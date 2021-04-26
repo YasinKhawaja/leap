@@ -23,7 +23,7 @@ export class CapabilityAddComponent implements OnInit {
   onSubmit() {
     console.log("Capability Added!");
     console.log(this.capability.value.name);
-    this.router.navigate(['capability']);
+    this.router.navigate(['capabilities']);
   }
 
 }

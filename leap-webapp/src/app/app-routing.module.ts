@@ -4,7 +4,7 @@ import { CapabilityComponent } from './capability/capability.component';
 import { CapabilityAddComponent} from "./capability-add/capability-add.component";
 
 const routes: Routes = [
-  { path: 'capability', component: CapabilityComponent},
+  { path: 'capabilities', component: CapabilityComponent},
   { path: 'add-capability', component: CapabilityAddComponent}
 ];
 
