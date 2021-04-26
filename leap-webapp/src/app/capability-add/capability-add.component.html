@@ -1,0 +1,13 @@
+<div class="container">
+    <h1>Add Capability</h1>
+
+<form [formGroup]="capability" (ngSubmit)="onSubmit()">
+    <br />
+    <label>
+        Name: 
+        <input type="text" formControlName="name">
+    </label>
+    <br />
+    <button type="submit" [disabled]="!capability.valid">Add</button>
+</form>
+</div>
