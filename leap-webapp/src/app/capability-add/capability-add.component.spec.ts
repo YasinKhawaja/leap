@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { CapabilityAddComponent } from './capability-add.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 describe('CapabilityAddComponent', () => {
   let component: CapabilityAddComponent;
@@ -8,6 +9,11 @@ describe('CapabilityAddComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports:[
+        ReactiveFormsModule,
+        FormsModule,
+        RouterTestingModule
+      ],
       declarations: [ CapabilityAddComponent ]
     })
     .compileComponents();

@@ -5,7 +5,7 @@ import { CapabilityAddComponent} from "./capability-add/capability-add.component
 
 const routes: Routes = [
   { path: 'capabilities', component: CapabilityComponent},
-  { path: 'add-capability', component: CapabilityAddComponent}
+  { path: 'capabilities/add', component: CapabilityAddComponent}
 ];
 
 @NgModule({
