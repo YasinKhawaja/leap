@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
+import { CapabilityService } from "../service/capability.service";
 import { Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Capability } from '../service/capability';
 
 @Component({
   selector: 'app-capability-add',
@@ -15,15 +17,15 @@ export class CapabilityAddComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private cs: CapabilityService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log("Capability Added!");
-    console.log(this.capability.value.name);
-    this.router.navigate(['capabilities']);
+    this.cs.addCapability(new Capability(this.capability.value.name))
+    this.router.navigate(['capabilities'])
   }
 
 }
