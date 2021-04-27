@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.jpa;
+package edu.ap.group10.leapwebapp.capability;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
