@@ -1,3 +1,4 @@
+
 package edu.ap.group10.leapwebapp.capability;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +12,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @CrossOrigin(origins = "http://localhost:4200")
 @Controller
 public class CapabilityController {
-    @Autowired
-    private CapabilityRepository repository;
+	@Autowired
+	private CapabilityRepository repository;
 
-    @PostMapping("/capabilities/add")
-    public @ResponseBody String saveCapability(@RequestParam("name") String name){
-        repository.save(new Capability(name));
-        return "saved!!";
-    }
+	@PostMapping("/capabilities/add")
+	public @ResponseBody String saveCapability(@RequestParam("name") String name) {
+		Capability capability = new Capability(name);
 
-    @GetMapping("/capabilities")
-    public @ResponseBody Iterable<Capability> getAllCapabilities(){
-        return repository.findAll();
-    }
+		repository.save(capability);
+		
+		return "Saved";
+	}
+
+	@GetMapping("/capabilities")
+	public @ResponseBody Iterable<Capability> getAllCapabilities() {
+		return repository.findAll();
+	}
 
 }
