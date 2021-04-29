@@ -8,9 +8,9 @@
         </tr>
       </thead>
       <tbody>
-          <tr>
-              <td>Test</td>
-           </tr>
+        <tr *ngFor='let capability of capabilities'>
+          <td> {{ capability.name }} </td>
+         </tr>
       </tbody>
     </table>
      <a [routerLink] = "['../capabilities/add']">Add Capability</a>

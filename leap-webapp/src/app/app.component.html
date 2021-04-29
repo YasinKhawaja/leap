@@ -1,45 +1,67 @@
-<div class = 'container-fluid'>   
-  <nav class='navbar navbar-expand-lg navbar-dark' style="background-color: crimson;">
-   <div class='container-fluid'>
-     <!-- Moet er hier een logo komen of is 'LEAP' ok ? -->
-    <a class="navbar-brand" class="test">LEAP</a>
-   <ul class='navbar-nav'>
-    <div class="verticalLine">
+<div>   
+  <nav class="navbar navbar-expand-lg navbar-custom">
+   <a class="navbar-brand" href="#">
+      <img class="img" src="assets/leap-logo.png" />
+  </a>
+   <ul class='navbar-nav navbar-brand' style="text-align: center;">
+    <div class="verticalLine ">
     <li class='nav-item active'>
       <!-- EnvName moet dynamisch opgevuld worden -->
       <a class="nav-link">EnvName</a>
     </li>
     </div>
+    <li class='nav-item active'>
+      <a class='nav-link ' [routerLink] = "['home']" style="color: white;">Home</a>
+  </li>
        <li class='nav-item active'>
-           <a class='nav-link' [routerLink] = "['capabilities']">Capabilities</a>
+           <a class='nav-link'  [routerLink] = "['capabilities']" style="color: white;">Capabilities</a>
        </li>
        <li class='nav-item active'>
-          <a class='nav-link'>Strategy/Strategy Items</a>
+          <a class='nav-link ' style="color: white;" >Strategy/Strategy Items</a>
+        </li>
+        <li class='nav-item active' >
+          <a class='nav-link' style="color: white;">IT-Applications</a>
         </li>
         <li class='nav-item active'>
-          <a class='nav-link'>IT-Applications</a>
+          <a class='nav-link' style="color: white;">Programs/Projects</a>
         </li>
         <li class='nav-item active'>
-          <a class='nav-link'>Programs/Projects</a>
+          <a class='nav-link' style="color: white;">Resources</a>
         </li>
         <li class='nav-item active'>
-          <a class='nav-link'>Resources</a>
-        </li>
-        <li class='nav-item active'>
-          <a class='nav-link'>Business Processes</a>
+          <a class='nav-link' style="color: white;">Business Processes</a>
         </li>
         <div class="verticalLine">
         <li class='nav-item active'>
-          <a class='nav-link'>Export</a>
+          <a class='nav-link' style="color: white;">Export</a>
         </li>
         </div>
         <li class='nav-item active'>
-          <!-- User moet dynamisch opgevuld worden met de username -->
+          <!-- User moet dynamisch opgevuld worden met de username =>  <p> {{ user.name }}</p> -->
           <a class='nav-link'><i class="fa fa-fw fa-user"></i>User</a>
         </li>
+    <li
+      class="nav-item active">
+      <button
+        class="btn btn-white btn-big "
+        [routerLink] = "['login']">
+        Log in
+      </button>
+      <button
+      class="btn btn-white btn-big"
+      [routerLink] = "['signup']">
+      Sign Up
+    </button>
+    </li>
    </ul>
-   </div>
+  
   </nav>
+
+  <footer class="footer">
+    &copy; 2020-2021 leap.com | Terms of Service | Privacy Policy | Cookies
+  </footer>
+  
   <br/><br/>
   <router-outlet></router-outlet>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </div>
