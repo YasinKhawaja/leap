@@ -1,0 +1,19 @@
+<div class="card my-5">
+    <div class="card-body">
+        <form [formGroup]="company" (ngSubmit)="onSubmit()">
+            <label>Vat number*<input type="text" formControlName="vatNumber"></label>
+            <label>Company name*<input type="text" formControlName="companyName"></label>
+            <label>Tax office<input type="text" formControlName="taxOffice"></label>
+            <label>Business activity<input type="text" formControlName="businessActivity"></label>
+            <label>Email address*<input type="email" formControlName="email"></label>
+            <label>Street name*<input type="text" formControlName="streetName"></label>
+            <label>House number*<input type="number" formControlName="houseNumber"></label>
+            <label>Postcode*<input type="number" formControlName="postcode"></label>
+            <label>City*<input type="text" formControlName="city"></label>
+            <label>Country*<input type="text" formControlName="country"></label>
+            <button type="submit" [disabled]="!company.valid">Send</button>
+            <p>Fiels marked with * are mandatory fields.</p>
+            <p>By registering, you agree that we will keep and use your personal information in accordance with our <a [routerLink]="['/privacypolicy']">Privacy Policy</a>.</p>
+        </form>
+    </div>
+</div>

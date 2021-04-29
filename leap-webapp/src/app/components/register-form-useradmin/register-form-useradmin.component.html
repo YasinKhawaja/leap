@@ -1,0 +1,14 @@
+<div class="card my-5">
+    <div class="card-body">
+        <form [formGroup]="useradmin" (ngSubmit)="onSubmit()">
+            <label>First name*<input type="text" formControlName="firstName" required></label>
+            <label>Surname*<input type="text" formControlName="surname" required></label>
+            <label>Email address*<input type="email" formControlName="email" required></label>
+            <label>Username*<input type="text" formControlName="username" required></label>
+            <label>Password*<input type="password" formControlName="password" required></label>
+            <label>Repeat Password*<input type="password" formControlName="repeatPassword" required></label>
+            <button type="submit" [disabled]="!useradmin.valid">Create user admin</button>
+            <p>Fiels marked with * are mandatory fields.</p>
+        </form>
+    </div>
+</div>

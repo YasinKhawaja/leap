@@ -12,12 +12,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CapabilityPropertiesComponent } from './capability-properties/capability-properties.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'capabilities', component: CapabilityComponent },
+  { path: 'register-useradmin', component: RegisterFormUseradminComponent },
+  { path: 'register', component: RegisterFormComponent }
   
 ]
 
@@ -26,7 +30,9 @@ const appRoutes: Routes = [
     AppComponent,
     CapabilityComponent,
     CapabilityAddComponent,
-    CapabilityPropertiesComponent
+    CapabilityPropertiesComponent,
+    RegisterFormComponent,
+    RegisterFormUseradminComponent
   ],
   imports: [
     BrowserModule,
