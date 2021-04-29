@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CapabilityController {
 	@Autowired
-	private CapabilityRepository repository;
+	private CapabilityRepository capabilityRepository;
 
 	@PostMapping("/capabilities/add")
-	public @ResponseBody String saveCapability(@RequestParam("name") String name) {
+	public @ResponseBody String addNewCapability(@RequestParam("name") String name) {
 		Capability capability = new Capability(name);
 
-		repository.save(capability);
+		capabilityRepository.save(capability);
 		
 		return "Saved";
 	}
 
 	@GetMapping("/capabilities")
 	public @ResponseBody Iterable<Capability> getAllCapabilities() {
-		return repository.findAll();
+		return capabilityRepository.findAll();
 	}
 
 }
