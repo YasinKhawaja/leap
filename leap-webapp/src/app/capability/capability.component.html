@@ -5,11 +5,25 @@
       <thead>
         <tr>
           <th scope='col'>Name</th>
+          <th scope='col'>Parent Id</th>
+          <th scope='col'>Level</th>
+          <th scope='col'>Pace Of Change</th>
+          <th scope='col'>tOM</th>
+          <th scope='col'>Resources Quality</th>
+          <th scope='col'>Information Quality</th>
+          <th scope='col'>Application Fit</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor='let capability of capabilities'>
           <td> {{ capability.name }} </td>
+          <td> {{ capability.parentId }} </td>
+          <td> {{ capability.level }} </td>
+          <td> {{ capability.paceOfChange }} </td>
+          <td> {{ capability.tom }} </td>
+          <td> {{ capability.resourcesQuality }} </td>
+          <td> {{ capability.informationQuality }} </td>
+          <td> {{ capability.applicationFit }} </td>
          </tr>
       </tbody>
     </table>
