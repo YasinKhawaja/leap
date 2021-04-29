@@ -59,6 +59,19 @@ public class Capability {
 		this.setApplicationFit(0.0);
 	}
 
+
+	public Capability(Integer level, String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality, Double informationQuality, Double applicationFit) {
+		this.level = level;
+		this.name = name;
+		this.paceOfChange = paceOfChange;
+		this.tom = tom;
+		this.resourcesQuality = resourcesQuality;
+		this.informationQuality = informationQuality;
+		this.applicationFit = applicationFit;
+		this.setParentId(1);
+	}
+
+
 	// GETTERS & SETTERS
 	public Integer getId() {
 		return id;

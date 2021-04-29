@@ -16,8 +16,11 @@ public class CapabilityController {
 	private CapabilityRepository repository;
 
 	@PostMapping("/capabilities/add")
-	public @ResponseBody String saveCapability(@RequestParam("name") String name) {
-		Capability capability = new Capability(name);
+	public @ResponseBody String saveCapability(@RequestParam("name") String name, @RequestParam("level") Integer level,
+	@RequestParam("paceOfChange") PaceOfChange paceOfChange, @RequestParam("tom") Tom tom, @RequestParam("resourcesQuality") 
+	Integer resourcesQuality, @RequestParam("informationQuality") Double informationQuality,
+	@RequestParam("applicationFit") Double applicationFit) {
+		Capability capability = new Capability(level, name, paceOfChange, tom, resourcesQuality, informationQuality, applicationFit);
 
 		repository.save(capability);
 		
