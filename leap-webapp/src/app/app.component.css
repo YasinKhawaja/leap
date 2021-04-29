@@ -2,11 +2,15 @@
     background-color: red;
    
 }
-    .navbar-custom .navbar-brand {
+.flex-container{
+    display: flex;
+    flex-direction: column;
+}
+.navbar-custom .navbar-brand {
         font-size:16px;
         line-height:18px;
         padding: 1rem;
-    }
+}
 
 .btn-big {
     border-radius: 0px;
@@ -58,7 +62,6 @@ input[type="submit"]:hover {
           mix-blend-mode: multiply;
       }
 footer {
-        position: absolute;
         right: 0;
         bottom: 0;
         left: 0;
