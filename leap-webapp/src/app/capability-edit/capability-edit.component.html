@@ -1,0 +1,46 @@
+<div class="container">
+    <h1>Edit Capability</h1>
+
+<form [formGroup]="capability" (ngSubmit)="onSubmit()">
+    <div class='form-group w-50'>
+        <label>Name</label>
+        <input type='text' class='form-control' formControlName='name' 
+          placeholder='Enter capability name' formControlName='name' />
+    </div> 
+    <div class='form-group w-50'>
+        <label>Level</label>
+        <input type='text' class='form-control' formControlName='level' 
+          placeholder='Enter capability level' formControlName='level' />
+    </div>  
+    <div class='form-group w-50'>
+        <label>Pace Of Change</label>
+        <select class="form-control" formControlName='paceOfChange'>
+          <option [ngValue]="null">Select one...</option>
+          <option *ngFor="let type of ePaceOfChange | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+        </select>
+    </div>  
+    <div class='form-group w-50'>
+        <label>tOM</label>
+        <select class="form-control" formControlName='tom'>
+          <option [ngValue]="null">Select one...</option>
+          <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+        </select>
+    </div>  
+    <div class='form-group w-50'>
+        <label>Resources Quality</label>
+        <input type='text' class='form-control' formControlName='resourcesQuality' 
+          placeholder='Enter capability resources quality' formControlName='resourcesQuality' />
+    </div>  
+    <div class='form-group w-50'>
+        <label>Information Quality</label>
+        <input type='text' class='form-control' formControlName='informationQuality' 
+          placeholder='Enter capability information quality' formControlName='informationQuality' />
+    </div>  
+    <div class='form-group w-50'>
+        <label>Application Fit</label>
+        <input type='text' class='form-control' formControlName='applicationFit' 
+          placeholder='Enter capability application fit' formControlName='applicationFit' />
+    </div>   
+    <button type="submit" [disabled]="!capability.valid">Edit</button>
+</form>
+</div>

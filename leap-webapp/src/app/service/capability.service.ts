@@ -40,5 +40,23 @@ export class CapabilityService {
       .subscribe(data => { console.log(data) },
                   error => { console.log(error) })
   }
+
+  // Edit a capability
+  editCapability(capability: Capability, originalName: string): void {
+    let url = `${this.capabilitiesServiceURI}/edit/${originalName}`;
+    // !! subscribe is needed to execute POST
+    this.http.post(url, capability.getParams(),
+                    { headers: this.contentHeaders})
+                    .subscribe(data => { console.log(data) },
+                                error => { console.log(error) })
+  }
+
+  // Search one capability by name
+  searchOneCapability(name: string): Observable<Capability[]> {
+    let url = `${this.capabilitiesServiceURI}/searchOne`
+
+    return this.http.post<Capability[]>(url, `name=${name}`,
+                    { headers: this.contentHeaders})
+  }
  
 }

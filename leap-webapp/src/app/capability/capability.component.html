@@ -17,7 +17,8 @@
       <tbody>
         <tr *ngFor='let capability of capabilities'>
           <td><a [routerLink]="['../capabilities/delete', capability.name]"><img src='assets/delete.jpg' width='15' height='18'></a>&nbsp;&nbsp; 
-            {{ capability.name }} </td>
+              <a [routerLink]="['../capabilities/edit', capability.name]">{{ capability.name }}</a> 
+          </td>
           <td> {{ capability.parentId }} </td>
           <td> {{ capability.level }} </td>
           <td> {{ capability.paceOfChange }} </td>

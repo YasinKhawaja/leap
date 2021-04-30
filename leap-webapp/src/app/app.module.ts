@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CapabilityPropertiesComponent } from './capability-properties/capability-properties.component';
 import { CapabilityDeleteComponent } from './capability-delete/capability-delete.component';
+import { CapabilityEditComponent } from './capability-edit/capability-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
     CapabilityComponent,
     CapabilityAddComponent,
     CapabilityPropertiesComponent,
-    CapabilityDeleteComponent
+    CapabilityDeleteComponent,
+    CapabilityEditComponent
   ],
   imports: [
     BrowserModule,
