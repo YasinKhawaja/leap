@@ -4,9 +4,9 @@
  
  <form [formGroup]='capability' (ngSubmit)='onSubmit()'>
    <div class='form-group w-50'>
-     <label for='price'>Name</label>
+     <label for='price'>Name (e.g. Capability Name)</label>
      <input type='text' class='form-control' formControlName='name' 
-       placeholder='Enter capability name' formControlName='name' />
+       placeholder='Enter capability name (e.g. Capability Name)' formControlName='name' />
    </div>
    <button class='btn btn-outline-primary' type='submit' [disabled]='!capability.valid'>Delete</button>
  </form>

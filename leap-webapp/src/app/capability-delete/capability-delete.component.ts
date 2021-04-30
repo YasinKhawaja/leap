@@ -12,7 +12,7 @@ export class CapabilityDeleteComponent implements OnInit {
 
   capabilityName: string
   capability = this.fb.group({
-    name: ['', Validators.required]
+    name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]]
   })
 
   constructor(private cs: CapabilityService,

@@ -3,14 +3,14 @@
 
 <form [formGroup]="capability" (ngSubmit)="onSubmit()">
     <div class='form-group w-50'>
-        <label>Name</label>
+        <label>Name (e.g. Capability Name)</label>
         <input type='text' class='form-control' formControlName='name' 
-          placeholder='Enter capability name' formControlName='name' />
+          placeholder='Enter capability name (e.g. Capability Name)' formControlName='name' />
     </div> 
     <div class='form-group w-50'>
-        <label>Level</label>
+        <label>Level (e.g. 2)</label>
         <input type='text' class='form-control' formControlName='level' 
-          placeholder='Enter capability level' formControlName='level' />
+          placeholder='Enter capability level (e.g. 2)' formControlName='level' />
     </div>  
     <div class='form-group w-50'>
         <label>Pace Of Change</label>
@@ -27,19 +27,19 @@
         </select>
     </div>  
     <div class='form-group w-50'>
-        <label>Resources Quality</label>
+        <label>Resources Quality (e.g. 8)</label>
         <input type='text' class='form-control' formControlName='resourcesQuality' 
-          placeholder='Enter capability resources quality' formControlName='resourcesQuality' />
+          placeholder='Enter capability resources quality (e.g. 8)' formControlName='resourcesQuality' />
     </div>  
     <div class='form-group w-50'>
-        <label>Information Quality</label>
+        <label>Information Quality (e.g. 6.4)</label>
         <input type='text' class='form-control' formControlName='informationQuality' 
-          placeholder='Enter capability information quality' formControlName='informationQuality' />
+          placeholder='Enter capability information quality (e.g. 6.4)' formControlName='informationQuality' />
     </div>  
     <div class='form-group w-50'>
-        <label>Application Fit</label>
+        <label>Application Fit (e.g. 7.5)</label>
         <input type='text' class='form-control' formControlName='applicationFit' 
-          placeholder='Enter capability application fit' formControlName='applicationFit' />
+          placeholder='Enter capability application fit (e.g. 7.5)' formControlName='applicationFit' />
     </div>   
     <button type="submit" [disabled]="!capability.valid">Edit</button>
 </form>

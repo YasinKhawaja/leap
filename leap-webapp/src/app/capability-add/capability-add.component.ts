@@ -30,13 +30,13 @@ export class CapabilityAddComponent implements OnInit {
   eTom = Tom;
 
   capability = this.fb.group({
-    name: ['', Validators.required],
-    level: ['', Validators.required],
+    name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    level: ['', [Validators.required, Validators.pattern('[0-9]')]],
     paceOfChange: ['', Validators.required],
     tom: ['', Validators.required],
-    resourcesQuality: ['', Validators.required],
-    informationQuality: ['', Validators.required],
-    applicationFit: ['', Validators.required]
+    resourcesQuality: ['', [Validators.required, Validators.pattern('[0-9]')]],
+    informationQuality: ['', [Validators.required, Validators.pattern('[0-9]+[.][0-9]+')]],
+    applicationFit: ['', [Validators.required, Validators.pattern('[0-9]+[.][0-9]+')]]
 
   })
 
