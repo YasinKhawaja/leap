@@ -4,12 +4,14 @@ import { CapabilityComponent } from './capability/capability.component';
 import { CapabilityAddComponent} from "./capability-add/capability-add.component";
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { EnvironmentComponent } from './components/environment/environment.component';
 
 const routes: Routes = [
   { path: 'capabilities', component: CapabilityComponent},
   { path: 'capabilities/add', component: CapabilityAddComponent},
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
-  { path: 'register', component: RegisterFormComponent }
+  { path: 'register', component: RegisterFormComponent },
+  { path: 'environments', component: EnvironmentComponent }
 ];
 
 @NgModule({

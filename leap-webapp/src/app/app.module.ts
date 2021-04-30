@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { CapabilityPropertiesComponent } from './capability-properties/capability-properties.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
+import { EnvironmentComponent } from './components/environment/environment.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     CapabilityAddComponent,
     CapabilityPropertiesComponent,
     RegisterFormComponent,
-    RegisterFormUseradminComponent
+    RegisterFormUseradminComponent,
+    EnvironmentComponent
   ],
   imports: [
     BrowserModule,
