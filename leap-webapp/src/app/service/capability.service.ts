@@ -28,7 +28,7 @@ export class CapabilityService {
     this.http.post(url, capability.getParams(),
                   { headers: this.contentHeaders})
                   .subscribe(data => { console.log(data) }, 
-                  error => { console.error(error) })
+                  error => { console.error(error.error.message) })
   }
 
   // Delete a capability
