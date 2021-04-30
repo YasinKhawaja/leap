@@ -25,7 +25,7 @@ public class Capability {
 	@Column(nullable = false)
 	private Integer level;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@Column(name = "pace_of_change")

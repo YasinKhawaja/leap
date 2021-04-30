@@ -30,5 +30,15 @@ export class CapabilityService {
                   .subscribe(data => { console.log(data) }, 
                   error => { console.error(error) })
   }
+
+  // Delete a capability
+  deleteCapability(name: string): void{
+    let url = `${this.capabilitiesServiceURI}/delete/${name}`
+    // !!! subscribe is needed to execute DELETE
+    this.http.delete(url,
+      { headers: this.contentHeaders})
+      .subscribe(data => { console.log(data) },
+                  error => { console.log(error) })
+  }
  
 }

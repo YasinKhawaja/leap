@@ -12,6 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { CapabilityPropertiesComponent } from './capability-properties/capability-properties.component';
+import { CapabilityDeleteComponent } from './capability-delete/capability-delete.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,8 @@ const appRoutes: Routes = [
     AppComponent,
     CapabilityComponent,
     CapabilityAddComponent,
-    CapabilityPropertiesComponent
+    CapabilityPropertiesComponent,
+    CapabilityDeleteComponent
   ],
   imports: [
     BrowserModule,

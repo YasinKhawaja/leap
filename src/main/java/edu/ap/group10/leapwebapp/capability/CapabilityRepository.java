@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CapabilityRepository extends CrudRepository<Capability, Long>{
+    public Capability findByName(String name);
     
 }
