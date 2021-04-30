@@ -25,7 +25,7 @@ export class EnvironmentService {
   addEnvironment(environment: Environment): void {
     let url = `${this.environmentsServiceURI}/add`
 
-    this.http.post(url, environment.getParams(), { responseType: 'text' })
+    this.http.post(url, environment.getParams())
       .subscribe(data => { console.log(data) }, error => { console.error(error) })
   }
 
