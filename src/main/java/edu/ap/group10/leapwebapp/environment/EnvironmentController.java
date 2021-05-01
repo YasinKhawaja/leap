@@ -4,7 +4,6 @@ package edu.ap.group10.leapwebapp.environment;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,12 +25,15 @@ public class EnvironmentController {
 	// To GET all environments
 	@GetMapping("/environments")
 	public @ResponseBody Iterable<Environment> getAllEnvironments() {
-		return environmentRepository.findAll();
+		Iterable<Environment> environments = environmentRepository.findAll();
+
+		return environments;
 	}
 
 	// To CREATE an environment
 	@PostMapping("environments/add")
 	public ResponseEntity<Environment> addNewEnvironment(@RequestParam String name) {
+		ResponseEntity<Environment> response;
 		Environment environment = new Environment();
 
 		if (!name.isEmpty()) {
@@ -39,47 +41,63 @@ public class EnvironmentController {
 
 			environmentRepository.save(environment);
 
-			return ResponseEntity.ok(environment);
+			response = ResponseEntity.ok().build();
+			// System.out.println("OK");
 		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(environment);
+			response = ResponseEntity.badRequest().build();
+			// System.out.println("BAD REQUEST");
 		}
+
+		return response;
 	}
 
 	// To UPDATE an environment
 	@PutMapping("environments/{id}")
-	public @ResponseBody String updateEnvironment(@PathVariable(value = "id") Integer environmentId,
-			@RequestParam String name) {
+	public ResponseEntity<Environment> updateEnvironment(@PathVariable Integer id, @RequestParam String name) {
+		ResponseEntity<Environment> response;
 		Environment environment;
 
 		try {
-			environment = environmentRepository.findById(environmentId).orElseThrow(() -> new EntityNotFoundException(
-					String.format("Environment with ID:%s not found", environmentId)));
+			if (!name.isEmpty()) {
+				environment = environmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
 
-			environment.setName(name);
+				environment.setName(name);
 
-			environmentRepository.save(environment);
+				environmentRepository.save(environment);
+
+				response = ResponseEntity.ok().build();
+				// System.out.println("OK");
+			} else {
+				response = ResponseEntity.badRequest().build();
+				// System.out.println("BAD REQUEST");
+			}
 		} catch (Exception e) {
-			return e.getMessage();
+			response = ResponseEntity.notFound().build();
+			// System.out.println("NOT FOUND");
 		}
 
-		return String.format("Environment with ID:%s updated", environmentId);
+		return response;
 	}
 
 	// To DELETE an environment
 	@DeleteMapping("environments/{id}")
-	public @ResponseBody String deleteEnvironment(@PathVariable(value = "id") Integer environmentId) {
+	public ResponseEntity<Environment> deleteEnvironment(@PathVariable Integer id) {
+		ResponseEntity<Environment> response;
 		Environment environment;
 
 		try {
-			environment = environmentRepository.findById(environmentId).orElseThrow(() -> new EntityNotFoundException(
-					String.format("Environment with ID:%s not found", environmentId)));
+			environment = environmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
 
 			environmentRepository.delete(environment);
+
+			response = ResponseEntity.ok().build();
+			// System.out.println("OK");
 		} catch (Exception e) {
-			return e.getMessage();
+			response = ResponseEntity.notFound().build();
+			// System.out.println("NOT FOUND");
 		}
 
-		return String.format("Environment with ID:%s deleted", environment.getId());
+		return response;
 	}
 
 }
