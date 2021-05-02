@@ -41,11 +41,9 @@ public class EnvironmentController {
 
 			environmentRepository.save(environment);
 
-			response = ResponseEntity.ok().build();
-			// System.out.println("OK");
+			response = ResponseEntity.ok().body(environment);
 		} else {
-			response = ResponseEntity.badRequest().build();
-			// System.out.println("BAD REQUEST");
+			response = ResponseEntity.badRequest().body(environment);
 		}
 
 		return response;
@@ -65,15 +63,12 @@ public class EnvironmentController {
 
 				environmentRepository.save(environment);
 
-				response = ResponseEntity.ok().build();
-				// System.out.println("OK");
+				response = ResponseEntity.ok().body(environment);
 			} else {
-				response = ResponseEntity.badRequest().build();
-				// System.out.println("BAD REQUEST");
+				response = ResponseEntity.badRequest().body(environment);
 			}
 		} catch (Exception e) {
 			response = ResponseEntity.notFound().build();
-			// System.out.println("NOT FOUND");
 		}
 
 		return response;
@@ -90,11 +85,9 @@ public class EnvironmentController {
 
 			environmentRepository.delete(environment);
 
-			response = ResponseEntity.ok().build();
-			// System.out.println("OK");
+			response = ResponseEntity.ok().body(environment);
 		} catch (Exception e) {
 			response = ResponseEntity.notFound().build();
-			// System.out.println("NOT FOUND");
 		}
 
 		return response;
