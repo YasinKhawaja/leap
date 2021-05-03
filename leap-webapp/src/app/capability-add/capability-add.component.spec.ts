@@ -5,21 +5,31 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { render } from "@testing-library/angular";
 import { By } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CapabilityAddComponent', () => {
   let component: CapabilityAddComponent;
   let fixture: ComponentFixture<CapabilityAddComponent>;
+
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       declarations: [ CapabilityAddComponent ]
     })
     .compileComponents();
+
+    // Inject the http service and test controller for each test
+    httpClient = TestBed.get(HttpClient);
+    httpTestingController = TestBed.get(HttpTestingController);
   });
 
   beforeEach(() => {
@@ -34,7 +44,8 @@ describe('CapabilityAddComponent', () => {
 
   it('should be a valid form',() => {
     // fill in name in form
-    component.capability.setValue({name: 'Test'});
+    component.capability.setValue({name: 'Test', level: '2', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
+    resourcesQuality: '7', informationQuality: '7.7', applicationFit: '8.8'});
     expect(component.capability.valid).toBeTruthy();
   })
 
@@ -43,11 +54,12 @@ describe('CapabilityAddComponent', () => {
     expect(component.capability.invalid).toBeTruthy();
     let button = fixture.debugElement.query(By.css('button[type=submit]'));
 
-    // check if button is disable
+    // check if button is disabled
     expect(button.nativeElement.disabled).toBeTruthy();
 
     // fill in name in form
-    component.capability.setValue({name: 'Test'});
+    component.capability.setValue({name: 'Test', level: '2', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
+    resourcesQuality: '7', informationQuality: '7.7', applicationFit: '8.8'});
     fixture.detectChanges();
 
     // check if button is enabled

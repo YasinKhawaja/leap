@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 import { Capability } from './capability';
 
 @Injectable({
@@ -28,7 +29,8 @@ export class CapabilityService {
     this.http.post(url, capability.getParams(),
                   { headers: this.contentHeaders})
                   .subscribe(data => { console.log(data) }, 
-                  error => { console.error(error.error.message) })
+                  error => { if (error.error.message) Swal.fire('Error',error.error.message +
+                  '. Try again with a different name or edit the existing capability.', 'error')})
   }
 
   // Delete a capability
