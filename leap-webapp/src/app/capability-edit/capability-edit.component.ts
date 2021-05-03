@@ -33,12 +33,9 @@ export class CapabilityEditComponent implements OnInit {
 
   capability = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    level: ['', [Validators.required, Validators.pattern('[0-9]')]],
     paceOfChange: ['', Validators.required],
     tom: ['', Validators.required],
-    resourcesQuality: ['', [Validators.required, Validators.pattern('[0-9]')]],
-    informationQuality: ['', [Validators.required, Validators.pattern('[0-9]+[.][0-9]+')]],
-    applicationFit: ['', [Validators.required, Validators.pattern('[0-9]+[.][0-9]+')]]
+    resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
 
   })
 
@@ -56,12 +53,9 @@ export class CapabilityEditComponent implements OnInit {
         this.cs.searchOneCapability(this.capabilityName)
           .subscribe(data => { console.log(data),
             this.capability.controls['name'].setValue(data[0].name)
-            this.capability.controls['level'].setValue(data[0].level)
             this.capability.controls['paceOfChange'].setValue(data[0].paceOfChange)
             this.capability.controls['tom'].setValue(data[0].tom)
             this.capability.controls['resourcesQuality'].setValue(data[0].resourcesQuality)
-            this.capability.controls['informationQuality'].setValue(data[0].informationQuality)
-            this.capability.controls['applicationFit'].setValue(data[0].applicationFit)
           },
             error => { console.log(error) })
       }
@@ -73,12 +67,9 @@ export class CapabilityEditComponent implements OnInit {
 
   onSubmit() {
     this.cs.editCapability(new Capability(this.capability.value.name,
-                                          this.capability.value.level,
                                           this.capability.value.paceOfChange,
                                           this.capability.value.tom,
-                                          this.capability.value.resourcesQuality,
-                                          this.capability.value.informationQuality,
-                                          this.capability.value.applicationFit),
+                                          this.capability.value.resourcesQuality),
                                           this.capabilityName)
     
     this.router.navigate(['capabilities'])

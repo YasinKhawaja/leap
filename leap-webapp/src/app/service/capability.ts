@@ -2,13 +2,18 @@ import { HttpParams } from "@angular/common/http";
 
 export class Capability {
     public parentId: string
+    public informationQuality: string
+    public applicationFit: string
+    public level: string
 
     
 
-    constructor(public name: string, public level: string, public paceOfChange: string,
-        public tom: string, public resourcesQuality: string, public informationQuality: string,
-        public applicationFit: string){
+    constructor(public name: string, public paceOfChange: string,
+        public tom: string, public resourcesQuality: string){
         this.parentId = '';
+        this.informationQuality = '';
+        this.applicationFit = '';
+        this.level = '';
     }
 
     getParams() : HttpParams{

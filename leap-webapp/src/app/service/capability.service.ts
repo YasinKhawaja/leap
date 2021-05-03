@@ -30,7 +30,7 @@ export class CapabilityService {
                   { headers: this.contentHeaders})
                   .subscribe(data => { console.log(data) }, 
                   error => { if (error.error.message) Swal.fire('Error',error.error.message +
-                  '. Try again with a different name or edit the existing capability.', 'error')})
+                  '.', 'error')})
   }
 
   // Delete a capability

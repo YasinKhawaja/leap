@@ -31,13 +31,9 @@ export class CapabilityAddComponent implements OnInit {
 
   capability = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    level: ['', [Validators.required, Validators.pattern('[0-9]')]],
     paceOfChange: ['', Validators.required],
     tom: ['', Validators.required],
-    resourcesQuality: ['', [Validators.required, Validators.pattern('[0-9]')]],
-    informationQuality: ['', [Validators.required, Validators.pattern('[0-9]+[.][0-9]+')]],
-    applicationFit: ['', [Validators.required, Validators.pattern('[0-9]+[.][0-9]+')]]
-
+    resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
   })
 
   constructor(private fb: FormBuilder,
@@ -49,9 +45,8 @@ export class CapabilityAddComponent implements OnInit {
 
   onSubmit() {
     //this.cs.addCapability(new Capability(this.capability.value.name))
-    this.cs.addCapability(new Capability(this.capability.value.name, this.capability.value.level,
-      this.capability.value.paceOfChange, this.capability.value.tom, this.capability.value.resourcesQuality,
-      this.capability.value.informationQuality, this.capability.value.applicationFit))
+    this.cs.addCapability(new Capability(this.capability.value.name,
+      this.capability.value.paceOfChange, this.capability.value.tom, this.capability.value.resourcesQuality))
     this.router.navigate(['capabilities'])
   }
 

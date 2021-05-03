@@ -27,12 +27,11 @@ public class CapabilityController {
 	// Added error handling, it also shows in the console in angular webpage. TO DO: Make it more user friendly
 	// so that it shows on the webpage and not in the devtools under console
 	@PostMapping("/capabilities/add")
-	public @ResponseBody String saveCapability(@RequestParam("name") String name, @RequestParam("level") Integer level,
+	public @ResponseBody String saveCapability(@RequestParam("name") String name,
 	@RequestParam("paceOfChange") PaceOfChange paceOfChange, @RequestParam("tom") Tom tom, @RequestParam("resourcesQuality") 
-	Integer resourcesQuality, @RequestParam("informationQuality") Double informationQuality,
-	@RequestParam("applicationFit") Double applicationFit, HttpServletResponse response) {
+	Integer resourcesQuality, HttpServletResponse response) {
 		try{
-		Capability capability = new Capability(level, name, paceOfChange, tom, resourcesQuality, informationQuality, applicationFit);
+		Capability capability = new Capability(name, paceOfChange, tom, resourcesQuality);
 
 		repository.save(capability);
 		
@@ -65,20 +64,16 @@ public class CapabilityController {
 	}
 
 	@PostMapping("/capabilities/edit/{originalName}")
-	public @ResponseBody String editCapability(@RequestParam("name") String newName, @RequestParam("level") Integer level,
+	public @ResponseBody String editCapability(@RequestParam("name") String newName,
 	@RequestParam("paceOfChange") PaceOfChange paceOfChange, @RequestParam("tom") Tom tom, @RequestParam("resourcesQuality") 
-	Integer resourcesQuality, @RequestParam("informationQuality") Double informationQuality,
-	@RequestParam("applicationFit") Double applicationFit, @PathVariable String originalName) {
+	Integer resourcesQuality, @PathVariable String originalName) {
 		
 		Capability editedCapability = repository.findByName(originalName);
 
 		editedCapability.setName(newName);
-		editedCapability.setLevel(level);
 		editedCapability.setPaceOfChange(paceOfChange);
 		editedCapability.setTom(tom);
 		editedCapability.setResourcesQuality(resourcesQuality);
-		editedCapability.setInformationQuality(informationQuality);
-		editedCapability.setApplicationFit(applicationFit);
 
 		repository.save(editedCapability);
 	

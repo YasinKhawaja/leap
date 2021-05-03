@@ -60,15 +60,15 @@ public class Capability {
 	}
 
 
-	public Capability(Integer level, String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality, Double informationQuality, Double applicationFit) {
-		this.level = level;
+	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality) {
 		this.name = name;
 		this.paceOfChange = paceOfChange;
 		this.tom = tom;
 		this.resourcesQuality = resourcesQuality;
-		this.informationQuality = informationQuality;
-		this.applicationFit = applicationFit;
 		this.setParentId(1);
+		this.setInformationQuality(0.0);
+		this.setApplicationFit(0.0);
+		this.setLevel(1);
 	}
 
 

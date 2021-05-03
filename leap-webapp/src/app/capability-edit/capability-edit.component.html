@@ -15,20 +15,6 @@
             Name should only consist out of characters from the alphabet.
           </div>
         </div>    
-    </div> 
-    <div class='form-group w-50'>
-        <label>Level (e.g. 2)</label>
-        <input type='text' class='form-control' formControlName='level' 
-          placeholder='Enter capability level (e.g. 2)' formControlName='level' />
-        <div *ngIf="capability.get('level')!.invalid && (capability.get('level')!.dirty || capability.get('level')!.touched)"
-          class="alert alert-danger">
-          <div *ngIf="capability.get('level')!.errors!.required">
-            Level is required.
-          </div>
-          <div *ngIf="capability.get('level')!.errors!.pattern">
-            Level should consist out of a single number.
-          </div>
-        </div>
     </div>  
     <div class='form-group w-50'>
         <label>Pace Of Change</label>
@@ -55,47 +41,19 @@
         </div>
     </div>  
     <div class='form-group w-50'>
-        <label>Resources Quality (e.g. 8)</label>
+        <label>Resources Quality (e.g. 4)</label>
         <input type='text' class='form-control' formControlName='resourcesQuality' 
-          placeholder='Enter capability resources quality (e.g. 8)' formControlName='resourcesQuality' />
+          placeholder='Enter capability resources quality (e.g. 4)' formControlName='resourcesQuality' />
         <div *ngIf="capability.get('resourcesQuality')!.invalid && (capability.get('resourcesQuality')!.dirty || capability.get('resourcesQuality')!.touched)"
           class="alert alert-danger">
           <div *ngIf="capability.get('resourcesQuality')!.errors!.required">
             Resources Quality is required.
           </div>
           <div *ngIf="capability.get('resourcesQuality')!.errors!.pattern">
-            Resources Quality should consist out of a single number.
+            Resources Quality should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
           </div>
         </div>
-    </div>  
-    <div class='form-group w-50'>
-        <label>Information Quality (e.g. 6.4)</label>
-        <input type='text' class='form-control' formControlName='informationQuality' 
-          placeholder='Enter capability information quality (e.g. 6.4)' formControlName='informationQuality' />
-        <div *ngIf="capability.get('informationQuality')!.invalid && (capability.get('informationQuality')!.dirty || capability.get('informationQuality')!.touched)"
-          class="alert alert-danger">
-          <div *ngIf="capability.get('informationQuality')!.errors!.required">
-            Information Quality is required.
-          </div>
-          <div *ngIf="capability.get('informationQuality')!.errors!.pattern">
-            Information Quality should consist out of a decimal number seperated by '.' .
-          </div>
-        </div>
-    </div>  
-    <div class='form-group w-50'>
-        <label>Application Fit (e.g. 7.5)</label>
-        <input type='text' class='form-control' formControlName='applicationFit' 
-          placeholder='Enter capability application fit (e.g. 7.5)' formControlName='applicationFit' />
-        <div *ngIf="capability.get('applicationFit')!.invalid && (capability.get('applicationFit')!.dirty || capability.get('applicationFit')!.touched)"
-          class="alert alert-danger">
-          <div *ngIf="capability.get('applicationFit')!.errors!.required">
-            Application Fit is required.
-          </div>
-          <div *ngIf="capability.get('applicationFit')!.errors!.pattern">
-            Application Fit should consist out of a decimal number seperated by '.' .
-          </div>
-        </div>
-    </div>   
+    </div>    
     <button type="submit" [disabled]="!capability.valid">Edit</button>
 </form>
 </div>
