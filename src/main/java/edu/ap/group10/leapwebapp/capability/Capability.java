@@ -25,7 +25,7 @@ public class Capability {
 	@Column(nullable = false)
 	private Integer level;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@Column(name = "pace_of_change")
@@ -58,6 +58,19 @@ public class Capability {
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
 	}
+
+
+	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality) {
+		this.name = name;
+		this.paceOfChange = paceOfChange;
+		this.tom = tom;
+		this.resourcesQuality = resourcesQuality;
+		this.setParentId(1);
+		this.setInformationQuality(0.0);
+		this.setApplicationFit(0.0);
+		this.setLevel(1);
+	}
+
 
 	// GETTERS & SETTERS
 	public Integer getId() {
