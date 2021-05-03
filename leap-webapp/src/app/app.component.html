@@ -1,62 +1,85 @@
-<div>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="#">
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top nav-custom">
+        <a class="navbar-brand" [routerLink] = " ['home']">
+  
             <img class="img" src="assets/leap-logo.png" />
         </a>
-        <ul class='navbar-nav navbar-brand' style="text-align: center;">
-            <div class="verticalLine ">
-                <li class='nav-item active'>
-                    <!-- EnvName moet dynamisch opgevuld worden -->
-                    <a class="nav-link">EnvName</a>
+  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <div class="verticalLine ">
+                    <li class='nav-item active'>
+                        <!-- EnvName moet dynamisch opgevuld worden -->
+                        <a class="nav-link ">EnvName</a>
+                    </li>
+                </div>
+                
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink] = " ['capabilities']">Capabilities</a>
                 </li>
-            </div>
-            <li class='nav-item active'>
-                <a class='nav-link ' [routerLink]="['home']" style="color: white;">Home</a>
-            </li>
-            <li class='nav-item active'>
-                <a class='nav-link' [routerLink]="['capabilities']" style="color: white;">Capabilities</a>
-            </li>
-            <li class='nav-item active'>
-                <a class='nav-link ' style="color: white;">Strategy/Strategy Items</a>
-            </li>
-            <li class='nav-item active'>
-                <a class='nav-link' style="color: white;">IT-Applications</a>
-            </li>
-            <li class='nav-item active'>
-                <a class='nav-link' style="color: white;">Programs/Projects</a>
-            </li>
-            <li class='nav-item active'>
-                <a class='nav-link' style="color: white;">Resources</a>
-            </li>
-            <li class='nav-item active'>
-                <a class='nav-link' style="color: white;">Business Processes</a>
-            </li>
-            <div class="verticalLine">
-                <li class='nav-item active'>
-                    <a class='nav-link' style="color: white;">Export</a>
+                <li class="nav-item active">
+                    <a class="nav-link">Strategy/Strategy Items</a>
                 </li>
-            </div>
-            <li class='nav-item active'>
-                <!-- User moet dynamisch opgevuld worden met de username =>  <p> {{ user.name }}</p> -->
-                <a class='nav-link'><i class="fa fa-fw fa-user"></i>User</a>
-            </li>
-            <li class="nav-item active">
-                <button class="btn btn-white btn-big " [routerLink]="['login']">
-        Log in
-      </button>
-                <button class="btn btn-white btn-big" [routerLink]="['signup']">
-      Sign Up
-    </button>
-            </li>
-        </ul>
-
+                <li class="nav-item active">
+                    <a class="nav-link" >IT-Applications</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" >Programs/Projects</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link">Resources</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" >Business Processes</a>
+                </li>
+               
+                <div class="verticalLine">
+                    <li class='nav-item active'>
+                        <a class='nav-link'>Export</a>
+                    </li>
+                </div>
+                <li class='nav-item active '>
+                    <!-- User moet dynamisch opgevuld worden met de username =>  <p> {{ user.name }}</p> -->
+                    <a class='nav-link'><i class="fa fa-fw fa-user"></i>User</a>
+                </li>
+  
+            </ul>
+            <form class="form-inline mt-2 mt-md-0">
+                <button class="btn btn-white btn-big navbar-right"  [routerLink] = "['login']"> LOGIN</button>
+                <button class="btn btn-white btn-big navbar-right"  [routerLink] = "['register']" >SIGNUP</button>
+                <div class="ml-auto color" id="language">
+                    <select name="language" id="lang" class=" dropdown color">
+                        <option value="eng" selected>EN</option>
+                    </select>
+                </div>
+            </form>
+        </div>
     </nav>
-
-    <footer class="footer">
+  </header>
+  <!-- Begin page content -->
+  <main role="main" class="container content">
+      <br>
+      <br>
+      <br>
+  <div>
+      
+  </div>
+  <br>
+  </main>
+  
+  <br>
+  <footer class="footer">
+    
+    <div class="container">
         &copy; 2020-2021 leap.com | Terms of Service | Privacy Policy | Cookies
-    </footer>
-
+    </div>
+  </footer>
+  
+  
     <br/><br/>
     <router-outlet></router-outlet>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</div>
+  

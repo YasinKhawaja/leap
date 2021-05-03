@@ -67,19 +67,19 @@ input[type="submit"]:hover {
     color: #fff !important;
 }
 
-.btn-white:hover {
-border: solid 2px #fff;
-background: #fff;
-color: #1f1f1f !important;
-}
+    .btn-white:hover {
+        border: solid 2px #fff;
+        background: #fff;
+        color: #1f1f1f !important;
+    }
 
 .btn-color {
     background: transparent;
 }
 
-.btn-color:hover {
+    .btn-color:hover {
         color: #fff;
-}
+    }
 .dropdown {
     background: transparent;
     border:none;
