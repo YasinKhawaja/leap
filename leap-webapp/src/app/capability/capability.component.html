@@ -1,18 +1,18 @@
-<div class = 'container'>   
-     <h1 class='display-4'>All Capabilities</h1>
-     <br/><br/>
-     <table class='table table-striped'>
-      <thead>
-        <tr>
-          <th scope='col'>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor='let capability of capabilities'>
-          <td> {{ capability.name }} </td>
-         </tr>
-      </tbody>
+<div class='container'>
+    <h1 class='display-4'>All Capabilities</h1>
+    <br/><br/>
+    <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th scope='col'>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let capability of capabilities'>
+                <td> {{ capability.name }} </td>
+            </tr>
+        </tbody>
     </table>
-     <a [routerLink] = "['../capabilities/add']">Add Capability</a>
-</div>
+    <a [routerLink]="['../capabilities/add']">Add Capability</a>
 
+</div>

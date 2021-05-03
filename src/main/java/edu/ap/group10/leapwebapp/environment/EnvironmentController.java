@@ -25,9 +25,7 @@ public class EnvironmentController {
 	// To GET all environments
 	@GetMapping("/environments")
 	public @ResponseBody Iterable<Environment> getAllEnvironments() {
-		Iterable<Environment> environments = environmentRepository.findAll();
-
-		return environments;
+		return environmentRepository.findAll();
 	}
 
 	// To CREATE an environment
@@ -53,11 +51,11 @@ public class EnvironmentController {
 	@PutMapping("environments/{id}")
 	public ResponseEntity<Environment> updateEnvironment(@PathVariable Integer id, @RequestParam String name) {
 		ResponseEntity<Environment> response;
-		Environment environment;
+		Environment environment = null;
 
 		try {
 			if (!name.isEmpty()) {
-				environment = environmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+				environment = environmentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 				environment.setName(name);
 
@@ -78,10 +76,10 @@ public class EnvironmentController {
 	@DeleteMapping("environments/{id}")
 	public ResponseEntity<Environment> deleteEnvironment(@PathVariable Integer id) {
 		ResponseEntity<Environment> response;
-		Environment environment;
+		Environment environment = null;
 
 		try {
-			environment = environmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+			environment = environmentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 			environmentRepository.delete(environment);
 
