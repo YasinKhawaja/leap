@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-environment',
@@ -10,19 +10,19 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentComponent implements OnInit {
 
-  environment = this.fb.group({
-    name: ['', Validators.required]
-  })
+  environments: Environment[]
 
-  constructor(private fb: FormBuilder, private es: EnvironmentService) { }
-
-  ngOnInit(): void {
+  constructor(private es: EnvironmentService) {
+    this.environments = [];
   }
 
-  onSubmit(): void {
-    var environment = new Environment(this.environment.value.name);
+  ngOnInit(): void {
+    this.es.getAllEnvironments()
+      .subscribe(data => { this.environments = data }, error => { console.error(error) })
+  }
 
-    this.es.addEnvironment(environment);
+  deleteEnvironment(): void {
+    
   }
 
 }

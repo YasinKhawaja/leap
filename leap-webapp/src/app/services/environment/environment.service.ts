@@ -29,4 +29,12 @@ export class EnvironmentService {
       .subscribe(data => { console.log(data) }, error => { console.error(error) })
   }
 
+  // To DELETE an environment
+  deleteEnvironment(id: number): void {
+    let url = `${this.environmentsServiceURI}/${id}`;
+
+    this.http.delete(url)
+      .subscribe(data => { console.log(data) }, error => { console.error(error) });
+  }
+
 }
