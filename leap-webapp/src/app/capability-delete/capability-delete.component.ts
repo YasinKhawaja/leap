@@ -19,7 +19,9 @@ export class CapabilityDeleteComponent implements OnInit {
               private fb: FormBuilder,
               private router: Router) {
 
-        this.capabilityName = router.url.split('/')[3]
+        // decode the capability name parameter from the url because otherwise 'Capability Name' will be filled in
+        // in the delete form as 'Capability%20Name'
+        this.capabilityName = decodeURI(router.url.split('/')[3])
         this.capability.controls['name'].setValue(this.capabilityName)        
   }
 
