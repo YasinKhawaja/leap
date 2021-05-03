@@ -1,9 +1,9 @@
 <div class="container">
-    <h1>Add Capability</h1>
+    <h1>Edit Capability</h1>
 
 <form [formGroup]="capability" (ngSubmit)="onSubmit()">
     <div class='form-group w-50'>
-        <label>Name</label>
+        <label>Name (e.g. Capability Name)</label>
         <input type='text' class='form-control' formControlName='name' 
           placeholder='Enter capability name (e.g. Capability Name)' formControlName='name' />
         <div *ngIf="capability.get('name')!.invalid && (capability.get('name')!.dirty || capability.get('name')!.touched)"
@@ -14,8 +14,8 @@
           <div *ngIf="capability.get('name')!.errors!.pattern">
             Name should only consist out of characters from the alphabet.
           </div>
-          </div>    
-    </div> 
+        </div>    
+    </div>  
     <div class='form-group w-50'>
         <label>Pace Of Change</label>
         <select class="form-control" formControlName='paceOfChange'>
@@ -38,10 +38,10 @@
           <div *ngIf="capability.get('tom')!.errors!.required">
             tOM is required.
           </div>
-          </div>
+        </div>
     </div>  
     <div class='form-group w-50'>
-        <label>Resources Quality</label>
+        <label>Resources Quality (e.g. 4)</label>
         <input type='text' class='form-control' formControlName='resourcesQuality' 
           placeholder='Enter capability resources quality (e.g. 4)' formControlName='resourcesQuality' />
         <div *ngIf="capability.get('resourcesQuality')!.invalid && (capability.get('resourcesQuality')!.dirty || capability.get('resourcesQuality')!.touched)"
@@ -53,7 +53,7 @@
             Resources Quality should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
           </div>
         </div>
-    </div>     
-    <button type="submit" [disabled]="!capability.valid">Add</button>
+    </div>    
+    <button type="submit" [disabled]="!capability.valid">Edit</button>
 </form>
 </div>
