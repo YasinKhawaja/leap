@@ -1,19 +1,47 @@
-.navbar-custom {
-    background-color: red;
-   
+html, body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
 }
-    .navbar-custom .navbar-brand {
-        font-size:16px;
-        line-height:18px;
-        padding: 1rem;
-    }
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: red;
+    color: white;
+    text-align: center;
+    flex-shrink: 0;
+    padding: 1rem;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    
+ 
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.img {
+    height: 25px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+.nav-custom {
+    background-color: red;
+}
 
 .btn-big {
+    margin-top: 0px;
     border-radius: 0px;
     text-decoration: none;
-    padding: 18px 24px;
     font-size: 14px;
-    line-height: 40px;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -24,6 +52,7 @@
     -o-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
 }
+
 .btn:hover,
 input[type="submit"]:hover {
     -webkit-transition: all .4s ease-in-out;
@@ -39,9 +68,9 @@ input[type="submit"]:hover {
 }
 
 .btn-white:hover {
-        border: solid 2px #fff;
-        background: #fff;
-        color: #1f1f1f !important;
+border: solid 2px #fff;
+background: #fff;
+color: #1f1f1f !important;
 }
 
 .btn-color {
@@ -51,19 +80,12 @@ input[type="submit"]:hover {
 .btn-color:hover {
         color: #fff;
 }
-.img {
-          width: 130px;
-          height: 75px;
-          object-fit: contain;
-          mix-blend-mode: multiply;
-      }
-footer {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        padding: 3rem;
-        background-color: red;
-        color: white;
-        text-align: center;
-      }
+.dropdown {
+    background: transparent;
+    border:none;
+  
+}
+.color{
+    color:white
+}
+

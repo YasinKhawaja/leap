@@ -1,14 +1,55 @@
-<div class="card my-5">
-    <div class="card-body">
+<div class="container">
+    <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">Create Account</h4>
+        
         <form [formGroup]="useradmin" (ngSubmit)="onSubmit()">
-            <label>First name*<input type="text" formControlName="firstName" required></label>
-            <label>Surname*<input type="text" formControlName="surname" required></label>
-            <label>Email address*<input type="email" formControlName="email" required></label>
-            <label>Username*<input type="text" formControlName="username" required></label>
-            <label>Password*<input type="password" formControlName="password" required></label>
-            <label>Repeat Password*<input type="password" formControlName="repeatPassword" required></label>
-            <button type="submit" [disabled]="!useradmin.valid">Create user admin</button>
-            <p>Fiels marked with * are mandatory fields.</p>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input type="text" formControlName="firstName" required class="form-control"  placeholder="First name*">
+            </div> 
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+              </div>
+              <input type="text" formControlName="surname" required class="form-control"  placeholder="Surname*">
+          </div> 
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input type="email" formControlName="email" class="form-control" placeholder="Email address*">
+            </div> 
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+              </div>
+              <input type="text" formControlName="username" required class="form-control"  placeholder="Username*">
+          </div> 
+          
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input input type="password" formControlName="password" required class="form-control"  placeholder="Create password*">
+              
+            </div> 
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input type="password" formControlName="repeatPassword" required class="form-control"  placeholder="Repeat password*">
+            </div> 
+            <div class="form-group">
+                <button type="submit" [disabled]="!useradmin.valid" class="btn btn-primary">Create user admin</button>
+                <br><br>
+                <p>Fiels marked with * are mandatory fields.</p>
+            </div> 
+            <div class="form-group">            
+            </div> 
         </form>
-    </div>
+    </article>
 </div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+

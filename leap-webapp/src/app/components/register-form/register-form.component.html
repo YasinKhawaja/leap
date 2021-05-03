@@ -1,19 +1,103 @@
-<div class="card my-5">
-    <div class="card-body">
-        <form [formGroup]="company" (ngSubmit)="onSubmit()">
-            <label>Vat number*<input type="text" formControlName="vatNumber"></label>
-            <label>Company name*<input type="text" formControlName="companyName"></label>
-            <label>Tax office<input type="text" formControlName="taxOffice"></label>
-            <label>Business activity<input type="text" formControlName="businessActivity"></label>
-            <label>Email address*<input type="email" formControlName="email"></label>
-            <label>Street name*<input type="text" formControlName="streetName"></label>
-            <label>House number*<input type="number" formControlName="houseNumber"></label>
-            <label>Postcode*<input type="number" formControlName="postcode"></label>
-            <label>City*<input type="text" formControlName="city"></label>
-            <label>Country*<input type="text" formControlName="country"></label>
-            <button type="submit" [disabled]="!company.valid">Send</button>
-            <p>Fiels marked with * are mandatory fields.</p>
-            <p>By registering, you agree that we will keep and use your personal information in accordance with our <a [routerLink]="['/privacypolicy']">Privacy Policy</a>.</p>
-        </form>
+<div class="container">
+    <article class="card-body mx-auto">
+      <h4 class="card-title mt-2 text-center">Create Account</h4>
+  <form [formGroup]="company" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+    <div class="form-group input-group col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text"> <i class="fa fa-book"></i> </span>
+        </div>
+        <input type="text" formControlName="vatNumber" class="form-control"  placeholder="Vat number*">
+      </div>
+        <div class="form-group input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+            </div>
+          <input type="text" formControlName="companyName"class="form-control"  placeholder="Company name*">
+        </div>
+  
+      </div>
+      <div class="form-row">
+      <div class="form-group input-group col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-book"></i> </span>
+          </div>
+        <input type="text" formControlName="taxOffice"  class="form-control" placeholder="Tax office">
+        </div>
+     
+        <div class="form-group input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-book"></i> </span>
+            </div>
+        <input type="text" formControlName="businessActivity" class="form-control"  placeholder="Business activity">
+        </div>
+      </div>
+  
+      <div class="form-row">
+      <div class="form-group input-group col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+          </div>
+        <input type="email" formControlName="email" class="form-control" placeholder="Email address*">
+        </div>
+        <div class="form-group input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg> </span>
+            </div>
+          <input type="text" formControlName="streetName" class="form-control" placeholder="Street name*">
+      </div>
     </div>
-</div>
+  
+    <div class="form-row">
+        <div class="form-group input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg> </span>
+            </div>
+        <input type="number" formControlName="houseNumber" class="form-control"  placeholder="House number*">
+      </div>
+  
+      <div class="form-group input-group col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-flag"></i> </span>
+          </div>
+          <input type="text" formControlName="city"class="form-control" placeholder="City*" >
+        </div>
+      </div>
+  
+    
+      <div class="form-row">
+        <div class="form-group input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-flag"></i> </span>
+            </div>
+          <input type="text" formControlName="country" class="form-control" placeholder="Country*" >
+         
+        </div>
+        <div class="form-group input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mailbox" viewBox="0 0 16 16">
+              <path d="M4 4a3 3 0 0 0-3 3v6h6V7a3 3 0 0 0-3-3zm0-1h8a4 4 0 0 1 4 4v6a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V7a4 4 0 0 1 4-4zm2.646 1A3.99 3.99 0 0 1 8 7v6h7V7a3 3 0 0 0-3-3H6.646z"/>
+              <path d="M11.793 8.5H9v-1h5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.354-.146l-.853-.854zM5 7c0 .552-.448 0-1 0s-1 .552-1 0a1 1 0 0 1 2 0z"/>
+            </svg> </span>
+            </div>
+          <input type="number" formControlName="postcode" class="form-control" placeholder="Zip*" >
+        </div>
+      
+      </div>
+      <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!company.valid">Send</button>
+    </div>
+      <br>
+      <br>
+      <p>Fiels marked with * are mandatory fields.</p>
+      <p>By registering, you agree that we will keep and use your personal information in accordance with our <a [routerLink]="['/privacypolicy']">Privacy Policy</a>.</p>
+        
+    </form>
+  </article>
+  </div>

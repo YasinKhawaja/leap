@@ -2,12 +2,12 @@
     <h1>Add Capability</h1>
 
 <form [formGroup]="capability" (ngSubmit)="onSubmit()">
-    <br />
-    <label>
-        Name: 
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Name</label>
         <input type="text" formControlName="name">
-    </label>
-    <br />
+    </div>
+    </div>
     <button type="submit" [disabled]="!capability.valid">Add</button>
 </form>
 </div>
