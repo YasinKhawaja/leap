@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,8 +25,7 @@ public class CapabilityController {
 	@Autowired
 	private CapabilityRepository repository;
 
-	// Added error handling, it also shows in the console in angular webpage. TO DO: Make it more user friendly
-	// so that it shows on the webpage and not in the devtools under console
+	// Added error handling when adding a capability with the same name of an already existing capability
 	@PostMapping("/capabilities/add")
 	public @ResponseBody String saveCapability(@RequestParam("name") String name,
 	@RequestParam("paceOfChange") PaceOfChange paceOfChange, @RequestParam("tom") Tom tom, @RequestParam("resourcesQuality") 
@@ -38,7 +38,7 @@ public class CapabilityController {
 		return "Saved";
 		}
 		catch(DataIntegrityViolationException exception){
-			throw new ResponseStatusException( HttpStatus.CONFLICT, "Capability with this name already exists", exception);
+			throw new ResponseStatusException( HttpStatus.CONFLICT, "Capability with this name already exists.", exception);
 		}
 	}
 
@@ -49,13 +49,19 @@ public class CapabilityController {
 		return repository.findAll();
 	}
 
+	// Added error handling when trying to delete a capability that doesn't exist
 	@DeleteMapping("/capabilities/delete/{name}")
-	public @ResponseBody String deleteCapability(@PathVariable String name) {
+	public @ResponseBody String deleteCapability(@PathVariable String name, HttpServletResponse response) {
+		try {
 		Capability capability = repository.findByName(name);
 		
 		repository.delete(capability);
 
 		return "Deleted";
+		}
+		catch(InvalidDataAccessApiUsageException exception){
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Capability you tried to delete does not exist.", exception);
+		}
 	}
 
 	@PostMapping("/capabilities/searchOne")

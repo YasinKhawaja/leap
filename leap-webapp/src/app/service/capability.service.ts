@@ -29,8 +29,7 @@ export class CapabilityService {
     this.http.post(url, capability.getParams(),
                   { headers: this.contentHeaders})
                   .subscribe(data => { console.log(data) }, 
-                  error => { if (error.error.message) Swal.fire('Error',error.error.message +
-                  '.', 'error')})
+                  error => { if (error.error.message) Swal.fire('Error',error.error.message, 'error')})
   }
 
   // Delete a capability
@@ -40,7 +39,7 @@ export class CapabilityService {
     this.http.delete(url,
       { headers: this.contentHeaders})
       .subscribe(data => { console.log(data) },
-                  error => { console.log(error) })
+                  error => { if (error.error.message) Swal.fire('Error',error.error.message, 'error')})
   }
 
   // Edit a capability
