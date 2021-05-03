@@ -7,17 +7,20 @@
             </th>
         </tr>
         <tr *ngFor="let environment of environments">
-            <td>{{ environment.id }}</td>
+            <td>{{ environment.name }}</td>
             <td>
-                <a href="environments/edit"><img src="assets/edit-icon.png" alt="Edit" width="20" height="20"></a>
+                <input (click)="updateEnvironment(environment.id, 'Test')" type="image" src="assets/edit-icon.png"
+                    alt="Edit" width="20" height="20">
                 &nbsp;&nbsp;&nbsp;
             </td>
             <td>
-                <a (click)="deleteEnvironment()"><img src="assets/delete-icon.png" alt="Delete" width="20" height="20"></a>
+                <input (click)="deleteEnvironment(environment.id)" type="image" src="assets/delete-icon.png"
+                    alt="Delete" width="20" height="20">
             </td>
         </tr>
     </table>
-    <div class="center">
-        <a href="environments/add">Add environment</a>
+    <div>
+        <a href="environments/add">ADD ENVIRONMENT</a>
     </div>
+    <app-environment-add></app-environment-add>
 </div>

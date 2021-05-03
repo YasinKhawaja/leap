@@ -8,10 +8,6 @@ export class Environment {
         this.id = 0;
     }
 
-    getId(): number {
-        return this.id;
-    }
-
     getParams(): HttpParams {
         return new HttpParams().set('name', this.name);
     }

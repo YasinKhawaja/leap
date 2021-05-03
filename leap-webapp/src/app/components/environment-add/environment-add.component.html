@@ -1,6 +1,8 @@
-<div class="middle blackborder">
+<br>
+<br>
+<div class="center">
     <form [formGroup]="environment" (ngSubmit)="onSubmit()">
-        <label>Name of environment: <input type="text" formControlName="name"></label>
-        <button type="submit" [disabled]="!environment.valid">OK</button>
+            <label>Name of environment: <input type="text" formControlName="name"></label>
+            <button type="submit" [disabled]="!environment.valid">OK</button>
     </form>
 </div>

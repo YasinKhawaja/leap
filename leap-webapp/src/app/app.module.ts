@@ -22,8 +22,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'capabilities', component: CapabilityComponent },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
-  { path: 'register', component: RegisterFormComponent }
-  
+  { path: 'register', component: RegisterFormComponent },
+  { path: 'environments', component: EnvironmentComponent}
 ]
 
 @NgModule({

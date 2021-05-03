@@ -28,9 +28,9 @@ public class EnvironmentController {
 		return environmentRepository.findAll();
 	}
 
-	// To CREATE an environment
+	// To ADD an environment
 	@PostMapping("environments/add")
-	public ResponseEntity<Environment> addNewEnvironment(@RequestParam String name) {
+	public ResponseEntity<Environment> addEnvironment(@RequestParam String name) {
 		ResponseEntity<Environment> response;
 		Environment environment = new Environment();
 
@@ -73,7 +73,7 @@ public class EnvironmentController {
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("environments/{id}")
+	@DeleteMapping("environments/{id}/delete")
 	public ResponseEntity<Environment> deleteEnvironment(@PathVariable Integer id) {
 		ResponseEntity<Environment> response;
 		Environment environment = null;

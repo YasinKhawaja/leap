@@ -24,7 +24,8 @@ export class EnvironmentAddComponent implements OnInit {
     var environment = new Environment(this.environment.value.name);
 
     this.es.addEnvironment(environment);
-    this.router.navigate(['environments']);
+    
+    this.router.navigate(["environments"]);
   }
 
 }
