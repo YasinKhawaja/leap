@@ -15,6 +15,8 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { EnvironmentComponent } from './components/environment/environment.component';
 import { EnvironmentAddComponent } from './components/environment-add/environment-add.component';
+import { EnvironmentEditComponent } from './components/environment-edit/environment-edit.component';
+import { EnvironmentDeleteComponent } from './components/environment-delete/environment-delete.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,7 +36,9 @@ const appRoutes: Routes = [
     RegisterFormComponent,
     RegisterFormUseradminComponent,
     EnvironmentComponent,
-    EnvironmentAddComponent
+    EnvironmentAddComponent,
+    EnvironmentEditComponent,
+    EnvironmentDeleteComponent,
   ],
   imports: [
     BrowserModule,

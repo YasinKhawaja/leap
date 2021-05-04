@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { EnvironmentEditComponent } from '../environment-edit/environment-edit.component';
 
 @Component({
   selector: 'app-environment',
@@ -11,23 +12,24 @@ export class EnvironmentComponent implements OnInit {
 
   environments: Environment[]
 
+  displayEditEnv = false;
+
   constructor(private es: EnvironmentService) {
     this.environments = [];
   }
 
   ngOnInit(): void {
     this.es.getAllEnvironments()
-      .subscribe(data => { this.environments = data }, error => { console.error(error) })
+      .subscribe(data => { this.environments = data; console.log(data); }, error => { console.error(error) })
   }
 
-  updateEnvironment(id: number, name: string): void {
-    this.es.updateEnvironment(id, name);
-    this.es.refresh();
+  editEnvironment(): void {
+    this.displayEditEnv = !this.displayEditEnv;
   }
 
   deleteEnvironment(id: number): void {
-    this.es.deleteEnvironment(id);
-    this.es.refresh();
+    this.es.deleteEnvironment(id).subscribe();
+    this.es.getAllEnvironments().subscribe();
   }
 
 }
