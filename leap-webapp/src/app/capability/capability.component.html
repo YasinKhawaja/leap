@@ -1,18 +1,38 @@
-<div class='container'>
-    <h1 class='display-4'>All Capabilities</h1>
-    <br/><br/>
-    <table class='table table-striped'>
-        <thead>
-            <tr>
-                <th scope='col'>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor='let capability of capabilities'>
-                <td> {{ capability.name }} </td>
-            </tr>
-        </tbody>
+<div class = 'container'>   
+     <h1 class='display-4'>All Capabilities</h1>
+     <br/><br/>
+     <table class='table table-striped'>
+      <thead>
+        <tr>
+          <th scope='col'>Name</th>
+          <th scope='col'>Parent Id</th>
+          <th scope='col'>Level</th>
+          <th scope='col'>Pace Of Change</th>
+          <th scope='col'>tOM</th>
+          <th scope='col'>Resources Quality</th>
+          <th scope='col'>Information Quality</th>
+          <th scope='col'>Application Fit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let capability of capabilities'>
+          <td><a [routerLink]="['../capabilities/delete', capability.name]"><img src='assets/delete.jpg' width='15' height='18'></a>&nbsp;&nbsp; 
+              <a [routerLink]="['../capabilities/edit', capability.name]">{{ capability.name }}</a> 
+          </td>
+          <td> {{ capability.parentId }} </td>
+          <td> {{ capability.level }} </td>
+          <td> {{ capability.paceOfChange }} </td>
+          <td> {{ capability.tom }} </td>
+          <td> {{ capability.resourcesQuality }} </td>
+          <td> {{ capability.informationQuality }} </td>
+          <td> {{ capability.applicationFit }} </td>
+         </tr>
+      </tbody>
     </table>
     <a [routerLink]="['../capabilities/add']">Add Capability</a>
+<br>
+<br>
+<br>
+<br>
 
 </div>

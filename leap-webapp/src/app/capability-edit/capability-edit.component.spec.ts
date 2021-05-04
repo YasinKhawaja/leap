@@ -1,21 +1,24 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { CapabilityEditComponent } from './capability-edit.component';
+
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { CapabilityComponent } from './capability.component';
 
-describe('CapabilityComponent', () => {
-  let component: CapabilityComponent;
-  let fixture: ComponentFixture<CapabilityComponent>;
+describe('CapabilityEditComponent', () => {
+  let component: CapabilityEditComponent;
+  let fixture: ComponentFixture<CapabilityEditComponent>;
 
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CapabilityComponent ],
+      declarations: [ CapabilityEditComponent ],
       imports: [ HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
@@ -29,7 +32,7 @@ describe('CapabilityComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CapabilityComponent);
+    fixture = TestBed.createComponent(CapabilityEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,18 +4,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { CapabilityComponent } from './capability.component';
+import { CapabilityDeleteComponent } from './capability-delete.component';
 
-describe('CapabilityComponent', () => {
-  let component: CapabilityComponent;
-  let fixture: ComponentFixture<CapabilityComponent>;
+describe('CapabilityDeleteComponent', () => {
+  let component: CapabilityDeleteComponent;
+  let fixture: ComponentFixture<CapabilityDeleteComponent>;
 
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CapabilityComponent ],
+      declarations: [ CapabilityDeleteComponent ],
       imports: [ HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
@@ -23,13 +23,13 @@ describe('CapabilityComponent', () => {
     })
     .compileComponents();
 
-    // Inject the http service and test controller for each test
-    httpClient = TestBed.get(HttpClient);
-    httpTestingController = TestBed.get(HttpTestingController);
+        // Inject the http service and test controller for each test
+        httpClient = TestBed.get(HttpClient);
+        httpTestingController = TestBed.get(HttpTestingController);
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CapabilityComponent);
+    fixture = TestBed.createComponent(CapabilityDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

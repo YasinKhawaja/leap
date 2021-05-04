@@ -8,6 +8,8 @@ import { EnvironmentComponent } from './components/environment/environment.compo
 import { EnvironmentEditComponent } from './components/environment-edit/environment-edit.component';
 import { EnvironmentAddComponent } from './components/environment-add/environment-add.component';
 import { EnvironmentDeleteComponent } from './components/environment-delete/environment-delete.component';
+import { CapabilityDeleteComponent } from './capability-delete/capability-delete.component';
+import { CapabilityEditComponent } from './capability-edit/capability-edit.component';
 
 const routes: Routes = [
   { path: 'capabilities', component: CapabilityComponent},
@@ -17,7 +19,10 @@ const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent },
   { path: 'environments/add', component: EnvironmentAddComponent},
   { path: 'environments/:id/edit', component: EnvironmentEditComponent },
-  { path: 'environments/:id/delete', component: EnvironmentDeleteComponent }
+  { path: 'environments/:id/delete', component: EnvironmentDeleteComponent },
+  { path: 'capabilities/delete', component: CapabilityDeleteComponent},
+  { path: 'capabilities/delete/:name', component: CapabilityDeleteComponent},
+  { path: 'capabilities/edit/:name', component: CapabilityEditComponent}
 ];
 
 @NgModule({
