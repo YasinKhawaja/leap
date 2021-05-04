@@ -17,6 +17,7 @@ import { EnvironmentComponent } from './components/environment/environment.compo
 import { EnvironmentAddComponent } from './components/environment-add/environment-add.component';
 import { CapabilityDeleteComponent } from './capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './capability-edit/capability-edit.component';
+import { ExportComponent } from './export/export.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -38,7 +39,8 @@ const appRoutes: Routes = [
     EnvironmentComponent,
     EnvironmentAddComponent,
     CapabilityDeleteComponent,
-    CapabilityEditComponent
+    CapabilityEditComponent,
+    ExportComponent
   ],
   imports: [
     BrowserModule,

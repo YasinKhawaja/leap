@@ -1,0 +1,25 @@
+  <div class="flex-container">
+  <div class="flex-container-1" id="div"> 
+   <ng-container class = 'container' *ngFor='let capability of capabilities'>
+        <div *ngIf="capability.level == '1' "id="div1" class="flex-container-2">{{capability.name}}
+        <ng-container class = 'container' *ngFor='let capability of capabilities'>
+    
+               <div *ngIf="capability.level == '2' "id="div2" class="flex-container-3">
+               <b>{{capability.name}}</b>
+               <ng-container class = 'container' *ngFor='let capability of capabilities'>
+                    <div *ngIf="capability.level == '3' "id="div3">
+                        {{capability.name}}
+                    </div>
+               </ng-container>
+               </div>
+        
+        </ng-container>
+        </div>
+    </ng-container>
+  </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+

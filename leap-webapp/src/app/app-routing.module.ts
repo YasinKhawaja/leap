@@ -8,6 +8,7 @@ import { EnvironmentAddComponent } from './components/environment-add/environmen
 import { EnvironmentComponent } from './components/environment/environment.component';
 import { CapabilityDeleteComponent } from './capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './capability-edit/capability-edit.component';
+import { ExportComponent } from './export/export.component';
 
 const routes: Routes = [
   { path: 'capabilities', component: CapabilityComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'environments/add', component: EnvironmentAddComponent},
   { path: 'capabilities/delete', component: CapabilityDeleteComponent},
   { path: 'capabilities/delete/:name', component: CapabilityDeleteComponent},
-  { path: 'capabilities/edit/:name', component: CapabilityEditComponent}
+  { path: 'capabilities/edit/:name', component: CapabilityEditComponent},
+  { path: 'export', component: ExportComponent}
 ];
 
 @NgModule({
