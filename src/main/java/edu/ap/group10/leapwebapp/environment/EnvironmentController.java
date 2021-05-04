@@ -4,6 +4,7 @@ package edu.ap.group10.leapwebapp.environment;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -48,8 +49,8 @@ public class EnvironmentController {
 	}
 
 	// To UPDATE an environment
-	@PutMapping("environments/{id}")
-	public ResponseEntity<Environment> updateEnvironment(@PathVariable Integer id, @RequestParam String name) {
+	@PutMapping("environments/{id}/edit")
+	public ResponseEntity<Environment> editEnvironment(@PathVariable Integer id, @RequestParam String name) {
 		ResponseEntity<Environment> response;
 		Environment environment = null;
 
@@ -79,7 +80,7 @@ public class EnvironmentController {
 		Environment environment = null;
 
 		try {
-			environment = environmentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+			environment = environmentRepository.findById(id).orElseThrow(NotFoundException::new);
 
 			environmentRepository.delete(environment);
 
