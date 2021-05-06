@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Capability } from '../service/capability';
-import { CapabilityService } from '../service/capability.service';
+import { Capability } from '../../classes/capability/capability';
+import { CapabilityService } from '../../services/capability/capability.service';
 
 @Component({
   selector: 'app-capability',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CapabilityService } from '../service/capability.service';
+import { CapabilityService } from '../../services/capability/capability.service';
 
 @Component({
   selector: 'app-capability-delete',
