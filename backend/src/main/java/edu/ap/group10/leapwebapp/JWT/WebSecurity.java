@@ -88,7 +88,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, SecurityConstraints.COMPANY_APPLICATION_STATUS).permitAll()
                 .mvcMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_TEST).permitAll()
                 //all other request require authenitcation.
-                .anyRequest().authenticated();
+                //.anyRequest().authenticated();
+                .anyRequest().permitAll();
                 
                 
         http.exceptionHandling().accessDeniedPage("/user/acess-denied");
