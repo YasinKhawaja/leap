@@ -1,23 +1,27 @@
 <div class='container'>
-    <h1 class='display-4'>Delete Capability</h1>
-    <br/><br/>
- 
- <form [formGroup]='capability' (ngSubmit)='onSubmit()'>
-   <div class='form-group w-50'>
-     <label for='price'>Name (e.g. Capability Name)</label>
-     <input type='text' class='form-control' formControlName='name' 
-       placeholder='Enter capability name (e.g. Capability Name)' formControlName='name' />
-       <div *ngIf="capability.get('name')!.invalid && (capability.get('name')!.dirty || capability.get('name')!.touched)"
-          class="alert alert-danger">
-          <div *ngIf="capability.get('name')!.errors!.required">
-            Name is required.
-          </div>
-          <div *ngIf="capability.get('name')!.errors!.pattern">
-            Name should only consist out of characters from the alphabet.
-          </div>
-        </div>    
-   </div>
-   <button class='btn btn-outline-primary' type='submit' [disabled]='!capability.valid'>Delete</button>
- </form>
+  <h1>Delete Capability</h1>
+  <br/><br/>
+
+<form [formGroup]='capability' (ngSubmit)='onSubmit()'>
+ <div class='form-group w-50'>
+ <div class="custom">
+   <input type='text'  formControlName='name' required/>
+     <label for='price'>Name</label>
+    </div>
+    <br>
+     <div *ngIf="capability.get('name')!.invalid && (capability.get('name')!.dirty || capability.get('name')!.touched)"
+        class="alert alert-danger">
+        <div *ngIf="capability.get('name')!.errors!.required">
+          Name is required.
+        </div>
+        <div *ngIf="capability.get('name')!.errors!.pattern">
+          Name should only consist out of characters from the alphabet.
+        </div>
+      </div>  
+      <small class="text-muted">
+        Enter capability name (e.g. Capability Name)
+      </small>     
  </div>
- 
+ <button class='btn btn-danger' type='submit' [disabled]='!capability.valid'>Delete</button>
+</form>
+</div>
