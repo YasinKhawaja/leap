@@ -21,9 +21,11 @@ public class Environment {
 	@GeneratedValue
 	private Integer id;
 
+	/*
 	// one-to-many relationship, required for foreign key in Capability
 	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
 	private Set<Capability> capabilities;
+	*/
 
 	// columns
 	@Column(name = "environment_name", nullable = false, unique = true)
@@ -46,6 +48,7 @@ public class Environment {
 		this.id = id;
 	}
 
+	/*
 	public Set<Capability> getCapabilities() {
 		return capabilities;
 	}
@@ -53,6 +56,7 @@ public class Environment {
 	public void setCapabilities(Set<Capability> capabilities) {
 		this.capabilities = capabilities;
 	}
+	*/
 
 	public String getName() {
 		return name;
