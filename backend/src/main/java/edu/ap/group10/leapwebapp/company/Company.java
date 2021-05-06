@@ -3,6 +3,7 @@ package edu.ap.group10.leapwebapp.company;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 //add country as enum here?
@@ -11,32 +12,33 @@ import edu.ap.group10.leapwebapp.company.Country;
 @Entity // This makes a table out of this class
 public class Company {
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, unique = true, updatable = false, name = "company_id")
+    private Long id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_vat_number")
     private String vatNumber;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_name")
     private String companyName;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_email")
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_street_name")
     private String streetName;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_house_number")
     private Integer houseNumber;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_postcode")
     private Integer postcode;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_city")
     private String city;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "company_country")
     private String country;
 
+    @Column(nullable = true, name = "company_business_activity")
     private String businessActivity;
+    @Column(nullable = true, name = "company_tax_office")
     private String taxOffice;
 
-    public Company(){
-        
-    }
+    public Company(){}
 
     public Company(String vatNumber, String companyName, String email, String streetName, Integer houseNumber, Integer postcode, String city, String country, String businessActivity, String taxOffice)
     {
@@ -52,11 +54,11 @@ public class Company {
         this.setBusinessActivity(businessActivity);
     }
     
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
     
