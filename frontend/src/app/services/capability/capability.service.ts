@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-import { Capability } from './capability';
+import { Capability } from '../../classes/capability/capability';
 
 @Injectable({
   providedIn: 'root'

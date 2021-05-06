@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
-import { CapabilityService } from "../service/capability.service";
+import { CapabilityService } from "../../services/capability/capability.service"
 import { Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Capability } from '../service/capability';
+import { Capability } from '../../classes/capability/capability';
 
 enum PaceOfChange {
   NONE = 'NONE',
