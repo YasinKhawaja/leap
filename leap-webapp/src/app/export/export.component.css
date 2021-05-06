@@ -76,4 +76,14 @@
     align-items: flex-start;
 }
 
+h1 {
+    border-bottom: 3px solid black;
+    text-align: center;
+}
+
+h4 {
+    border-bottom: 3px solid black;
+    text-align: center;
+}
+
 
