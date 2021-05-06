@@ -103,6 +103,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         //allows any url to access 
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
         corsConfiguration.addAllowedMethod("OPTIONS");
+        corsConfiguration.addAllowedMethod("DELETE");
+        System.out.println(corsConfiguration.getAllowedMethods());
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
