@@ -10,13 +10,14 @@ import { Environment } from 'src/app/classes/environment/environment';
 })
 export class EnvironmentService {
 
-  private environmentsServiceURI: string = 'http://localhost:8080/environments';
+  private environmentsServiceURI: string = 'http://localhost:8080/api/environments';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   // GET all environments
   getAllEnvironments(): Observable<Environment[]> {
     let url = `${this.environmentsServiceURI}`;
+    console.log(url);
 
     return this.http.get<Environment[]>(url);
   }

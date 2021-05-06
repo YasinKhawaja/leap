@@ -30,7 +30,7 @@ public class EnvironmentController {
 	}
 
 	// To ADD an environment
-	@PostMapping("environments/add")
+	@PostMapping("/environments/add")
 	public ResponseEntity<Environment> addEnvironment(@RequestParam String name) {
 		ResponseEntity<Environment> response;
 		Environment environment = new Environment();
@@ -49,7 +49,7 @@ public class EnvironmentController {
 	}
 
 	// To UPDATE an environment
-	@PutMapping("environments/{id}/edit")
+	@PutMapping("/environments/{id}/edit")
 	public ResponseEntity<Environment> editEnvironment(@PathVariable Integer id, @RequestParam String name) {
 		ResponseEntity<Environment> response;
 		Environment environment = null;
@@ -74,7 +74,7 @@ public class EnvironmentController {
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("environments/{id}/delete")
+	@DeleteMapping("/environments/{id}/delete")
 	public ResponseEntity<Environment> deleteEnvironment(@PathVariable Integer id) {
 		ResponseEntity<Environment> response;
 		Environment environment = null;
