@@ -27,9 +27,11 @@ public class Capability {
 	@Column(name = "parent_id", nullable = false)
 	private Integer parentId;
 
+	/*
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "environment_id", nullable = false)
 	private Environment environment;
+	*/
 
 	// columns
 	@Column(nullable = false)
@@ -97,6 +99,7 @@ public class Capability {
 		this.parentId = parentId;
 	}
 
+	/*
 	public Environment getEnvironment() {
 		return environment;
 	}
@@ -104,7 +107,8 @@ public class Capability {
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
 	}
-
+	*/
+	
 	public Integer getLevel() {
 		return level;
 	}
