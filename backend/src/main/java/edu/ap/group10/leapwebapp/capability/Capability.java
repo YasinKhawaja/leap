@@ -5,8 +5,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import edu.ap.group10.leapwebapp.environment.Environment;
 
 @Entity
 public class Capability {
@@ -17,9 +22,16 @@ public class Capability {
 	@GeneratedValue
 	private Integer id;
 
+	// foreign keys
 	// ===== TO-DO foreign key? =====
 	@Column(name = "parent_id", nullable = false)
 	private Integer parentId;
+
+	/*
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "environment_id", nullable = false)
+	private Environment environment;
+	*/
 
 	// columns
 	@Column(nullable = false)
@@ -59,7 +71,6 @@ public class Capability {
 		this.setApplicationFit(0.0);
 	}
 
-
 	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality) {
 		this.name = name;
 		this.paceOfChange = paceOfChange;
@@ -70,7 +81,6 @@ public class Capability {
 		this.setApplicationFit(0.0);
 		this.setLevel(1);
 	}
-
 
 	// GETTERS & SETTERS
 	public Integer getId() {
@@ -89,6 +99,16 @@ public class Capability {
 		this.parentId = parentId;
 	}
 
+	/*
+	public Environment getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
+	}
+	*/
+	
 	public Integer getLevel() {
 		return level;
 	}
