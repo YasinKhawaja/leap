@@ -24,10 +24,16 @@
     <body>
         <h1>Options</h1>
         <h4>Export</h4>
-        <form (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="generatePDF()">
             <br>
         <button type="submit">Export to PDF</button>
         </form>
+        <br>
+        <form (ngSubmit)="generateCSV()">
+          <br>
+         <button type="submit">Export to CSV</button>
+        </form>
+        
     </body>
   </div>
   <br>
