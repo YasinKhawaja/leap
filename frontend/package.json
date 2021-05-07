@@ -25,6 +25,7 @@
     "file-saver": "^2.0.5",
     "html2canvas": "*",
     "jspdf": "^2.3.1",
+    "pptxgenjs": "^3.6.0",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.16.7",
     "tslib": "^2.0.0",

@@ -1,5 +1,6 @@
+
 <div class="flex-container" >
-  <div id="pdf">
+  <section id="pdf">
   <div class="flex-container-1" id="div" > 
    <ng-container class = 'container' *ngFor='let capability of capabilities'>
         <div *ngIf="capability.level == '1' "id="div1" class="flex-container-2">{{capability.name}}
@@ -19,9 +20,8 @@
     </ng-container>
   </div>
   <br>
-  </div>
+</section>
   <div id="div" >
-    <body>
         <h1>Options</h1>
         <h4>Export</h4>
         <form (ngSubmit)="generatePDF()">
@@ -33,12 +33,14 @@
           <br>
          <button type="submit">Export to CSV</button>
         </form>
-        
-    </body>
-  </div>
+        <br>
+        <form (ngSubmit)="generatePowerPoint()">
+          <br>
+         <button type="submit">Export to PowerPoint</button>
+        </form>
+    </div>
   <br>
   <br>
   <br>
   <br>
 </div>
-

@@ -14,13 +14,14 @@ body {
     text-align: center;
     flex-shrink: 0;
     padding: 1rem;
-
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    position: relative;
     width: 100%;
     
  
+}
+
+.header {
+    position: relative;
 }
 
 .content {

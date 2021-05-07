@@ -4,6 +4,7 @@ import { CapabilityService } from '../../services/capability/capability.service'
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import { saveAs } from "file-saver";
+import pptxgen from "pptxgenjs";
 @Component({
   selector: 'app-export',
   templateUrl: './export.component.html',
@@ -25,16 +26,21 @@ export class ExportComponent implements OnInit {
 
   generatePDF() {
     let data = document.getElementById('pdf');  
-        html2canvas(data).then(canvas => {
-        const contentDataURL = canvas.toDataURL('image/png')  
-        let pdf = new jsPDF('p','mm','a4'); //Generates PDF in landscape mode
+        html2canvas(data , {
+          width: 2000,
+          height: 10000
+        }).then(canvas => {
+        const contentDataURL = canvas.toDataURL('image/png')
+        console.log(canvas);
+        let pdf = new jsPDF('l','mm','a4'); //Generates PDF in landscape mode
         // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
-        var imgWidth = 208;
+        var imgWidth = 300;
         // imgHeight nog beter aanpassen
         // de canvas wordt niet helemaal meegenomen als er capabilities bijkomen waardoor de map groter wordt
         var imgHeight = canvas.height * imgWidth / canvas.width;
         pdf.addImage(contentDataURL, 'PNG', 0, 0, imgWidth, imgHeight);  
         pdf.save('CapabilityMap.pdf');
+        console.log(canvas);
       }); 
   }
 
@@ -48,5 +54,31 @@ export class ExportComponent implements OnInit {
 
     var blob = new Blob([csvArray], {type: 'text/csv' })
     saveAs(blob, "CapabilityMap.csv");
+  }
+
+  generatePowerPoint() {
+    // create new powerpoint
+    let powerpoint = new pptxgen();
+
+    // add a slide
+    let slide = powerpoint.addSlide();
+
+    // add object(s)
+    let title = "Capability Map";
+    slide.addText(title, { x: 0.5, y: 0.7, w: 3, color: "0000FF", fontSize: 40 });
+
+    // add the capability map image
+    let data = document.getElementById('pdf');  
+        html2canvas(data , {
+          width: 1500,
+          height: 2000,
+          scale: 4
+        }).then(canvas => {
+        const contentDataURL = canvas.toDataURL('image/png')
+    slide.addImage({data: contentDataURL});
+
+    // save powerpoint
+    powerpoint.writeFile();
+  });
   }
 }
