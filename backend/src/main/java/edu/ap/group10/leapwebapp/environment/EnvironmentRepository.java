@@ -1,10 +1,12 @@
 
 package edu.ap.group10.leapwebapp.environment;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EnvironmentRepository extends CrudRepository<Environment, Integer> {
+public interface EnvironmentRepository extends JpaRepository<Environment, Long> {
 
-    
+    public Environment findByName(String name);
+
+    public Boolean existsByName(String name);
 
 }
