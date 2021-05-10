@@ -1,0 +1,22 @@
+<div>
+    <p>Please review and accept or refuse the request.</p>
+    <!--If company is loaded then show this div-->
+    <div>
+        <span>{{ company.vatNumber }}</span>
+        <span>{{ company.companyName }}</span>
+        <span>{{ company.email }}</span>
+        <span>{{ company.streetName }}</span>
+        <span>{{ company.houseNumber }}</span>
+        <span>{{ company.postcode }}</span>
+        <span>{{ company.city }}</span>
+        <span>{{ company.country }}</span>
+        <span>{{ company.businessActivity }}</span>
+        <span>{{ company.taxOffice }}</span>
+    </div>
+    <button (click)="accept()">
+        Accept application
+    </button>
+    <button (click)="decline()">
+        Decline application
+    </button>
+</div>
