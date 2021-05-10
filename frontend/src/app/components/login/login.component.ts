@@ -26,12 +26,13 @@ export class LoginComponent implements OnInit {
 
   //onSubmit check user and user admin repository if user exists with userdetails
   onSubmit() {
-    //encode password here or in login service?
+    //encode password here
     this.ls.login(new Login(
       this.login.value.username,
       this.login.value.password))
-    //navigate to the environment page?
-    this.router.navigate(['environments'])
+
+      //change it so the enviornments only gets called on succesful login
+    this.router.navigate(['/environments'])
   }
 
 }

@@ -37,6 +37,8 @@ public class UseradminController {
     ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
     Company company = token.getCompany();
 
+    System.out.println(company.getCompanyName());
+
     if(token != null){
       UserLeap validateUser = userRepository.findByUsername(username);
       Useradmin validateAdmin = useradminRepository.findByUsername(username);

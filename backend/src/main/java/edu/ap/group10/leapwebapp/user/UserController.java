@@ -1,11 +1,17 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.MethodInvocationRecorder.Recorded.ToCollectionConverter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,8 +21,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import edu.ap.group10.leapwebapp.user.UserRepository;
 import edu.ap.group10.leapwebapp.useradmin.Useradmin;
@@ -49,22 +58,12 @@ public class UserController {
 
     //Be sure to send password encrypted via angular, decrypt again here! TO DO FOR WEB SECURITY
     //Future web security JWT implementation: https://bezkoder.com/spring-boot-jwt-authentication/
-    @GetMapping("/user/login")
+    @PostMapping("/user/login")
     public @ResponseBody String loginResult(@RequestParam("username") String username, @RequestParam("password") String password){
         Authentication auth = customAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         String authorities = auth.getAuthorities().toString();
         return authorities;
-      }
-
-      @GetMapping("/user/login-error")
-      public @ResponseBody String failureResult(){
-          return "failed to log in";
-        }
-
-        @GetMapping("/user/access-denied")
-        public @ResponseBody String accessDenied(){
-            return "Access Denied!";
-          }
+    }
 
     @PostMapping("/user/register")
     public @ResponseBody String register(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,

@@ -27,7 +27,7 @@ export class LoginService {
 
    getUserToken(): Observable<string> {
     let url = this.loginUrl;
-    console.log(url);
+    console.log("TESTING" + url);
 
     return this.http.get<string>(url);
   }

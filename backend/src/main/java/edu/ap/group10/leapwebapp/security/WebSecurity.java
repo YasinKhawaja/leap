@@ -2,6 +2,8 @@ package edu.ap.group10.leapwebapp.security;
 
 import java.security.AuthProvider;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -71,6 +73,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage(SecurityConstraints.SIGN_IN_URL)
+                //.usernameParameter("username").passwordParameter("password")
+                .loginProcessingUrl(SecurityConstraints.SIGN_IN_URL)
+                //add message failed to log in
+                .failureUrl(SecurityConstraints.SIGN_IN_URL)
+                //get naar environments pagina in plaats van hardcoded?
+                .successForwardUrl(SecurityConstraints.SIGN_IN_URL)
                 
                 //Not implemented yet
                 //.defaultSuccessUrl("/")
