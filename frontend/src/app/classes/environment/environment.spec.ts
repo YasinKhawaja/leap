@@ -1,7 +1,7 @@
-import { Environment } from './environment';
+// import { Environment } from './environment';
 
-describe('Environment', () => {
-  it('should create an instance', () => {
-    expect(new Environment()).toBeTruthy();
-  });
-});
+// describe('Environment', () => {
+//   it('should create an instance', () => {
+//     expect(new Environment()).toBeTruthy();
+//   });
+// });

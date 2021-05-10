@@ -44,8 +44,8 @@ describe('CapabilityAddComponent', () => {
 
   it('should be a valid form',() => {
     // fill in name in form
-    component.capability.setValue({name: 'Test', level: '2', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
-    resourcesQuality: '7', informationQuality: '7.7', applicationFit: '8.8'});
+    component.capability.setValue({name: 'Test', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
+    resourcesQuality: '4'});
     expect(component.capability.valid).toBeTruthy();
   })
 
@@ -58,8 +58,8 @@ describe('CapabilityAddComponent', () => {
     expect(button.nativeElement.disabled).toBeTruthy();
 
     // fill in name in form
-    component.capability.setValue({name: 'Test', level: '2', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
-    resourcesQuality: '7', informationQuality: '7.7', applicationFit: '8.8'});
+    component.capability.setValue({name: 'Test', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
+    resourcesQuality: '4'});
     fixture.detectChanges();
 
     // check if button is enabled

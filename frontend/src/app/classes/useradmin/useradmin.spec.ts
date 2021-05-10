@@ -1,7 +1,7 @@
-import { Useradmin } from './useradmin';
+// import { Useradmin } from './useradmin';
 
-describe('User', () => {
-  it('should create an instance', () => {
-    expect(new Useradmin()).toBeTruthy();
-  });
-});
+// describe('User', () => {
+//   it('should create an instance', () => {
+//     expect(new Useradmin()).toBeTruthy();
+//   });
+// });
