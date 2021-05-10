@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CompanyRequestComponent } from './components/company-request/company-request.component';
 
 
+
 const routes: Routes = [
   { path: 'capabilities', component: CapabilityComponent},
   { path: 'capabilities/add', component: CapabilityAddComponent},

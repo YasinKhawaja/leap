@@ -15,12 +15,12 @@ export class RegisterFormUseradminComponent implements OnInit{
   matcher = new CustomErrorStateMatcher();
 
   useradmin = this.fb.group({
-    firstName: ['', Validators.required],
-    surname: ['', Validators.required],
-    email: ['', Validators.email],
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    repeatPassword: ['']
+    firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    surname: ['',  [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    username: ['',  Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    repeatPassword: ['', Validators.required]
   }, {
     validator: this.checkPasswords
   })

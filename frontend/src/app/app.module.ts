@@ -24,6 +24,8 @@ import { CompanyRequestComponent } from './components/company-request/company-re
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
+
+
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },

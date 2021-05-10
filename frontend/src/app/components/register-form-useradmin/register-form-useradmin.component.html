@@ -1,5 +1,5 @@
 <div class="container">
-    <article class="card-body mx-auto" style="max-width: 400px;">
+    <article class="card-body mx-auto">
         <h4 class="card-title mt-3 text-center">Create Account</h4>
 
         <form [formGroup]="useradmin" (ngSubmit)="onSubmit()">
@@ -7,50 +7,102 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input type="text" formControlName="firstName" required class="form-control" placeholder="First name*">
-            </div>
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                <input type="text" formControlName="firstName" required class="form-control"  placeholder="First name*">    
+                
+                <div *ngIf="useradmin.get('firstName')!.invalid && (useradmin.get('firstName')!.dirty || useradmin.get('firstName')!.touched)"
+                class="alert alert-danger alertdiv">
+                <div *ngIf="useradmin.get('firstName')!.errors!.required">
+                  Firstname is required.
                 </div>
-                <input type="text" formControlName="surname" required class="form-control" placeholder="Surname*">
-            </div>
+                <div *ngIf="useradmin.get('firstName')!.errors!.pattern">
+                    Firstname should only consist out of characters from the alphabet.
+                </div>
+                </div>  
+            </div> 
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+              </div>
+              <input type="text" formControlName="surname" required class="form-control"  placeholder="Surname*">
+              <div *ngIf="useradmin.get('surname')!.invalid && (useradmin.get('surname')!.dirty || useradmin.get('surname')!.touched)"
+              class="alert alert-danger alertdiv">
+              <div *ngIf="useradmin.get('surname')!.errors!.required">
+                Surname is required.
+              </div>
+              <div *ngIf="useradmin.get('surname')!.errors!.pattern">
+                Surname should only consist out of characters from the alphabet.
+              </div>
+              </div>  
+
+          </div> 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
                 <input type="email" formControlName="email" class="form-control" placeholder="Email address*">
-            </div>
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                <div *ngIf="useradmin.get('email')!.invalid && (useradmin.get('email')!.dirty || useradmin.get('email')!.touched)"
+                class="alert alert-danger alertdiv">
+                <div *ngIf="useradmin.get('email')!.errors!.required">
+                  Email is required.
                 </div>
-                <input type="text" formControlName="username" required class="form-control" placeholder="Username*">
-            </div>
+                <div *ngIf="useradmin.get('email')!.errors!.pattern">
+                    Email must be a valid email.
+                </div>
+                </div>  
 
+            </div> 
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+              </div>
+              <input type="text" formControlName="username" required class="form-control"  placeholder="Username*">
+              <div *ngIf="useradmin.get('username')!.invalid && (useradmin.get('username')!.dirty || useradmin.get('username')!.touched)"
+              class="alert alert-danger alertdiv">
+              <div *ngIf="useradmin.get('username')!.errors!.required">
+                Username is required.
+              </div>
+              </div>  
+          </div> 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input input type="password" formControlName="password" required class="form-control" placeholder="Create password*" id="password">
-
-            </div>
+                <input input type="password" formControlName="password" required class="form-control"  placeholder="Create password*">
+              
+                <div *ngIf="useradmin.get('password')!.invalid && (useradmin.get('password')!.dirty || useradmin.get('password')!.touched)"
+                class="alert alert-danger alertdiv">
+                <div *ngIf="useradmin.get('password')!.errors!.required">
+                  Password is required.
+                </div>
+                <div *ngIf="useradmin.get('password')!.errors!.minlength">
+                   
+                    Password should have minimum 8 characters
+                </div>
+                </div>  
+            </div> 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input type="password" formControlName="repeatPassword" required class="form-control" placeholder="Repeat password*" id="repeatPassword">
+                <input type="password" formControlName="repeatPassword" required class="form-control"  placeholder="Repeat password*">
+                <div *ngIf="useradmin.get('repeatPassword')!.invalid && (useradmin.get('repeatPassword')!.dirty || useradmin.get('repeatPassword')!.touched)"
+                class="alert alert-danger alertdiv">
+                <div *ngIf="useradmin.get('repeatPassword')!.errors!.required">
+                  Password is required.
+                </div>
+                </div>  
                 <div *ngIf="useradmin.hasError('different')" class="alert alert-danger">
                     <div>Password and Confirm Password must be match.</div>
                 </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" [disabled]="!useradmin.valid" class="btn btn-primary">Create user admin</button>
-                <br><br>
+               
+
+            </div> 
+            <div class="form-group input-group">
                 <p>Fiels marked with * are mandatory fields.</p>
             </div>
-            <div class="form-group">
-            </div>
+            <button type="submit" [disabled]="!useradmin.valid" class="btn btn-danger">Create user admin</button>
+            <br><br>
+            <br> <br>
         </form>
     </article>
 </div>
