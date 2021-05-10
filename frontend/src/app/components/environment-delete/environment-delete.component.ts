@@ -20,9 +20,12 @@ export class EnvironmentDeleteComponent implements OnInit {
     this.es.deleteEnvironment(id).subscribe(data => console.log(data));
 
     // works like refresh
-    this.es.getAllEnvironments().subscribe();
+    //this.es.getAllEnvironments().subscribe();
 
-    this.router.navigate(['/environments']);
+    this.router.navigate(['/environments'])
+      .then(() => {
+      window.location.reload();
+    });
   }
 
 }
