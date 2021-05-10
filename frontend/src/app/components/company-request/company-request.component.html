@@ -1,17 +1,17 @@
 <div>
+    <br>
     <p>Please review and accept or refuse the request.</p>
-    <!--If company is loaded then show this div-->
     <div>
-        <span>{{ company.vatNumber }}</span>
-        <span>{{ company.companyName }}</span>
-        <span>{{ company.email }}</span>
-        <span>{{ company.streetName }}</span>
-        <span>{{ company.houseNumber }}</span>
-        <span>{{ company.postcode }}</span>
-        <span>{{ company.city }}</span>
-        <span>{{ company.country }}</span>
-        <span>{{ company.businessActivity }}</span>
-        <span>{{ company.taxOffice }}</span>
+        <span>Vat number: {{ company.vatNumber }}</span><br>
+        <span>Name: {{ company.companyName }}</span><br>
+        <span>Email: {{ company.email }}</span> <br>
+        <span>Street: {{ company.streetName }}</span> <br>
+        <span>House number: {{ company.houseNumber }}</span> <br>
+        <span>Postcode: {{ company.postcode }}</span> <br>
+        <span>City: {{ company.city }}</span> <br>
+        <span>Country: {{ company.country }}</span> <br>
+        <span>Activity: {{ company.businessActivity }}</span> <br>
+        <span>Tax Office: {{ company.taxOffice }}</span> <br>
     </div>
     <button (click)="accept()">
         Accept application
