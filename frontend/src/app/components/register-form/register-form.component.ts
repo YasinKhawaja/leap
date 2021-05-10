@@ -269,16 +269,16 @@ export class RegisterFormComponent implements OnInit{
   eCountry = Country;
   
   company = this.fb.group({
-    vatNumber: ['', Validators.required],
-    companyName: ['', Validators.required],
-    email: ['', Validators.email],
-    streetName: ['', Validators.required],
-    houseNumber: ['', Validators.required],
-    postcode: ['', Validators.required],
-    city: ['', Validators.required],
-    country: ['', Validators.required],
-    businessActivity: ['', Validators.nullValidator],
-    taxOffice: ['', Validators.nullValidator]
+    vatNumber: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9 ]+$')]],
+    companyName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    streetName: ['',[Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    houseNumber: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+    postcode: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+    city: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    country: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    businessActivity: ['', [Validators.nullValidator, Validators.pattern('[a-zA-Z ]+')]],
+    taxOffice: ['', [Validators.nullValidator, Validators.pattern('[a-zA-Z ]+')]]
   })
 
   constructor(private fb: FormBuilder,

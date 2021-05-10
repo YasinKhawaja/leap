@@ -8,12 +8,33 @@
                         <span class="input-group-text"> <i class="fa fa-book"></i> </span>
                     </div>
                     <input type="text" formControlName="vatNumber" class="form-control" placeholder="Vat number*">
+                    <div *ngIf="company.get('vatNumber')!.invalid && (company.get('vatNumber')!.dirty || company.get('vatNumber')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('vatNumber')!.errors!.required">
+                      Vat number is required.
+                    </div>
+                    <div *ngIf="company.get('vatNumber')!.errors!.pattern">
+                        It must be a valid VAT number.
+                    </div>
+                    </div>  
                 </div>
+                
                 <div class="form-group input-group col-md-6">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                     </div>
                     <input type="text" formControlName="companyName" class="form-control" placeholder="Company name*">
+                    <div *ngIf="company.get('companyName')!.invalid && (company.get('companyName')!.dirty || company.get('companyName')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('companyName')!.errors!.required">
+                        Company name is required.
+                    </div>
+                    <div *ngIf="company.get('companyName')!.errors!.pattern">
+                        Company name should only consist out of characters from the alphabet.
+                    </div>
+                    </div>  
+
+
                 </div>
 
             </div>
@@ -23,6 +44,12 @@
                         <span class="input-group-text"> <i class="fa fa-book"></i> </span>
                     </div>
                     <input type="text" formControlName="taxOffice" class="form-control" placeholder="Tax office">
+                    <div *ngIf="company.get('taxOffice')!.invalid && (company.get('taxOffice')!.dirty || company.get('taxOffice')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('taxOffice')!.errors!.pattern">
+                        Tax office should only consist out of characters from the alphabet.
+                    </div>
+                    </div>  
                 </div>
 
                 <div class="form-group input-group col-md-6">
@@ -30,6 +57,12 @@
                         <span class="input-group-text"> <i class="fa fa-book"></i> </span>
                     </div>
                     <input type="text" formControlName="businessActivity" class="form-control" placeholder="Business activity">
+                    <div *ngIf="company.get('businessActivity')!.invalid && (company.get('businessActivity')!.dirty || company.get('businessActivity')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('businessActivity')!.errors!.pattern">
+                        Tax office should only consist out of characters from the alphabet.
+                    </div>
+                    </div>  
                 </div>
             </div>
 
@@ -39,6 +72,15 @@
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
                     <input type="email" formControlName="email" class="form-control" placeholder="Email address*">
+                    <div *ngIf="company.get('email')!.invalid && (company.get('email')!.dirty || company.get('email')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('email')!.errors!.required">
+                      Email is required.
+                    </div>
+                    <div *ngIf="company.get('email')!.errors!.pattern">
+                        Email must be a valid email.
+                    </div>
+                    </div>  
                 </div>
                 <div class="form-group input-group col-md-6">
                     <div class="input-group-prepend">
@@ -48,6 +90,17 @@
           </svg> </span>
                     </div>
                     <input type="text" formControlName="streetName" class="form-control" placeholder="Street name*">
+                    <div *ngIf="company.get('streetName')!.invalid && (company.get('streetName')!.dirty || company.get('streetName')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('streetName')!.errors!.required">
+                        Street name is required.
+                    </div>
+                    <div *ngIf="company.get('streetName')!.errors!.pattern">
+                        Street name should only consist out of characters from the alphabet.
+                    </div>
+                    </div>  
+
+
                 </div>
             </div>
 
@@ -60,6 +113,15 @@
           </svg> </span>
                     </div>
                     <input type="number" formControlName="houseNumber" class="form-control" placeholder="House number*">
+                    <div *ngIf="company.get('houseNumber')!.invalid && (company.get('houseNumber')!.dirty || company.get('houseNumber')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('houseNumber')!.errors!.required">
+                        House number is required.
+                    </div>
+                    <div *ngIf="company.get('houseNumber')!.errors!.pattern">
+                        House number should only consist out of numbers.
+                    </div>
+                    </div>  
                 </div>
 
                 <div class="form-group input-group col-md-6">
@@ -67,6 +129,16 @@
                         <span class="input-group-text"> <i class="fa fa-flag"></i> </span>
                     </div>
                     <input type="text" formControlName="city" class="form-control" placeholder="City*">
+
+                    <div *ngIf="company.get('city')!.invalid && (company.get('city')!.dirty || company.get('city')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('city')!.errors!.required">
+                        City is required.
+                    </div>
+                    <div *ngIf="company.get('city')!.errors!.pattern">
+                        City should only consist out of characters from the alphabet.
+                    </div>
+                    </div>  
                 </div>
             </div>
 
@@ -77,7 +149,15 @@
                         <span class="input-group-text"> <i class="fa fa-flag"></i> </span>
                     </div>
                     <input type="text" formControlName="country" class="form-control" placeholder="Country*">
-
+                    <div *ngIf="company.get('country')!.invalid && (company.get('country')!.dirty || company.get('country')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('country')!.errors!.required">
+                        Country is required.
+                    </div>
+                    <div *ngIf="company.get('country')!.errors!.pattern">
+                        Country should only consist out of characters from the alphabet.
+                    </div>
+                    </div>  
                 </div>
                 <div class="form-group input-group col-md-6">
                     <div class="input-group-prepend">
@@ -87,11 +167,21 @@
           </svg> </span>
                     </div>
                     <input type="number" formControlName="postcode" class="form-control" placeholder="Zip*">
+
+                    <div *ngIf="company.get('postcode')!.invalid && (company.get('postcode')!.dirty || company.get('postcode')!.touched)"
+                    class="alert alert-danger alertdiv">
+                    <div *ngIf="company.get('postcode')!.errors!.required">
+                        Postcode is required.
+                    </div>
+                    <div *ngIf="company.get('postcode')!.errors!.pattern">
+                        Postcode should only consist out of numbers.
+                    </div>
+                    </div>  
                 </div>
 
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" [disabled]="!company.valid">Send</button>
+                <button type="submit" class="btn btn-danger" [disabled]="!company.valid">Send</button>
             </div>
             <br>
             <br>
