@@ -1,7 +1,7 @@
-import { Company } from './company';
+// import { Company } from './company';
 
-describe('Company', () => {
-  it('should create an instance', () => {
-    expect(new Company()).toBeTruthy();
-  });
-});
+// describe('Company', () => {
+//   it('should create an instance', () => {
+//     expect(new Company()).toBeTruthy();
+//   });
+// });
