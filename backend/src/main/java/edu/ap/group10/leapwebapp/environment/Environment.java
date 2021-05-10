@@ -19,7 +19,7 @@ public class Environment {
 	// primary key
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	/*
 	// one-to-many relationship, required for foreign key in Capability
@@ -40,11 +40,11 @@ public class Environment {
 	}
 
 	// GETTERS & SETTERS
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
