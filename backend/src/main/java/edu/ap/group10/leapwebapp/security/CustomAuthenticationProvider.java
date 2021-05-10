@@ -1,4 +1,6 @@
-package edu.ap.group10.leapwebapp.JWT;
+package edu.ap.group10.leapwebapp.security;
+
+import java.net.http.HttpResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,6 +17,7 @@ import edu.ap.group10.leapwebapp.user.UserLeap;
 import edu.ap.group10.leapwebapp.user.UserRepository;
 import edu.ap.group10.leapwebapp.useradmin.Useradmin;
 import edu.ap.group10.leapwebapp.useradmin.UseradminRepository;
+import javassist.NotFoundException;
 
 //Keep comment section for now since we'll need it if we switch to the given JWT System
 
@@ -63,17 +66,37 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserLeap userLeap = userRepository.findByUsername(username);
         Useradmin useradmin = useradminRepository.findByUsername(username);
-        if(userLeap == null && useradmin == null){
-            return null; //next auth provider will be tested
-        }
-        if (!userLeap.isEnabled() && !useradmin.isEnabled()){
-            throw new DisabledException("This user has been disabled.");
-        }
-        if (!bCryptPasswordEncoder.matches(password, userLeap.getPassword()) && bCryptPasswordEncoder.matches(password, useradmin.getPassword())) {
-            throw new BadCredentialsException("Incorrect username or password");
-        }
-        return new UsernamePasswordAuthenticationToken(userLeap, password, userLeap.getAuthorities());
 
+        //Make exceptions constant, put them in a class
+        UsernamePasswordAuthenticationToken token;
+
+        if(userLeap != null) {
+            if(!userLeap.isEnabled()){
+                throw new DisabledException("This user has been disabled.");
+            }
+            if(!bCryptPasswordEncoder.matches(password, userLeap.getPassword())) {
+                throw new BadCredentialsException("Incorrect username or password");
+            }
+            token = new UsernamePasswordAuthenticationToken(userLeap, password, userLeap.getAuthorities());
+            //remove
+            System.out.println(token);
+            return token;
+        }
+        else if(useradmin != null){
+            if(!useradmin.isEnabled()){
+                throw new DisabledException("This admin has been disabled.");
+            }
+            if(!bCryptPasswordEncoder.matches(password, useradmin.getPassword())) {
+                throw new BadCredentialsException("Incorrect password.");
+            }
+            token = new UsernamePasswordAuthenticationToken(useradmin, password, useradmin.getAuthorities());
+            //remove
+            System.out.println(token);
+            return token;
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

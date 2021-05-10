@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.JWT;
+package edu.ap.group10.leapwebapp.security;
 
 import java.security.AuthProvider;
 
@@ -85,8 +85,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 //allows anyone to go to the homepage
                 .mvcMatchers("/").permitAll()
                 .mvcMatchers(HttpMethod.POST, SecurityConstraints.COMPANY_SIGN_UP).permitAll()
-                .mvcMatchers(HttpMethod.POST, SecurityConstraints.COMPANY_APPLICATION_STATUS).permitAll()
-                .mvcMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_TEST).permitAll()
+                .mvcMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_SIGN_UP).permitAll()
                 //all other request require authenitcation.
                 //.anyRequest().authenticated();
                 .anyRequest().permitAll();
@@ -105,7 +104,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         corsConfiguration.addAllowedMethod("OPTIONS");
         corsConfiguration.addAllowedMethod("DELETE");
         corsConfiguration.addAllowedMethod("PUT");
-        System.out.println(corsConfiguration.getAllowedMethods());
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
