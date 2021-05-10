@@ -1,13 +1,15 @@
-  <div class="flex-container">
-  <div class="flex-container-1" id="div"> 
+
+<div class="flex-container" >
+  <section id="pdf">
+  <div class="flex-container-1" id="div" > 
    <ng-container class = 'container' *ngFor='let capability of capabilities'>
         <div *ngIf="capability.level == '1' "id="div1" class="flex-container-2">{{capability.name}}
         <ng-container class = 'container' *ngFor='let capability of capabilities'>
     
-               <div *ngIf="capability.level == '2' "id="div2" class="flex-container-3">
+               <div *ngIf="capability.level == '2' "id="div2" class="flex-container-3" >
                <b>{{capability.name}}</b>
                <ng-container class = 'container' *ngFor='let capability of capabilities'>
-                    <div *ngIf="capability.level == '3' "id="div3">
+                    <div *ngIf="capability.level == '3' "id="div3" >
                         {{capability.name}}
                     </div>
                </ng-container>
@@ -17,23 +19,28 @@
         </div>
     </ng-container>
   </div>
-  <div id="div">
-    <body>
+  <br>
+</section>
+  <div id="div" >
         <h1>Options</h1>
         <h4>Export</h4>
-        <form>
-            <input type="radio" id="powerpoint" name="export" value="powerpoint">
-            <label for="powerpoint">PowerPoint</label><br>
-            <input type="radio" id="pdf" name="export" value="pdf">
-            <label for="pdf">PDF</label><br>
-            <input type="radio" id="csv" name="export" value="csv">
-            <label for="csv">CSV</label><br>
-        <button>Download</button>
+        <form (ngSubmit)="generatePDF()">
+            <br>
+        <button type="submit">Export to PDF</button>
         </form>
-    </body>
-  </div>
+        <br>
+        <form (ngSubmit)="generateCSV()">
+          <br>
+         <button type="submit">Export to CSV</button>
+        </form>
+        <br>
+        <form (ngSubmit)="generatePowerPoint()">
+          <br>
+         <button type="submit">Export to PowerPoint</button>
+        </form>
+    </div>
   <br>
   <br>
   <br>
   <br>
-
+</div>
