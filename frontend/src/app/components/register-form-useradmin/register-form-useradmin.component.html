@@ -1,55 +1,57 @@
 <div class="container">
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title mt-3 text-center">Create Account</h4>
-        
+
         <form [formGroup]="useradmin" (ngSubmit)="onSubmit()">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input type="text" formControlName="firstName" required class="form-control"  placeholder="First name*">
-            </div> 
+                <input type="text" formControlName="firstName" required class="form-control" placeholder="First name*">
+            </div>
             <div class="form-group input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-              </div>
-              <input type="text" formControlName="surname" required class="form-control"  placeholder="Surname*">
-          </div> 
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input type="text" formControlName="surname" required class="form-control" placeholder="Surname*">
+            </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
                 <input type="email" formControlName="email" class="form-control" placeholder="Email address*">
-            </div> 
+            </div>
             <div class="form-group input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-              </div>
-              <input type="text" formControlName="username" required class="form-control"  placeholder="Username*">
-          </div> 
-          
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input type="text" formControlName="username" required class="form-control" placeholder="Username*">
+            </div>
+
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input input type="password" formControlName="password" required class="form-control"  placeholder="Create password*">
-              
-            </div> 
+                <input input type="password" formControlName="password" required class="form-control" placeholder="Create password*" id="password">
+
+            </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input type="password" formControlName="repeatPassword" required class="form-control"  placeholder="Repeat password*">
-            </div> 
+                <input type="password" formControlName="repeatPassword" required class="form-control" placeholder="Repeat password*" id="repeatPassword">
+                <div *ngIf="useradmin.hasError('different')" class="alert alert-danger">
+                    <div>Password and Confirm Password must be match.</div>
+                </div>
+            </div>
             <div class="form-group">
                 <button type="submit" [disabled]="!useradmin.valid" class="btn btn-primary">Create user admin</button>
                 <br><br>
                 <p>Fiels marked with * are mandatory fields.</p>
-            </div> 
-            <div class="form-group">            
-            </div> 
+            </div>
+            <div class="form-group">
+            </div>
         </form>
     </article>
 </div>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-

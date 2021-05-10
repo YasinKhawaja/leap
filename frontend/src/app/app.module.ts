@@ -19,7 +19,10 @@ import { EnvironmentEditComponent } from './components/environment-edit/environm
 import { EnvironmentDeleteComponent } from './components/environment-delete/environment-delete.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
-import { ExportComponent } from "./components/export/export.component"
+import { ExportComponent } from "./components/export/export.component";
+import { CompanyRequestComponent } from './components/company-request/company-request.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,7 +47,10 @@ const appRoutes: Routes = [
     EnvironmentDeleteComponent,
     CapabilityDeleteComponent,
     CapabilityEditComponent,
-    ExportComponent
+    ExportComponent,
+    CompanyRequestComponent,
+    LoginComponent
+
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [CapabilityService],
   bootstrap: [AppComponent]

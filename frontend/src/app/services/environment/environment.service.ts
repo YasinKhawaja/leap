@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Environment } from 'src/app/classes/environment/environment';
-import { UserLeap } from 'src/app/classes/userleap/user-leap';
+import { Userleap } from 'src/app/classes/userleap/userleap';
 
 @Injectable({
   providedIn: 'root'

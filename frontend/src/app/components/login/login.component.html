@@ -1,28 +1,29 @@
-<form class="no-margin centered-page container" >
+<form class="no-margin centered-page container" [formGroup]="login" (ngSubmit)="onSubmit()">
     <div class="div-midden">
         <h3 class="card-title mt-2 text-center">Login</h3>
-    <div class="form-group input-group">
-       
-        <div class="input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-        </div>
-        <input type="text" class="form-control" formControlName="username" >
-        <div  class="invalid-feedback">
-           
-        </div>
-    </div>
-        <br />
-    <div class="form-group input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-        </div>
-        <input type="password" class="form-control" formControlName="password" >
-    </div>
-        <a href="" >Forgot password?</a>
+        <div class="form-group input-group">
 
-   
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input type="text" class="form-control" formControlName="username">
+            <div class="invalid-feedback">
+
+            </div>
+        </div>
+        <br />
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input type="password" class="form-control" formControlName="password">
+        </div>
+        <!--Forgot password page not added yet-->
+        <a href="">Forgot password?</a>
+
+
         <div class="form-group">
-            <button type="submit" class="btn btn-danger form-control button">LOG IN</button>   
-       </div>
+            <button type="submit" class="btn btn-danger form-control button" [disabled]="!login.valid">LOG IN</button>
+        </div>
     </div>
 </form>

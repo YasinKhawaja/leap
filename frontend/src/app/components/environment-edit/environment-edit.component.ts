@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-environment-edit',
@@ -11,13 +12,24 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentEditComponent implements OnInit {
 
+  token: string
+
   environment = this.fb.group({
     name: ['', Validators.required]
   });
 
-  constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router) { }
+  constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router, private ls: LoginService) { 
+    this.token = "";
+   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.ls.getUserToken()
+    .subscribe(data => { 
+      this.token = data;
+      console.log(data); },
+      error => {console.error(error)})
+
+   }
 
   onSubmit(): void {
     var id = parseInt(this.router.url.split('/')[2]);

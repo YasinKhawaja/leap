@@ -23,13 +23,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import edu.ap.group10.leapwebapp.company.Company;
 
-@Entity // This makes a table out of this class
+@Entity
 @Inheritance
 @DiscriminatorColumn(name="user_type")
 @Table(name="user")
 @DiscriminatorValue("admin")
 public class Useradmin implements UserDetails{
-  //add names for colums like so (name="first_name") instead of firstName
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,22 +44,21 @@ public class Useradmin implements UserDetails{
   private String email;
   @Column(nullable = false, name = "user_password")
   private String password;
-
+  
   @OneToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
   @JoinColumn(nullable = false, name = "company_id")
   private Company company;
 
-
   public Useradmin(){}
 
-  public Useradmin(String firstName, String surname, String email, String username, String password, Company Company)
+  public Useradmin(String firstName, String surname, String email, String username, String password, Company company)
   {
     this.setFirstName(firstName);
     this.setSurname(surname);
     this.setEmail(email);
     this.setUsername(username);
     this.setPassword(password);
-    this.setCompany(company);
+    this.company = company;
   }
 
   public Long getId() {

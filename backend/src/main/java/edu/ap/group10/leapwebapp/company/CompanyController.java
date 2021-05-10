@@ -3,6 +3,7 @@ package edu.ap.group10.leapwebapp.company;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.company.CompanyRepository;
@@ -33,12 +35,6 @@ public class CompanyController {
   @Autowired
   private ConfirmationTokenRepository confirmationTokenRepository;
 
-  //COMPANY
-  @GetMapping("/companies")
-  public @ResponseBody Iterable<Company> getAllCompanies() {
-    return companyRepository.findAll();
-  }
-
   //OPTIONAL: Make /companies/register/{id} only accessible by those with the application admin role, requires login and is more inconvenient but more secure
   @PostMapping("/companies/register")
   public @ResponseBody String addNewCompany(@RequestParam("vatNumber") String vatNumber
@@ -53,10 +49,15 @@ public class CompanyController {
 
         ConfirmationToken confirmationToken = new ConfirmationToken(n);
         confirmationTokenRepository.save(confirmationToken);
-        String confirmationTokenString =  "https://localhost:8080/company/register/" + n.getId() + "?token=" + confirmationToken.getConfirmationToken();
+
+        //test string
+        //String confirmationTokenString =  "https://localhost:8080/company/register/" + n.getId() + "?token=" + confirmationToken.getConfirmationToken();
+
+        String confirmationTokenString =  "http://localhost:4200/company/register/?id=" + n.getId() + "&token=" + confirmationToken.getConfirmationToken();
 
         Mail mail = new Mail();
         mail.setSender("leapwebapp@gmail.com");
+        //add all application admins? maybe send mail to the role and get all email records that fit this role -> later implementation
         mail.setReceiver("standaertsander@gmail.com");
         mail.setSubject("New application from: " + companyName);
         mail.setContent("Click on this link to view the request from: " + companyName + ".\n" + confirmationTokenString);
@@ -66,19 +67,22 @@ public class CompanyController {
   }
 
   //Not implemented yet
-  @GetMapping("/companies/register/{id}")
-  public @ResponseBody String viewCompanyApplication(@PathVariable String sID, @RequestParam("token")String confirmationToken){
+  @GetMapping("/companies/register/{id}/")
+  public @ResponseBody Company viewCompanyApplication(@PathVariable String id, @RequestParam("token")String confirmationToken){
 
     ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
     if(token != null) {
-      Long id = Long.parseLong(sID);
-      Company c = companyRepository.findById(id).get();
-    //return all the details of the company onto an angular page with a form to accept/deny given company
-      return "something";
+      Long companyID = Long.parseLong(id);
+      Company c = companyRepository.findById(companyID).get();
+
+      if(c != null){
+        return c;
+      }
+      else{
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found");
+      }
     }
-    //pressing accept will send a true boolean to /companies/register/{id}/applicationStatus
-    //pressing refuse will send a false boolean to /companies/register/{id}/applicationStatus
-    return "You do not have the permission to accept or refuse a company.";
+    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You do not have the permission to accept or refuse a company.");
   }
 
   @PostMapping("/companies/register/{id}/applicationStatus")
@@ -90,10 +94,11 @@ public class CompanyController {
     String confirmationTokenString = "";
 
     if (accepted){
-      //generate link for useradmin registering
       ConfirmationToken confirmationToken = new ConfirmationToken(company);
       confirmationTokenRepository.save(confirmationToken);
-      confirmationTokenString =  "https://localhost:8080/useradmin/register?token=" + confirmationToken.getConfirmationToken();
+      //test string
+      //confirmationTokenString =  "https://localhost:8080/useradmin/register?token=" + confirmationToken.getConfirmationToken();
+      confirmationTokenString = "http://localhost:4200/register-useradmin?token=" + confirmationToken.getConfirmationToken();
     }
 
     Mail mail = new Mail();
