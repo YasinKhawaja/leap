@@ -1,23 +1,22 @@
 
 package edu.ap.group10.leapwebapp.environment;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200")
-@Controller
+@RestController
 public class EnvironmentController {
 
 	@Autowired
@@ -25,71 +24,43 @@ public class EnvironmentController {
 
 	// To GET all environments
 	@GetMapping("/environments")
-	public @ResponseBody Iterable<Environment> getAllEnvironments() {
+	public List<Environment> getEnvironments() {
 		return environmentRepository.findAll();
 	}
 
-	// To ADD an environment
-	@PostMapping("/environments/add")
-	public ResponseEntity<Environment> addEnvironment(@RequestParam String name) {
-		ResponseEntity<Environment> response;
-		Environment environment = new Environment();
-
-		if (!name.isEmpty()) {
-			environment.setName(name);
-
-			environmentRepository.save(environment);
-
-			response = ResponseEntity.ok().body(environment);
-		} else {
-			response = ResponseEntity.badRequest().body(environment);
-		}
-
-		return response;
+	// To CREATE an environment
+	@PostMapping("/environments")
+	public Environment createEnvironment(@RequestBody Environment environment) {
+		return environmentRepository.save(environment);
 	}
 
 	// To UPDATE an environment
-	@PutMapping("/environments/{id}/edit")
-	public ResponseEntity<Environment> editEnvironment(@PathVariable Integer id, @RequestParam String name) {
-		ResponseEntity<Environment> response;
-		Environment environment = null;
+	@PutMapping("/environments/{environmentName}")
+	public Environment updateEnvironment(@PathVariable String environmentName,
+			@RequestBody Environment environmentRequest) {
+		if (environmentRepository.existsByName(environmentName)) {
+			Environment environmentToUpdate = environmentRepository.findByName(environmentName);
+			environmentToUpdate.setName(environmentRequest.getName());
 
-		try {
-			if (!name.isEmpty()) {
-				environment = environmentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
-				environment.setName(name);
-
-				environmentRepository.save(environment);
-
-				response = ResponseEntity.ok().body(environment);
-			} else {
-				response = ResponseEntity.badRequest().body(environment);
-			}
-		} catch (Exception e) {
-			response = ResponseEntity.notFound().build();
+			return environmentRepository.save(environmentToUpdate);
+		} else {
+			throw new ResourceNotFoundException(
+					"Environment with name [" + environmentName + "] not found, please try again.");
 		}
-
-		return response;
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("/environments/{id}/delete")
-	public ResponseEntity<Environment> deleteEnvironment(@PathVariable Integer id) {
-		ResponseEntity<Environment> response;
-		Environment environment = null;
+	@DeleteMapping("/environments/{environmentName}")
+	public ResponseEntity<?> deleteEnvironment(@PathVariable String environmentName) {
+		if (environmentRepository.existsByName(environmentName)) {
+			Environment environmentToDelete = environmentRepository.findByName(environmentName);
+			environmentRepository.delete(environmentToDelete);
 
-		try {
-			environment = environmentRepository.findById(id).orElseThrow(NotFoundException::new);
-
-			environmentRepository.delete(environment);
-
-			response = ResponseEntity.ok().body(environment);
-		} catch (Exception e) {
-			response = ResponseEntity.notFound().build();
+			return ResponseEntity.ok().build();
+		} else {
+			throw new ResourceNotFoundException(
+					"Environment with name [" + environmentName + "] not found, please try again.");
 		}
-
-		return response;
 	}
 
 }
