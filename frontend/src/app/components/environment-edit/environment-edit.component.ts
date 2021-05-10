@@ -20,12 +20,11 @@ export class EnvironmentEditComponent implements OnInit {
   ngOnInit(): void { }
 
   onSubmit(): void {
-    var id = parseInt(this.router.url.split('/')[2]);
+    var environmentName = this.router.url.split('/')[2];
 
-    var environment = new Environment(this.environment.value.name);
-    environment.id = id;
+    var environmentRequest = new Environment(this.environment.value.name);
 
-    this.es.updateEnvironment(environment).subscribe(data => console.log(data));
+    this.es.updateEnvironment(environmentName, environmentRequest).subscribe(data => console.log(data));
 
     // works like refresh
     this.es.getAllEnvironments().subscribe();

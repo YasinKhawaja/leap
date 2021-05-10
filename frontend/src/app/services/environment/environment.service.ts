@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Environment } from 'src/app/classes/environment/environment';
 
 @Injectable({
@@ -17,30 +17,29 @@ export class EnvironmentService {
   // GET all environments
   getAllEnvironments(): Observable<Environment[]> {
     let url = `${this.environmentsServiceURI}`;
-    console.log(url);
 
     return this.http.get<Environment[]>(url);
   }
 
   // To CREATE an environment
-  addEnvironment(environment: Environment): Observable<Environment> {
-    let url = `${this.environmentsServiceURI}/add`
+  addEnvironment(environmentRequest: Environment): Observable<Environment> {
+    let url = `${this.environmentsServiceURI}`
 
-    return this.http.post<Environment>(url, environment.getParams())
+    return this.http.post<Environment>(url, environmentRequest)
       .pipe(catchError(this.handleError));
   }
 
   // To UPDATE an environment
-  updateEnvironment(environment: Environment): Observable<Environment> {
-    let url = `${this.environmentsServiceURI}/${environment.id}/edit`;
+  updateEnvironment(environmentName: string, environmentRequest: Environment): Observable<Environment> {
+    let url = `${this.environmentsServiceURI}/${environmentName}`;
 
-    return this.http.put<Environment>(url, environment.getParams())
+    return this.http.put<Environment>(url, environmentRequest)
       .pipe(catchError(this.handleError));
   }
 
   // To DELETE an environment
-  deleteEnvironment(id: number): Observable<{}> {
-    let url = `${this.environmentsServiceURI}/${id}/delete`;
+  deleteEnvironment(environmentName: string): Observable<{}> {
+    let url = `${this.environmentsServiceURI}/${environmentName}`;
 
     return this.http.delete(url)
       .pipe(catchError(this.handleError));

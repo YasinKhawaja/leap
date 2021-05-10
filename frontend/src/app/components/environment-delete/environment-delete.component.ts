@@ -15,9 +15,9 @@ export class EnvironmentDeleteComponent implements OnInit {
   }
 
   deleteEnvironment(): void {
-    let id = parseInt(this.router.url.split('/')[2]);
+    let environmentName = this.router.url.split('/')[2];
 
-    this.es.deleteEnvironment(id).subscribe(data => console.log(data));
+    this.es.deleteEnvironment(environmentName).subscribe(data => console.log(data));
 
     // works like refresh
     this.es.getAllEnvironments().subscribe();

@@ -27,8 +27,8 @@ export class EnvironmentComponent implements OnInit {
     this.displayEditEnv = !this.displayEditEnv;
   }
 
-  deleteEnvironment(id: number): void {
-    this.es.deleteEnvironment(id).subscribe();
+  deleteEnvironment(environmentName: string): void {
+    this.es.deleteEnvironment(environmentName).subscribe();
     this.es.getAllEnvironments().subscribe();
   }
 
