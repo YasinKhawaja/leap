@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Environment } from 'src/app/classes/environment/environment';
 
 @Injectable({
@@ -14,33 +14,32 @@ export class EnvironmentService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // GET all environments
-  getAllEnvironments(): Observable<Environment[]> {
+  // To GET all environments
+  getEnvironments(): Observable<Environment[]> {
     let url = `${this.environmentsServiceURI}`;
-    console.log(url);
 
     return this.http.get<Environment[]>(url);
   }
 
   // To CREATE an environment
-  addEnvironment(environment: Environment): Observable<Environment> {
-    let url = `${this.environmentsServiceURI}/add`
+  createEnvironment(environmentToCreate: Environment): Observable<Environment> {
+    let url = `${this.environmentsServiceURI}`
 
-    return this.http.post<Environment>(url, environment.getParams())
+    return this.http.post<Environment>(url, environmentToCreate)
       .pipe(catchError(this.handleError));
   }
 
   // To UPDATE an environment
-  updateEnvironment(environment: Environment): Observable<Environment> {
-    let url = `${this.environmentsServiceURI}/${environment.id}/edit`;
+  updateEnvironment(environmentIdToUpdate: number, environmentToUpdateWith: Environment): Observable<Environment> {
+    let url = `${this.environmentsServiceURI}/${environmentIdToUpdate}`;
 
-    return this.http.put<Environment>(url, environment.getParams())
+    return this.http.put<Environment>(url, environmentToUpdateWith)
       .pipe(catchError(this.handleError));
   }
 
   // To DELETE an environment
-  deleteEnvironment(id: number): Observable<{}> {
-    let url = `${this.environmentsServiceURI}/${id}/delete`;
+  deleteEnvironment(environmentIdToDelete: number): Observable<{}> {
+    let url = `${this.environmentsServiceURI}/${environmentIdToDelete}`;
 
     return this.http.delete(url)
       .pipe(catchError(this.handleError));

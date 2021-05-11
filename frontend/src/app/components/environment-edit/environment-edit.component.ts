@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Environment } from 'src/app/classes/environment/environment';
@@ -20,15 +20,10 @@ export class EnvironmentEditComponent implements OnInit {
   ngOnInit(): void { }
 
   onSubmit(): void {
-    var id = parseInt(this.router.url.split('/')[2]);
+    let environmentIdToUpdate = parseInt(this.router.url.split('/')[2]);
+    let environmentToUpdateWith = new Environment(this.environment.value.name);
 
-    var environment = new Environment(this.environment.value.name);
-    environment.id = id;
-
-    this.es.updateEnvironment(environment).subscribe(data => console.log(data));
-
-    // works like refresh
-    this.es.getAllEnvironments().subscribe();
+    this.es.updateEnvironment(environmentIdToUpdate, environmentToUpdateWith).subscribe(data => console.log(data));
 
     this.router.navigate(['/environments']);
   }

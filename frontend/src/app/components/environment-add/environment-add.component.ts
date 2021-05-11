@@ -21,12 +21,9 @@ export class EnvironmentAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    var environment = new Environment(this.environment.value.name);
+    let environmentToCreate = new Environment(this.environment.value.name);
 
-    this.es.addEnvironment(environment).subscribe(data => console.log(data));
-
-    // works like refresh
-    this.es.getAllEnvironments().subscribe();
+    this.es.createEnvironment(environmentToCreate).subscribe(data => console.log(data));
 
     this.router.navigate(['environments']);
   }

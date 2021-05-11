@@ -9,7 +9,7 @@
         <tr *ngFor="let environment of environments">
             <td><a [routerLink]="['/capabilities']">{{ environment.name }}</a></td>
             <td>
-                <a [routerLink]="['/environments/' + environment.id + '/edit']"><img src="assets/edit-icon.png"
+                <a [routerLink]="['/environments/' + environment.id + '/update']"><img src="assets/edit-icon.png"
                         alt="Delete" height="20" width="20"></a>
                 &nbsp;&nbsp;&nbsp;
             </td>
@@ -22,6 +22,6 @@
     </table>
     <div>
         <br>
-        <a [routerLink]="['/environments/add']">ADD ENVIRONMENT</a>
+        <a [routerLink]="['/environments/create']">ADD ENVIRONMENT</a>
     </div>
 </div>
