@@ -7,10 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.useradmin.Useradmin;
 
 @Entity // This makes a table out of this class
@@ -19,11 +21,12 @@ public class UserLeap extends Useradmin{
 
     //Change default company and environment value, this is done for useradmin when they are created
     @Column(nullable = false, name = "user_environment")
+    @Value("{UserLeap.environment:#{null}}")
     private String environment;
 
     public UserLeap(){}
 
-  public UserLeap(String firstName, String surname, String email, String username, String password, Long company, String environment)
+  public UserLeap(String firstName, String surname, String email, String username, String password, Company company, String environment)
   {
       super(firstName, surname, email, username, password, company);
       this.setEnvironment(environment);

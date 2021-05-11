@@ -4,4 +4,32 @@
         <input type="text" formControlName="name">&nbsp;
         <button type="submit" [disabled]="!environment.valid">RENAME</button>
     </form>
+    <!-- *ngif="" -> if service.user.role == useradmin
+    <table *ngIf="token == "USER_ADMIN"">
+        <caption></caption>
+        <tr>
+            <th id="users">
+                <h1>Users</h1>
+            </th>
+        </tr>
+        Not implemented yet -> make controller page that gets all users of companyID
+        <tr *ngFor="let environment of environments">
+            not implemented yet get all users page instead of capabilities
+            <td>{{ user.name }} - {{ user.environments }}</td>
+            <td>
+                not implemented yet, edit user met surname, firstname, email, company, username en linkedenvironments
+                <a [routerLink]="['/environments/' + environment.id + '/edit']"><img src="assets/edit-icon.png" alt="Delete" height="20" width="20"></a>
+                &nbsp;&nbsp;&nbsp;
+            </td>
+            <td>
+                not implemented yet, delete user van environment
+                <a [routerLink]="['/environments/' + environment.id + '/delete']"><img src="assets/delete-icon.png" alt="Delete" height="20" width="20"></a>
+                &nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+    </table>
+    <div>
+        <br>
+        <a [routerLink]="['/environments/add']">Create New User</a>
+    </div>-->
 </div>

@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.JWT;
+package edu.ap.group10.leapwebapp.security;
 
 public class SecurityConstraints {
     //jwt secret
@@ -15,7 +15,6 @@ public class SecurityConstraints {
     public static final String SIGN_IN_URL = "/user/login";
     //sign up company url
     public static final String COMPANY_SIGN_UP = "/companies/register";
-    //DELETE LATER
-    public static final String COMPANY_APPLICATION_STATUS = "/companies/register/26/applicationStatus";
-    public static final String USER_ADMIN_TEST = "/useradmin/register";
+    //sign up useradmin url
+    public static final String USER_ADMIN_SIGN_UP = "/useradmin/register";
 }

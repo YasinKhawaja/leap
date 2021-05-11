@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import edu.ap.group10.leapwebapp.JWT.CustomAuthenticationProvider;
+import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
 
 @SpringBootApplication
 public class LeapWebappApplication{

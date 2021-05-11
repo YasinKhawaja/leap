@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Environment } from 'src/app/classes/environment/environment';
+import { Userleap } from 'src/app/classes/userleap/userleap';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class EnvironmentService {
 
     return this.http.get<Environment[]>(url);
   }
+  
+  /*getAllUsers(): Observable<UserLeap[]> {
+    let url = this.environmentsServiceURI + "/"
+  }*/
 
   // To CREATE an environment
   addEnvironment(environmentRequest: Environment): Observable<Environment> {

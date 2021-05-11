@@ -26,9 +26,12 @@ export class EnvironmentAddComponent implements OnInit {
     this.es.addEnvironment(environment).subscribe(data => console.log(data));
 
     // works like refresh
-    this.es.getAllEnvironments().subscribe();
+    //this.es.getAllEnvironments().subscribe();
 
-    this.router.navigate(['environments']);
+    this.router.navigate(['environments'])
+      .then(() => {
+      window.location.reload();
+    });
   }
 
 }
