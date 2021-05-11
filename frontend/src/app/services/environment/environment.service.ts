@@ -64,6 +64,7 @@ export class EnvironmentService {
         `body was: ${error.error}`);
     }
     // Return an observable with a user-facing error message.
+    console.log(error);
     return throwError(
       'Something bad happened; please try again later.');
   }

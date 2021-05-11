@@ -21,7 +21,7 @@ export class EnvironmentAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let environmentToCreate = new Environment(this.environment.value.name);
+    var environmentToCreate = new Environment(this.environment.value.name);
 
     this.es.createEnvironment(environmentToCreate).subscribe(data => console.log(data));
 
