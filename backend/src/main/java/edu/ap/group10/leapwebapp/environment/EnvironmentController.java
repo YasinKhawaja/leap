@@ -34,11 +34,11 @@ public class EnvironmentController {
 	}
 
 	// To UPDATE an environment
-	@PutMapping("/environments/{environmentName}")
-	public Environment updateEnvironment(@PathVariable String environmentName, @RequestBody Environment environment) {
+	@PutMapping("/environments/{environmentId}")
+	public Environment updateEnvironment(@PathVariable Long environmentId, @RequestBody Environment environmentReq) {
 		Environment updatedEnvironment = null;
 		try {
-			updatedEnvironment = environmentService.updateEnvironment(environmentName, environment);
+			updatedEnvironment = environmentService.updateEnvironment(environmentId, environmentReq);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -46,11 +46,11 @@ public class EnvironmentController {
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("/environments/{environmentName}")
-	public ResponseEntity<?> deleteEnvironment(@PathVariable String environmentName) {
+	@DeleteMapping("/environments/{environmentId}")
+	public ResponseEntity<?> deleteEnvironment(@PathVariable Long environmentId) {
 		ResponseEntity<?> response = null;
 		try {
-			response = environmentService.deleteEnvironment(environmentName);
+			response = environmentService.deleteEnvironment(environmentId);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

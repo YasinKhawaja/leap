@@ -14,36 +14,34 @@ public class EnvironmentService {
     @Autowired
     private EnvironmentRepository environmentRepository;
 
+    // To GET all environments
     public List<Environment> getEnvironments() {
         return environmentRepository.findAll();
     }
 
+    // To CREATE an environment
     public Environment createEnvironment(Environment environment) {
         return environmentRepository.save(environment);
     }
 
-    public Environment updateEnvironment(String environmentName, Environment environment) {
-        if (environmentRepository.existsByName(environmentName)) {
-            Environment environmentToUpdate = environmentRepository.findByName(environmentName);
-            environmentToUpdate.setName(environment.getName());
+    // To UPDATE an environment
+    public Environment updateEnvironment(Long environmentId, Environment environment) {
+        Environment environmentToUpdate = environmentRepository.findById(environmentId)
+                .orElseThrow(ResourceNotFoundException::new);
 
-            return environmentRepository.save(environmentToUpdate);
-        } else {
-            throw new ResourceNotFoundException(
-                    "Environment with name [" + environmentName + "] not found, please try again.");
-        }
+        environmentToUpdate.setName(environment.getName());
+
+        return environmentRepository.save(environmentToUpdate);
     }
 
-    public ResponseEntity<?> deleteEnvironment(String environmentName) {
-        if (environmentRepository.existsByName(environmentName)) {
-            Environment environmentToDelete = environmentRepository.findByName(environmentName);
-            environmentRepository.delete(environmentToDelete);
+    // To DELETE an environment
+    public ResponseEntity<?> deleteEnvironment(Long environmentId) {
+        Environment environmentToDelete = environmentRepository.findById(environmentId)
+                .orElseThrow(ResourceNotFoundException::new);
 
-            return ResponseEntity.ok().build();
-        } else {
-            throw new ResourceNotFoundException(
-                    "Environment with name [" + environmentName + "] not found, please try again.");
-        }
+        environmentRepository.delete(environmentToDelete);
+
+        return ResponseEntity.ok().body(environmentToDelete);
     }
 
 }

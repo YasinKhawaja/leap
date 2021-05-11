@@ -11,12 +11,6 @@ import edu.ap.group10.leapwebapp.environment.Environment;
 @Repository
 public interface CapabilityRepository extends JpaRepository<Capability, Long> {
 
-    public Capability findByName(String name);
-
     public List<Capability> findByEnvironment(Environment environment);
-
-    public Boolean existsByName(String name);
-
-    public List<Capability> searchOneByName(String name);
 
 }
