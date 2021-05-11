@@ -1,7 +1,7 @@
 
 package edu.ap.group10.leapwebapp.environment;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
 
@@ -21,15 +23,14 @@ public class Environment {
 	@GeneratedValue
 	private Long id;
 
-	/*
-	// one-to-many relationship, required for foreign key in Capability
-	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
-	private Set<Capability> capabilities;
-	*/
-
 	// columns
 	@Column(name = "environment_name", nullable = false, unique = true)
 	private String name;
+
+	// bidirectional @OneToMany, foreign key in Capability
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Capability> capabilities;
 
 	// CONSTRUCTORS
 	public Environment() {
@@ -48,22 +49,20 @@ public class Environment {
 		this.id = id;
 	}
 
-	/*
-	public Set<Capability> getCapabilities() {
-		return capabilities;
-	}
-
-	public void setCapabilities(Set<Capability> capabilities) {
-		this.capabilities = capabilities;
-	}
-	*/
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Capability> getCapabilities() {
+		return capabilities;
+	}
+
+	public void setCapabilities(List<Capability> capabilities) {
+		this.capabilities = capabilities;
 	}
 
 }

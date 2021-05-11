@@ -15,8 +15,8 @@ export class EnvironmentService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // GET all environments
-  getAllEnvironments(): Observable<Environment[]> {
+  // To GET all environments
+  getEnvironments(): Observable<Environment[]> {
     let url = `${this.environmentsServiceURI}`;
 
     return this.http.get<Environment[]>(url);
@@ -27,24 +27,24 @@ export class EnvironmentService {
   }*/
 
   // To CREATE an environment
-  addEnvironment(environmentRequest: Environment): Observable<Environment> {
+  createEnvironment(environmentToCreate: Environment): Observable<Environment> {
     let url = `${this.environmentsServiceURI}`
 
-    return this.http.post<Environment>(url, environmentRequest)
+    return this.http.post<Environment>(url, environmentToCreate)
       .pipe(catchError(this.handleError));
   }
 
   // To UPDATE an environment
-  updateEnvironment(environmentName: string, environmentRequest: Environment): Observable<Environment> {
-    let url = `${this.environmentsServiceURI}/${environmentName}`;
+  updateEnvironment(environmentIdToUpdate: number, environmentToUpdateWith: Environment): Observable<Environment> {
+    let url = `${this.environmentsServiceURI}/${environmentIdToUpdate}`;
 
-    return this.http.put<Environment>(url, environmentRequest)
+    return this.http.put<Environment>(url, environmentToUpdateWith)
       .pipe(catchError(this.handleError));
   }
 
   // To DELETE an environment
-  deleteEnvironment(environmentName: string): Observable<{}> {
-    let url = `${this.environmentsServiceURI}/${environmentName}`;
+  deleteEnvironment(environmentIdToDelete: number): Observable<{}> {
+    let url = `${this.environmentsServiceURI}/${environmentIdToDelete}`;
 
     return this.http.delete(url)
       .pipe(catchError(this.handleError));

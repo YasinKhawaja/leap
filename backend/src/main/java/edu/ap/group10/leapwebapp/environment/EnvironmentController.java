@@ -4,7 +4,6 @@ package edu.ap.group10.leapwebapp.environment;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,47 +19,42 @@ import org.springframework.web.bind.annotation.RestController;
 public class EnvironmentController {
 
 	@Autowired
-	private EnvironmentRepository environmentRepository;
+	private EnvironmentService environmentService;
 
 	// To GET all environments
 	@GetMapping("/environments")
 	public List<Environment> getEnvironments() {
-		return environmentRepository.findAll();
+		return environmentService.getEnvironments();
 	}
 
 	// To CREATE an environment
 	@PostMapping("/environments")
 	public Environment createEnvironment(@RequestBody Environment environment) {
-		return environmentRepository.save(environment);
+		return environmentService.createEnvironment(environment);
 	}
 
 	// To UPDATE an environment
-	@PutMapping("/environments/{environmentName}")
-	public Environment updateEnvironment(@PathVariable String environmentName,
-			@RequestBody Environment environmentRequest) {
-		if (environmentRepository.existsByName(environmentName)) {
-			Environment environmentToUpdate = environmentRepository.findByName(environmentName);
-			environmentToUpdate.setName(environmentRequest.getName());
-
-			return environmentRepository.save(environmentToUpdate);
-		} else {
-			throw new ResourceNotFoundException(
-					"Environment with name [" + environmentName + "] not found, please try again.");
+	@PutMapping("/environments/{environmentId}")
+	public Environment updateEnvironment(@PathVariable Long environmentId, @RequestBody Environment environmentReq) {
+		Environment updatedEnvironment = null;
+		try {
+			updatedEnvironment = environmentService.updateEnvironment(environmentId, environmentReq);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+		return updatedEnvironment;
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("/environments/{environmentName}")
-	public ResponseEntity<?> deleteEnvironment(@PathVariable String environmentName) {
-		if (environmentRepository.existsByName(environmentName)) {
-			Environment environmentToDelete = environmentRepository.findByName(environmentName);
-			environmentRepository.delete(environmentToDelete);
-
-			return ResponseEntity.ok().build();
-		} else {
-			throw new ResourceNotFoundException(
-					"Environment with name [" + environmentName + "] not found, please try again.");
+	@DeleteMapping("/environments/{environmentId}")
+	public ResponseEntity<?> deleteEnvironment(@PathVariable Long environmentId) {
+		ResponseEntity<?> response = null;
+		try {
+			response = environmentService.deleteEnvironment(environmentId);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+		return response;
 	}
 
 }
