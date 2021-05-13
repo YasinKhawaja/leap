@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,29 +18,29 @@ public class EnvironmentService {
         return environmentRepository.findAll();
     }
 
+    // To GET an environment by name
+    public Environment getEnvironment(String name) {
+        return environmentRepository.findByName(name);
+    }
+
     // To CREATE an environment
-    public Environment createEnvironment(Environment environment) {
+    public Environment createEnvironment(String name) {
+        Environment environment = new Environment(name);
+
         return environmentRepository.save(environment);
     }
 
     // To UPDATE an environment
-    public Environment updateEnvironment(Long environmentId, Environment environment) {
-        Environment environmentToUpdate = environmentRepository.findById(environmentId)
-                .orElseThrow(ResourceNotFoundException::new);
+    public Environment updateEnvironment(Long id, String name) {
+        Environment environment = environmentRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        environment.setName(name);
 
-        environmentToUpdate.setName(environment.getName());
-
-        return environmentRepository.save(environmentToUpdate);
+        return environmentRepository.save(environment);
     }
 
     // To DELETE an environment
-    public ResponseEntity<?> deleteEnvironment(Long environmentId) {
-        Environment environmentToDelete = environmentRepository.findById(environmentId)
-                .orElseThrow(ResourceNotFoundException::new);
-
-        environmentRepository.delete(environmentToDelete);
-
-        return ResponseEntity.ok().body(environmentToDelete);
+    public void deleteEnvironment(Long id) {
+        environmentRepository.deleteById(id);
     }
 
 }

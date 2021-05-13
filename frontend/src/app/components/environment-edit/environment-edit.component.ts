@@ -13,29 +13,36 @@ import { LoginService } from 'src/app/services/login/login.service';
 export class EnvironmentEditComponent implements OnInit {
 
   token: string
+  environment: Environment
 
-  environment = this.fb.group({
+  environmentForm = this.fb.group({
     name: ['', Validators.required]
   });
 
-  constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router, private ls: LoginService) { 
+  constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router, private ls: LoginService) {
     this.token = "";
-   }
+  }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    var name = this.router.url.split('/')[2];
+
     this.ls.getUserToken()
-    .subscribe(data => { 
-      this.token = data;
-      console.log(data); },
-      error => {console.error(error)})
+      .subscribe(data => {
+        this.token = data;
+        console.log(data);
+      },
+        error => { console.error(error) })
 
-   }
+    this.es.getEnvironmentByName(name)
+      .subscribe(response => this.environment = response, error => console.log(error));
+  }
 
   onSubmit(): void {
-    let environmentIdToUpdate = parseInt(this.router.url.split('/')[2]);
-    let environmentToUpdateWith = new Environment(this.environment.value.name);
+    var environmentIdToUpdate = this.environment.id;
+    var environmentToUpdateWith = new Environment(this.environmentForm.value.name);
 
-    this.es.updateEnvironment(environmentIdToUpdate, environmentToUpdateWith).subscribe(data => console.log(data));
+    this.es.updateEnvironment(environmentIdToUpdate, environmentToUpdateWith.name)
+      .subscribe(response => console.log(response), error => console.log(error));
 
     this.router.navigate(['/environments']);
   }

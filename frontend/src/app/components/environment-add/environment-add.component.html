@@ -1,7 +1,7 @@
 <div class="middle">
     <h2>Add environment</h2>
-    <form [formGroup]="environment" (ngSubmit)="onSubmit()">
+    <form [formGroup]="environmentForm" (ngSubmit)="onSubmit()">
         <input type="text" formControlName="name">&nbsp;
-        <button type="submit" [disabled]="!environment.valid">ADD</button>
+        <button type="submit" [disabled]="!environmentForm.valid">ADD</button>
     </form>
 </div>

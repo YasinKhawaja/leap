@@ -2,10 +2,10 @@
 package edu.ap.group10.leapwebapp.capability;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
@@ -26,49 +26,62 @@ public class CapabilityService {
     }
 
     // To GET all capabilities in an environment
-    public List<Capability> getCapabilitiesInEnvironment(Long environmentId) {
-        Environment environmentToFindBy = environmentRepository.findById(environmentId)
+    public List<Capability> getCapabilitiesInEnvironment(Long envId) {
+        Environment environmentToFindBy = environmentRepository.findById(envId)
                 .orElseThrow(ResourceNotFoundException::new);
 
         return capabilityRepository.findByEnvironment(environmentToFindBy);
     }
 
+    // To GET a capability in its environment by name
+    public Capability getCapabilityInEnvironmentByName(String envName, String capName) {
+        Environment envToFindBy = environmentRepository.findByName(envName);
+
+        List<Capability> capsFound = this.getCapabilitiesInEnvironment(envToFindBy.getId()).stream()
+                .filter(capability -> capability.getName().equals(capName)).collect(Collectors.toList());
+
+        return capsFound.get(0);
+    }
+
     // To CREATE a capability in an environment
-    public Capability createCapabilityInEnvironment(Long environmentId, Capability capabilityReq) {
-        Environment environmentToLinkWith = environmentRepository.findById(environmentId)
-                .orElseThrow(ResourceNotFoundException::new);
+    public Capability createCapabilityInEnvironment(Long envId, String name, PaceOfChange paceOfChange, Tom tom,
+            Integer resourcesQuality) {
 
-        capabilityReq.setEnvironment(environmentToLinkWith);
+        Environment envToLinkWith = environmentRepository.findById(envId).orElseThrow(ResourceNotFoundException::new);
 
-        return capabilityRepository.save(capabilityReq);
+        // Create the new cap and set its foreign key
+        Capability capability = new Capability(name, paceOfChange, tom, resourcesQuality);
+        capability.setEnvironment(envToLinkWith);
+
+        return capabilityRepository.save(capability);
     }
 
     // To UPDATE a capability in an environment
-    public Capability updateCapabilityInEnvironment(Long environmentId, Long capabilityId, Capability capabilityReq) {
-        if (!environmentRepository.existsById(environmentId)) {
-            throw new ResourceNotFoundException();
-        }
-
-        Capability capabilityToUpdate = capabilityRepository.findById(capabilityId)
-                .orElseThrow(ResourceNotFoundException::new);
-
-        capabilityToUpdate.setName(capabilityReq.getName());
-
+    public Capability updateCapabilityInEnvironment(Long envId, Long capId, String name, PaceOfChange paceOfChange,
+            Tom tom, Integer resourcesQuality) {
+        // Find the cap in its env to update
+        List<Capability> capsFound = this.getCapabilitiesInEnvironment(envId).stream()
+                .filter(capability -> capability.getId().equals(capId)).collect(Collectors.toList());
+        // Get the found cap to update
+        Capability capabilityToUpdate = capsFound.get(0);
+        // Update the cap
+        capabilityToUpdate.setName(name);
+        capabilityToUpdate.setPaceOfChange(paceOfChange);
+        capabilityToUpdate.setTom(tom);
+        capabilityToUpdate.setResourcesQuality(resourcesQuality);
+        // Resave the updated cap
         return capabilityRepository.save(capabilityToUpdate);
     }
 
     // To DELETE a capability in an environment
-    public ResponseEntity<?> deleteCapabilityFromEnvironment(Long environmentId, Long capabilityId) {
-        if (!environmentRepository.existsById(environmentId)) {
-            throw new ResourceNotFoundException();
-        }
-
-        Capability capabilityToDelete = capabilityRepository.findById(capabilityId)
-                .orElseThrow(ResourceNotFoundException::new);
-
+    public void deleteCapabilityFromEnvironment(Long envId, Long capId) {
+        // Find the cap in its env to delete
+        List<Capability> capsFound = this.getCapabilitiesInEnvironment(envId).stream()
+                .filter(capability -> capability.getId().equals(capId)).collect(Collectors.toList());
+        // Get the found cap to delete
+        Capability capabilityToDelete = capsFound.get(0);
+        // Delete the cap
         capabilityRepository.delete(capabilityToDelete);
-
-        return ResponseEntity.ok().build();
     }
 
 }

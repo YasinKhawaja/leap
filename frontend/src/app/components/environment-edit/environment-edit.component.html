@@ -1,8 +1,8 @@
 <div class="middle">
-    <h2>Rename environment</h2>
-    <form [formGroup]="environment" (ngSubmit)="onSubmit()">
+    <h2 *ngIf="environment != null">Rename {{ environment.name }}</h2>
+    <form [formGroup]="environmentForm" (ngSubmit)="onSubmit()">
         <input type="text" formControlName="name">&nbsp;
-        <button type="submit" [disabled]="!environment.valid">RENAME</button>
+        <button type="submit" [disabled]="!environmentForm.valid">RENAME</button>
     </form>
     <!-- *ngif="" -> if service.user.role == useradmin
     <table *ngIf="token == "USER_ADMIN"">

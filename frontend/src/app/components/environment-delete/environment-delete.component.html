@@ -1,4 +1,5 @@
-<div class="middle">
-    <h4>Are you sure you want to delete this environment?</h4>
-    <button (click)="deleteEnvironment()">DELETE</button>&nbsp;<a [routerLink]="['/environments']">CANCEL</a>
+<div class="middle" *ngIf="environment != null">
+    <h4>Are you sure you want to delete {{ environment.name }}?</h4>
+    <button (click)="deleteEnvironment(environment.id)">DELETE</button>&nbsp;
+    <a [routerLink]="['/environments']">CANCEL</a>
 </div>

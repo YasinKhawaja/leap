@@ -11,19 +11,19 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentAddComponent implements OnInit {
 
-  environment = this.fb.group({
+  environmentForm = this.fb.group({
     name: ['', Validators.required]
   });
 
   constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSubmit(): void {
-    var environmentToCreate = new Environment(this.environment.value.name);
+    var environment = new Environment(this.environmentForm.value.name);
 
-    this.es.createEnvironment(environmentToCreate).subscribe(data => console.log(data));
+    this.es.createEnvironment(environment.name)
+      .subscribe(response => console.log(response), error => console.log(error));
 
     this.router.navigate(['environments']);
   }

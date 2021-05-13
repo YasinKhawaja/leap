@@ -11,15 +11,11 @@ export class EnvironmentComponent implements OnInit {
 
   environments: Environment[]
 
-  displayEditEnv = false;
-
-  constructor(private es: EnvironmentService) {
-    this.environments = [];
-  }
+  constructor(private es: EnvironmentService) { }
 
   ngOnInit(): void {
     this.es.getEnvironments()
-      .subscribe(data => { this.environments = data; console.log(data); }, error => { console.error(error) });
+      .subscribe(response => { this.environments = response; console.log(response); }, error => console.error(error));
   }
 
 }

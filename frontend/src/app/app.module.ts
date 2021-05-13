@@ -52,7 +52,6 @@ const appRoutes: Routes = [
     ExportComponent,
     CompanyRequestComponent,
     LoginComponent
-
   ],
   imports: [
     BrowserModule,
