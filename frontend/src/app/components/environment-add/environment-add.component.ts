@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
@@ -11,21 +11,41 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentAddComponent implements OnInit {
 
-  environmentForm = this.fb.group({
-    name: ['', Validators.required]
-  });
+  envAddForm: FormGroup;
 
   constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  // To initialize the envAddForm
+  initializeForm() {
+    // Form group
+    this.envAddForm = this.fb.group({
+      // Form controls
+      name: ['', [Validators.required, this.noWhiteSpace]],
+    });
+  }
+
+  // To be able to use all form controls (name) above in html
+  get envAddFormControls() { return this.envAddForm.controls; }
+
+  // Custom validator
+  private noWhiteSpace(control: FormControl) {
+    if ((control.value as string).indexOf(' ') >= 0) {
+      return { 'whitespace': true };
+    }
+    return null;
+  }
 
   onSubmit(): void {
-    var environment = new Environment(this.environmentForm.value.name);
+    var env = new Environment(this.envAddFormControls.name.value);
 
-    this.es.createEnvironment(environment.name)
-      .subscribe(response => console.log(response), error => console.log(error));
+    this.es.createEnvironment(env.name)
+      .subscribe(res => console.log(res), err => console.error(err));
 
-    this.router.navigate(['environments']);
+    this.router.navigate(['envs'])//.then(() => window.location.reload());
   }
 
 }

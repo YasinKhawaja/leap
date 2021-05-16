@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
 import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
@@ -31,7 +30,6 @@ export class CapabilityAddComponent implements OnInit {
 
   ePaceOfChange = PaceOfChange;
   eTom = Tom;
-  environment: Environment
 
   capability = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
@@ -40,16 +38,13 @@ export class CapabilityAddComponent implements OnInit {
     resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
   });
 
-  constructor(private fb: FormBuilder, private router: Router, private cs: CapabilityService, private es: EnvironmentService) { }
+  constructor(private fb: FormBuilder, private router: Router, private cs: CapabilityService) { }
 
-  ngOnInit(): void {
-    var name = this.router.url.split('/')[2];
-
-    this.es.getEnvironmentByName(name)
-      .subscribe(response => { this.environment = response; console.log(response); }, error => console.log(error));
-  }
+  ngOnInit(): void { }
 
   onSubmit() {
+    var envId = this.router.url.split('/')[2];
+
     var capToCreate = new Capability(
       this.capability.value.name,
       this.capability.value.paceOfChange,
@@ -57,14 +52,14 @@ export class CapabilityAddComponent implements OnInit {
       this.capability.value.resourcesQuality
     );
 
-    this.cs.createCapabilityInEnvironment(this.environment.id, capToCreate)
+    this.cs.createCapabilityInEnvironment(envId, capToCreate)
       .subscribe(
         response => console.log(response),
         error => { if (error.error.message) Swal.fire('Error', error.error.message, 'error') }
       );
 
-    this.router.navigate([`environments/${this.environment.name}/capabilities`])
-      .then(() => window.location.reload());
+    this.router.navigate([`envs/${envId}/caps`])
+    //.then(() => window.location.reload());
   }
 
 }

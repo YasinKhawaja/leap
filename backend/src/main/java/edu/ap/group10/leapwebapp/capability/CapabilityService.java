@@ -56,7 +56,7 @@ public class CapabilityService {
         return capabilityRepository.save(capability);
     }
 
-    // To UPDATE a capability in an environment
+    // To UPDATE a capability in its environment
     public Capability updateCapabilityInEnvironment(Long envId, Long capId, String name, PaceOfChange paceOfChange,
             Tom tom, Integer resourcesQuality) {
         // Find the cap in its env to update
@@ -73,15 +73,15 @@ public class CapabilityService {
         return capabilityRepository.save(capabilityToUpdate);
     }
 
-    // To DELETE a capability in an environment
+    // To DELETE a capability in its environment
     public void deleteCapabilityFromEnvironment(Long envId, Long capId) {
         // Find the cap in its env to delete
         List<Capability> capsFound = this.getCapabilitiesInEnvironment(envId).stream()
-                .filter(capability -> capability.getId().equals(capId)).collect(Collectors.toList());
+                .filter(cap -> cap.getId().equals(capId)).collect(Collectors.toList());
         // Get the found cap to delete
-        Capability capabilityToDelete = capsFound.get(0);
+        Capability capToDelete = capsFound.get(0);
         // Delete the cap
-        capabilityRepository.delete(capabilityToDelete);
+        capabilityRepository.delete(capToDelete);
     }
 
 }

@@ -23,17 +23,14 @@ import { ExportComponent } from "./components/export/export.component";
 import { CompanyRequestComponent } from './components/company-request/company-request.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-
-
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'capabilities', component: CapabilityComponent },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'environments', component: EnvironmentComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'envs', component: EnvironmentComponent },
+  { path: 'caps', component: CapabilityComponent }
 ]
 
 @NgModule({

@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 
 @Injectable({
@@ -9,7 +8,7 @@ import { Capability } from '../../classes/capability/capability';
 })
 export class CapabilityService {
 
-  private capabilitiesServiceURI: string = 'http://localhost:8080/api/environments'; // /{envId}/capabilities
+  private capabilitiesServiceURI: string = 'http://localhost:8080/api/envs'; // /{envId}/caps
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -22,38 +21,40 @@ export class CapabilityService {
     return this.http.get<Capability[]>(url);
   }
 
+  // To GET all caps in their env
+  getAllCapabilitiesInEnvironment(envId: string): Observable<Capability[]> {
+    var url = `${this.capabilitiesServiceURI}/${envId}/caps`;
+
+    return this.http.get<Capability[]>(url);
+  }
+
   // To GET a capability by name
   getCapabilityByName(envName: string, capName: string): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}/${envName}/capabilities/${capName}`;
+    var url = `${this.capabilitiesServiceURI}/${envName}/caps/${capName}`;
 
     return this.http.get<Capability>(url);
   }
 
   // To CREATE a capability in its environment
-  createCapabilityInEnvironment(envId: number, cap: Capability): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}/${envId}/capabilities`
+  createCapabilityInEnvironment(envId: string, cap: Capability): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}/${envId}/caps`
 
     return this.http.post<Capability>(url, cap.getParams(), { headers: this.contentHeaders });
   }
 
   // To UPDATE a capability in its environment
-  updateCapabilityInEnvironment(envId: number, capId: number, cap: Capability): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}/${envId}/capabilities/${capId}`;
+  updateCapabilityInEnvironment(envId: string, capId: string, cap: Capability): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}/${envId}/caps/${capId}`;
 
     return this.http.put<Capability>(url, cap.getParams(), { headers: this.contentHeaders });
   }
 
-  // Delete a capability
-  deleteCapability(name: string): void {
-    let url = `${this.capabilitiesServiceURI}/delete/${name}`
-    // !!! subscribe is needed to execute DELETE
-    this.http.delete(url,
-      { headers: this.contentHeaders })
-      .subscribe(data => { console.log(data) },
-        error => { if (error.error.message) Swal.fire('Error', error.error.message, 'error') })
+  // To DELETE a cap in its env
+  deleteCapabilityFromEnvironment(envId: string, capId: string): void {
+    var url = `${this.capabilitiesServiceURI}/${envId}/caps/${capId}`
+
+    this.http.delete(url).subscribe();
   }
-
-
 
   // Search one capability by name
   searchOneCapability(name: string): Observable<Capability[]> {

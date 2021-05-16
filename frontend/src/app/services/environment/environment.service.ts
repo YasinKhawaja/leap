@@ -1,7 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Environment } from 'src/app/classes/environment/environment';
 
 @Injectable({
@@ -9,12 +8,12 @@ import { Environment } from 'src/app/classes/environment/environment';
 })
 export class EnvironmentService {
 
-  private environmentsServiceURI: string = 'http://localhost:8080/api/environments';
+  private environmentsServiceURI: string = 'http://localhost:8080/api/envs';
 
   constructor(private http: HttpClient) { }
 
   // To GET all environments
-  getEnvironments(): Observable<Environment[]> {
+  getAllEnvironments(): Observable<Environment[]> {
     var url = `${this.environmentsServiceURI}`;
 
     return this.http.get<Environment[]>(url);
@@ -32,44 +31,26 @@ export class EnvironmentService {
   }*/
 
   // To CREATE an environment
-  createEnvironment(name: string): Observable<Environment> {
+  createEnvironment(envName: string): Observable<Environment> {
     var url = `${this.environmentsServiceURI}`;
-    var environment = new Environment(name);
+    var env = new Environment(envName);
 
-    return this.http.post<Environment>(url, environment.getParams())
-      .pipe(catchError(this.handleError));
+    return this.http.post<Environment>(url, env.getParams());
   }
 
   // To UPDATE an environment
-  updateEnvironment(id: number, name: string): Observable<Environment> {
-    var url = `${this.environmentsServiceURI}/${id}`;
-    var environment = new Environment(name);
+  updateEnvironment(envId: string, newEnvName: string): Observable<Environment> {
+    var url = `${this.environmentsServiceURI}/${envId}`;
+    var env = new Environment(newEnvName);
 
-    return this.http.put<Environment>(url, environment.getParams())
-      .pipe(catchError(this.handleError));
+    return this.http.put<Environment>(url, env.getParams());
   }
 
   // To DELETE an environment
-  deleteEnvironment(id: number): Observable<{}> {
-    let url = `${this.environmentsServiceURI}/${id}`;
+  deleteEnvironment(envId: string): void {
+    let url = `${this.environmentsServiceURI}/${envId}`;
 
-    return this.http.delete(url)
-      .pipe(catchError(this.handleError));
-  }
-
-  // Error handling
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // A client-side or network error occurred.
-      console.error(`An error occurred: ${error.error}`);
-    } else {
-      // The backend returned an unsuccessful response code.
-      console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
-    }
-    // Return an observable with a user-facing error message.
-    console.log(error);
-
-    return throwError('Something bad happened; please try again later.');
+    this.http.delete(url).subscribe();
   }
 
 }

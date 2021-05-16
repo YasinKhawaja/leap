@@ -14,28 +14,28 @@ public class EnvironmentService {
     private EnvironmentRepository environmentRepository;
 
     // To GET all environments
-    public List<Environment> getEnvironments() {
+    public List<Environment> getAllEnvironments() {
         return environmentRepository.findAll();
     }
 
     // To GET an environment by name
-    public Environment getEnvironment(String name) {
+    public Environment getEnvironmentByName(String name) {
         return environmentRepository.findByName(name);
     }
 
     // To CREATE an environment
     public Environment createEnvironment(String name) {
-        Environment environment = new Environment(name);
+        Environment envToSave = new Environment(name);
 
-        return environmentRepository.save(environment);
+        return environmentRepository.save(envToSave);
     }
 
     // To UPDATE an environment
     public Environment updateEnvironment(Long id, String name) {
-        Environment environment = environmentRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        environment.setName(name);
+        Environment envToUpdate = environmentRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        envToUpdate.setName(name);
 
-        return environmentRepository.save(environment);
+        return environmentRepository.save(envToUpdate);
     }
 
     // To DELETE an environment

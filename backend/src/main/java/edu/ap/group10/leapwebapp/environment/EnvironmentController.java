@@ -21,37 +21,37 @@ public class EnvironmentController {
 	private EnvironmentService environmentService;
 
 	// To GET all environments
-	@GetMapping("/environments")
-	public List<Environment> getEnvironments() {
-		return environmentService.getEnvironments();
+	@GetMapping("/envs")
+	public List<Environment> getAllEnvironments() {
+		return environmentService.getAllEnvironments();
 	}
 
 	// To GET an environment by name
 	@GetMapping("/environments/{name}")
-	public Environment getEnvironment(@PathVariable String name) {
-		return environmentService.getEnvironment(name);
+	public Environment getEnvironmentByName(@PathVariable String name) {
+		return environmentService.getEnvironmentByName(name);
 	}
 
 	// To CREATE an environment
-	@PostMapping("/environments")
+	@PostMapping("/envs")
 	public Environment createEnvironment(@RequestParam String name) {
 		return environmentService.createEnvironment(name);
 	}
 
 	// To UPDATE an environment
-	@PutMapping("/environments/{id}")
+	@PutMapping("/envs/{id}")
 	public Environment updateEnvironment(@PathVariable Long id, @RequestParam String name) {
-		Environment updatedEnvironment = null;
+		Environment updatedEnv = null;
 		try {
-			updatedEnvironment = environmentService.updateEnvironment(id, name);
+			updatedEnv = environmentService.updateEnvironment(id, name);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return updatedEnvironment;
+		return updatedEnv;
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("/environments/{id}")
+	@DeleteMapping("/envs/{id}")
 	public void deleteEnvironment(@PathVariable Long id) {
 		environmentService.deleteEnvironment(id);
 	}

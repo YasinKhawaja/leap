@@ -9,13 +9,15 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentComponent implements OnInit {
 
-  environments: Environment[]
+  environments: Environment[];
 
-  constructor(private es: EnvironmentService) { }
+  constructor(private es: EnvironmentService) {
+    this.environments = [];
+  }
 
   ngOnInit(): void {
-    this.es.getEnvironments()
-      .subscribe(response => { this.environments = response; console.log(response); }, error => console.error(error));
+    this.es.getAllEnvironments()
+      .subscribe(res => { this.environments = res; console.log(res); }, err => console.error(err));
   }
 
 }

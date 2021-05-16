@@ -21,32 +21,32 @@ public class CapabilityController {
 	private CapabilityService capabilityService;
 
 	// To GET all capabilities
-	@GetMapping("/capabilities")
+	@GetMapping("/caps")
 	public List<Capability> getCapabilities() {
 		return capabilityService.getCapabilities();
 	}
 
 	// To GET all capabilities in an environment
-	@GetMapping("/environments/{envId}/capabilities")
+	@GetMapping("/envs/{envId}/caps")
 	public List<Capability> getCapabilitiesInEnvironment(@PathVariable Long envId) {
 		return capabilityService.getCapabilitiesInEnvironment(envId);
 	}
 
 	// To GET a capability in its environment by name
-	@GetMapping("/environments/{envName}/capabilities/{capName}")
+	@GetMapping("/envs/{envName}/caps/{capName}")
 	public Capability getCapabilityInEnvironmentByName(@PathVariable String envName, @PathVariable String capName) {
 		return capabilityService.getCapabilityInEnvironmentByName(envName, capName);
 	}
 
 	// To CREATE a capability in its environment
-	@PostMapping("/environments/{envId}/capabilities")
+	@PostMapping("/envs/{envId}/caps")
 	public Capability createCapabilityInEnvironment(@PathVariable Long envId, @RequestParam String name,
 			@RequestParam PaceOfChange paceOfChange, @RequestParam Tom tom, @RequestParam Integer resourcesQuality) {
 		return capabilityService.createCapabilityInEnvironment(envId, name, paceOfChange, tom, resourcesQuality);
 	}
 
 	// To UPDATE a capability in its environment
-	@PutMapping("/environments/{envId}/capabilities/{capId}")
+	@PutMapping("/envs/{envId}/caps/{capId}")
 	public Capability updateCapabilityInEnvironment(@PathVariable Long envId, @PathVariable Long capId,
 			@RequestParam String name, @RequestParam PaceOfChange paceOfChange, @RequestParam Tom tom,
 			@RequestParam Integer resourcesQuality) {
@@ -54,7 +54,7 @@ public class CapabilityController {
 	}
 
 	// To DELETE a capability in its environment
-	@DeleteMapping("/environments/{envId}/capabilities/{capId}")
+	@DeleteMapping("/envs/{envId}/caps/{capId}")
 	public void deleteCapabilityFromEnvironment(@PathVariable Long envId, @PathVariable Long capId) {
 		capabilityService.deleteCapabilityFromEnvironment(envId, capId);
 	}

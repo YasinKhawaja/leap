@@ -1,7 +1,7 @@
-<div class='container' *ngIf="environment != null">
-  <h1 class='display-4'>All Capabilities in {{ environment.name }}</h1>
+<div class='container'>
+  <h1 class='display-4'>All Capabilities</h1>
   <br /><br />
-  <a [routerLink]="['../capabilities/create']">Add Capability</a>
+  <a [routerLink]="['../caps/create']">Add Capability</a>
 
   <table class='table table-striped'>
     <thead>
@@ -17,10 +17,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let capability of environment.capabilities'>
-        <td><a [routerLink]="['../capabilities/', capability.name, 'delete']"><img src='assets/delete.jpg' width='15'
+      <tr *ngFor='let capability of caps'>
+        <td><a [routerLink]="['../caps/', capability.id, 'delete']"><img src='assets/delete.jpg' width='15'
               height='18'></a>&nbsp;&nbsp;
-          <a [routerLink]="['../capabilities/', capability.name, 'update']">{{ capability.name }}</a>
+          <a [routerLink]="['../caps/', capability.id, 'update']">{{ capability.name }}</a>
         </td>
         <td class="numbers"> {{ capability.parentId }} </td>
         <td class="numbers"> {{ capability.level }} </td>

@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class EnvironmentServiceUnitTests {
+class EnvironmentServiceUnitTest {
 
     @Mock
     private EnvironmentRepository eRepositoryUnderTest;
@@ -28,10 +28,10 @@ class EnvironmentServiceUnitTests {
     @Test
     void getEnvironments_3EnvsInDb_Return3Envs() {
         // When
-        List<Environment> actualEnvsFound = eServiceUnderTest.getEnvironments();
-
         when(eRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Environment("EnvironmentTest0"),
                 new Environment("EnvironmentTest1"), new Environment("EnvironmentTest2")));
+
+        List<Environment> actualEnvsFound = eServiceUnderTest.getAllEnvironments();
 
         // Then
         verify(eRepositoryUnderTest).findAll();
@@ -70,13 +70,13 @@ class EnvironmentServiceUnitTests {
     @Test
     void deleteEnvironment_VerifyIfDeleted() {
         // Given
-        Long environmentIdToDelete = 1L;
+        Long envIdToDelete = 1L;
 
         // When
-        eServiceUnderTest.deleteEnvironment(environmentIdToDelete);
+        eServiceUnderTest.deleteEnvironment(envIdToDelete);
 
         // Then
-        verify(eRepositoryUnderTest).deleteById(environmentIdToDelete);
+        verify(eRepositoryUnderTest).deleteById(envIdToDelete);
     }
 
 }
