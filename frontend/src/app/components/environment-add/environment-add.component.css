@@ -1,14 +1,24 @@
-.middle {
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.middle-page {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.center {
+.middle-div {
     text-align: center;
+    vertical-align: middle;
 }
 
 .form-control.ng-touched.ng-invalid {
     border: 2px solid red;
+}
+
+.form-control.ng-touched.ng-valid {
+    border: 2px solid green;
 }

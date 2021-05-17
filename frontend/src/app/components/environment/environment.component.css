@@ -3,19 +3,14 @@
     padding: 0px;
 }
 
-.middle {
+.middle-page {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.center {
+.middle-div {
     text-align: center;
-}
-
-.blackborder {
-    border: 1px;
-    border-color: black;
-    border-style: solid;
+    vertical-align: middle;
 }

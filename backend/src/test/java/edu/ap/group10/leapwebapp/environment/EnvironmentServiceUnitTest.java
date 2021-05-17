@@ -2,8 +2,6 @@
 package edu.ap.group10.leapwebapp.environment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -12,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -45,17 +44,16 @@ class EnvironmentServiceUnitTest {
     void createEnvironment_GivenEnv_VerifyIfCreated() {
         // Given
         String envName = "EnvironmentTest";
-        Environment expectedEnvToBeCreated = new Environment(envName);
-
-        given(eRepositoryUnderTest.save(expectedEnvToBeCreated)).willAnswer(invocation -> invocation.getArgument(0));
+        ArgumentCaptor<Environment> aCaptor = ArgumentCaptor.forClass(Environment.class);
 
         // When
-        Environment actualEnvCreated = eServiceUnderTest.createEnvironment(envName);
+        eServiceUnderTest.createEnvironment(envName);
 
         // Then
-        verify(eRepositoryUnderTest).save(any(Environment.class));
+        verify(eRepositoryUnderTest).save(aCaptor.capture());
 
-        assertEquals(expectedEnvToBeCreated.getName(), actualEnvCreated.getName());
+        Environment actEnvToBeCreated = aCaptor.getValue();
+        assertEquals(envName, actEnvToBeCreated.getName());
     }
 
     @Test

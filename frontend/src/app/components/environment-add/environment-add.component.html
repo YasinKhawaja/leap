@@ -1,37 +1,33 @@
-<div class="container middle">
-    <div class="row">
-        <div class="col-md-5 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Create environment</h3>
-                </div>
-                <div class="card-body">
-                    <!-- Form -->
-                    <form class="form" [formGroup]="envAddForm" (ngSubmit)="onSubmit()">
-                        <!-- Name field -->
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" formControlName="name">
-                            <!-- Name field validation errors -->
-                            <div class="alert alert-danger center"
-                                *ngIf="envAddFormControls.name.touched && envAddFormControls.name.invalid">
-                                <div *ngIf="envAddFormControls.name.errors.required">
-                                    Name is required
-                                </div>
-                                <div *ngIf="envAddFormControls.name.errors.whitespace">
-                                    Name cannot contain white spaces
-                                </div>
-                            </div>
+<div class="col-3 middle-page">
+    <div class="card">
+        <div class="card-header middle-div">
+            <h5><strong>NEW ENVIRONMENT</strong></h5>
+        </div>
+        <div class="card-body">
+            <!-- Form -->
+            <form class="form" [formGroup]="envAddForm" (ngSubmit)="onSubmit()">
+                <!-- Name field -->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                    <!-- Name field validation errors -->
+                    <div class="alert alert-danger middle-div"
+                        *ngIf="envAddFormControls.name.touched && envAddFormControls.name.invalid">
+                        <div *ngIf="envAddFormControls.name.errors.required">
+                            Name is required
                         </div>
-                        <!-- Submit button -->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success" [disabled]="envAddForm.invalid">
-                                CREATE
-                            </button>
+                        <div *ngIf="envAddFormControls.name.errors.whitespace">
+                            Name cannot contain white spaces
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <!-- Submit button -->
+                <div>
+                    <button type="submit" class="btn btn-success" [disabled]="envAddForm.invalid">
+                        CREATE
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

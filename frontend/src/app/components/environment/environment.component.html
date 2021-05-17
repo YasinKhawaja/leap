@@ -1,31 +1,31 @@
-<div class="middle">
-    <table>
-        <caption></caption>
-        <tr>
-            <th id="environments">
-                <h1>Environments</h1>
-            </th>
-        </tr>
-        <tr *ngFor="let environment of environments">
-            <td>
-                <a [routerLink]="['/envs/' + environment.id + '/caps']">{{ environment.name }}</a>
-            </td>
-            <td>
-                <a [routerLink]="['/envs/' + environment.id + '/update']">
-                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;
-            </td>
-            <td>
-                <a [routerLink]="['/envs/' + environment.id + '/delete']">
-                    <img src="assets/delete-icon.png" alt="Delete" height="20" width="20">
-                </a>
-                &nbsp;&nbsp;&nbsp;
-            </td>
-        </tr>
+<div class="middle-page">
+    <table class="table">
+        <thead>
+            <tr class="middle-div">
+                <th scope="col" colspan="3">ENVIRONMENTS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let env of environments">
+                <td>
+                    <a class="btn btn-light" [routerLink]="['/envs/' + env.id + '/caps']" role="button">
+                        {{ env.name }}
+                    </a>
+                </td>
+                <td class="middle-div">
+                    <a [routerLink]="['/envs/' + env.id + '/update']">
+                        <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
+                    </a>
+                </td>
+                <td class="middle-div">
+                    <a [routerLink]="['/envs/' + env.id + '/delete']">
+                        <img src="assets/delete-icon.png" alt="Delete" height="20" width="20">
+                    </a>
+                </td>
+            </tr>
+        </tbody>
     </table>
-    <div>
-        <br>
-        <a [routerLink]="['/envs/create']">ADD ENVIRONMENT</a>
+    <div class="middle-div">
+        <a class="btn btn-danger" [routerLink]="['/envs/create']" role="button">CREATE ENVIRONMENT</a>
     </div>
 </div>

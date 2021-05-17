@@ -1,6 +1,9 @@
 
 package edu.ap.group10.leapwebapp.capability;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,8 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
 
@@ -22,16 +27,6 @@ public class Capability {
 	@Id
 	@GeneratedValue
 	private Long id;
-
-	// foreign keys
-	// ===== TO-DO foreign key? =====
-	@Column(name = "parent_id", nullable = false)
-	private Integer parentId;
-
-	@ManyToOne
-	@JoinColumn(name = "environment_id")
-	@JsonBackReference
-	private Environment environment;
 
 	// columns
 	@Column(nullable = false)
@@ -56,12 +51,27 @@ public class Capability {
 	@Column(name = "application_fit")
 	private Double applicationFit;
 
+	// foreign keys
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "parent_reference")
+	private List<Capability> subcapabilities;
+
+	@ManyToOne
+	@JoinColumn(name = "parent_id")
+	@JsonBackReference(value = "parent_reference")
+	private Capability parent;
+
+	@ManyToOne
+	@JoinColumn(name = "environment_id")
+	@JsonBackReference(value = "environment_reference")
+	private Environment environment;
+
 	// CONSTRUCTORS
 	public Capability() {
 	}
 
 	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality) {
-		this.setParentId(1); // Foreign key
+		this.setParent(null); // Foreign key
 		this.setEnvironment(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
@@ -79,22 +89,6 @@ public class Capability {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public Environment getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(Environment environment) {
-		this.environment = environment;
 	}
 
 	public Integer getLevel() {
@@ -151,6 +145,30 @@ public class Capability {
 
 	public void setApplicationFit(Double applicationFit) {
 		this.applicationFit = applicationFit;
+	}
+
+	public List<Capability> getSubcapabilities() {
+		return subcapabilities;
+	}
+
+	public void setSubcapabilities(List<Capability> subcapabilities) {
+		this.subcapabilities = subcapabilities;
+	}
+
+	public Capability getParent() {
+		return parent;
+	}
+
+	public void setParent(Capability parent) {
+		this.parent = parent;
+	}
+
+	public Environment getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
 	}
 
 }

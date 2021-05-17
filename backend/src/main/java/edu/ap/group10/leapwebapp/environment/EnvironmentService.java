@@ -23,11 +23,6 @@ public class EnvironmentService {
         return environmentRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
-    // To GET an environment by name
-    public Environment getEnvironmentByName(String name) {
-        return environmentRepository.findByName(name);
-    }
-
     // To CREATE an environment
     public Environment createEnvironment(String name) {
         Environment envToSave = new Environment(name);

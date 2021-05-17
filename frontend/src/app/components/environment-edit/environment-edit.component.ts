@@ -13,7 +13,7 @@ export class EnvironmentEditComponent implements OnInit {
 
   token: string;
 
-  environmentForm = this.fb.group({
+  envEditForm = this.fb.group({
     name: ['', Validators.required]
   });
 
@@ -30,9 +30,12 @@ export class EnvironmentEditComponent implements OnInit {
         error => { console.error(error) });
   }
 
+  // To be able to use all form controls (name) above in html
+  get envEditFormControls() { return this.envEditForm.controls; }
+
   onSubmit(): void {
     var envIdToUpdate = this.router.url.split('/')[2];
-    var newEnvName = this.environmentForm.value.name;
+    var newEnvName = this.envEditForm.value.name;
 
     this.es.updateEnvironment(envIdToUpdate, newEnvName)
       .subscribe(res => console.log(res), err => console.error(err));

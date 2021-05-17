@@ -29,7 +29,7 @@ public class Environment {
 
 	// bidirectional @OneToMany, foreign key in Capability
 	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
-	@JsonManagedReference
+	@JsonManagedReference(value = "environment_reference")
 	private List<Capability> capabilities;
 
 	// CONSTRUCTORS

@@ -1,17 +1,38 @@
- <div class="middle">
-        <br>
-        <h2>Edit environment</h2><br>
-        <form [formGroup]="environmentForm" (ngSubmit)="onSubmit()">
-            <div class='form-group w-50'>
-                <div class="custom">
-            <input type="text" formControlName="name" required>
-            <label>Name</label>
+<div class="col-3 middle-page">
+    <div class="card">
+        <div class="card-header middle-div">
+            <h5><strong>EDIT ENVIRONMENT</strong></h5>
         </div>
-        <br>
+        <div class="card-body">
+            <!-- Form -->
+            <form class="form" [formGroup]="envEditForm" (ngSubmit)="onSubmit()">
+                <!-- Name field -->
+                <div class="form-group">
+                    <label for="name">New name</label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                    <!-- Name field validation errors -->
+                    <div class="alert alert-danger middle-div"
+                        *ngIf="envEditFormControls.name.touched && envEditFormControls.name.invalid">
+                        <div *ngIf="envEditFormControls.name.errors.required">
+                            New name is required
+                        </div>
+                        <div *ngIf="envEditFormControls.name.errors.whitespace">
+                            New name cannot contain white spaces
+                        </div>
+                    </div>
+                </div>
+                <!-- Submit button -->
+                <div>
+                    <button type="submit" class="btn btn-success" [disabled]="envEditForm.invalid">
+                        CREATE
+                    </button>
+                </div>
+            </form>
         </div>
-            <button type="submit" class="btn btn-danger" [disabled]="!environmentForm.valid">RENAME</button>
-        </form>
-    <!-- *ngif="" -> if service.user.role == useradmin
+    </div>
+</div>
+
+<!-- *ngif="" -> if service.user.role == useradmin
     <table *ngIf="token == "USER_ADMIN"">
         <caption></caption>
         <tr>
@@ -39,4 +60,3 @@
         <br>
         <a [routerLink]="['/environments/add']">Create New User</a>
     </div>-->
-</div>
