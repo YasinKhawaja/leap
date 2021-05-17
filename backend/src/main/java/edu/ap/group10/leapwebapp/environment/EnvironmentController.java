@@ -26,6 +26,18 @@ public class EnvironmentController {
 		return environmentService.getAllEnvironments();
 	}
 
+	// To GET an environment
+	@GetMapping("/envs/{id}")
+	public Environment getEnvironment(@PathVariable Long id) {
+		Environment env = null;
+		try {
+			env = environmentService.getEnvironment(id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return env;
+	}
+
 	// To GET an environment by name
 	@GetMapping("/environments/{name}")
 	public Environment getEnvironmentByName(@PathVariable String name) {

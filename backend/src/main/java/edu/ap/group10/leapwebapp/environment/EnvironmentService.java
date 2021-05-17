@@ -18,6 +18,11 @@ public class EnvironmentService {
         return environmentRepository.findAll();
     }
 
+    // To GET an environment
+    public Environment getEnvironment(Long id) {
+        return environmentRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
     // To GET an environment by name
     public Environment getEnvironmentByName(String name) {
         return environmentRepository.findByName(name);
