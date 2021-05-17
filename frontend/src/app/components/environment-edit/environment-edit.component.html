@@ -1,9 +1,16 @@
-<div class="middle">
-    <h2>Rename</h2>
-    <form [formGroup]="environmentForm" (ngSubmit)="onSubmit()">
-        <input type="text" formControlName="name">&nbsp;
-        <button type="submit" [disabled]="!environmentForm.valid">RENAME</button>
-    </form>
+ <div class="middle">
+        <br>
+        <h2>Edit environment</h2><br>
+        <form [formGroup]="environmentForm" (ngSubmit)="onSubmit()">
+            <div class='form-group w-50'>
+                <div class="custom">
+            <input type="text" formControlName="name" required>
+            <label>Name</label>
+        </div>
+        <br>
+        </div>
+            <button type="submit" class="btn btn-danger" [disabled]="!environmentForm.valid">RENAME</button>
+        </form>
     <!-- *ngif="" -> if service.user.role == useradmin
     <table *ngIf="token == "USER_ADMIN"">
         <caption></caption>
