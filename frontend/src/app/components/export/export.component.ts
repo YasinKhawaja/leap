@@ -65,20 +65,20 @@ export class ExportComponent implements OnInit {
 
     // add object(s)
     let title = "Capability Map";
-    slide.addText(title, { x: 0.5, y: 0.7, w: 3, color: "0000FF", fontSize: 40 });
+    slide.addText(title, { x: 0.5, y: 0.7, w: '100%', color: "0000FF", fontSize: 40 });
 
     // add the capability map image
     let data = document.getElementById('pdf');  
         html2canvas(data , {
           width: 1500,
-          height: 2000,
+          height: 1500,
           scale: 4
         }).then(canvas => {
         const contentDataURL = canvas.toDataURL('image/png')
-    slide.addImage({data: contentDataURL});
+    slide.addImage({data: contentDataURL, x: 1, y: 1,sizing:{type:'cover', w:5, h:4}});
 
     // save powerpoint
-    powerpoint.writeFile();
+    powerpoint.writeFile({fileName: "CapabilityMap"});
   });
   }
 }
