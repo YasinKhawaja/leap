@@ -27,18 +27,20 @@ export class ExportComponent implements OnInit {
   generatePDF() {
     let data = document.getElementById('pdf');  
         html2canvas(data , {
-          width: 2000,
-          height: 10000
+          width: 2500,
+          height: 15000
         }).then(canvas => {
-        const contentDataURL = canvas.toDataURL('image/png')
-        console.log(canvas);
-        let pdf = new jsPDF('l','mm','a4'); //Generates PDF in landscape mode
+        var contentWidth = canvas.width;
+        var contentHeight = canvas.height;
+
+        const contentDataURL = canvas.toDataURL('image/png', 10.0)
+        let pdf = new jsPDF('l','pt','a4'); //Generates PDF in landscape mode
         // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
-        var imgWidth = 300;
+        var imgWidth = 500;
+        var imgHeight = 450/contentWidth * contentHeight;
         // imgHeight nog beter aanpassen
         // de canvas wordt niet helemaal meegenomen als er capabilities bijkomen waardoor de map groter wordt
-        var imgHeight = canvas.height * imgWidth / canvas.width;
-        pdf.addImage(contentDataURL, 'PNG', 0, 0, imgWidth, imgHeight);  
+        pdf.addImage(contentDataURL, 'PNG', 200, -50, imgWidth, imgHeight);  
         pdf.save('CapabilityMap.pdf');
         console.log(canvas);
       }); 
@@ -70,13 +72,12 @@ export class ExportComponent implements OnInit {
     // add the capability map image
     let data = document.getElementById('pdf');  
         html2canvas(data , {
-          width: 1500,
-          height: 1500,
-          scale: 4
+          width: 3000,
+          height: 3200
         }).then(canvas => {
         const contentDataURL = canvas.toDataURL('image/png')
-    slide.addImage({data: contentDataURL, x: 1, y: 1,sizing:{type:'cover', w:5, h:4}});
-
+    slide.addImage({data: contentDataURL, x: 1, y: 1,sizing:{type:'contain', w:5, h:4}});
+ 
     // save powerpoint
     powerpoint.writeFile({fileName: "CapabilityMap"});
   });
