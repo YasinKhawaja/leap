@@ -40,7 +40,7 @@ export class EnvironmentEditComponent implements OnInit {
     this.es.updateEnvironment(envIdToUpdate, newEnvName)
       .subscribe(res => console.log(res), err => console.error(err));
 
-    this.router.navigate(['/envs']);
+    this.router.navigate(['environments']);
   }
 
 }

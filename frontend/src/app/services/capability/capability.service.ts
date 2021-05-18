@@ -8,7 +8,7 @@ import { Capability } from '../../classes/capability/capability';
 })
 export class CapabilityService {
 
-  private capabilitiesServiceURI: string = 'http://localhost:8080/api/envs'; // /{envId}/caps
+  private capabilitiesServiceURI: string = 'http://localhost:8080/api/capabilities';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -21,25 +21,25 @@ export class CapabilityService {
     return this.http.get<Capability[]>(url);
   }
 
-  // To GET all caps in their env
+  // To GET all caps in an env
   getAllCapabilitiesInEnvironment(envId: string): Observable<Capability[]> {
-    var url = `${this.capabilitiesServiceURI}/${envId}/caps`;
+    var url = `${this.capabilitiesServiceURI}`;
 
-    return this.http.get<Capability[]>(url);
+    return this.http.get<Capability[]>(url, { params: { envId: envId } });
   }
 
   // To GET a capability by name
   getCapabilityByName(envName: string, capName: string): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}/${envName}/caps/${capName}`;
+    var url = `${this.capabilitiesServiceURI}${capName}`;
 
     return this.http.get<Capability>(url);
   }
 
   // To CREATE a capability in its environment
-  createCapabilityInEnvironment(envId: string, cap: Capability): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}/${envId}/caps`
+  createCapability(envId: string, parentCapId: string, cap: Capability): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}`;
 
-    return this.http.post<Capability>(url, cap.getParams(), { headers: this.contentHeaders });
+    return this.http.post<Capability>(url, cap, { params: { envId: envId, parentCapId: parentCapId } });
   }
 
   // To UPDATE a capability in its environment

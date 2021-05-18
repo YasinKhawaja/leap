@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +21,13 @@ public class EnvironmentController {
 	private EnvironmentService environmentService;
 
 	// To GET all environments
-	@GetMapping("/envs")
+	@GetMapping("/environments")
 	public List<Environment> getAllEnvironments() {
 		return environmentService.getAllEnvironments();
 	}
 
 	// To GET an environment
-	@GetMapping("/envs/{id}")
+	@GetMapping("/environments/{id}")
 	public Environment getEnvironment(@PathVariable Long id) {
 		Environment env = null;
 		try {
@@ -39,14 +38,20 @@ public class EnvironmentController {
 		return env;
 	}
 
+	// To GET if an environment name already exists
+	@GetMapping("/environments/exists")
+	public Boolean existsByName(@RequestParam String name) {
+		return environmentService.existsByName(name);
+	}
+
 	// To CREATE an environment
-	@PostMapping("/envs")
+	@PostMapping("/environments")
 	public Environment createEnvironment(@RequestParam String name) {
 		return environmentService.createEnvironment(name);
 	}
 
 	// To UPDATE an environment
-	@PutMapping("/envs/{id}")
+	@PutMapping("/environments/{id}")
 	public Environment updateEnvironment(@PathVariable Long id, @RequestParam String name) {
 		Environment updatedEnv = null;
 		try {
@@ -58,7 +63,7 @@ public class EnvironmentController {
 	}
 
 	// To DELETE an environment
-	@DeleteMapping("/envs/{id}")
+	@DeleteMapping("/environments/{id}")
 	public void deleteEnvironment(@PathVariable Long id) {
 		environmentService.deleteEnvironment(id);
 	}

@@ -18,7 +18,7 @@ export class EnvironmentDeleteComponent implements OnInit {
 
     this.es.deleteEnvironment(envIdToDelete);
 
-    this.router.navigate(['/envs'])//.then(() => window.location.reload());
+    this.router.navigate(['environments'])//.then(() => window.location.reload());
   }
 
 }

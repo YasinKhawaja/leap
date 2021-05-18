@@ -11,7 +11,7 @@ import { CapabilityService } from '../../services/capability/capability.service'
 
 export class CapabilityComponent implements OnInit {
 
-  caps: Capability[];
+  capabilities: Capability[];
 
   constructor(private cs: CapabilityService, private router: Router) { }
 
@@ -19,7 +19,7 @@ export class CapabilityComponent implements OnInit {
     var envId = this.router.url.split('/')[2];
 
     this.cs.getAllCapabilitiesInEnvironment(envId)
-      .subscribe(res => { this.caps = res; console.log(res); }, err => console.error(err));
+      .subscribe(res => { this.capabilities = res; console.log(res); }, err => console.error(err));
   }
 
 }

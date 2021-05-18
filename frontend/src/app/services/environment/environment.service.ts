@@ -8,7 +8,7 @@ import { Environment } from 'src/app/classes/environment/environment';
 })
 export class EnvironmentService {
 
-  private environmentsServiceURI: string = 'http://localhost:8080/api/envs';
+  private environmentsServiceURI: string = 'http://localhost:8080/api/environments';
 
   constructor(private http: HttpClient) { }
 
@@ -17,13 +17,6 @@ export class EnvironmentService {
     var url = `${this.environmentsServiceURI}`;
 
     return this.http.get<Environment[]>(url);
-  }
-
-  // To GET an environment by name
-  getEnvironmentByName(name: string): Observable<Environment> {
-    var url = `${this.environmentsServiceURI}/${name}`;
-
-    return this.http.get<Environment>(url);
   }
 
   /*getAllUsers(): Observable<UserLeap[]> {
@@ -48,7 +41,7 @@ export class EnvironmentService {
 
   // To DELETE an environment
   deleteEnvironment(envId: string): void {
-    let url = `${this.environmentsServiceURI}/${envId}`;
+    var url = `${this.environmentsServiceURI}/${envId}`;
 
     this.http.delete(url).subscribe();
   }

@@ -14,10 +14,13 @@
                     <div class="alert alert-danger middle-div"
                         *ngIf="envAddFormControls.name.touched && envAddFormControls.name.invalid">
                         <div *ngIf="envAddFormControls.name.errors.required">
-                            Name is required
+                            Name is required.
                         </div>
                         <div *ngIf="envAddFormControls.name.errors.whitespace">
-                            Name cannot contain white spaces
+                            Name cannot contain white spaces.
+                        </div>
+                        <div *ngIf="envAddFormControls.name.errors.exists">
+                            Name already exists.
                         </div>
                     </div>
                 </div>

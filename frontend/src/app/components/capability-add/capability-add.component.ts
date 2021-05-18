@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { Capability } from 'src/app/classes/capability/capability';
 import Swal from 'sweetalert2';
-import { Capability } from '../../classes/capability/capability';
 import { CapabilityService } from "../../services/capability/capability.service";
 
 enum PaceOfChange {
@@ -28,38 +27,64 @@ enum Tom {
 })
 export class CapabilityAddComponent implements OnInit {
 
+  // Enums ^
   ePaceOfChange = PaceOfChange;
   eTom = Tom;
+  // Form
+  capAddForm: FormGroup;
 
-  capability = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    paceOfChange: ['', Validators.required],
-    tom: ['', Validators.required],
-    resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
-  });
+  constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router) { }
 
-  constructor(private fb: FormBuilder, private router: Router, private cs: CapabilityService) { }
+  ngOnInit(): void {
+    this.initializeForm();
+  }
 
-  ngOnInit(): void { }
+  // To initialize the form in HTML
+  private initializeForm() {
+    this.capAddForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      paceOfChange: ['', Validators.required],
+      targetOperationModel: ['', Validators.required],
+      resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
+    });
+  }
 
+  // Form GETTERS
+  get name() {
+    return this.capAddForm.get('name');
+  }
+
+  get paceOfChange() {
+    return this.capAddForm.get('paceOfChange');
+  }
+
+  get targetOperationModel() {
+    return this.capAddForm.get('targetOperationModel');
+  }
+
+  get resourcesQuality() {
+    return this.capAddForm.get('resourcesQuality');
+  }
+
+  // Form submit logic
   onSubmit() {
     var envId = this.router.url.split('/')[2];
+    var parentCapId = '0';
 
     var capToCreate = new Capability(
-      this.capability.value.name,
-      this.capability.value.paceOfChange,
-      this.capability.value.tom,
-      this.capability.value.resourcesQuality
+      this.name.value,
+      this.paceOfChange.value,
+      this.targetOperationModel.value,
+      this.resourcesQuality.value
     );
 
-    this.cs.createCapabilityInEnvironment(envId, capToCreate)
+    this.cs.createCapability(envId, parentCapId, capToCreate)
       .subscribe(
         response => console.log(response),
-        error => { if (error.error.message) Swal.fire('Error', error.error.message, 'error') }
+        error => Swal.fire('Error', error.error.message, 'error')
       );
 
-    this.router.navigate([`envs/${envId}/caps`])
-    //.then(() => window.location.reload());
+    this.router.navigate([`environments/${envId}/capabilities`]);
   }
 
 }

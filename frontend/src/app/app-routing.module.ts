@@ -15,14 +15,14 @@ import { RegisterFormUseradminComponent } from './components/register-form-usera
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 const routes: Routes = [
-  { path: 'envs', component: EnvironmentComponent },
-  { path: 'envs/create', component: EnvironmentAddComponent },
-  { path: 'envs/:envId/update', component: EnvironmentEditComponent },
-  { path: 'envs/:envId/delete', component: EnvironmentDeleteComponent },
-  { path: 'envs/:envId/caps', component: CapabilityComponent },
-  { path: 'envs/:envId/caps/create', component: CapabilityAddComponent },
-  { path: 'envs/:envId/caps/:capId/update', component: CapabilityEditComponent },
-  { path: 'envs/:envId/caps/:capId/delete', component: CapabilityDeleteComponent },
+  { path: 'environments', component: EnvironmentComponent },
+  { path: 'environments/create', component: EnvironmentAddComponent },
+  { path: 'environments/:envId/update', component: EnvironmentEditComponent },
+  { path: 'environments/:envId/delete', component: EnvironmentDeleteComponent },
+  { path: 'environments/:envId/capabilities', component: CapabilityComponent },
+  { path: 'environments/:envId/capabilities/create', component: CapabilityAddComponent },
+  { path: 'environments/:envId/capabilities/:capId/update', component: CapabilityEditComponent },
+  { path: 'environments/:envId/capabilities/:capId/delete', component: CapabilityDeleteComponent },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'export', component: ExportComponent },
