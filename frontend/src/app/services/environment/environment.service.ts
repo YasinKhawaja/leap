@@ -40,10 +40,10 @@ export class EnvironmentService {
   }
 
   // To DELETE an environment
-  deleteEnvironment(envId: string): void {
+  deleteEnvironment(envId: string): Observable<{}> {
     var url = `${this.environmentsServiceURI}/${envId}`;
 
-    this.http.delete(url).subscribe();
+    return this.http.delete(url);
   }
 
 }

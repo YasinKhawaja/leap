@@ -44,9 +44,14 @@ export class EnvironmentAddComponent implements OnInit {
     var env = new Environment(this.envAddFormControls.name.value);
 
     this.es.createEnvironment(env.name)
-      .subscribe(res => console.log(res), err => Swal.fire('Error', 'This environment already exists!', 'error'));
-
-    this.router.navigate(['environments'])//.then(() => window.location.reload());
+      .subscribe(
+        res => {
+          console.log(res);
+          Swal.fire('Created', 'Environment created.', 'success');
+          this.router.navigate(['environments']);
+        },
+        err => Swal.fire('Error', err.error.message, 'error')
+      );
   }
 
 }

@@ -47,7 +47,14 @@ public class EnvironmentController {
 	// To CREATE an environment
 	@PostMapping("/environments")
 	public Environment createEnvironment(@RequestParam String name) {
-		return environmentService.createEnvironment(name);
+		Environment createdEnv = null;
+		try {
+			createdEnv = environmentService.createEnvironment(name);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			throw e;
+		}
+		return createdEnv;
 	}
 
 	// To UPDATE an environment
@@ -58,6 +65,7 @@ public class EnvironmentController {
 			updatedEnv = environmentService.updateEnvironment(id, name);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			throw e;
 		}
 		return updatedEnv;
 	}

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
 import { LoginService } from 'src/app/services/login/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-environment-edit',
@@ -38,9 +39,14 @@ export class EnvironmentEditComponent implements OnInit {
     var newEnvName = this.envEditForm.value.name;
 
     this.es.updateEnvironment(envIdToUpdate, newEnvName)
-      .subscribe(res => console.log(res), err => console.error(err));
-
-    this.router.navigate(['environments']);
+      .subscribe(
+        res => {
+          console.log(res);
+          Swal.fire('Edited', 'Environment renamed.', 'success');
+          this.router.navigate(['environments']);
+        },
+        err => Swal.fire('Error', err.error.message, 'error')
+      );
   }
 
 }

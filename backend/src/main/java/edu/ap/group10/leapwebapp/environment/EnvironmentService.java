@@ -29,6 +29,10 @@ public class EnvironmentService {
 
     // To CREATE an environment
     public Environment createEnvironment(String name) {
+        if (environmentRepository.existsByName(name)) {
+            throw new ArithmeticException("Environment already exists!");
+        }
+
         Environment envToSave = new Environment(name);
 
         return environmentRepository.save(envToSave);
@@ -37,6 +41,11 @@ public class EnvironmentService {
     // To UPDATE an environment
     public Environment updateEnvironment(Long id, String name) {
         Environment envToUpdate = environmentRepository.findById(id).orElseThrow();
+
+        if (environmentRepository.existsByName(name)) {
+            throw new ArithmeticException("An environment with this name already exists!");
+        }
+
         envToUpdate.setName(name);
 
         return environmentRepository.save(envToUpdate);

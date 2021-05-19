@@ -1,18 +1,5 @@
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
-.middle-page {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.middle-div {
-    text-align: center;
-    vertical-align: middle;
+#caps {
+    margin: 25px;
 }
 
 th {
@@ -20,28 +7,7 @@ th {
     vertical-align: middle !important;
 }
 
-/*table {
-    z-index: 2;
-    left: 10%;
-    top: 260px;
-    width: 109%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 0 2px 15px rgba(64, 64, 64, .7);
-    border-radius: 12px 12px 0 0;
-    overflow: hidden;
-}*/
-
-/*.numbers {
+td {
     text-align: center;
-}*/
-
-/*tr {
-    width: 100%;
-    background-color: lightblue;
-    font-family: 'Montserrat', sans-serif;
+    vertical-align: middle !important;
 }
-
-tr:nth-child(even) {
-    background-color: white;
-}*/

@@ -1,4 +1,4 @@
-<div class="container">
+<div id="caps">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -8,8 +8,8 @@
         <th scope="col">PACE OF CHANGE</th>
         <th scope="col">TARGET OPERATION MODEL</th>
         <th scope="col">RESOURCES QUALITY</th>
-        <th scope="col">INFORMATION QUALITY</th>
-        <th scope="col">APPLICATION FIT</th>
+        <th scope="col">INFO QUALITY</th>
+        <th scope="col">APP FIT</th>
         <th scope="col"></th> <!-- ADD sub cap -->
       </tr>
     </thead>
@@ -17,7 +17,7 @@
       <tr *ngFor="let cap of capabilities">
         <td>
           <a [routerLink]="[cap.id, 'delete']">
-            <img src='assets/delete.jpg' alt="Delete" width='20' height='20'>
+            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
           </a>
         </td>
         <td>
@@ -31,9 +31,14 @@
         <td class="numbers">{{ cap.resourcesQuality }}</td>
         <td class="numbers">{{ cap.informationQuality }}</td>
         <td class="numbers">{{ cap.applicationFit }}</td>
+        <td>
+          <a class="btn btn-danger" [routerLink]="[cap.id, 'create']" role="button" *ngIf="cap.level == '1'">ADD CAP Lv2</a>
+          <a class="btn btn-danger" [routerLink]="[cap.id, 'create']" role="button" *ngIf="cap.level == '2'">ADD CAP Lv3</a>
+        </td>
       </tr>
     </tbody>
   </table>
-  <a [routerLink]="['create']">ADD CAPABILITY</a>
-  <app-capability-add></app-capability-add>
+  <div>
+    <a class="btn btn-danger" [routerLink]="['create']" role="button">ADD CAPABILITY Lv1</a>
+  </div>
 </div>
