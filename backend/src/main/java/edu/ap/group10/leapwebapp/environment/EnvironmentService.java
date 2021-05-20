@@ -4,6 +4,7 @@ package edu.ap.group10.leapwebapp.environment;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,10 @@ public class EnvironmentService {
     // To GET if an environment name already exists
     public Boolean existsByName(String name) {
         return environmentRepository.existsByName(name);
+    }
+
+    public Environment getEnvironmentById(Long id){
+        return environmentRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     // To CREATE an environment

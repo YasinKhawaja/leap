@@ -1,0 +1,52 @@
+<h1 class='display-4'>All IT Applications</h1>
+<br /><br />
+<a [routerLink]="['../itapplication/create']">Add IT Application</a>
+
+<table class='table table-striped'>
+    <thead>
+        <tr>
+            <th scope='col'>Name</th>
+            <!--technology + version-->
+            <th scope='col'>Technology</th>
+            <!--dates-->
+            <th scope='col'>Acquisition Date</th>
+            <th scope='col'>End of Life</th>
+            <!--current / expected-->
+            <th scope='col'>Scalability</th>
+            <th scope='col'>Performance</th>
+            <th scope='col'>Security Level</th>
+            <th scope='col'>Stability</th>
+            <!-- 1-5 -->
+            <th scope='col'>Value for Money</th>
+
+            <!--current cost / tolerated cost-->
+            <th scope='col'>Cost per year</th>
+            <!--TIME value-->
+            <th scope='col'>TIME</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let itapplication of itApplications'>
+            <td>
+                <a [routerLink]="['../itapplication/', itapplication.id, 'delete']"><img src='assets/delete.jpg' width='15' height='18'></a>&nbsp;&nbsp;
+                <a [routerLink]="['../itapplication/', itapplication.id, 'update']">{{ itapplication.name }}</a>
+            </td>
+            <td> {{ itapplication.technology }} V{{itapplication.version}} </td>
+            <td> {{ itapplication.acquisitionDate }} </td>
+            <td> {{ itapplication.endOfLife }} </td>
+            <td class="numbers"> {{ itapplication.currentScalability }}/{{ itapplication.expectedScalability }} </td>
+            <td class="numbers"> {{ itapplication.currentPerformance }}/{{ itapplication.expectedPerformance }} </td>
+            <td class="numbers"> {{ itapplication.currentSecurityLevel }}/{{ itapplication.expectedSecurityLevel }} </td>
+            <td class="numbers"> {{ itapplication.currentStability }}/{{ itapplication.expectedStability }} </td>
+            <td class="numbers"> {{ itapplication.currentValueForMoney }}</td>
+            <td class="numbers"> {{ itapplication.currentTotalCostPerYear }}{{ itapplication.costCurrency }}/{{ itapplication.toleratedTotalCostPerYear }}{{ itapplication.costCurrency }}</td>
+            <td class="numbers"> {{ itapplication.timeValue }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>

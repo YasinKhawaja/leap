@@ -22,6 +22,10 @@ import { CapabilityEditComponent } from './components/capability-edit/capability
 import { ExportComponent } from "./components/export/export.component";
 import { CompanyRequestComponent } from './components/company-request/company-request.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ItapplicationComponent } from './components/itapplication/itapplication.component';
+import { ItapplicationAddComponent } from './components/itapplication-add/itapplication-add.component';
+import { ItapplicationDeleteComponent } from './components/itapplication-delete/itapplication-delete.component';
+import { ItapplicationEditComponent } from './components/itapplication-edit/itapplication-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +34,8 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterFormComponent },
   { path: 'login', component: LoginComponent },
   { path: 'environments', component: EnvironmentComponent },
-  { path: 'capabilities', component: CapabilityComponent }
+  { path: 'capabilities', component: CapabilityComponent },
+  { path: 'itapplication', component: ItapplicationComponent }
 ]
 
 @NgModule({
@@ -48,7 +53,11 @@ const appRoutes: Routes = [
     CapabilityEditComponent,
     ExportComponent,
     CompanyRequestComponent,
-    LoginComponent
+    LoginComponent,
+    ItapplicationAddComponent,
+    ItapplicationDeleteComponent,
+    ItapplicationEditComponent,
+    ItapplicationComponent
   ],
   imports: [
     BrowserModule,

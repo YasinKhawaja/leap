@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
+import edu.ap.group10.leapwebapp.itapplication.ITApplication;
 
 @Entity
 public class Capability {
@@ -50,6 +52,10 @@ public class Capability {
 
 	@Column(name = "application_fit")
 	private Double applicationFit;
+/*
+	@OneToMany(targetEntity = ITApplication.class, fetch = FetchType.EAGER)
+	@JoinColumn(name="environment_id", nullable = false)
+	private List<ITApplication> itApplications;*/
 
 	// foreign keys
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -82,6 +88,18 @@ public class Capability {
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
 	}
+/*
+	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality, List ITApplications){
+		this.setParentId(1); // Foreign key
+		this.setEnvironment(null); // Foreign key
+		this.setLevel(1);
+		this.name = name;
+		this.paceOfChange = paceOfChange;
+		this.tom = tom;
+		this.resourcesQuality = resourcesQuality;
+		this.setInformationQuality(0.0);
+		this.setApplicationFit(0.0);
+	}*/
 
 	// GETTERS & SETTERS
 	public Long getId() {

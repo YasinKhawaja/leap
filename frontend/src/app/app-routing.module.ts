@@ -10,6 +10,10 @@ import { EnvironmentDeleteComponent } from './components/environment-delete/envi
 import { EnvironmentEditComponent } from './components/environment-edit/environment-edit.component';
 import { EnvironmentComponent } from './components/environment/environment.component';
 import { ExportComponent } from './components/export/export.component';
+import { ItapplicationAddComponent } from './components/itapplication-add/itapplication-add.component';
+import { ItapplicationDeleteComponent } from './components/itapplication-delete/itapplication-delete.component';
+import { ItapplicationEditComponent } from './components/itapplication-edit/itapplication-edit.component';
+import { ItapplicationComponent } from './components/itapplication/itapplication.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
@@ -27,7 +31,11 @@ const routes: Routes = [
   { path: 'register', component: RegisterFormComponent },
   { path: 'export', component: ExportComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'company/register', component: CompanyRequestComponent }
+  { path: 'company/register', component: CompanyRequestComponent },
+  { path: 'itapplication/', component: ItapplicationComponent},
+  { path: 'itapplication/:itapplicationId/delete', component: ItapplicationDeleteComponent},
+  { path: 'itapplication/:itapplicationId/update', component: ItapplicationEditComponent},
+  { path: 'itapplication/create', component: ItapplicationAddComponent}
 ];
 
 @NgModule({
