@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       this.login.value.password))
 
       //change it so the enviornments only gets called on succesful login
-    this.router.navigate(['/envs'])
+    this.router.navigate(['/environments'])
   }
 
 }
