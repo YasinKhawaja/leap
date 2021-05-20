@@ -13,7 +13,7 @@ import pptxgen from "pptxgenjs";
 export class ExportComponent implements OnInit {
 
   capabilities: Capability[]
-
+  
   constructor(private cs: CapabilityService) { 
     this.capabilities = [];
   }
@@ -104,5 +104,25 @@ export class ExportComponent implements OnInit {
     // save powerpoint
     powerpoint.writeFile({fileName: "CapabilityMap"});
   });
+  }
+
+  generateLevel1Layer(){
+    let capabilitiesLevel1: Capability[]
+    capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
+    this.capabilities = capabilitiesLevel1;
+    console.log(this.capabilities);
+    console.log("button called");
+  }
+
+  generateLevel1and2Layer(){
+    let capabilitiesLevel2: Capability[]
+    capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
+    this.capabilities = capabilitiesLevel2;
+    console.log(this.capabilities);
+    console.log("button called");
+  }
+
+  generateEntireMap(){
+    this.ngOnInit();
   }
 }
