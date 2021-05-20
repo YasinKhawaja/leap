@@ -48,9 +48,6 @@ export class CapabilityAddComponent implements OnInit {
     this.cs.addCapability(new Capability(this.capability.value.name,
       this.capability.value.paceOfChange, this.capability.value.tom, this.capability.value.resourcesQuality))
     this.router.navigate(['capabilities'])
-      .then(() => {
-        window.location.reload();
-      })
   }
 
 }

@@ -73,9 +73,7 @@ export class CapabilityEditComponent implements OnInit {
                                           this.capabilityName)
     
     this.router.navigate(['capabilities'])
-      .then(() => {
-        window.location.reload();
-      })
+      
   }
 
 }

@@ -31,9 +31,7 @@ export class CapabilityDeleteComponent implements OnInit {
   onSubmit() {
     this.cs.deleteCapability(this.capability.value.name)
     this.router.navigate(['capabilities'])
-      .then(() => {
-        window.location.reload();
-      })
+      
   }
 
 }
