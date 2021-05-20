@@ -40,7 +40,7 @@ public class Capability {
 	private PaceOfChange paceOfChange;
 
 	@Enumerated(EnumType.STRING)
-	private Tom tom;
+	private TargetOperationModel targetOperationModel;
 
 	@Column(name = "resources_quality")
 	private Integer resourcesQuality;
@@ -70,13 +70,14 @@ public class Capability {
 	public Capability() {
 	}
 
-	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality) {
+	public Capability(String name, PaceOfChange poc, TargetOperationModel tom,
+			Integer resourcesQuality) {
 		this.setParent(null); // Foreign key
 		this.setEnvironment(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
-		this.paceOfChange = paceOfChange;
-		this.tom = tom;
+		this.paceOfChange = poc;
+		this.targetOperationModel = tom;
 		this.resourcesQuality = resourcesQuality;
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
@@ -115,12 +116,12 @@ public class Capability {
 		this.paceOfChange = paceOfChange;
 	}
 
-	public Tom getTom() {
-		return tom;
+	public TargetOperationModel getTom() {
+		return targetOperationModel;
 	}
 
-	public void setTom(Tom tom) {
-		this.tom = tom;
+	public void setTom(TargetOperationModel tom) {
+		this.targetOperationModel = tom;
 	}
 
 	public Integer getResourcesQuality() {
