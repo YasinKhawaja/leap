@@ -32,21 +32,21 @@ public class CapabilityServiceUnitTests {
 
 
     
-    // @Test
-    // void getCapability_InDb_ReturnCap() {
-    //     // When
-    //     when(cRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Capability("test1",PaceOfChange.DIFFERENTIATION,Tom.COORDINATION,2),
-    //             new Capability("test2",PaceOfChange.INNOVATIVE,Tom.DIVERSIFICATION,2), new Capability("test3",PaceOfChange.STANDARD,Tom.REPLICATION,2)));
+     @Test
+     void getCapability_InDb_ReturnCap() {
+       // When
+       when(cRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Capability("test1",PaceOfChange.DIFFERENTIATION,TargetOperationModel.COORDINATION,2),
+               new Capability("test2",PaceOfChange.INNOVATIVE,TargetOperationModel.DIVERSIFICATION,2), new Capability("test3",PaceOfChange.STANDARD,TargetOperationModel.REPLICATION,2)));
 
-    //     List<Capability> actualCaFound = cServiceUnderTest.getCapabilities();
+        List<Capability> actualCaFound = cServiceUnderTest.getAllCapabilities();
 
-    //     // Then
-    //     verify(cRepositoryUnderTest).findAll();
+       // Then
+        verify(cRepositoryUnderTest).findAll();
 
-    //     assertEquals("test1", actualCaFound.get(0).getName());
-    //     assertEquals("test2", actualCaFound.get(1).getName());
-    //     assertEquals("test3", actualCaFound.get(2).getName());
-    // }
+        assertEquals("test1", actualCaFound.get(0).getName());
+        assertEquals("test2", actualCaFound.get(1).getName());
+        assertEquals("test3", actualCaFound.get(2).getName());
+     }
 
     
 }

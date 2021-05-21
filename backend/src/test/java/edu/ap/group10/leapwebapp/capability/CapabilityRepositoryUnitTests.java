@@ -27,24 +27,24 @@ public class CapabilityRepositoryUnitTests {
         cRepositoryUnderTest.deleteAll();
     }
 
-    // @Test
-    // void findByEnv() {
+     @Test
+    void findByEnv() {
 
-    //     // Given
-    //     Environment env = new Environment("EnvironmentTest");
-    //     eRepositoryUnderTest.save(env);
-
-
-    //     Capability expectedCaToReturn = new Capability("jan",PaceOfChange.DIFFERENTIATION,Tom.COORDINATION,2);
-    //     expectedCaToReturn.setEnvironment(env);
-    //     cRepositoryUnderTest.save(expectedCaToReturn);
+       // Given
+      Environment env = new Environment("EnvironmentTest");
+       eRepositoryUnderTest.save(env);
 
 
-    //     // When
-    //     List<Capability> actualCaReturned = cRepositoryUnderTest.findByEnvironment(env);
+      Capability expectedCaToReturn = new Capability("jan",PaceOfChange.DIFFERENTIATION,TargetOperationModel.COORDINATION,2);
+      expectedCaToReturn.setEnvironment(env);
+       cRepositoryUnderTest.save(expectedCaToReturn);
 
-    //     // Then
-    //     assertEquals(expectedCaToReturn, actualCaReturned.get(0));
-    // }
+
+     // When
+      List<Capability> actualCaReturned = cRepositoryUnderTest.findByEnvironment(env);
+
+      // Then
+      assertEquals(expectedCaToReturn, actualCaReturned.get(0));
+     }
     
 }
