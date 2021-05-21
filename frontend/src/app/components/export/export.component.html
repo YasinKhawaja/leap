@@ -22,18 +22,31 @@
   <br>
 </section>
   <div id="div" >
-        <h1>Options</h1>
+        <h4>Options</h4>
+        <form (ngSubmit)="generateEntireMap()">
+          <br>
+         <button type="submit">Show Entire Capability Map</button>
+        </form>
+        <form (ngSubmit)="generateLevel1and2Layer()">
+          <br>
+         <button type="submit">Show Level 1 & 2 Layer</button>
+        </form>
+        <form (ngSubmit)="generateLevel1Layer()">
+          <br>
+         <button type="submit">Show Level 1 Layer</button>
+        </form>
+        <br>
+        <br>
+        <br>
         <h4>Export</h4>
         <form (ngSubmit)="generatePDF()">
             <br>
         <button type="submit">Export to PDF</button>
         </form>
-        <br>
         <form (ngSubmit)="generateCSV()">
           <br>
          <button type="submit">Export to CSV</button>
         </form>
-        <br>
         <form (ngSubmit)="generatePowerPoint()">
           <br>
          <button type="submit">Export to PowerPoint</button>

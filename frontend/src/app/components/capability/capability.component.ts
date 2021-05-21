@@ -19,7 +19,8 @@ export class CapabilityComponent implements OnInit {
   ngOnInit(): void {
     this.ns.environmentSelect();
 
-    var envId = this.router.url.split('/')[2];
+    var envId = this.ns.getEnvironment();
+    // var envId = this.router.url.split('/')[2];
 
     this.cs.getAllCapabilitiesInEnvironment(envId)
       .subscribe(res => { this.capabilities = res; console.log(res); }, err => console.error(err));

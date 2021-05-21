@@ -12,7 +12,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto" *ngIf="(ns.environmentSelected | async) === true">
+                <ul class="navbar-nav mr-auto" *ngIf="(ns.environmentStatus() | async) === true">
                     <div class="verticalLine ">
                         <li class='nav-item active'>
                             <!-- EnvName moet dynamisch opgevuld worden -->
@@ -88,10 +88,14 @@
 
         </div>
         <br>
-    </main>
-    <router-outlet></router-outlet>
-    <br>
-    <footer class="footer">
+        <br>
+        <br>
+        <br>
+        <br>
+</main>
+<router-outlet></router-outlet>
+<br>
+<footer class="footer">
 
         <div class="container">
             &copy; 2020-2021 leap.com | Terms of Service | Privacy Policy | Cookies
