@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capability } from 'src/app/classes/capability/capability';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { CapabilityService } from '../../services/capability/capability.service';
 
 @Component({
@@ -13,9 +14,11 @@ export class CapabilityComponent implements OnInit {
 
   capabilities: Capability[];
 
-  constructor(private cs: CapabilityService, private router: Router) { }
+  constructor(private cs: CapabilityService, private router: Router, private ns: NavbarService) { }
 
   ngOnInit(): void {
+    this.ns.environmentSelect();
+
     var envId = this.router.url.split('/')[2];
 
     this.cs.getAllCapabilitiesInEnvironment(envId)

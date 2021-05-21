@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 @Component({
   selector: 'app-environment',
@@ -11,7 +12,7 @@ export class EnvironmentComponent implements OnInit {
 
   environments: Environment[];
 
-  constructor(private es: EnvironmentService) {
+  constructor(private es: EnvironmentService, private ns: NavbarService) {
     this.environments = [];
   }
 
@@ -20,4 +21,7 @@ export class EnvironmentComponent implements OnInit {
       .subscribe(res => { this.environments = res; console.log(res); }, err => console.error(err));
   }
 
+  environmentId(environmentId): void{
+    this.ns.setEnvironment(environmentId);
+  }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarService } from './services/navbar/navbar.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title: string;
 
-  constructor() {
+  constructor(public ns: NavbarService) {
     this.title = 'LEAP-webapp'
+  }
+
+  deselect(): void{
+    this.ns.environmentDeselect()
   }
 }
