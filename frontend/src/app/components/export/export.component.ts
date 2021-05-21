@@ -5,6 +5,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import { saveAs } from "file-saver";
 import pptxgen from "pptxgenjs";
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 @Component({
   selector: 'app-export',
   templateUrl: './export.component.html',
@@ -14,15 +15,22 @@ export class ExportComponent implements OnInit {
 
   capabilities: Capability[]
   
-  constructor(private cs: CapabilityService) { 
+  constructor(private cs: CapabilityService, private ns: NavbarService) { 
     this.capabilities = [];
   }
 
   ngOnInit(): void {
-    this.cs.getAllCapabilities()
-               .subscribe(data => { this.capabilities = data }, 
-                          error => { console.error(error) })
+    let environmentId = this.ns.getEnvironment();
+    //let environmentId = this.router.url.split('/')[2];
+
+    this.cs.getAllCapabilitiesInEnvironment(environmentId)
+      .subscribe(result => {
+        this.capabilities = result;
+        console.log(result);
+      },
+      error => console.log(error));
   }
+  
 
   generatePDF() {
         // let data = document.getElementById('pdf');  
