@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <body>
     <header class="header">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top nav-custom">
@@ -46,21 +45,39 @@
                         </li>
                     </div>
                 </ul>
-                <ul>
+
+                <ul class="navbar-nav" *ngIf="(ns.user | async) === true">
+                   
                     <li class='nav-item active '>
+                        <!--log out knop-->
                         <!-- User moet dynamisch opgevuld worden met de username =>  <p> {{ user.name }}</p> -->
-                        <a class='nav-link'><i class="fa fa-fw fa-user"></i>User</a>
+                        <a class='nav-link' [routerLink]="['login']" (click)="logout()"><i class="fa fa-fw fa-user"></i>User</a>
                     </li>
                 </ul>
-                <form class="form-inline mt-2 mt-md-0">
-                    <button class="btn btn-white btn-big navbar-right" [routerLink]="['login']" (click)="deselect()"> LOGIN</button>
-                    <button class="btn btn-white btn-big navbar-right" [routerLink]="['register']" (click)="deselect()">SIGNUP</button>
-                    <div class="ml-auto color" id="language">
-                        <select name="language" id="lang" class=" dropdown color">
-                        <option value="eng" selected>EN</option>
-                    </select>
-                    </div>
-                </form>
+            <nav  *ngIf="(ns.environmentSelected | async) === false">
+                <ul class="navbar-nav"  *ngIf="(ns.user | async) === true">
+                <li class='nav-item active'>
+                    <!-- EnvName moet dynamisch opgevuld worden -->
+                    <a class="nav-link " [routerLink]="['environments']">Environments</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-navright"  *ngIf="(ns.user | async) === false"> 
+                <li>
+                    <button class="btn btn-white btn-big navbar-right" [routerLink]="['login']"> LOGIN</button>
+                </li>
+               
+           <li>
+            <button class="btn btn-white btn-big navbar-right" [routerLink]="['register']" (click)="deselect()">SIGNUP</button>
+           </li>
+             <li >
+            <div class="color" id="language">
+                <select name="language" id="lang" class=" dropdown color">
+                <option value="eng" selected>EN</option>
+            </select>
+            </div>
+            </li>
+            </ul>
+                </nav>
             </div>
         </nav>
     </header>

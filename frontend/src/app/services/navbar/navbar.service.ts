@@ -8,9 +8,20 @@ export class NavbarService {
   environmentSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
   environmentID: string;
 
-  public environmentSelect() {
-    this.environmentSelected.next(true);
+  
+  //tijdelijk tot inlog werkt 
+  user:BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public userLogin(){
+    this.user.next(true)
   }
+  public userLogout(){
+    this.user.next(false)
+  } 
+//
+
+public environmentSelect() {
+  this.environmentSelected.next(true);
+}
 
   public environmentDeselect() {
     this.environmentSelected.next(false);

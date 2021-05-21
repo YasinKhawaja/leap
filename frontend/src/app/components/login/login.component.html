@@ -23,7 +23,7 @@
 
 
         <div class="form-group">
-            <button type="submit" class="btn btn-danger form-control button" [disabled]="!login.valid">LOG IN</button>
+            <button type="submit" class="btn btn-danger form-control button" (click)="deselect()" [disabled]="!login.valid">LOG IN</button>
         </div>
     </div>
 </form>

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/classes/login/login';
 import { LoginService } from 'src/app/services/login/login.service';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,16 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private ls: LoginService) { }
+    private ls: LoginService,private ns : NavbarService) { }
 
   ngOnInit(): void {
   }
+
+  //tijdelijk tot login werkt
+  deselect(): void{
+    this.ns.userLogin();
+  }
+  //
 
   //onSubmit check user and user admin repository if user exists with userdetails
   onSubmit() {

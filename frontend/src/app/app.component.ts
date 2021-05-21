@@ -15,4 +15,11 @@ export class AppComponent {
   deselect(): void{
     this.ns.environmentDeselect()
   }
+
+  //tijdelijk
+  logout(): void {
+    this.ns.userLogout()
+    this.ns.environmentDeselect()
+  }
+
 }

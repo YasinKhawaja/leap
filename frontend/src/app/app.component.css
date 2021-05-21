@@ -80,8 +80,13 @@ body {
 .dropdown {
     background: transparent;
     border: none;
+    top:4px;
 }
 
 .color {
     color: white
+}
+
+.navbar-navright {
+    margin-left: 490%;
 }
