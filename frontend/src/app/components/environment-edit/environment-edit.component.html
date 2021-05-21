@@ -1,7 +1,62 @@
-<div class="middle">
-    <h2>Rename environment</h2>
-    <form [formGroup]="environment" (ngSubmit)="onSubmit()">
-        <input type="text" formControlName="name">&nbsp;
-        <button type="submit" [disabled]="!environment.valid">RENAME</button>
-    </form>
+<div class="col-3 middle-page">
+    <div class="card">
+        <div class="card-header middle-div">
+            <h5><strong>EDIT ENVIRONMENT</strong></h5>
+        </div>
+        <div class="card-body">
+            <!-- Form -->
+            <form class="form" [formGroup]="envEditForm" (ngSubmit)="onSubmit()">
+                <!-- Name field -->
+                <div class="form-group">
+                    <label for="name">New name</label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                    <!-- Name field validation errors -->
+                    <div class="alert alert-danger middle-div"
+                        *ngIf="envEditFormControls.name.touched && envEditFormControls.name.invalid">
+                        <div *ngIf="envEditFormControls.name.errors.required">
+                            New name is required
+                        </div>
+                        <div *ngIf="envEditFormControls.name.errors.whitespace">
+                            New name cannot contain white spaces
+                        </div>
+                    </div>
+                </div>
+                <!-- Submit button -->
+                <div>
+                    <button type="submit" class="btn btn-success" [disabled]="envEditForm.invalid">
+                        CREATE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<!-- *ngif="" -> if service.user.role == useradmin
+    <table *ngIf="token == "USER_ADMIN"">
+        <caption></caption>
+        <tr>
+            <th id="users">
+                <h1>Users</h1>
+            </th>
+        </tr>
+        Not implemented yet -> make controller page that gets all users of companyID
+        <tr *ngFor="let environment of environments">
+            not implemented yet get all users page instead of capabilities
+            <td>{{ user.name }} - {{ user.environments }}</td>
+            <td>
+                not implemented yet, edit user met surname, firstname, email, company, username en linkedenvironments
+                <a [routerLink]="['/environments/' + environment.id + '/edit']"><img src="assets/edit-icon.png" alt="Delete" height="20" width="20"></a>
+                &nbsp;&nbsp;&nbsp;
+            </td>
+            <td>
+                not implemented yet, delete user van environment
+                <a [routerLink]="['/environments/' + environment.id + '/delete']"><img src="assets/delete-icon.png" alt="Delete" height="20" width="20"></a>
+                &nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+    </table>
+    <div>
+        <br>
+        <a [routerLink]="['/environments/add']">Create New User</a>
+    </div>-->

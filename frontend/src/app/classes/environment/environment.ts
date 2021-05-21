@@ -1,12 +1,12 @@
 import { HttpParams } from "@angular/common/http";
+import { Capability } from "../capability/capability";
 
 export class Environment {
 
-    public id: number;
-    //public name: string;
+    public id: number
+    public capabilities: Capability[]
 
     constructor(public name: string) {
-        this.id = 0;
     }
 
     getParams(): HttpParams {

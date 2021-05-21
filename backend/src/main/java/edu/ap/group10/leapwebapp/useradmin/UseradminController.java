@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.ap.group10.leapwebapp.useradmin.UseradminRepository;
+import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationToken;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenRepository;
 import edu.ap.group10.leapwebapp.user.UserLeap;
@@ -34,7 +35,9 @@ public class UseradminController {
       @RequestParam("token")String confirmationToken) {
 
     ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-    Long companyID = token.getCompany().getId();
+    Company company = token.getCompany();
+
+    System.out.println(company.getCompanyName());
 
     if(token != null){
       UserLeap validateUser = userRepository.findByUsername(username);
@@ -46,7 +49,7 @@ public class UseradminController {
       else if(userRepository.findByEmail(email) != null || useradminRepository.findByEmail(email) != null){
           return "Email is already in use! " + email;
       }
-      Useradmin n = new Useradmin(firstName, surname, email, username, password, companyID);
+      Useradmin n = new Useradmin(firstName, surname, email, username, password, company);
       useradminRepository.save(n);
       return "Saved";
     }

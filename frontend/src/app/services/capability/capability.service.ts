@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 
 @Injectable({
@@ -14,42 +13,47 @@ export class CapabilityService {
 
   constructor(private http: HttpClient) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
- }
+  }
 
   // Get all capabilities
-  getAllCapabilities(): Observable<Capability[]>{
+  getAllCapabilities(): Observable<Capability[]> {
     let url = `${this.capabilitiesServiceURI}`;
     return this.http.get<Capability[]>(url);
   }
 
-  // Add a capability
-  addCapability(capability: Capability): void {
-    let url = `${this.capabilitiesServiceURI}/add`
-      // !!! subscribe is needed to execute POST
-    this.http.post(url, capability.getParams(),
-                  { headers: this.contentHeaders})
-                  .subscribe(data => { console.log(data) }, 
-                  error => { if (error.error.message) Swal.fire('Error',error.error.message, 'error')})
+  // To GET all caps in an env
+  getAllCapabilitiesInEnvironment(envId: string): Observable<Capability[]> {
+    var url = `${this.capabilitiesServiceURI}`;
+
+    return this.http.get<Capability[]>(url, { params: { envId: envId } });
   }
 
-  // Delete a capability
-  deleteCapability(name: string): void{
-    let url = `${this.capabilitiesServiceURI}/delete/${name}`
-    // !!! subscribe is needed to execute DELETE
-    this.http.delete(url,
-      { headers: this.contentHeaders})
-      .subscribe(data => { console.log(data) },
-                  error => { if (error.error.message) Swal.fire('Error',error.error.message, 'error')})
+  // To GET a capability by name
+  getCapabilityByName(envName: string, capName: string): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}${capName}`;
+
+    return this.http.get<Capability>(url);
   }
 
-  // Edit a capability
-  editCapability(capability: Capability, originalName: string): void {
-    let url = `${this.capabilitiesServiceURI}/edit/${originalName}`;
-    // !! subscribe is needed to execute POST
-    this.http.post(url, capability.getParams(),
-                    { headers: this.contentHeaders})
-                    .subscribe(data => { console.log(data) },
-                                error => { console.log(error) })
+  // To CREATE a capability in its environment
+  createCapability(envId: string, parentCapId: string, cap: Capability): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}`;
+
+    return this.http.post<Capability>(url, cap, { params: { envId: envId, parentCapId: parentCapId } });
+  }
+
+  // To UPDATE a capability in its environment
+  updateCapabilityInEnvironment(envId: string, capId: string, cap: Capability): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}/${envId}/caps/${capId}`;
+
+    return this.http.put<Capability>(url, cap.getParams(), { headers: this.contentHeaders });
+  }
+
+  // To DELETE a cap in its env
+  deleteCapabilityFromEnvironment(envId: string, capId: string): void {
+    var url = `${this.capabilitiesServiceURI}/${envId}/caps/${capId}`
+
+    this.http.delete(url).subscribe();
   }
 
   // Search one capability by name
@@ -57,7 +61,7 @@ export class CapabilityService {
     let url = `${this.capabilitiesServiceURI}/searchOne`
 
     return this.http.post<Capability[]>(url, `name=${name}`,
-                    { headers: this.contentHeaders})
+      { headers: this.contentHeaders })
   }
- 
+
 }

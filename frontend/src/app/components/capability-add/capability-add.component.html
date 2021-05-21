@@ -1,78 +1,76 @@
 <div class="container">
   <h1>Add Capability</h1><br>
-
-<form [formGroup]="capability" (ngSubmit)="onSubmit()">
-  <div class='form-group w-50'>
-    <div class="custom">
-      <input type='text' formControlName='name' required/>
-      <label>Name</label>
-    </div>
-    <br>
-      <div *ngIf="capability.get('name')!.invalid && (capability.get('name')!.dirty || capability.get('name')!.touched)"
-        class="alert alert-danger alertdiv">
-        <div *ngIf="capability.get('name')!.errors!.required">
+  <form [formGroup]="capAddForm" (ngSubmit)="onSubmit()">
+    <div class='form-group w-50'>
+      <div class="custom">
+        <input type='text' formControlName='name' required />
+        <label>Name</label>
+      </div>
+      <br>
+      <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="alert alert-danger alertdiv">
+        <div *ngIf="name!.errors!.required">
           Name is required.
         </div>
-        <div *ngIf="capability.get('name')!.errors!.pattern">
+        <div *ngIf="name!.errors!.pattern">
           Name should only consist out of characters from the alphabet.
         </div>
-        </div>  
-        <small class="text-muted">
-          Enter capability name (e.g. Capability Name)
-        </small>   
-  </div> 
-  <div class='form-group w-50'>
-    <div class="custom">
-      <select class="select1" formControlName='paceOfChange' required>
-        <option *ngFor="let type of ePaceOfChange | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-      </select>
-      <label>Pace Of Change</label>
+      </div>
+      <small class="text-muted">
+        Enter capability name (e.g. Capability Name)
+      </small>
     </div>
+    <div class='form-group w-50'>
+      <div class="custom">
+        <select class="select1" formControlName='paceOfChange' required>
+          <option *ngFor="let type of ePaceOfChange | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+        </select>
+        <label>Pace Of Change</label>
+      </div>
       <br>
-      <div *ngIf="capability.get('paceOfChange')!.invalid && (capability.get('paceOfChange')!.dirty || capability.get('paceOfChange')!.touched)"
+      <div *ngIf="paceOfChange!.invalid && (paceOfChange!.dirty || paceOfChange!.touched)"
         class="alert alert-danger alertdiv">
-        <div *ngIf="capability.get('paceOfChange')!.errors!.required">
+        <div *ngIf="paceOfChange!.errors!.required">
           Pace Of Change is required.
         </div>
       </div>
-  </div>  
-  <div class='form-group w-50'>
-    <div class="custom">
-      <select class="select2" formControlName='tom' required>
-        <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-      </select>
-      <label>tOM</label>
     </div>
+    <div class='form-group w-50'>
+      <div class="custom">
+        <select class="select2" formControlName='targetOperationModel' required>
+          <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+        </select>
+        <label>tOM</label>
+      </div>
       <br>
-      <div *ngIf="capability.get('tom')!.invalid && (capability.get('tom')!.dirty || capability.get('tom')!.touched)"
+      <div *ngIf="targetOperationModel!.invalid && (targetOperationModel!.dirty || targetOperationModel!.touched)"
         class="alert alert-danger alertdiv">
-        <div *ngIf="capability.get('tom')!.errors!.required">
+        <div *ngIf="targetOperationModel!.errors!.required">
           tOM is required.
         </div>
-        </div>
-  </div>  
-  <div class='form-group w-50'>
-    <div class="custom">
-      <input type='text'  formControlName='resourcesQuality' required/>
-      <label>Resources Quality</label>
+      </div>
     </div>
+    <div class='form-group w-50'>
+      <div class="custom">
+        <input type='text' formControlName='resourcesQuality' required />
+        <label>Resources Quality</label>
+      </div>
       <br>
-      <div *ngIf="capability.get('resourcesQuality')!.invalid && (capability.get('resourcesQuality')!.dirty || capability.get('resourcesQuality')!.touched)"
+      <div *ngIf="resourcesQuality!.invalid && (resourcesQuality!.dirty || resourcesQuality!.touched)"
         class="alert alert-danger alertdiv">
-        <div *ngIf="capability.get('resourcesQuality')!.errors!.required">
+        <div *ngIf="resourcesQuality!.errors!.required">
           Resources Quality is required.
         </div>
-        <div *ngIf="capability.get('resourcesQuality')!.errors!.pattern">
+        <div *ngIf="resourcesQuality!.errors!.pattern">
           Resources Quality should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
         </div>
       </div>
-   
+
       <small class="text-muted">
         Enter capability resources quality (e.g. 4)
-      </small> 
-  </div>     
-  
-  <button type="submit" class="btn btn-danger form-control" [disabled]="!capability.valid">Add</button>
-  <br><br><br><br><br>
-</form>
+      </small>
+    </div>
+
+    <button type="submit" class="btn btn-danger form-control" [disabled]="!capAddForm.valid">Add</button>
+    <br><br><br><br><br>
+  </form>
 </div>

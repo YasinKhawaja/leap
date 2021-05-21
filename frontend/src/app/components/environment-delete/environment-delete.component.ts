@@ -11,18 +11,16 @@ export class EnvironmentDeleteComponent implements OnInit {
 
   constructor(private es: EnvironmentService, private router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   deleteEnvironment(): void {
-    let id = parseInt(this.router.url.split('/')[2]);
+    var envIdToDelete = this.router.url.split('/')[2];
 
-    this.es.deleteEnvironment(id).subscribe(data => console.log(data));
-
-    // works like refresh
-    this.es.getAllEnvironments().subscribe();
-
-    this.router.navigate(['/environments']);
+    this.es.deleteEnvironment(envIdToDelete)
+      .subscribe(
+        res => this.router.navigate(['environments']),
+        err => console.log(err)
+      );
   }
 
 }

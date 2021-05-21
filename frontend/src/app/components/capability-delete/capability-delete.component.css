@@ -1,44 +1,60 @@
-.custom{
-    position: absolute;
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.middle {
+    position: fixed;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+
+.alert{
+    background-color: red;
+    padding: 20px 40px;
+    max-width: 600px;
+   overflow:hidden;
+    left:100px;
+    top: 10px;
+    border-radius:40px;
     
- }
- 
- button{
-     width: 25%;
- }
+}
 
-.alertdiv{
-     width: 50%;
- }
+.alert.show{
+    animation:show_slide 1s ease forwards;
+}
+@keyframes show_slide{
+    0%{
+        transform:translate(100%);
+    }
+    40% {
+        transform: translate(-10%);
+    }
+    80% {
+        transform: translate(0%);
+    }
+    100% {
+        transform: translate(-10px);
+    }
+}
 
- input {
-     border: 0px;
-     border-bottom: 3px solid red;
-     outline: none;
-     background: white;
-     padding: 0px;
-     width: 150%;
-     
- }
-
- input + label {
+.alert .fa-exclamation-circle{
+        color: black;
+        font-size:30px;
+       
+}
+.msg {
+        padding:0 20px;
+        font-size:15px;
+        color: black;
+}
+   
+.fa-times{
+    font-size:30px;
+}
+.fa-check-circle{
         
-position: absolute;
-top: 0px;
-color: rgb(124, 116, 116);
-pointer-events: none;
-transition: .3s linear;
-font-size: 17px;
- }
- 
-input:focus + label {
-         top: -16px;
-         font-size: 15px;
- }
- 
-input:required:valid +label {
-         top: -16px;
-         font-size: 15px;
- }
-
-
+        font-size:30px;
+        padding:0 20px;
+}

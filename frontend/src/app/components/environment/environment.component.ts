@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
-import { EnvironmentEditComponent } from '../environment-edit/environment-edit.component';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 @Component({
   selector: 'app-environment',
@@ -10,26 +10,18 @@ import { EnvironmentEditComponent } from '../environment-edit/environment-edit.c
 })
 export class EnvironmentComponent implements OnInit {
 
-  environments: Environment[]
+  environments: Environment[];
 
-  displayEditEnv = false;
-
-  constructor(private es: EnvironmentService) {
+  constructor(private es: EnvironmentService, private ns: NavbarService) {
     this.environments = [];
   }
 
   ngOnInit(): void {
     this.es.getAllEnvironments()
-      .subscribe(data => { this.environments = data; console.log(data); }, error => { console.error(error) })
+      .subscribe(res => { this.environments = res; console.log(res); }, err => console.error(err));
   }
 
-  editEnvironment(): void {
-    this.displayEditEnv = !this.displayEditEnv;
+  environmentId(environmentId): void{
+    this.ns.setEnvironment(environmentId);
   }
-
-  deleteEnvironment(id: number): void {
-    this.es.deleteEnvironment(id).subscribe();
-    this.es.getAllEnvironments().subscribe();
-  }
-
 }

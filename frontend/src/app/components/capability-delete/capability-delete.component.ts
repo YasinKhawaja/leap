@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CapabilityService } from '../../services/capability/capability.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-capability-delete',
@@ -10,28 +10,21 @@ import { CapabilityService } from '../../services/capability/capability.service'
 })
 export class CapabilityDeleteComponent implements OnInit {
 
-  capabilityName: string
-  capability = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]]
-  })
+  constructor(private cs: CapabilityService, private router: Router, private location: Location) { }
 
-  constructor(private cs: CapabilityService,
-              private fb: FormBuilder,
-              private router: Router) {
+  ngOnInit(): void { }
 
-        // decode the capability name parameter from the url because otherwise 'Capability Name' will be filled in
-        // in the delete form as 'Capability%20Name'
-        this.capabilityName = decodeURI(router.url.split('/')[3])
-        this.capability.controls['name'].setValue(this.capabilityName)        
+  deleteCapabilityFromEnvironment() {
+    var envId = this.router.url.split('/')[2];
+    var capIdToDelete = this.router.url.split('/')[4];
+
+    this.cs.deleteCapabilityFromEnvironment(envId, capIdToDelete);
+
+    this.navigateBack();
   }
 
-  ngOnInit(): void {
-  }
-
-  onSubmit() {
-    this.cs.deleteCapability(this.capability.value.name)
-    this.router.navigate(['capabilities'])
-      
+  navigateBack() {
+    this.location.back();
   }
 
 }

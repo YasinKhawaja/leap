@@ -3,87 +3,60 @@ package edu.ap.group10.leapwebapp.capability;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200")
-@Controller
+@RestController
 public class CapabilityController {
+
 	@Autowired
-	private CapabilityRepository repository;
+	private CapabilityService capabilityService;
 
-	// Added error handling when adding a capability with the same name of an already existing capability
-	@PostMapping("/capabilities/add")
-	public @ResponseBody String saveCapability(@RequestParam("name") String name,
-	@RequestParam("paceOfChange") PaceOfChange paceOfChange, @RequestParam("tom") Tom tom, @RequestParam("resourcesQuality") 
-	Integer resourcesQuality, HttpServletResponse response) {
-		try{
-		Capability capability = new Capability(name, paceOfChange, tom, resourcesQuality);
-
-		repository.save(capability);
-		
-		return "Saved";
-		}
-		catch(DataIntegrityViolationException exception){
-			throw new ResponseStatusException( HttpStatus.CONFLICT, "Capability with this name already exists.", exception);
-		}
+	// To GET all capabilities
+	@GetMapping("/capabilities/all")
+	public List<Capability> getAllCapabilities() {
+		return capabilityService.getAllCapabilities();
 	}
 
-	// first time after adding a capability, it doesnt show up in the list. You have to manually hard refresh. 
-	// --> Database gets called too early ? 
+	// To GET all capabilities in an environment
 	@GetMapping("/capabilities")
-	public @ResponseBody Iterable<Capability> getAllCapabilities() {
-		return repository.findAll();
+	public List<Capability> getAllCapabilitiesInEnvironment(@RequestParam Long envId) {
+		return capabilityService.getAllCapabilitiesInEnvironment(envId);
 	}
 
-	// Added error handling when trying to delete a capability that doesn't exist
-	@DeleteMapping("/capabilities/delete/{name}")
-	public @ResponseBody String deleteCapability(@PathVariable String name, HttpServletResponse response) {
-		try {
-		Capability capability = repository.findByName(name);
-		
-		repository.delete(capability);
-
-		return "Deleted";
-		}
-		catch(InvalidDataAccessApiUsageException exception){
-			throw new ResponseStatusException(HttpStatus.CONFLICT, "Capability you tried to delete does not exist.", exception);
-		}
+	// To GET a capability in an environment
+	@GetMapping("/capabilities/{capId}")
+	public Capability getCapability(@RequestParam Long envId, @PathVariable Long capId) {
+		return capabilityService.getCapability(envId, capId);
 	}
 
-	@PostMapping("/capabilities/searchOne")
-	public @ResponseBody List<Capability> searchOneCapabilityByName(@RequestParam("name") String name) {
-		return repository.searchOneByName(name);
+	// To CREATE a capability in an environment
+	@PostMapping("/capabilities")
+	public Capability createCapability(@RequestParam Long envId, @RequestParam Long parentCapId,
+			@RequestBody Capability cap) {
+		return capabilityService.createCapability(envId, parentCapId, cap);
 	}
 
-	@PostMapping("/capabilities/edit/{originalName}")
-	public @ResponseBody String editCapability(@RequestParam("name") String newName,
-	@RequestParam("paceOfChange") PaceOfChange paceOfChange, @RequestParam("tom") Tom tom, @RequestParam("resourcesQuality") 
-	Integer resourcesQuality, @PathVariable String originalName) {
-		
-		Capability editedCapability = repository.findByName(originalName);
-
-		editedCapability.setName(newName);
-		editedCapability.setPaceOfChange(paceOfChange);
-		editedCapability.setTom(tom);
-		editedCapability.setResourcesQuality(resourcesQuality);
-
-		repository.save(editedCapability);
-	
-		return "Edited";
+	// To UPDATE a capability in its environment
+	@PutMapping("/capabilities/{capId}")
+	public Capability updateCapability(@RequestParam Long envId, @PathVariable Long capId,
+			@RequestBody Capability cap) {
+		return capabilityService.updateCapability(envId, capId, cap);
 	}
-	
+
+	// To DELETE a capability in its environment
+	@DeleteMapping("/capabilities/{capId}")
+	public void deleteCapability(@RequestParam Long envId, @PathVariable Long capId) {
+		capabilityService.deleteCapability(envId, capId);
+	}
+
 }

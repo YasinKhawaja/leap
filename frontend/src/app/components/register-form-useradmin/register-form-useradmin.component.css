@@ -1,6 +1,13 @@
 button{
-    position: fixed;
-    left: 40%;
-    width: 20%;
+    width: 100%;
     border-radius:10px;
+}
+
+.alertdiv{
+    width: 100%;
+   top:6px;
+}
+
+article{
+    max-width: 400px;
 }

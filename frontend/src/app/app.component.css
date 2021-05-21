@@ -14,14 +14,10 @@ body {
     text-align: center;
     flex-shrink: 0;
     padding: 1rem;
-    position: relative;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    
- 
-}
-
-.header {
-    position: relative;
 }
 
 .content {
@@ -54,8 +50,7 @@ body {
     transition: all .4s ease-in-out;
 }
 
-.btn:hover,
-input[type="submit"]:hover {
+.btn:hover, input[type="submit"]:hover {
     -webkit-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
     -ms-transition: all .4s ease-in-out;
@@ -68,25 +63,25 @@ input[type="submit"]:hover {
     color: #fff !important;
 }
 
-    .btn-white:hover {
-        border: solid 2px #fff;
-        background: #fff;
-        color: #1f1f1f !important;
-    }
+.btn-white:hover {
+    border: solid 2px #fff;
+    background: #fff;
+    color: #1f1f1f !important;
+}
 
 .btn-color {
     background: transparent;
 }
 
-    .btn-color:hover {
-        color: #fff;
-    }
-.dropdown {
-    background: transparent;
-    border:none;
-  
-}
-.color{
-    color:white
+.btn-color:hover {
+    color: #fff;
 }
 
+.dropdown {
+    background: transparent;
+    border: none;
+}
+
+.color {
+    color: white
+}

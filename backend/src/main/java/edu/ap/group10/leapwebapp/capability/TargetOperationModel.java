@@ -1,7 +1,7 @@
 
 package edu.ap.group10.leapwebapp.capability;
 
-public enum Tom {
+public enum TargetOperationModel {
 
 	NONE, COORDINATION, DIVERSIFICATION, REPLICATION, UNIFICATION
 

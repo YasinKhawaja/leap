@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-environment-add',
@@ -11,24 +12,46 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentAddComponent implements OnInit {
 
-  environment = this.fb.group({
-    name: ['', Validators.required]
-  });
+  envAddForm: FormGroup;
 
   constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  // To initialize the envAddForm
+  initializeForm() {
+    // Form group
+    this.envAddForm = this.fb.group({
+      // Form controls
+      name: ['', [Validators.required, this.noWhiteSpace]],
+    });
+  }
+
+  // To be able to use all form controls (name) above in html
+  get envAddFormControls() { return this.envAddForm.controls; }
+
+  // Custom validator => It validates if there isn't a white space in the string
+  private noWhiteSpace(control: AbstractControl): { [key: string]: any } | null {
+    if ((control.value as string).indexOf(' ') >= 0) {
+      return { 'whitespace': true };
+    }
+    return null;
   }
 
   onSubmit(): void {
-    var environment = new Environment(this.environment.value.name);
+    var env = new Environment(this.envAddFormControls.name.value);
 
-    this.es.addEnvironment(environment).subscribe(data => console.log(data));
-
-    // works like refresh
-    this.es.getAllEnvironments().subscribe();
-
-    this.router.navigate(['environments']);
+    this.es.createEnvironment(env.name)
+      .subscribe(
+        res => {
+          console.log(res);
+          Swal.fire('Created', 'Environment created.', 'success');
+          this.router.navigate(['environments']);
+        },
+        err => Swal.fire('Error', err.error.message, 'error')
+      );
   }
 
 }

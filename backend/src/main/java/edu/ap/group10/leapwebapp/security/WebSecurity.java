@@ -1,6 +1,8 @@
-package edu.ap.group10.leapwebapp.JWT;
+package edu.ap.group10.leapwebapp.security;
 
 import java.security.AuthProvider;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -71,6 +73,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage(SecurityConstraints.SIGN_IN_URL)
+                //.usernameParameter("username").passwordParameter("password")
+                .loginProcessingUrl(SecurityConstraints.SIGN_IN_URL)
+                //add message failed to log in
+                .failureUrl(SecurityConstraints.SIGN_IN_URL)
+                //get naar environments pagina in plaats van hardcoded?
+                .successForwardUrl(SecurityConstraints.SIGN_IN_URL)
                 
                 //Not implemented yet
                 //.defaultSuccessUrl("/")
@@ -85,8 +93,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 //allows anyone to go to the homepage
                 .mvcMatchers("/").permitAll()
                 .mvcMatchers(HttpMethod.POST, SecurityConstraints.COMPANY_SIGN_UP).permitAll()
-                .mvcMatchers(HttpMethod.POST, SecurityConstraints.COMPANY_APPLICATION_STATUS).permitAll()
-                .mvcMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_TEST).permitAll()
+                .mvcMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_SIGN_UP).permitAll()
                 //all other request require authenitcation.
                 //.anyRequest().authenticated();
                 .anyRequest().permitAll();
@@ -105,7 +112,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         corsConfiguration.addAllowedMethod("OPTIONS");
         corsConfiguration.addAllowedMethod("DELETE");
         corsConfiguration.addAllowedMethod("PUT");
-        System.out.println(corsConfiguration.getAllowedMethods());
         source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;

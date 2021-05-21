@@ -1,6 +1,9 @@
 
 package edu.ap.group10.leapwebapp.capability;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,8 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
+import edu.ap.group10.leapwebapp.itapplication.ITApplication;
 
 @Entity
 public class Capability {
@@ -20,24 +28,13 @@ public class Capability {
 	// primary key
 	@Id
 	@GeneratedValue
-	private Integer id;
-
-	// foreign keys
-	// ===== TO-DO foreign key? =====
-	@Column(name = "parent_id", nullable = false)
-	private Integer parentId;
-
-	/*
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "environment_id", nullable = false)
-	private Environment environment;
-	*/
+	private Long id;
 
 	// columns
 	@Column(nullable = false)
 	private Integer level;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String name;
 
 	@Column(name = "pace_of_change")
@@ -45,7 +42,7 @@ public class Capability {
 	private PaceOfChange paceOfChange;
 
 	@Enumerated(EnumType.STRING)
-	private Tom tom;
+	private TargetOperationModel targetOperationModel;
 
 	@Column(name = "resources_quality")
 	private Integer resourcesQuality;
@@ -55,60 +52,64 @@ public class Capability {
 
 	@Column(name = "application_fit")
 	private Double applicationFit;
+/*
+	@OneToMany(targetEntity = ITApplication.class, fetch = FetchType.EAGER)
+	@JoinColumn(name="environment_id", nullable = false)
+	private List<ITApplication> itApplications;*/
+
+	// foreign keys
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "parent_reference")
+	private List<Capability> subcapabilities;
+
+	@ManyToOne
+	@JoinColumn(name = "parent_id")
+	@JsonBackReference(value = "parent_reference")
+	private Capability parent;
+
+	@ManyToOne
+	@JoinColumn(name = "environment_id")
+	@JsonBackReference(value = "environment_reference")
+	private Environment environment;
 
 	// CONSTRUCTORS
 	public Capability() {
 	}
 
-	public Capability(String name) {
-		this.setParentId(0);
+	public Capability(String name, PaceOfChange poc, TargetOperationModel tom,
+			Integer resourcesQuality) {
+		this.setParent(null); // Foreign key
+		this.setEnvironment(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
-		this.setPaceOfChange(PaceOfChange.NONE);
-		this.setTom(Tom.NONE);
-		this.setResourcesQuality(1);
+		this.paceOfChange = poc;
+		this.targetOperationModel = tom;
+		this.resourcesQuality = resourcesQuality;
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
 	}
-
-	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality) {
+/*
+	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality, List ITApplications){
+		this.setParentId(1); // Foreign key
+		this.setEnvironment(null); // Foreign key
+		this.setLevel(1);
 		this.name = name;
 		this.paceOfChange = paceOfChange;
 		this.tom = tom;
 		this.resourcesQuality = resourcesQuality;
-		this.setParentId(1);
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
-		this.setLevel(1);
-	}
+	}*/
 
 	// GETTERS & SETTERS
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	/*
-	public Environment getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(Environment environment) {
-		this.environment = environment;
-	}
-	*/
-	
 	public Integer getLevel() {
 		return level;
 	}
@@ -133,12 +134,12 @@ public class Capability {
 		this.paceOfChange = paceOfChange;
 	}
 
-	public Tom getTom() {
-		return tom;
+	public TargetOperationModel getTom() {
+		return targetOperationModel;
 	}
 
-	public void setTom(Tom tom) {
-		this.tom = tom;
+	public void setTom(TargetOperationModel tom) {
+		this.targetOperationModel = tom;
 	}
 
 	public Integer getResourcesQuality() {
@@ -163,6 +164,30 @@ public class Capability {
 
 	public void setApplicationFit(Double applicationFit) {
 		this.applicationFit = applicationFit;
+	}
+
+	public List<Capability> getSubcapabilities() {
+		return subcapabilities;
+	}
+
+	public void setSubcapabilities(List<Capability> subcapabilities) {
+		this.subcapabilities = subcapabilities;
+	}
+
+	public Capability getParent() {
+		return parent;
+	}
+
+	public void setParent(Capability parent) {
+		this.parent = parent;
+	}
+
+	public Environment getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
 	}
 
 }

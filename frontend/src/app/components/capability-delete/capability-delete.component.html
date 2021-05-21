@@ -1,27 +1,8 @@
-<div class='container'>
-  <h1>Delete Capability</h1>
-  <br/><br/>
-
-<form [formGroup]='capability' (ngSubmit)='onSubmit()'>
- <div class='form-group w-50'>
- <div class="custom">
-   <input type='text'  formControlName='name' required/>
-     <label for='price'>Name</label>
-    </div>
-    <br>
-     <div *ngIf="capability.get('name')!.invalid && (capability.get('name')!.dirty || capability.get('name')!.touched)"
-        class="alert alert-danger">
-        <div *ngIf="capability.get('name')!.errors!.required">
-          Name is required.
-        </div>
-        <div *ngIf="capability.get('name')!.errors!.pattern">
-          Name should only consist out of characters from the alphabet.
-        </div>
-      </div>  
-      <small class="text-muted">
-        Enter capability name (e.g. Capability Name)
-      </small>     
- </div>
- <button class='btn btn-danger' type='submit' [disabled]='!capability.valid'>Delete</button>
-</form>
+<div class="middle">
+  <div class="alert show">
+      <span class="fa fa-exclamation-circle"></span>
+      <span class="msg">Are you sure you want to delete this capability?</span>
+      <span class="fa fa-times" (click)="navigateBack()"></span>
+      <span class="fa fa-check-circle" (click)="deleteCapabilityFromEnvironment()"></span>
+  </div>    
 </div>

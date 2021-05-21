@@ -1,30 +1,30 @@
 import { HttpParams } from "@angular/common/http";
 
 export class Capability {
+
+    public id: string
     public parentId: string
+    public level: string
     public informationQuality: string
     public applicationFit: string
-    public level: string
 
-    
-
-    constructor(public name: string, public paceOfChange: string,
-        public tom: string, public resourcesQuality: string){
+    constructor(public name: string, public paceOfChange: string, public tom: string, public resourcesQuality: string) {
+        this.id = '';
         this.parentId = '';
-        this.informationQuality = '';
-        this.applicationFit = '';
         this.level = '';
+        this.informationQuality = '0';
+        this.applicationFit = '0';
     }
 
-    getParams() : HttpParams{
+    getParams(): HttpParams {
         return new HttpParams()
+            //.set('parentId', this.parentId)
+            //.set('level', this.level)
             .set('name', this.name)
             .set('resourcesQuality', this.resourcesQuality)
-            .set('parentId', this.parentId)
-            .set('level', this.level)
             .set('paceOfChange', this.paceOfChange)
-            .set('tom', this.tom)
-            .set('informationQuality', this.informationQuality)
-            .set('applicationFit', this.applicationFit)
+            .set('targetOperationModel', this.tom)
+        //.set('informationQuality', this.informationQuality)
+        //.set('applicationFit', this.applicationFit);
     }
 }

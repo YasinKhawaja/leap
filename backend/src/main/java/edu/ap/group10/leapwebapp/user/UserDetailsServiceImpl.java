@@ -23,12 +23,21 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("Finding user");
         final UserLeap userLeap = userRepository.findByUsername(username);
         final Useradmin useradmin = useradminRepository.findByUsername(username);
         if (userLeap == null && useradmin == null){
+            System.out.println("Not found");
             throw new UsernameNotFoundException(username);
         }
-        return userLeap;
+        else if (userLeap != null){
+            System.out.println("It's a user");
+            return userLeap;
+        }
+        else{
+            System.out.println("Admin");
+            return useradmin;
+        }
     }
     
 }

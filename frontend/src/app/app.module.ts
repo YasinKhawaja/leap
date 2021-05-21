@@ -19,16 +19,23 @@ import { EnvironmentEditComponent } from './components/environment-edit/environm
 import { EnvironmentDeleteComponent } from './components/environment-delete/environment-delete.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
-import { ExportComponent } from "./components/export/export.component"
+import { ExportComponent } from "./components/export/export.component";
+import { CompanyRequestComponent } from './components/company-request/company-request.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ItapplicationComponent } from './components/itapplication/itapplication.component';
+import { ItapplicationAddComponent } from './components/itapplication-add/itapplication-add.component';
+import { ItapplicationDeleteComponent } from './components/itapplication-delete/itapplication-delete.component';
+import { ItapplicationEditComponent } from './components/itapplication-edit/itapplication-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'capabilities', component: CapabilityComponent },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'environments', component: EnvironmentComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'environments', component: EnvironmentComponent },
+  { path: 'capabilities', component: CapabilityComponent },
+  { path: 'itapplication', component: ItapplicationComponent }
 ]
 
 @NgModule({
@@ -44,7 +51,13 @@ const appRoutes: Routes = [
     EnvironmentDeleteComponent,
     CapabilityDeleteComponent,
     CapabilityEditComponent,
-    ExportComponent
+    ExportComponent,
+    CompanyRequestComponent,
+    LoginComponent,
+    ItapplicationAddComponent,
+    ItapplicationDeleteComponent,
+    ItapplicationEditComponent,
+    ItapplicationComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +65,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [CapabilityService],
   bootstrap: [AppComponent]
