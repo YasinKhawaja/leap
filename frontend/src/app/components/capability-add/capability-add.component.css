@@ -1,80 +1,32 @@
-.custom{
-    position: absolute;
-    
- }
- 
- button{
-     width: 25%;
- }
-
- .alertdiv{
-     width: 50%;
-     top:5px;
- }
-
- input {
-     border: 0px;
-     border-bottom: 3px solid red;
-     outline: none;
-     background: white;
-     padding: 0px;
-     width: 150%;
-     
- }
-
- input + label {
-        
-position: absolute;
-top: 0px;
-color: rgb(124, 116, 116);
-pointer-events: none;
-transition: .3s linear;
-font-size: 17px;
- }
- 
- input:focus + label {
-         top: -16px;
-         font-size: 15px;
- }
- 
- input:required:valid +label {
-         top: -16px;
-         font-size: 15px;
- }
-
- select + label {
-    position: absolute;
-    top: 0px;
-    color: rgb(124, 116, 116);
-    pointer-events: none;
-    transition: .3s linear;
-    font-size: 17px;
+.middle-page {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-select {
-    border: 0px;
-    border-bottom: 3px solid red;
-    outline: none;
-    background: white;
-    padding: 0px;
+.center {
+    text-align: center;
+    vertical-align: middle;
 }
 
-
- select:focus + label {
-    top: -16px;
-    font-size: 15px;
+h5 {
+    margin: 0px;
 }
 
-select:required:valid +label {
-    top: -16px;
-    font-size: 15px;
+td {
+    text-align: center;
+    vertical-align: middle !important;
 }
 
- .select1{
- width: 180%;
+label {
+    margin: 0px;
 }
 
-.select2{
-   width: 185%;
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
 }
 
+.form-control.ng-touched.ng-valid {
+    border: 2px solid green;
+}

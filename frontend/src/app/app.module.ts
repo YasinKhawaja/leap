@@ -22,6 +22,7 @@ import { CapabilityEditComponent } from './components/capability-edit/capability
 import { ExportComponent } from "./components/export/export.component";
 import { CompanyRequestComponent } from './components/company-request/company-request.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SubcapabilityAddComponent } from './components/subcapability-add/subcapability-add.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     CapabilityEditComponent,
     ExportComponent,
     CompanyRequestComponent,
-    LoginComponent
+    LoginComponent,
+    SubcapabilityAddComponent
   ],
   imports: [
     BrowserModule,

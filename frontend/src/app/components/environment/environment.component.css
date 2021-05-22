@@ -1,13 +1,7 @@
-* {
-    margin: 0px;
-    padding: 0px;
-}
-
-.middle-page {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#envs {
+    margin: 25px;
+    display: flex;
+    justify-content: center;
 }
 
 .middle-div {

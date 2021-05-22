@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CapabilityAddComponent } from "./components/capability-add/capability-add.component";
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
 import { CapabilityComponent } from './components/capability/capability.component';
@@ -20,7 +19,6 @@ const routes: Routes = [
   { path: 'environments/:envId/update', component: EnvironmentEditComponent },
   { path: 'environments/:envId/delete', component: EnvironmentDeleteComponent },
   { path: 'environments/:envId/capabilities', component: CapabilityComponent },
-  { path: 'environments/:envId/capabilities/create', component: CapabilityAddComponent },
   { path: 'environments/:envId/capabilities/:capId/update', component: CapabilityEditComponent },
   { path: 'environments/:envId/capabilities/:capId/delete', component: CapabilityDeleteComponent },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },

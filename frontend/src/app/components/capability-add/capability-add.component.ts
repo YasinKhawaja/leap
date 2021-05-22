@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Capability } from 'src/app/classes/capability/capability';
@@ -12,7 +12,7 @@ enum PaceOfChange {
   INNOVATIVE = 'INNOVATIVE'
 }
 
-enum Tom {
+enum TargetOperationModel {
   NONE = 'NONE',
   COORDINATION = 'COORDINATION',
   DIVERSIFICATION = 'DIVERSIFICATION',
@@ -21,15 +21,17 @@ enum Tom {
 }
 
 @Component({
-  selector: 'app-capability-add',
+  selector: 'app-capability-add, [app-capability-add]',
   templateUrl: './capability-add.component.html',
   styleUrls: ['./capability-add.component.css']
 })
 export class CapabilityAddComponent implements OnInit {
 
+  // Cap from "capability" comp
+  @Input() cap: Capability;
   // Enums ^
-  ePaceOfChange = PaceOfChange;
-  eTom = Tom;
+  ePoc = PaceOfChange;
+  eTom = TargetOperationModel;
   // Form
   capAddForm: FormGroup;
 
@@ -37,6 +39,7 @@ export class CapabilityAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    console.log(this.cap);
   }
 
   // To initialize the form in HTML
@@ -69,7 +72,13 @@ export class CapabilityAddComponent implements OnInit {
   // Form submit logic
   onSubmit() {
     var envId = this.router.url.split('/')[2];
-    var parentCapId = '0';
+
+    var parentCapId = '';
+    if (this.cap == null) {
+      parentCapId = '0'; // = no parent cap
+    } else {
+      parentCapId = this.cap.id;
+    }
 
     var capToCreate = new Capability(
       this.name.value,
@@ -80,11 +89,12 @@ export class CapabilityAddComponent implements OnInit {
 
     this.cs.createCapability(envId, parentCapId, capToCreate)
       .subscribe(
-        response => console.log(response),
-        error => Swal.fire('Error', error.error.message, 'error')
+        res => {
+          console.log(res);
+          window.location.reload();
+        },
+        err => Swal.fire('Error', err.error.message, 'error')
       );
-
-    this.router.navigate([`environments/${envId}/capabilities`]);
   }
 
 }

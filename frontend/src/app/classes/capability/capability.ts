@@ -8,7 +8,7 @@ export class Capability {
     public informationQuality: string
     public applicationFit: string
 
-    constructor(public name: string, public paceOfChange: string, public tom: string, public resourcesQuality: string) {
+    constructor(public name: string, public paceOfChange: string, public targetOperationModel: string, public resourcesQuality: string) {
         this.id = '';
         this.parentId = '';
         this.level = '';
@@ -23,8 +23,8 @@ export class Capability {
             .set('name', this.name)
             .set('resourcesQuality', this.resourcesQuality)
             .set('paceOfChange', this.paceOfChange)
-            .set('targetOperationModel', this.tom)
-        //.set('informationQuality', this.informationQuality)
-        //.set('applicationFit', this.applicationFit);
+            .set('targetOperationModel', this.targetOperationModel)
+            //.set('informationQuality', this.informationQuality)
+            //.set('applicationFit', this.applicationFit);
     }
 }
