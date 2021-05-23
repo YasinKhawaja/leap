@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 import { CapabilityService } from '../../services/capability/capability.service';
 
@@ -12,7 +12,7 @@ enum PaceOfChange {
   INNOVATIVE = 'INNOVATIVE'
 }
 
-enum Tom {
+enum TargetOperationModel {
   NONE = 'NONE',
   COORDINATION = 'COORDINATION',
   DIVERSIFICATION = 'DIVERSIFICATION',
@@ -27,9 +27,11 @@ enum Tom {
 })
 export class CapabilityEditComponent implements OnInit {
 
-  ePaceOfChange = PaceOfChange
-  eTom = Tom;
-  capabilityName: string
+  // Enums ^
+  ePoc = PaceOfChange;
+  eTom = TargetOperationModel;
+  // Form
+  capEditForm: FormGroup;
 
   capabilityForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
@@ -38,44 +40,59 @@ export class CapabilityEditComponent implements OnInit {
     resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
   });
 
-  constructor(private es: EnvironmentService, private cs: CapabilityService,
-    private fb: FormBuilder, private router: Router, private activeroute: ActivatedRoute) {
-    // // splitting url parts
-    // this.capabilityName = router.url.split('/')[3]
-    // // handling active route
-    // this.activeroute.params
-    //   .subscribe(params => {
-    //     this.capabilityName = params['name'];
-    //     this.cs.searchOneCapability(this.capabilityName)
-    //       .subscribe(data => {
-    //         console.log(data),
-    //           this.capabilityForm.controls['name'].setValue(data[0].name)
-    //         this.capabilityForm.controls['paceOfChange'].setValue(data[0].paceOfChange)
-    //         this.capabilityForm.controls['tom'].setValue(data[0].tom)
-    //         this.capabilityForm.controls['resourcesQuality'].setValue(data[0].resourcesQuality)
-    //       },
-    //         error => { console.log(error) })
-    //   }
-    //   )
+  constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router) { }
+
+  ngOnInit(): void {
+    this.initializeForm();
   }
 
-  ngOnInit(): void { }
+  // To initialize the form in HTML
+  private initializeForm() {
+    this.capEditForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      paceOfChange: ['', Validators.required],
+      targetOperationModel: ['', Validators.required],
+      resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
+    });
+  }
+
+  // Form GETTERS
+  get name() {
+    return this.capEditForm.get('name');
+  }
+
+  get paceOfChange() {
+    return this.capEditForm.get('paceOfChange');
+  }
+
+  get targetOperationModel() {
+    return this.capEditForm.get('targetOperationModel');
+  }
+
+  get resourcesQuality() {
+    return this.capEditForm.get('resourcesQuality');
+  }
 
   onSubmit() {
     var envId = this.router.url.split('/')[2];
     var capIdToUpdate = this.router.url.split('/')[4];
 
     var newCapValues = new Capability(
-      this.capabilityForm.value.name,
-      this.capabilityForm.value.paceOfChange,
-      this.capabilityForm.value.tom,
-      this.capabilityForm.value.resourcesQuality
+      this.name.value,
+      this.paceOfChange.value,
+      this.targetOperationModel.value,
+      this.resourcesQuality.value
     );
 
     this.cs.updateCapabilityInEnvironment(envId, capIdToUpdate, newCapValues)
-      .subscribe(res => console.log(res), err => console.error(err));
-
-    this.router.navigate([`envs/${envId}/caps`])//.then(() => window.location.reload());
+      .subscribe(
+        res => {
+          console.log(res);
+          Swal.fire('Updated', `Capability updated.`, 'success');
+          this.capEditForm.reset();
+        },
+        err => console.error(err)
+      );
   }
 
 }

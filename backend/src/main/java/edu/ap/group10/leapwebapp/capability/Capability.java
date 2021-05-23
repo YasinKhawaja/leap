@@ -76,15 +76,14 @@ public class Capability {
 	public Capability() {
 	}
 
-	public Capability(String name, PaceOfChange poc, TargetOperationModel tom,
-			Integer resourcesQuality) {
+	public Capability(String name, PaceOfChange poc, TargetOperationModel tom, Integer resQuality) {
 		this.setParent(null); // Foreign key
 		this.setEnvironment(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
 		this.paceOfChange = poc;
 		this.targetOperationModel = tom;
-		this.resourcesQuality = resourcesQuality;
+		this.resourcesQuality = resQuality;
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
 	}
@@ -134,11 +133,11 @@ public class Capability {
 		this.paceOfChange = paceOfChange;
 	}
 
-	public TargetOperationModel getTom() {
+	public TargetOperationModel getTargetOperationModel() {
 		return targetOperationModel;
 	}
 
-	public void setTom(TargetOperationModel tom) {
+	public void setTargetOperationModel(TargetOperationModel tom) {
 		this.targetOperationModel = tom;
 	}
 

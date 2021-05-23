@@ -28,11 +28,11 @@ export class CapabilityService {
     return this.http.get<Capability[]>(url, { params: { envId: envId } });
   }
 
-  // To GET a capability by name
-  getCapabilityByName(envName: string, capName: string): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}${capName}`;
+  // To GET a cap in its env
+  getCapability(envId: string, capId: string): Observable<Capability> {
+    var url = `${this.capabilitiesServiceURI}/${capId}`;
 
-    return this.http.get<Capability>(url);
+    return this.http.get<Capability>(url, { params: { envId: envId } });
   }
 
   // To CREATE a capability in its environment
@@ -44,16 +44,16 @@ export class CapabilityService {
 
   // To UPDATE a capability in its environment
   updateCapabilityInEnvironment(envId: string, capId: string, cap: Capability): Observable<Capability> {
-    var url = `${this.capabilitiesServiceURI}/${envId}/caps/${capId}`;
+    var url = `${this.capabilitiesServiceURI}/${capId}`;
 
-    return this.http.put<Capability>(url, cap.getParams(), { headers: this.contentHeaders });
+    return this.http.put<Capability>(url, cap, { params: { envId: envId } });
   }
 
   // To DELETE a cap in its env
-  deleteCapabilityFromEnvironment(envId: string, capId: string): void {
-    var url = `${this.capabilitiesServiceURI}/${envId}/caps/${capId}`
+  deleteCapability(envId: string, capId: string): Observable<{}> {
+    var url = `${this.capabilitiesServiceURI}/${capId}`;
 
-    this.http.delete(url).subscribe();
+    return this.http.delete(url, { params: { envId: envId } });
   }
 
   // Search one capability by name

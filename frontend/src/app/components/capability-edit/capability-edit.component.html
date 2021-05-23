@@ -1,82 +1,82 @@
-<div class="container">
-  <h1>Edit Capability</h1><br>
-
-  <form [formGroup]="capabilityForm" (ngSubmit)="onSubmit()">
-    <div class='form-group w-50'>
-      <div class="custom">
-        <input type='text' formControlName='name' required />
-        <label>Name</label>
-      </div>
-      <br>
-      <div
-        *ngIf="capabilityForm.get('name')!.invalid && (capabilityForm.get('name')!.dirty || capabilityForm.get('name')!.touched)"
-        class="alert alert-danger alertdiv">
-        <div *ngIf="capabilityForm.get('name')!.errors!.required">
-          Name is required.
+<div id="cap-edit">
+  <div class="flex-container">
+    <div class="flex-item">
+      <div class="card">
+        <div class="card-header center">
+          <h5><strong>EDIT CAPABILITY</strong></h5>
         </div>
-        <div *ngIf="capabilityForm.get('name')!.errors!.pattern">
-          Name should only consist out of characters from the alphabet.
+        <div class="card-body">
+          <!-- Form -->
+          <form class="form" [formGroup]="capEditForm" (ngSubmit)="onSubmit()">
+            <!-- Name -->
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" type="text" class="form-control" formControlName="name" required>
+              <!-- Name field validation errors -->
+              <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
+                <div *ngIf="name!.errors!.required">
+                  Name is required.
+                </div>
+                <div *ngIf="name!.errors!.pattern">
+                  Name should only consist out of characters from the alphabet.
+                </div>
+              </div>
+            </div>
+            <!-- Pace of Change -->
+            <div class="form-group">
+              <label for="paceOfChange">Pace of Change</label>
+              <select id="paceOfChange" class="form-control" formControlName='paceOfChange' required>
+                <option *ngFor="let type of ePoc | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
+              </select>
+              <!-- Pace of Change dropdown validation errors -->
+              <div class="alert alert-danger center"
+                *ngIf="paceOfChange!.invalid && (paceOfChange!.dirty || paceOfChange!.touched)">
+                <div *ngIf="paceOfChange!.errors!.required">
+                  Pace of Change is required.
+                </div>
+              </div>
+            </div>
+            <!-- Target Operation Model -->
+            <div class="form-group">
+              <label for="targetOperationModel">Target Operation Model</label>
+              <select id="targetOperationModel" class="form-control" formControlName='targetOperationModel' required>
+                <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
+              </select>
+              <!-- Target Operation Model dropdown validation errors -->
+              <div class="alert alert-danger center"
+                *ngIf="targetOperationModel!.invalid && (targetOperationModel!.dirty || targetOperationModel!.touched)">
+                <div *ngIf="targetOperationModel!.errors!.required">
+                  Target Operation Model is required.
+                </div>
+              </div>
+            </div>
+            <!-- Resources Quality -->
+            <div class="form-group">
+              <label for="resourcesQuality">Resources Quality</label>
+              <input id="resourcesQuality" type="text" class="form-control" formControlName="resourcesQuality">
+              <!-- Resources Quality field validation errors -->
+              <div class="alert alert-danger center"
+                *ngIf="resourcesQuality!.invalid && (resourcesQuality!.dirty || resourcesQuality!.touched)">
+                <div *ngIf="resourcesQuality!.errors!.required">
+                  Resources Quality is required.
+                </div>
+                <div *ngIf="resourcesQuality!.errors!.pattern">
+                  Resources Quality should be a number between 1 and 5:<br>(1 = poor, 3 = fair, 5 = good).
+                </div>
+              </div>
+            </div>
+            <!-- Submit button -->
+            <div class="center">
+              <button type="submit" class="btn btn-success" [disabled]="capEditForm.invalid">
+                EDIT
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-      <small class="text-muted">
-        Enter capability name (e.g. Capability Name)
-      </small>
     </div>
-    <div class='form-group w-50'>
-      <div class="custom">
-        <select class="select1" formControlName='paceOfChange' required>
-          <option *ngFor="let type of ePaceOfChange | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-        </select>
-        <label>Pace Of Change</label>
-      </div>
-      <br>
-      <div
-        *ngIf="capabilityForm.get('paceOfChange')!.invalid && (capabilityForm.get('paceOfChange')!.dirty || capabilityForm.get('paceOfChange')!.touched)"
-        class="alert alert-danger alertdiv">
-        <div *ngIf="capabilityForm.get('paceOfChange')!.errors!.required">
-          Pace Of Change is required.
-        </div>
-      </div>
+    <div class="flex-item">
+      <!-- Other components -->
     </div>
-    <div class='form-group w-50'>
-      <div class="custom">
-        <select class="select2" formControlName='tom' required>
-          <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-        </select>
-        <label>tOM</label>
-      </div>
-      <br>
-      <div
-        *ngIf="capabilityForm.get('tom')!.invalid && (capabilityForm.get('tom')!.dirty || capabilityForm.get('tom')!.touched)"
-        class="alert alert-danger alertdiv">
-        <div *ngIf="capabilityForm.get('tom')!.errors!.required">
-          tOM is required.
-        </div>
-      </div>
-    </div>
-    <div class='form-group w-50'>
-      <div class="custom">
-        <input type='text' formControlName='resourcesQuality' required />
-        <label>Resources Quality</label>
-      </div>
-      <br>
-      <div
-        *ngIf="capabilityForm.get('resourcesQuality')!.invalid && (capabilityForm.get('resourcesQuality')!.dirty || capabilityForm.get('resourcesQuality')!.touched)"
-        class="alert alert-danger alertdiv">
-        <div *ngIf="capabilityForm.get('resourcesQuality')!.errors!.required">
-          Resources Quality is required.
-        </div>
-        <div *ngIf="capabilityForm.get('resourcesQuality')!.errors!.pattern">
-          Resources Quality should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-        </div>
-      </div>
-
-      <small class="text-muted">
-        Enter capability resources quality (e.g. 4)
-      </small>
-    </div>
-
-    <button type="submit" class="btn btn-danger form-control" [disabled]="!capabilityForm.valid">Edit</button>
-    <br><br><br><br><br>
-  </form>
+  </div>
 </div>

@@ -30,7 +30,7 @@ export class EnvironmentAddComponent implements OnInit {
   }
 
   // To be able to use all form controls (name) above in html
-  get envAddFormControls() { return this.envAddForm.controls; }
+  get name() { return this.envAddForm.get('name'); }
 
   // Custom validator => It validates if there isn't a white space in the string
   private noWhiteSpace(control: AbstractControl): { [key: string]: any } | null {
@@ -41,13 +41,13 @@ export class EnvironmentAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    var env = new Environment(this.envAddFormControls.name.value);
+    var env = new Environment(this.name.value);
 
     this.es.createEnvironment(env.name)
       .subscribe(
         res => {
           console.log(res);
-          Swal.fire('Created', 'Environment created.', 'success');
+          Swal.fire('Created', `Environment ${this.name.value} created.`, 'success');
           this.router.navigate(['environments']);
         },
         err => Swal.fire('Error', err.error.message, 'error')

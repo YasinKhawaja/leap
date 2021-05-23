@@ -1,44 +1,70 @@
-<div id="caps">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col"></th> <!-- DELETE icon -->
-        <th scope="col">NAME</th>
-        <th scope="col">LEVEL</th>
-        <th scope="col">PACE OF CHANGE</th>
-        <th scope="col">TARGET OPERATION MODEL</th>
-        <th scope="col">RESOURCES QUALITY</th>
-        <th scope="col">INFO QUALITY</th>
-        <th scope="col">APP FIT</th>
-        <th scope="col"></th> <!-- ADD sub cap -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cap of capabilities">
-        <td>
-          <a [routerLink]="[cap.id, 'delete']">
-            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
-          </a>
-        </td>
-        <td>
-          <a class="btn btn-light" [routerLink]="[cap.id, 'update']" role="button">
-            {{ cap.name }}
-          </a>
-        </td>
-        <td class="numbers">{{ cap.level }}</td>
-        <td>{{ cap.paceOfChange }}</td>
-        <td>{{ cap.tom }}</td>
-        <td class="numbers">{{ cap.resourcesQuality }}</td>
-        <td class="numbers">{{ cap.informationQuality }}</td>
-        <td class="numbers">{{ cap.applicationFit }}</td>
-        <td>
-          <a class="btn btn-danger" [routerLink]="[cap.id, 'create']" role="button" *ngIf="cap.level == '1'">ADD CAP Lv2</a>
-          <a class="btn btn-danger" [routerLink]="[cap.id, 'create']" role="button" *ngIf="cap.level == '2'">ADD CAP Lv3</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="caps">
   <div>
-    <a class="btn btn-danger" [routerLink]="['create']" role="button">ADD CAPABILITY Lv1</a>
+    <form action="" id="capAddForm"></form>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th> <!-- DELETE icon -->
+          <th scope="col">NAME</th>
+          <th scope="col">LEVEL</th>
+          <th scope="col">PACE OF CHANGE</th>
+          <th scope="col">TARGET OPERATION MODEL</th>
+          <th scope="col">RESOURCES QUALITY</th>
+          <th scope="col">INFO QUALITY</th>
+          <th scope="col">APP FIT</th>
+          <th scope="col"></th> <!-- ADD sub cap -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cap of capabilities">
+          <td>
+            <a [routerLink]="[cap.id, 'delete']">
+              <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+            </a>
+          </td>
+          <td>
+            <a class="btn btn-light" [routerLink]="[cap.id, 'update']" role="button">
+              {{ cap.name }}
+            </a>
+          </td>
+          <td>{{ cap.level }}</td>
+          <td>{{ cap.paceOfChange }}</td>
+          <td>{{ cap.targetOperationModel }}</td>
+          <td>{{ cap.resourcesQuality }}</td>
+          <td>{{ cap.informationQuality }}</td>
+          <td>{{ cap.applicationFit }}</td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="callAll(cap, '2')" *ngIf="cap.level == '1'">
+              ADD CAP Lv2
+            </button>
+            <button type="button" class="btn btn-danger" (click)="callAll(cap, '3')" *ngIf="cap.level == '2'">
+              ADD CAP Lv3
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <br>
+      <button type="button" class="btn btn-danger" (click)="callAll(null, '1')">ADD CAPABILITY Lv1</button>
+    </div>
+    <br>
+  </div>
+  <div class="flex-container">
+    <div class="flex-item">
+      <div *ngIf="_display1">
+        <app-capability-add [cap]="_cap"></app-capability-add>
+      </div>
+    </div>
+    <div class="flex-item">
+      <div *ngIf="_display2">
+        <app-capability-add [cap]="_cap"></app-capability-add>
+      </div>
+    </div>
+    <div class="flex-item">
+      <div *ngIf="_display3">
+        <app-capability-add [cap]="_cap"></app-capability-add>
+      </div>
+    </div>
   </div>
 </div>

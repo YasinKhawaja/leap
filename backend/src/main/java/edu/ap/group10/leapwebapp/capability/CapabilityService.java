@@ -81,7 +81,7 @@ public class CapabilityService {
         // Update the cap
         capabilityToUpdate.setName(cap.getName());
         capabilityToUpdate.setPaceOfChange(cap.getPaceOfChange());
-        capabilityToUpdate.setTom(cap.getTom());
+        capabilityToUpdate.setTargetOperationModel(cap.getTargetOperationModel());
         capabilityToUpdate.setResourcesQuality(cap.getResourcesQuality());
         // Resave the updated cap
         return capabilityRepository.save(capabilityToUpdate);

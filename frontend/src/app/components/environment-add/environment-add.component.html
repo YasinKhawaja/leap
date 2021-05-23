@@ -11,21 +11,17 @@
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" formControlName="name">
                     <!-- Name field validation errors -->
-                    <div class="alert alert-danger middle-div"
-                        *ngIf="envAddFormControls.name.touched && envAddFormControls.name.invalid">
-                        <div *ngIf="envAddFormControls.name.errors.required">
+                    <div class="alert alert-danger middle-div" *ngIf="name.touched && name.invalid">
+                        <div *ngIf="name.errors.required">
                             Name is required.
                         </div>
-                        <div *ngIf="envAddFormControls.name.errors.whitespace">
+                        <div *ngIf="name.errors.whitespace">
                             Name cannot contain white spaces.
-                        </div>
-                        <div *ngIf="envAddFormControls.name.errors.exists">
-                            Name already exists.
                         </div>
                     </div>
                 </div>
                 <!-- Submit button -->
-                <div>
+                <div class="middle-div">
                     <button type="submit" class="btn btn-success" [disabled]="envAddForm.invalid">
                         CREATE
                     </button>
