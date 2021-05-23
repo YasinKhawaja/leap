@@ -21,7 +21,7 @@ enum TargetOperationModel {
 }
 
 @Component({
-  selector: 'app-capability-add, [app-capability-add]',
+  selector: 'app-capability-add',
   templateUrl: './capability-add.component.html',
   styleUrls: ['./capability-add.component.css']
 })
