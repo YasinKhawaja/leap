@@ -1,0 +1,48 @@
+<div class="container">
+    <br>
+    <h1>Add Strategy</h1><br>
+  
+  <form [formGroup]="strAddForm" (ngSubmit)="onSubmit()">
+    <div class='form-group w-50'>
+      <div class="custom">
+        <input type='text' formControlName='name' required/>
+        <label>Name</label>
+      </div>
+      <br>
+      <div *ngIf="strAddForm.get('name')!.invalid && (strAddForm.get('name')!.dirty || strAddForm.get('name')!.touched)"
+      class="alert alert-danger alertdiv">
+      <div *ngIf="strAddForm.get('name')!.errors!.required">
+        Name is required.
+      </div>
+      <div *ngIf="strAddForm.get('name')!.errors!.pattern">
+        Name should only consist out of characters from the alphabet.
+      </div>
+      </div>  
+
+      <br>
+      <div class='form-group w-50'>
+        <div class="custom">
+         
+          <input type='date' formControlName='timeframeFrom'required/>
+  
+          <label>Timeframe from</label>
+        </div>
+          <br>
+          
+      </div>  
+      <br>
+      <div class='form-group w-50'>
+        <div class="custom">
+         
+          <input type='date' formControlName='timeframeTo' required/>
+  
+          <label>Timeframe to</label>
+        </div>
+          <br>
+      </div>  
+
+      <br>
+      <button type="submit" class="btn btn-danger form-control" [disabled]="!strAddForm.valid">Add</button>
+    </div> 
+</form>
+

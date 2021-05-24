@@ -1,0 +1,61 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.middle {
+    position: fixed;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+}
+
+.alert{
+    background-color: red;
+    padding: 20px 40px;
+    max-width: 600px;
+   overflow:hidden;
+    left:100px;
+    top: 10px;
+    border-radius:40px;
+    
+}
+
+.alert.show{
+    animation:show_slide 1s ease forwards;
+}
+@keyframes show_slide{
+    0%{
+        transform:translate(100%);
+    }
+    40% {
+        transform: translate(-10%);
+    }
+    80% {
+        transform: translate(0%);
+    }
+    100% {
+        transform: translate(-10px);
+    }
+}
+
+.alert .fa-exclamation-circle{
+        color: black;
+        font-size:30px;
+       
+}
+.msg {
+        padding:0 20px;
+        font-size:15px;
+        color: black;
+}
+   
+.fa-times{
+    font-size:30px;
+}
+.fa-check-circle{
+        
+        font-size:30px;
+        padding:0 20px;
+}
+

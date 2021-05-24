@@ -24,6 +24,10 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
+import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
+import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
+import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
 
 
@@ -35,7 +39,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'environments', component: EnvironmentComponent },
   { path: 'capabilities', component: CapabilityComponent },
-  { path: 'itapplication', component: ItapplicationComponent }
+  { path: 'itapplication', component: ItapplicationComponent },
+  { path: 'strategies', component: StrategyComponent }
 ]
 
 @NgModule({
@@ -57,7 +62,11 @@ const appRoutes: Routes = [
     ItapplicationAddComponent,
     ItapplicationDeleteComponent,
     ItapplicationEditComponent,
-    ItapplicationComponent
+    ItapplicationComponent,
+    StrategyComponent,
+    StrategyAddComponent,
+    StrategyDeleteComponent,
+    StrategyEditComponent
   ],
   imports: [
     BrowserModule,
