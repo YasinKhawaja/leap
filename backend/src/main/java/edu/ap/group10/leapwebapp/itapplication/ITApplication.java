@@ -1,7 +1,5 @@
 package edu.ap.group10.leapwebapp.itapplication;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -60,7 +58,6 @@ public class ITApplication{
     private Double currentTotalCostPerYear;
     @Column(nullable = false, name = "application_tolerated_total_cost_per_year")
     private Double toleratedTotalCostPerYear;
-    //what's this?
     @Column(nullable = false, name = "application_time_value")
     @Enumerated(EnumType.STRING)
     private TimeValue timeValue;

@@ -17,7 +17,6 @@ export class ItapplicationComponent implements OnInit {
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironment();
-    //let environmentId = this.router.url.split('/')[2];
 
     this.its.getITApplications_CurrentEnvironment(environmentId)
       .subscribe(result => {

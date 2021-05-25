@@ -38,13 +38,11 @@ export class NavbarService {
   }
 
   public setEnvironment(environmentID: string) {
-    //this.environmentID = environmentID;
     this.createCookie("Environment", environmentID, 1);
   }
 
   public getEnvironment(): string{
     if(this.environmentSelected) {
-      //return this.environmentID;
       return this.readCookie("Environment");
     }
     else{
@@ -69,18 +67,14 @@ export class NavbarService {
 
     for (var i = 0; i < cookieValues.length; i++) {
       var cookie = cookieValues[i];
-      console.log('checking' + cookie);
 
       while (cookie.charAt(0) == ' ') {
         cookie = cookie.substring(1, cookie.length);
-        console.log('while' + cookie);
       }
       if (cookie.indexOf(nameCK) == 0){
-        console.log('return' + cookie);
         return cookie.substring(nameCK.length, cookie.length);
       } 
     }
-    console.log('null');
     return null;
   }
 

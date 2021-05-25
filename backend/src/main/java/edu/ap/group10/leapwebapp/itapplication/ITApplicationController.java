@@ -1,26 +1,19 @@
 package edu.ap.group10.leapwebapp.itapplication;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ITApplicationController {
 
@@ -29,15 +22,13 @@ public class ITApplicationController {
     @Autowired
     private EnvironmentService environmentService;
 
-    //Get request to itapplications has to have a ?id= variable in the url or something
     @GetMapping("/itapplications/{environmentId}")
-    public @ResponseBody List<ITApplication> getAllITApplications(@PathVariable String environmentId){
+    public List<ITApplication> getAllITApplications(@PathVariable String environmentId){
         return itApplicationService.getITApplications(environmentId);
     }
 
-    //add variables etc -> change to include invornment id in creatapplication
     @PostMapping("/itapplications/{environmentId}")
-    public ResponseEntity<ITApplication> addITApplication(@PathVariable String environmentId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
+    public ITApplication addITApplication(@PathVariable String environmentId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
     @RequestParam("version") String version, @RequestParam("acquisitionDate") String acquisitionDate, @RequestParam("endOfLife") String endOfLife, 
     @RequestParam("currentScalability") Integer currentScalability, @RequestParam("expectedScalability") Integer expectedScalability, @RequestParam("currentPerformance") Integer currentPerformance,
     @RequestParam("expectedPerformance") Integer expectedPerformance, @RequestParam("currentSecurityLevel") Integer currentSecurityLevel, @RequestParam("expectedSecurityLevel") Integer expectedSecurityLevel,
@@ -48,24 +39,9 @@ public class ITApplicationController {
         Environment environment = environmentService.getEnvironmentById(Long.parseLong(environmentId));
         ITApplication itApplication = new ITApplication(applicationName, technology, version, acquisitionDate, endOfLife, currentScalability, expectedScalability, currentPerformance, expectedPerformance,
         currentSecurityLevel, expectedSecurityLevel, currentStability, expectedStability, costCurrency, currentValueForMoney, currentTotalCostPerYear, toleratedTotalCostPerYear, timeValue, environment);
-        itApplicationService.createITApplication(itApplication);
-        
-        ResponseEntity<ITApplication> respEntity;
-
-        Boolean present = itApplicationService.isPresent(itApplication.getId());
-
-        //null check and true check
-        if(present != null && present){
-            respEntity = ResponseEntity.ok().body(itApplication);
-        }
-        else {
-            respEntity = ResponseEntity.badRequest().body(itApplication);
-        }
-        
-        return respEntity;
+        return itApplicationService.createITApplication(itApplication);
     }
 
-    //-> change to include invornment id in creatapplication
     @PutMapping("/itapplications/{applicationId}")
     public ITApplication updateITApplication(@PathVariable String applicationId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
     @RequestParam("version") String version, @RequestParam("acquisitionDate") String acquisitionDate, @RequestParam("endOfLife") String endOfLife, 
@@ -82,7 +58,6 @@ public class ITApplicationController {
         return itApplicationService.updateITApplication(oldITApplication.getId(), newITApplication);
     }
 
-    // -> change to include invornment id in creatapplication
     @DeleteMapping("/itapplications/{applicationId}")
     public void deleteITApplication(@PathVariable String applicationId){        
         Long applicationID = Long.parseLong(applicationId);

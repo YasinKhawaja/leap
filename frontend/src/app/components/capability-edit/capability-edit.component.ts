@@ -73,6 +73,12 @@ export class CapabilityEditComponent implements OnInit {
     return this.capEditForm.get('resourcesQuality');
   }
 
+  refer() {
+    var capabilityId = this.router.url.split('/')[4];
+    console.log("TEST");
+    this.router.navigate([`capability-application/${capabilityId}`])
+  }
+
   onSubmit() {
     var envId = this.router.url.split('/')[2];
     var capIdToUpdate = this.router.url.split('/')[4];

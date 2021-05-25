@@ -1,33 +1,11 @@
 package edu.ap.group10.leapwebapp.user;
-
-import java.net.URI;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.MethodInvocationRecorder.Recorded.ToCollectionConverter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RestController;
 
-import edu.ap.group10.leapwebapp.user.UserRepository;
 import edu.ap.group10.leapwebapp.useradmin.Useradmin;
 import edu.ap.group10.leapwebapp.useradmin.UseradminRepository;
 import edu.ap.group10.leapwebapp.company.Company;
@@ -35,10 +13,8 @@ import edu.ap.group10.leapwebapp.company.CompanyRepository;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
-import edu.ap.group10.leapwebapp.user.UserLeap;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@Controller
+@RestController
 public class UserController {
    
     @Autowired
@@ -58,15 +34,15 @@ public class UserController {
 
     //Be sure to send password encrypted via angular, decrypt again here! TO DO FOR WEB SECURITY
     //Future web security JWT implementation: https://bezkoder.com/spring-boot-jwt-authentication/
+    //change to /user
     @PostMapping("/user/login")
-    public @ResponseBody String loginResult(@RequestParam("username") String username, @RequestParam("password") String password){
+    public String loginResult(@RequestParam("username") String username, @RequestParam("password") String password){
         Authentication auth = customAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        String authorities = auth.getAuthorities().toString();
-        return authorities;
+        return auth.getAuthorities().toString();
     }
-
+    //change to /user
     @PostMapping("/user/register")
-    public @ResponseBody String register(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
+    public String register(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
     @RequestParam("email") String email, @RequestParam("company") Long company, @RequestParam("username") String username,
     @RequestParam("environment") String environment){
 

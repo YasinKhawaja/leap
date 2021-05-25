@@ -26,6 +26,10 @@ import { RegisterFormUseradminComponent } from './components/register-form-usera
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { CapabilityService } from './services/capability/capability.service';
 
+import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
+import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
+import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
+import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,7 +61,11 @@ const appRoutes: Routes = [
     ItapplicationAddComponent,
     ItapplicationDeleteComponent,
     ItapplicationEditComponent,
-    ItapplicationComponent
+    ItapplicationComponent,
+    CapabilityApplicationComponent,
+    CapabilityApplicationAddComponent,
+    CapabilityApplicationDeleteComponent,
+    CapabilityApplicationEditComponent
   ],
   imports: [
     BrowserModule,

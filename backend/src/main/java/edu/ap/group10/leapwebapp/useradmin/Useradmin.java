@@ -1,6 +1,5 @@
 package edu.ap.group10.leapwebapp.useradmin;
 
-import java.beans.Transient;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -121,31 +120,26 @@ public void setCompany(Company company) {
 
   @Override
 public Collection<? extends GrantedAuthority> getAuthorities() {
-    // TODO Auto-generated method stub
     return Collections.<GrantedAuthority>singletonList(new SimpleGrantedAuthority("USER_ADMIN"));
 }
 
 @Override
 public boolean isAccountNonExpired() {
-    // TODO Auto-generated method stub
     return true;
 }
 
 @Override
 public boolean isAccountNonLocked() {
-    // TODO Auto-generated method stub
     return true;
 }
 
 @Override
 public boolean isCredentialsNonExpired() {
-    // TODO Auto-generated method stub
     return true;
 }
 
 @Override
 public boolean isEnabled() {
-    // TODO Auto-generated method stub
     return true;
 }
 }

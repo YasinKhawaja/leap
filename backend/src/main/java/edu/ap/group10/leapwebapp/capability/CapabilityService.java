@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
@@ -38,6 +39,12 @@ public class CapabilityService {
                 .filter(cap -> cap.getId().equals(capId)).collect(Collectors.toList());
         // Return the found cap
         return capsFound.get(0);
+    }
+
+    //Get for capability by capabilityId for capability-application link
+    public Capability getCapabilityById(Long capId) {
+        return capabilityRepository.findById(capId)
+        .orElseThrow(ResourceNotFoundException::new);
     }
 
     // To CREATE a capability in an environment
