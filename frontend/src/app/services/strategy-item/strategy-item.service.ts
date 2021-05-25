@@ -17,11 +17,15 @@ export class StrategyItemService {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
  }
 
-
- public getAllStrategyItemInStrategy(strId: string): Observable<StrategyItem[]> {
-  var url = `${this.strategyItemServiceURI}/${strId}`;
-
+ getAllStrategies(): Observable<StrategyItem[]> {
+  let url = `${this.strategyItemServiceURI}`;
   return this.http.get<StrategyItem[]>(url);
+}
+
+  getAllStrategyItemInStrategy(strId: string): Observable<StrategyItem[]> {
+  var url = `${this.strategyItemServiceURI}`;
+
+  return this.http.get<StrategyItem[]>(url, { params: { strId: strId } });
 }
 
 }
