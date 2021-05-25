@@ -5,6 +5,9 @@ export class Environment {
     public id: string;
     public capabilities: Capability[];
 
-    constructor(public name: string) { }
+    constructor(public name: string) {
+        this.id = '';
+        this.capabilities = []
+    }
 
 }

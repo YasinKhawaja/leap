@@ -9,7 +9,7 @@ import { EnvironmentComponent } from './environment.component';
 describe('EnvironmentComponent', () => {
   let component: EnvironmentComponent;
   let fixture: ComponentFixture<EnvironmentComponent>;
-  let service: EnvironmentService;
+  let eService: EnvironmentService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,30 +30,41 @@ describe('EnvironmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EnvironmentComponent);
     component = fixture.componentInstance;
-    service = fixture.debugElement.injector.get(EnvironmentService);
+    eService = fixture.debugElement.injector.get(EnvironmentService);
     fixture.detectChanges();
   });
 
   // Default test
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call ngOnInit', () => {
+  // Positive test "getAllEnvironments" method
+  it('should call & save 3 envs in "environments" prop', () => {
     // Given
-    var spy_getAllEnvironments = spyOn(service, "getAllEnvironments").and.callFake(() => {
+    var spyService_getAllEnvironments = spyOn(eService, "getAllEnvironments").and.callFake(() => {
       return Rx.of([
-        { id: 1, name: 'A', capabilities: [] },
-        { id: 2, name: 'B', capabilities: [] }
-      ]);
+        { id: '1', name: 'EnvA', capabilities: [] },
+        { id: '2', name: 'EnvB', capabilities: [] },
+        { id: '3', name: 'EnvC', capabilities: [] }
+      ])
     });
 
     // When
-    component.ngOnInit();
+    component.getAllEnvironments();
 
     // Then
-    expect(component.environments).toBeDefined();
-    expect(component.environments).toBeInstanceOf(Array);
-    expect(component.environments).toHaveSize(2);
+    expect(spyService_getAllEnvironments).toHaveBeenCalled();
+    expect(component.environments).toHaveSize(3);
+  });
+
+  // Negative test "getAllEnvironments" method
+  it('should throw error & save none', () => {
+    // Given
+    var spy_getAllEnvironments = spyOn(component, "getAllEnvironments").and.throwError('ERROR');
+
+    // Then
+    expect(spy_getAllEnvironments).toThrowError('ERROR');
+    expect(component.environments).toHaveSize(0);
   });
 });

@@ -1,4 +1,3 @@
-import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -9,16 +8,16 @@ export class NavbarService {
   environmentSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
   environmentID: string;
 
-  
+
   //tijdelijk tot inlog werkt 
-  user:BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public userLogin(){
+  user: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public userLogin() {
     this.user.next(true)
   }
-  public userLogout(){
+  public userLogout() {
     this.user.next(false)
-  } 
-//
+  }
+  //
 
 
   public environmentStatus(): BehaviorSubject<boolean> {
@@ -30,7 +29,7 @@ export class NavbarService {
     this.environmentSelected.next(true);
     this.createCookie("Selected", this.environmentSelected.value.toString(), 1)
   }
- 
+
   public environmentDeselect() {
     this.environmentSelected.next(false);
     this.eraseCookie("Selected");
@@ -42,17 +41,17 @@ export class NavbarService {
     this.createCookie("Environment", environmentID, 1);
   }
 
-  public getEnvironment(): string{
-    if(this.environmentSelected) {
+  public getEnvironment(): string {
+    if (this.environmentSelected) {
       //return this.environmentID;
       return this.readCookie("Environment");
     }
-    else{
+    else {
       return "no environment was selected"
     }
   }
 
-  createCookie(name: string, value:string, days: number) {
+  createCookie(name: string, value: string, days: number) {
     var expires = '';
     if (days) {
       var date = new Date();
@@ -75,10 +74,10 @@ export class NavbarService {
         cookie = cookie.substring(1, cookie.length);
         console.log('while' + cookie);
       }
-      if (cookie.indexOf(nameCK) == 0){
+      if (cookie.indexOf(nameCK) == 0) {
         console.log('return' + cookie);
         return cookie.substring(nameCK.length, cookie.length);
-      } 
+      }
     }
     console.log('null');
     return null;

@@ -2,6 +2,13 @@ import { Environment } from './environment';
 
 describe('Environment', () => {
     it('should create an instance', () => {
-        expect(new Environment('Test')).toBeTruthy();
+        // Given
+        var expEnv;
+
+        // When
+        expEnv = new Environment('Test');
+
+        // Then
+        expect(expEnv.name).toBe('Test');
     });
 });
