@@ -42,7 +42,7 @@ describe('CapabilityAddComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be a valid form',() => {
+  /*it('should be a valid form',() => {
     // fill in name in form
     component.capability.setValue({name: 'Test', paceOfChange: 'INNOVATIVE', tom: 'REPLICATION', 
     resourcesQuality: '4'});
@@ -68,5 +68,5 @@ describe('CapabilityAddComponent', () => {
     // submit form
     button.nativeElement.click();
     fixture.detectChanges(); 
-  })
+  })*/
 });

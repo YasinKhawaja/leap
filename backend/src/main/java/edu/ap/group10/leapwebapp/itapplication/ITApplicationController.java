@@ -45,7 +45,7 @@ public class ITApplicationController {
     @RequestParam("currentValueForMoney") Integer currentValueForMoney, @RequestParam("currentTotalCostPerYear") Double currentTotalCostPerYear, @RequestParam("toleratedTotalCostPerYear") Double toleratedTotalCostPerYear,
     @RequestParam("timeValue") TimeValue timeValue){
 
-        Environment environment = environmentService.getEnvironmentById(Long.parseLong(environmentId));
+        Environment environment = environmentService.getEnvironment(Long.parseLong(environmentId));
         ITApplication itApplication = new ITApplication(applicationName, technology, version, acquisitionDate, endOfLife, currentScalability, expectedScalability, currentPerformance, expectedPerformance,
         currentSecurityLevel, expectedSecurityLevel, currentStability, expectedStability, costCurrency, currentValueForMoney, currentTotalCostPerYear, toleratedTotalCostPerYear, timeValue, environment);
         itApplicationService.createITApplication(itApplication);

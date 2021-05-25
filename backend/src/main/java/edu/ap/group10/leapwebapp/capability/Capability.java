@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
-import edu.ap.group10.leapwebapp.itapplication.ITApplication;
 
 @Entity
 public class Capability {
@@ -37,25 +35,28 @@ public class Capability {
 	@Column(nullable = false)
 	private String name;
 
-	@Column(name = "pace_of_change")
+	@Column(name = "pace_of_change", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private PaceOfChange paceOfChange;
 
+	@Column(name = "target_operation_model", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TargetOperationModel targetOperationModel;
 
-	@Column(name = "resources_quality")
+	@Column(name = "resources_quality", nullable = false)
 	private Integer resourcesQuality;
 
-	@Column(name = "information_quality")
+	@Column(name = "information_quality", nullable = false)
 	private Double informationQuality;
 
-	@Column(name = "application_fit")
+	@Column(name = "application_fit", nullable = false)
 	private Double applicationFit;
-/*
-	@OneToMany(targetEntity = ITApplication.class, fetch = FetchType.EAGER)
-	@JoinColumn(name="environment_id", nullable = false)
-	private List<ITApplication> itApplications;*/
+	/*
+	 * @OneToMany(targetEntity = ITApplication.class, fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name="environment_id", nullable = false) private
+	 * List<ITApplication> itApplications;
+	 */
 
 	// foreign keys
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -63,12 +64,12 @@ public class Capability {
 	private List<Capability> subcapabilities;
 
 	@ManyToOne
-	@JoinColumn(name = "parent_id")
+	@JoinColumn(name = "parent_id") // Nullable because a Lv1 cap doesn't have a parent cap
 	@JsonBackReference(value = "parent_reference")
 	private Capability parent;
 
 	@ManyToOne
-	@JoinColumn(name = "environment_id")
+	@JoinColumn(name = "environment_id", nullable = false)
 	@JsonBackReference(value = "environment_reference")
 	private Environment environment;
 
@@ -76,29 +77,25 @@ public class Capability {
 	public Capability() {
 	}
 
-	public Capability(String name, PaceOfChange poc, TargetOperationModel tom, Integer resQuality) {
+	public Capability(String name) {
+		this.setEnvironment(new Environment()); // Foreign key
 		this.setParent(null); // Foreign key
-		this.setEnvironment(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
-		this.paceOfChange = poc;
-		this.targetOperationModel = tom;
-		this.resourcesQuality = resQuality;
+		this.setPaceOfChange(PaceOfChange.NONE);
+		this.setTargetOperationModel(TargetOperationModel.NONE);
+		this.setResourcesQuality(0);
 		this.setInformationQuality(0.0);
 		this.setApplicationFit(0.0);
 	}
-/*
-	public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer resourcesQuality, List ITApplications){
-		this.setParentId(1); // Foreign key
-		this.setEnvironment(null); // Foreign key
-		this.setLevel(1);
-		this.name = name;
-		this.paceOfChange = paceOfChange;
-		this.tom = tom;
-		this.resourcesQuality = resourcesQuality;
-		this.setInformationQuality(0.0);
-		this.setApplicationFit(0.0);
-	}*/
+	/*
+	 * public Capability(String name, PaceOfChange paceOfChange, Tom tom, Integer
+	 * resourcesQuality, List ITApplications){ this.setParentId(1); // Foreign key
+	 * this.setEnvironment(null); // Foreign key this.setLevel(1); this.name = name;
+	 * this.paceOfChange = paceOfChange; this.tom = tom; this.resourcesQuality =
+	 * resourcesQuality; this.setInformationQuality(0.0);
+	 * this.setApplicationFit(0.0); }
+	 */
 
 	// GETTERS & SETTERS
 	public Long getId() {

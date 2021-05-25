@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
@@ -9,7 +10,7 @@ import { EnvironmentService } from 'src/app/services/environment/environment.ser
 })
 export class EnvironmentDeleteComponent implements OnInit {
 
-  constructor(private es: EnvironmentService, private router: Router) { }
+  constructor(private es: EnvironmentService, private router: Router, private location: Location) { }
 
   ngOnInit(): void { }
 
@@ -18,9 +19,14 @@ export class EnvironmentDeleteComponent implements OnInit {
 
     this.es.deleteEnvironment(envIdToDelete)
       .subscribe(
-        res => this.router.navigate(['environments']),
+        res => this.navigateBack(),
         err => console.log(err)
       );
+  }
+
+  // To navigate to the previous page
+  navigateBack() {
+    this.location.back();
   }
 
 }

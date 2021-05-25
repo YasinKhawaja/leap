@@ -2,6 +2,7 @@
 package edu.ap.group10.leapwebapp.environment;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,46 +29,21 @@ public class EnvironmentController {
 
 	// To GET an environment
 	@GetMapping("/environments/{id}")
-	public Environment getEnvironment(@PathVariable Long id) {
-		Environment env = null;
-		try {
-			env = environmentService.getEnvironment(id);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return env;
-	}
-
-	// To GET if an environment name already exists
-	@GetMapping("/environments/exists")
-	public Boolean existsByName(@RequestParam String name) {
-		return environmentService.existsByName(name);
+	public Environment getEnvironment(@PathVariable Long id) throws NoSuchElementException {
+		return environmentService.getEnvironment(id);
 	}
 
 	// To CREATE an environment
 	@PostMapping("/environments")
-	public Environment createEnvironment(@RequestParam String name) {
-		Environment createdEnv = null;
-		try {
-			createdEnv = environmentService.createEnvironment(name);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			throw e;
-		}
-		return createdEnv;
+	public Environment createEnvironment(@RequestParam String name) throws ArithmeticException {
+		return environmentService.createEnvironment(name);
 	}
 
 	// To UPDATE an environment
 	@PutMapping("/environments/{id}")
-	public Environment updateEnvironment(@PathVariable Long id, @RequestParam String name) {
-		Environment updatedEnv = null;
-		try {
-			updatedEnv = environmentService.updateEnvironment(id, name);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			throw e;
-		}
-		return updatedEnv;
+	public Environment updateEnvironment(@PathVariable Long id, @RequestParam String name)
+			throws NoSuchElementException, ArithmeticException {
+		return environmentService.updateEnvironment(id, name);
 	}
 
 	// To DELETE an environment
