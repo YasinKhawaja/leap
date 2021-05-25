@@ -35,8 +35,8 @@ public class CapabilityServiceUnitTests {
      @Test
      void getCapability_InDb_ReturnCap() {
        // When
-       when(cRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Capability("test1",PaceOfChange.DIFFERENTIATION,TargetOperationModel.COORDINATION,2),
-               new Capability("test2",PaceOfChange.INNOVATIVE,TargetOperationModel.DIVERSIFICATION,2), new Capability("test3",PaceOfChange.STANDARD,TargetOperationModel.REPLICATION,2)));
+       when(cRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Capability("test1"),
+               new Capability("test2"), new Capability("test3")));
 
         List<Capability> actualCaFound = cServiceUnderTest.getAllCapabilities();
 

@@ -1,4 +1,3 @@
-import { HttpParams } from "@angular/common/http";
 
 export class Capability {
 
@@ -16,15 +15,4 @@ export class Capability {
         this.applicationFit = '0';
     }
 
-    getParams(): HttpParams {
-        return new HttpParams()
-            //.set('parentId', this.parentId)
-            //.set('level', this.level)
-            .set('name', this.name)
-            .set('resourcesQuality', this.resourcesQuality)
-            .set('paceOfChange', this.paceOfChange)
-            .set('targetOperationModel', this.targetOperationModel)
-            //.set('informationQuality', this.informationQuality)
-            //.set('applicationFit', this.applicationFit);
-    }
 }

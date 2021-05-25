@@ -48,7 +48,7 @@ export class CapabilityAddComponent implements OnInit {
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
       paceOfChange: ['', Validators.required],
       targetOperationModel: ['', Validators.required],
-      resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
+      resourcesQuality: ['', [Validators.pattern('[1-5]')]]
     });
   }
 
@@ -86,6 +86,12 @@ export class CapabilityAddComponent implements OnInit {
       this.targetOperationModel.value,
       this.resourcesQuality.value
     );
+
+    // If no input given for "Resources Quality" field in form
+    if (capToCreate.resourcesQuality.length == 0) {
+      // Set default value 1 for API call 
+      capToCreate.resourcesQuality = '0';
+    }
 
     this.cs.createCapability(envId, parentCapId, capToCreate)
       .subscribe(

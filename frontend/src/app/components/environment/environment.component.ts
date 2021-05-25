@@ -17,11 +17,18 @@ export class EnvironmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.es.getAllEnvironments()
-      .subscribe(res => { this.environments = res; console.log(res); }, err => console.error(err));
+    this.getAllEnvironments();
   }
 
-  environmentId(environmentId): void{
+  getAllEnvironments(): void {
+    this.es.getAllEnvironments()
+      .subscribe(
+        res => { this.environments = res; console.log(res); },
+        err => console.error(err)
+      );
+  }
+
+  environmentId(environmentId): void {
     this.ns.setEnvironment(environmentId);
   }
 }

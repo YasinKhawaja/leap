@@ -35,7 +35,7 @@ public class CapabilityRepositoryUnitTests {
        eRepositoryUnderTest.save(env);
 
 
-      Capability expectedCaToReturn = new Capability("jan",PaceOfChange.DIFFERENTIATION,TargetOperationModel.COORDINATION,2);
+      Capability expectedCaToReturn = new Capability("jan");
       expectedCaToReturn.setEnvironment(env);
        cRepositoryUnderTest.save(expectedCaToReturn);
 

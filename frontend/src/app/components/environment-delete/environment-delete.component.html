@@ -1,8 +1,12 @@
-<div class="middle">
-    <div class="alert show">
-        <span class="fa fa-exclamation-circle"></span>
-        <span class="msg">Are you sure you want to delete this environment?</span>
-        <span class="fa fa-times" [routerLink]="['envs']"></span>
-        <span class="fa fa-check-circle" (click)="deleteEnvironment()"></span>
-    </div>    
+<div class="center-page">
+    <div class="card">
+        <div class="card-header center">
+            <h4>Are you sure you want to delete this environment?</h4>
+        </div>
+        <div class="card-body center">
+            <button type="button" class="btn btn-light" (click)="navigateBack()">CANCEL</button>
+            &nbsp;
+            <button type="button" class="btn btn-danger" (click)="deleteEnvironment()">DELETE</button>
+        </div>
+    </div>
 </div>

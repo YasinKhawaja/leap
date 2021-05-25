@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Environment } from 'src/app/classes/environment/environment';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
 import Swal from 'sweetalert2';
 
@@ -25,25 +24,15 @@ export class EnvironmentAddComponent implements OnInit {
     // Form group
     this.envAddForm = this.fb.group({
       // Form controls
-      name: ['', [Validators.required, this.noWhiteSpace]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
     });
   }
 
-  // To be able to use all form controls (name) above in html
+  // To be able to use the name form control in HTML
   get name() { return this.envAddForm.get('name'); }
 
-  // Custom validator => It validates if there isn't a white space in the string
-  private noWhiteSpace(control: AbstractControl): { [key: string]: any } | null {
-    if ((control.value as string).indexOf(' ') >= 0) {
-      return { 'whitespace': true };
-    }
-    return null;
-  }
-
   onSubmit(): void {
-    var env = new Environment(this.name.value);
-
-    this.es.createEnvironment(env.name)
+    this.es.createEnvironment(this.name.value)
       .subscribe(
         res => {
           console.log(res);

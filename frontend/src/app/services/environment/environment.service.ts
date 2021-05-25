@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Environment } from 'src/app/classes/environment/environment';
@@ -19,16 +19,14 @@ export class EnvironmentService {
     return this.http.get<Environment[]>(url);
   }
 
-  /*getAllUsers(): Observable<UserLeap[]> {
-    let url = this.environmentsServiceURI + "/"
-  }*/
-
   // To CREATE an environment
   createEnvironment(envName: string): Observable<Environment> {
     var url = `${this.environmentsServiceURI}`;
     var env = new Environment(envName);
 
-    return this.http.post<Environment>(url, env.getParams());
+    var nameParam = new HttpParams().set('name', env.name);
+
+    return this.http.post<Environment>(url, nameParam);
   }
 
   // To UPDATE an environment
@@ -36,7 +34,9 @@ export class EnvironmentService {
     var url = `${this.environmentsServiceURI}/${envId}`;
     var env = new Environment(newEnvName);
 
-    return this.http.put<Environment>(url, env.getParams());
+    var nameParam = new HttpParams().set('name', env.name);
+
+    return this.http.put<Environment>(url, nameParam);
   }
 
   // To DELETE an environment

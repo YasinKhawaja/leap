@@ -10,7 +10,7 @@
           <form class="form" [formGroup]="capEditForm" (ngSubmit)="onSubmit()">
             <!-- Name -->
             <div class="form-group">
-              <label for="name">Name</label>
+              <label for="name">Name <span class="red">*</span></label>
               <input id="name" type="text" class="form-control" formControlName="name" required>
               <!-- Name field validation errors -->
               <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
@@ -24,7 +24,7 @@
             </div>
             <!-- Pace of Change -->
             <div class="form-group">
-              <label for="paceOfChange">Pace of Change</label>
+              <label for="paceOfChange">Pace of Change <span class="red">*</span></label>
               <select id="paceOfChange" class="form-control" formControlName='paceOfChange' required>
                 <option *ngFor="let type of ePoc | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
               </select>
@@ -38,7 +38,7 @@
             </div>
             <!-- Target Operation Model -->
             <div class="form-group">
-              <label for="targetOperationModel">Target Operation Model</label>
+              <label for="targetOperationModel">Target Operation Model <span class="red">*</span></label>
               <select id="targetOperationModel" class="form-control" formControlName='targetOperationModel' required>
                 <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
               </select>
@@ -57,9 +57,6 @@
               <!-- Resources Quality field validation errors -->
               <div class="alert alert-danger center"
                 *ngIf="resourcesQuality!.invalid && (resourcesQuality!.dirty || resourcesQuality!.touched)">
-                <div *ngIf="resourcesQuality!.errors!.required">
-                  Resources Quality is required.
-                </div>
                 <div *ngIf="resourcesQuality!.errors!.pattern">
                   Resources Quality should be a number between 1 and 5:<br>(1 = poor, 3 = fair, 5 = good).
                 </div>
