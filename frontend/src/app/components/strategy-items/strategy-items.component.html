@@ -14,14 +14,16 @@
      <tbody>
        <tr *ngFor='let strategyItem of strategyItems'>
          <td><a [routerLink]="['../strsItems/', strategyItem.id, 'delete']"><img src='assets/delete.jpg' width='15' height='18'></a>&nbsp;&nbsp;
+           
           <a [routerLink]="['../strsItems/',strategyItem.id, 'update']">
             <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
         </a>
         &nbsp;&nbsp;&nbsp;
-            <a>{{ strategyItem.name }} </a> </td>
+          <a >{{ strategyItem.name }} </a> </td>
             
             <td > {{ strategyItem.description }} </td>
          <!-- <td> {{ strategyItem.id }} </td> hier moet de id van de strategy-->  
+       
           </tr>
      </tbody>
    </table>

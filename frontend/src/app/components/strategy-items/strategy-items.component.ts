@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 
 @Component({
@@ -12,13 +13,17 @@ export class StrategyItemsComponent implements OnInit {
 
   strategyItems: StrategyItem[]
 
-  constructor(private cs: StrategyItemService , private router: Router) { 
+  constructor(private cs: StrategyItemService , private router: Router,private ns: NavbarService) { 
     this.strategyItems = [];
   }
 
   ngOnInit(): void {
 
-    //var strId = this.router.url.split('/')[2];
+    var strId = this.router.url.split('/')[2];
+
+    this.cs.getAllStrategyItemInStrategy(strId)
+               .subscribe(res => { this.strategyItems = res;  console.log(res); }, 
+                         error => { console.error(error) })
 }
 
 }

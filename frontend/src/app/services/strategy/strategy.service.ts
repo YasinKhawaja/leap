@@ -16,8 +16,6 @@ export class StrategyService {
  }
 
 
-//toegevoegd door id
-
 public getAllStrategyInEnvironment(environmentId: string): Observable<Strategy[]> {
   var url = `${this.strategiesServiceURI}/${environmentId}`;
 

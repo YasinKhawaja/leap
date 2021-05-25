@@ -27,6 +27,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
 import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
+import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
 
@@ -66,7 +67,8 @@ const appRoutes: Routes = [
     StrategyComponent,
     StrategyAddComponent,
     StrategyDeleteComponent,
-    StrategyEditComponent
+    StrategyEditComponent,
+    StrategyItemsComponent
   ],
   imports: [
     BrowserModule,

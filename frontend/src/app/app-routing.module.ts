@@ -43,7 +43,8 @@ const routes: Routes = [
   { path: 'strategies/:strId/delete', component: StrategyDeleteComponent},
   { path: 'strategies/:strId/update', component: StrategyEditComponent},
   { path: 'strategies/create', component: StrategyAddComponent},
-  { path: 'strategies/:strId/strsItems', component: StrategyItemsComponent}
+  {path:  'strategies/:strId/strsItems', component: StrategyItemsComponent}
+
   
 ];
 

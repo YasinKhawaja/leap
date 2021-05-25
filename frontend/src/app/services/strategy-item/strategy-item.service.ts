@@ -8,7 +8,7 @@ import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
 })
 export class StrategyItemService {
 
-  private strategyItemServiceURI: string = 'http://localhost:8080/api/envs';
+  private strategyItemServiceURI: string = 'http://localhost:8080/api/strsItems';
   private contentHeaders: HttpHeaders;
 
   
@@ -17,5 +17,11 @@ export class StrategyItemService {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
  }
 
+
+ public getAllStrategyItemInStrategy(strId: string): Observable<StrategyItem[]> {
+  var url = `${this.strategyItemServiceURI}/${strId}`;
+
+  return this.http.get<StrategyItem[]>(url);
+}
 
 }
