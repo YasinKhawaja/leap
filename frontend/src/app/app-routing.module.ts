@@ -16,11 +16,6 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
-import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
-import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
-import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
-import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
-import { StrategyComponent } from './components/strategy/strategy.component';
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent },
@@ -36,15 +31,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'company/register', component: CompanyRequestComponent },
   { path: 'itapplication/', component: ItapplicationComponent},
-  { path: 'itapplication/:strId/delete', component: ItapplicationDeleteComponent},
-  { path: 'itapplication/:strId/update', component: ItapplicationEditComponent},
-  { path: 'itapplication/create', component: ItapplicationAddComponent},
-  { path: 'strategies/', component: StrategyComponent},
-  { path: 'strategies/:strId/delete', component: StrategyDeleteComponent},
-  { path: 'strategies/:strId/update', component: StrategyEditComponent},
-  { path: 'strategies/create', component: StrategyAddComponent},
-  { path: 'strategies/:strId/strsItems', component: StrategyItemsComponent}
-  
+  { path: 'itapplication/:itapplicationId/delete', component: ItapplicationDeleteComponent},
+  { path: 'itapplication/:itapplicationId/update', component: ItapplicationEditComponent},
+  { path: 'itapplication/create', component: ItapplicationAddComponent}
 ];
 
 @NgModule({
