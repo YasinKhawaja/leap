@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CapabilityApplication } from './classes/capability-application/capability-application';
 import { CapabilityAddComponent } from "./components/capability-add/capability-add.component";
+import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
+import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
+import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
 import { CapabilityComponent } from './components/capability/capability.component';
@@ -35,7 +39,11 @@ const routes: Routes = [
   { path: 'itapplication/', component: ItapplicationComponent},
   { path: 'itapplication/:itapplicationId/delete', component: ItapplicationDeleteComponent},
   { path: 'itapplication/:itapplicationId/update', component: ItapplicationEditComponent},
-  { path: 'itapplication/create', component: ItapplicationAddComponent}
+  { path: 'itapplication/create', component: ItapplicationAddComponent},
+  { path: 'capability-application/:capabilityId', component: CapabilityApplication},
+  { path: 'capability-application/:capabilityId/create', component: CapabilityApplicationAddComponent},
+  { path: 'capability-application/:capabilityId/update/:capabilityapplicationId', component: CapabilityApplicationEditComponent},
+  { path: 'capability-application/:capabilityId/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent}
 ];
 
 @NgModule({

@@ -53,7 +53,6 @@ public void setPassword(String password) {
 
 @Override
 public Collection<? extends GrantedAuthority> getAuthorities() {
-    // TODO Auto-generated method stub
     return Collections.<GrantedAuthority>singletonList(new SimpleGrantedAuthority("USER"));
 }
 

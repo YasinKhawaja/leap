@@ -29,10 +29,6 @@ public class ITApplicationService {
         .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public Boolean isPresent(Long id) {
-        return itApplicationRepository.findById(id).isPresent();
-    }
-
     //create itapplication
     public ITApplication createITApplication(ITApplication itApplication){
         return itApplicationRepository.save(itApplication);
@@ -51,7 +47,6 @@ public class ITApplicationService {
 
     //delete it application
     public void deleteITApplication(Long itApplicationId){
-        System.out.println(itApplicationId);
         ITApplication oldITApplication = itApplicationRepository.findById(itApplicationId)
         .orElseThrow(ResourceNotFoundException::new);
 

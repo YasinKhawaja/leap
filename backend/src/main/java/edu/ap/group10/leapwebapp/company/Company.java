@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//add country as enum here?
+//add country as enum
 import edu.ap.group10.leapwebapp.company.Country;
 
 @Entity // This makes a table out of this class
@@ -83,7 +83,7 @@ public class Company {
     }
 
     public void setTaxOffice(String taxOffice) {
-        if(taxOffice == "") {
+        if(taxOffice.equals("")) {
         	taxOffice = null;
         }
         this.taxOffice = taxOffice;
@@ -94,7 +94,7 @@ public class Company {
     }
 
     public void setBusinessActivity(String businessActivity) {
-    	if(businessActivity == "") {
+    	if(businessActivity.equals("")) {
     		businessActivity = null;
     	}
     	this.businessActivity = businessActivity;

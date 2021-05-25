@@ -16,7 +16,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import edu.ap.group10.leapwebapp.company.Company;
-import edu.ap.group10.leapwebapp.useradmin.Useradmin;
 
 @Entity
 @Table

@@ -26,6 +26,10 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { ItapplicationAddComponent } from './components/itapplication-add/itapplication-add.component';
 import { ItapplicationDeleteComponent } from './components/itapplication-delete/itapplication-delete.component';
 import { ItapplicationEditComponent } from './components/itapplication-edit/itapplication-edit.component';
+import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
+import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
+import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
+import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,7 +61,11 @@ const appRoutes: Routes = [
     ItapplicationAddComponent,
     ItapplicationDeleteComponent,
     ItapplicationEditComponent,
-    ItapplicationComponent
+    ItapplicationComponent,
+    CapabilityApplicationComponent,
+    CapabilityApplicationAddComponent,
+    CapabilityApplicationDeleteComponent,
+    CapabilityApplicationEditComponent
   ],
   imports: [
     BrowserModule,
