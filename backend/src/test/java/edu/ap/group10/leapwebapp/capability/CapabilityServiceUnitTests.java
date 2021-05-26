@@ -20,10 +20,10 @@ public class CapabilityServiceUnitTests {
 
 
     @Mock
-    private CapabilityRepository cRepositoryUnderTest;
+    private CapabilityRepository capabilityRepositoryMock;
 
     @InjectMocks
-    private CapabilityService cServiceUnderTest;
+    private CapabilityService sut;
 
     
     @Autowired
@@ -33,15 +33,15 @@ public class CapabilityServiceUnitTests {
 
     
      @Test
-     void getCapability_InDb_ReturnCap() {
+     void givenThreeCapabilities_whenGetAllCapabilities_returnsAllCapabilites() {
        // When
-       when(cRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Capability("test1"),
+       when(capabilityRepositoryMock.findAll()).thenReturn(Arrays.asList(new Capability("test1"),
                new Capability("test2"), new Capability("test3")));
 
-        List<Capability> actualCaFound = cServiceUnderTest.getAllCapabilities();
+        List<Capability> actualCaFound = sut.getAllCapabilities();
 
        // Then
-        verify(cRepositoryUnderTest).findAll();
+        verify(capabilityRepositoryMock).findAll();
 
         assertEquals("test1", actualCaFound.get(0).getName());
         assertEquals("test2", actualCaFound.get(1).getName());

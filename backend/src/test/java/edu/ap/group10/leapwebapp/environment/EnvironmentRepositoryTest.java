@@ -11,34 +11,34 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 public class EnvironmentRepositoryTest {
 
     @Autowired
-    private EnvironmentRepository environmentRepository;
+    private EnvironmentRepository sut;
 
     @AfterEach
     void tearDown(){
-        environmentRepository.deleteAll();
+        sut.deleteAll();
     }
 
     @Test
-    void itShouldCheckIfEnvironmentExistsByName(){
+    void givenEnvironment_whenExistsByName_returnsExistsByName(){
         //Arrange
         String name = "Siemens";
         Environment environment = new Environment(name);
-        environmentRepository.save(environment);
+        sut.save(environment);
 
         //Act
-        boolean expected = environmentRepository.existsByName(name);
+        boolean expected = sut.existsByName(name);
 
         //Assert
         assertEquals(expected, true);
     }
 
     @Test
-    void itShouldCheckIfEnvironmentDoesNotExistsByName(){
+    void givenEnvironment_whenExistsByName_returnsDoesNotExistByName(){
         //Arrange
         String name = "Siemens";
 
         //Act
-        boolean expected = environmentRepository.existsByName(name);
+        boolean expected = sut.existsByName(name);
 
         //Assert
         assertEquals(expected, false);
