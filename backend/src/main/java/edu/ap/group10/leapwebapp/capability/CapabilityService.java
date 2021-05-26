@@ -69,6 +69,7 @@ public class CapabilityService {
         } else if (parentCapToLinkWith.getLevel() == 2) {
             cap.setLevel(3);
         } else {
+            // error is niet juist omdat het niet echt een berekening is, maak een nieuwe eigen capabilityexception
             throw new ArithmeticException("Cannot make sub capability, max niveau 3.");
         }
         // Set the foreign keys

@@ -7,64 +7,57 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+@DataJpaTest
 @ExtendWith(MockitoExtension.class)
 class EnvironmentServiceUnitTest {
-
+    
     @Mock
-    private EnvironmentRepository eRepositoryUnderTest;
-
+    private EnvironmentRepository environmentRepositoryMock;
+    // sut => system  under test
     @InjectMocks
-    private EnvironmentService eServiceUnderTest;
+    private EnvironmentService sut;
     
     @Test
-    void canGetAllEnvironments(){
-        // When
-        eServiceUnderTest.getAllEnvironments();
-
-        // Then
-        verify(eRepositoryUnderTest).findAll();
-    }
-
-    @Test
-    void existsByName() {
-        // given
+    void givenEnvironmentId_whenGetEnvironmentById_returnsEnvironmentFound(){
+        //given 
         String name = "Siemens";
         Environment environment = new Environment(name);
-        eRepositoryUnderTest.save(environment);
+        environment.setId(1L);
+        Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
-        // when
-        eServiceUnderTest.existsByName(name);
+        // When
+        sut.getEnvironment(environment.getId());
 
-        // then
-        ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
-        
-        verify(eRepositoryUnderTest).existsByName(stringArgumentCaptor.capture());
+        // Then
+        ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);
+        verify(environmentRepositoryMock).findById(longArgumentCaptor.capture());
 
-        String capturedName = stringArgumentCaptor.getValue();
+        assertEquals(longArgumentCaptor.getValue(), environment.getId());
 
-        assertEquals(capturedName, name);
+
     }
 
     @Test
-    void getEnvironments_3EnvsInDb_Return3Envs() {
+    void givenThreeEnvironments_whenGetAllEnvironments_returnsAllEnvironments() {
         // When
-        when(eRepositoryUnderTest.findAll()).thenReturn(Arrays.asList(new Environment("EnvironmentTest0"),
+        when(environmentRepositoryMock.findAll()).thenReturn(Arrays.asList(new Environment("EnvironmentTest0"),
                 new Environment("EnvironmentTest1"), new Environment("EnvironmentTest2")));
 
-        List<Environment> actualEnvsFound = eServiceUnderTest.getAllEnvironments();
+        List<Environment> actualEnvsFound = sut.getAllEnvironments();
 
         // Then
-        verify(eRepositoryUnderTest).findAll();
+        verify(environmentRepositoryMock).findAll();
 
         assertEquals("EnvironmentTest0", actualEnvsFound.get(0).getName());
         assertEquals("EnvironmentTest1", actualEnvsFound.get(1).getName());
@@ -72,47 +65,53 @@ class EnvironmentServiceUnitTest {
     }
 
     @Test
-    void createEnvironment_GivenEnv_VerifyIfCreated() {
+    void givenEnvironmentName_whenCreateEnvironment_returnsEnvironmentCreated() {
         // Given
         String envName = "EnvironmentTest";
         ArgumentCaptor<Environment> aCaptor = ArgumentCaptor.forClass(Environment.class);
 
         // When
-        eServiceUnderTest.createEnvironment(envName);
+        sut.createEnvironment(envName);
 
         // Then
-        verify(eRepositoryUnderTest).save(aCaptor.capture());
+        verify(environmentRepositoryMock).save(aCaptor.capture());
 
         Environment actEnvToBeCreated = aCaptor.getValue();
         assertEquals(envName, actEnvToBeCreated.getName());
     }
 
-    // Error : java.util.NoSuchElementException: No value present
-	// at java.base/java.util.Optional.orElseThrow(Optional.java:375)
     @Test
-    void updateEnvironment_GivenEnv_VerifyIfUpdated() {
+    void givenNewEnvironmentName_whenUpdateEnvironment_returnsEnvironmentNameIsUpdated() {
         // Given
-        Long id = (long) 1;
         String name = "Siemens";
+        Environment environment = new Environment(name);
+        environment.setId(1L);
+        Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
+
+        String newName = "Philips";
+        Long id = environment.getId();
 
         // When
-        eServiceUnderTest.updateEnvironment(id, name);
+        sut.updateEnvironment(id, newName);
 
         // Then
         ArgumentCaptor<Environment> environmentArgumentCaptor = ArgumentCaptor.forClass(Environment.class);
-        verify(eRepositoryUnderTest).save(environmentArgumentCaptor.capture());
+        verify(environmentRepositoryMock).save(environmentArgumentCaptor.capture());
+
+        assertEquals(environmentArgumentCaptor.getValue().getName(), newName);
+        //test if updated with new name
     }
 
     @Test
-    void deleteEnvironment_VerifyIfDeleted() {
+    void givenEnvironmentId_whenDeleteEnvironment_returnsEnvironmentDeleted() {
         // Given
         Long envIdToDelete = 1L;
 
         // When
-        eServiceUnderTest.deleteEnvironment(envIdToDelete);
+        sut.deleteEnvironment(envIdToDelete);
 
         // Then
-        verify(eRepositoryUnderTest).deleteById(envIdToDelete);
+        verify(environmentRepositoryMock).deleteById(envIdToDelete);
     }
 
 }
