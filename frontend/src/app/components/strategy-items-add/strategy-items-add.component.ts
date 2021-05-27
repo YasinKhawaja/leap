@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
@@ -15,7 +15,6 @@ export class StrategyItemsAddComponent implements OnInit {
   // Form
   strItemAddForm: FormGroup;
 
-  @Input() strItem: StrategyItem;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -28,7 +27,7 @@ export class StrategyItemsAddComponent implements OnInit {
     private initializeForm() {
      this.strItemAddForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9 ]+$')]]
     });
     }
 
