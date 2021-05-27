@@ -40,14 +40,8 @@ export class NavbarService {
     this.createCookie("Environment", environmentID, 1);
   }
 
-<<<<<<< HEAD
   public getEnvironment(): string{
     if(this.environmentSelected) {
-=======
-  public getEnvironment(): string {
-    if (this.environmentSelected) {
-      //return this.environmentID;
->>>>>>> feature
       return this.readCookie("Environment");
     }
     else {
@@ -76,12 +70,7 @@ export class NavbarService {
       while (cookie.charAt(0) == ' ') {
         cookie = cookie.substring(1, cookie.length);
       }
-<<<<<<< HEAD
       if (cookie.indexOf(nameCK) == 0){
-=======
-      if (cookie.indexOf(nameCK) == 0) {
-        console.log('return' + cookie);
->>>>>>> feature
         return cookie.substring(nameCK.length, cookie.length);
       }
     }

@@ -2,15 +2,15 @@
 <div class="flex-container" >
   <section id="pdf">
   <div class="flex-container-1" id="div" > 
-   <ng-container class = 'container' *ngFor='let capability of capabilities'>
-        <div *ngIf="capability.level == '1' "id="div1" class="flex-container-2">{{capability.name}}
-        <ng-container class = 'container' *ngFor='let capability of capabilities'>
+   <ng-container class = 'container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
+        <div id="div1" class="flex-container-2">{{capabilityLevel1.name}}
+        <ng-container class = 'container' *ngFor='let capabilityLevel2 of capabilityLevel1.subcapabilities'>
     
-               <div *ngIf="capability.level == '2' "id="div2" class="flex-container-3" >
-               <b>{{capability.name}}</b>
-               <ng-container class = 'container' *ngFor='let capability of capabilities'>
-                    <div *ngIf="capability.level == '3' "id="div3" >
-                        {{capability.name}}
+               <div  id="div2" class="flex-container-3" >
+               <b>{{capabilityLevel2.name}}</b>
+               <ng-container class = 'container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
+                    <div id="div3" >
+                        {{capabilityLevel3.name}}
                     </div>
                </ng-container>
                </div>

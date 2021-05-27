@@ -6,6 +6,7 @@ export class Capability {
     public level: string
     public informationQuality: string
     public applicationFit: string
+    public subcapabilities: Capability[]
 
     constructor(public name: string, public paceOfChange: string, public targetOperationModel: string, public resourcesQuality: string) {
         this.id = '';
@@ -13,6 +14,7 @@ export class Capability {
         this.level = '';
         this.informationQuality = '0';
         this.applicationFit = '0';
+        this.subcapabilities = [];
     }
 
 }

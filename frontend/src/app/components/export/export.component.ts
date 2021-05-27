@@ -14,6 +14,9 @@ import { NavbarService } from 'src/app/services/navbar/navbar.service';
 export class ExportComponent implements OnInit {
 
   capabilities: Capability[]
+  capabilitiesLevel1: Capability[]
+  capabilitiesLevel2: Capability[]
+  capabilitiesLevel3: Capability[]
   
   constructor(private cs: CapabilityService, private ns: NavbarService) { 
     this.capabilities = [];
@@ -26,9 +29,17 @@ export class ExportComponent implements OnInit {
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {
         this.capabilities = result;
+        this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
+        console.log(this.capabilitiesLevel1)
+        this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
+        console.log(this.capabilitiesLevel2)
+        this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3') 
+        console.log(this.capabilitiesLevel3)
         console.log(result);
       },
       error => console.log(error));
+     
+     
   }
   
 
