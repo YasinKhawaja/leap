@@ -13,8 +13,6 @@ import edu.ap.group10.leapwebapp.strategy.Strategy;
 @Entity
 public class StrategyItem {
 
-    // PROPERTIES
-	// primary key
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -26,26 +24,20 @@ public class StrategyItem {
 	private Strategy strategy;
 
 
-    // columns
 	@Column(nullable = false)
 	private String name;
 
     @Column(nullable = false)
 	private String description;
 
-
-    // CONSTRUCTORS
 	public StrategyItem() {
 	}
 
     public StrategyItem(String name, String description) {
 		this.name = name;
         this.description=description;
-			//dit 
-		//this.setStrategy(null);
 	}
 
-    // GETTERS & SETTERS
 	public Long getId() {
 		return id;
 	}

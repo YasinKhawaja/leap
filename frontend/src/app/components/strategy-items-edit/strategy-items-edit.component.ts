@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 })
 export class StrategyItemsEditComponent implements OnInit {
 
- // Form
  strItemEditForm: FormGroup;
 
  strForm = this.fb.group({
@@ -37,7 +36,6 @@ export class StrategyItemsEditComponent implements OnInit {
    });
    }
 
-    // Form GETTERS
  get name() {
    return this.strItemEditForm.get('name');
  }

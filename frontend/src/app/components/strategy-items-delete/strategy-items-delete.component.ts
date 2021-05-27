@@ -41,7 +41,6 @@ export class StrategyItemsDeleteComponent implements OnInit {
      
   }
 
- 
   navigateBack() {
     this.location.back();
     

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -22,19 +21,16 @@ public class StrategyItemService {
     @Autowired
     private StrategyRepository strategyRepository;
 
-     // To GET all strategies
      public List<StrategyItem> getAllStrategyItems() {
       return strategyItemRepository.findAll();
   }
 
-  // To GET all strategyItem in an strategy
   public List<StrategyItem> getAllStrategiesInStrategy(Long strId) {
     Strategy strategyToFindBy = strategyRepository.findById(strId).orElseThrow();
 
     return strategyItemRepository.findByStrategy(strategyToFindBy);
 }
 
-    // To GET a strategyItem in its Strategy
     public StrategyItem getStrategyItem(Long strId, Long strItemId) {
    
       List<StrategyItem> strItemFound = this.getAllStrategiesInStrategy(strId).stream()
@@ -43,8 +39,6 @@ public class StrategyItemService {
       return strItemFound.get(0);
   }
 
-
-//create => werkt
  public StrategyItem createStrategyItem(Long strId, StrategyItem strItem) {
   Strategy strategyToLinkWith = strategyRepository.findById(strId).orElseThrow();
 
@@ -54,7 +48,6 @@ public class StrategyItemService {
 }
 
 
- // To UPDATE 
  public StrategyItem updateStrategyItem(Long strId, Long strItemId, StrategyItem strItems) {
   
   List<StrategyItem> strItemFound = this.getAllStrategiesInStrategy(strId).stream()
@@ -69,7 +62,6 @@ public class StrategyItemService {
   return strategyItemRepository.save(strategyItemToUpdate);
 }
 
-// To DELETE 
 public void deleteStrategyItem(Long strId, Long strItemId) {
 
   List<StrategyItem> strItemFound = this.getAllStrategiesInStrategy(strId).stream()

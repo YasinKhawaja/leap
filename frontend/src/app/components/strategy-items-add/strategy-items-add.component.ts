@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 })
 export class StrategyItemsAddComponent implements OnInit {
 
-  // Form
   strItemAddForm: FormGroup;
 
 
@@ -31,7 +30,6 @@ export class StrategyItemsAddComponent implements OnInit {
     });
     }
 
-     // Form GETTERS
   get name() {
     return this.strItemAddForm.get('name');
   }
@@ -53,11 +51,13 @@ export class StrategyItemsAddComponent implements OnInit {
 
     this.si.createStrategyItem(strId, straItemToCreate)
     .subscribe(
-      response => console.log(response),
-      error => Swal.fire('Error', error.error.message, 'error')
+      res => {
+        console.log(res);
+        Swal.fire('Created', `Strategy Item ${this.name.value} created.`, 'success');
+        this.router.navigate([`strategies/${strId}/strategyItems`]);
+      },
+      err => Swal.fire('Error', err.error.message, 'error')
     );
-
-    this.router.navigate([`strategies/${strId}/strategyItems`])
-
+    
   }
 }

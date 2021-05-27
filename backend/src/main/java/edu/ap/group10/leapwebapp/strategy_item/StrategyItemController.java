@@ -43,15 +43,12 @@ public class StrategyItemController {
 	}
 
 
-	//testen 
-	// To UPDATE 
 	@PutMapping("/strategyItems/{strItemId}")
 	public StrategyItem updateStrategyItem(@RequestParam Long strId, @PathVariable Long strItemId,
 			@RequestBody StrategyItem strategyItem) {
 		return strategyItemService.updateStrategyItem(strId, strItemId, strategyItem);
 	}
 
-	// To DELETE 
 	@DeleteMapping("/strategyItems/{strItemId}")
 	public void deleteStrategyItem(@RequestParam Long strId, @PathVariable Long strItemId) {
 		strategyItemService.deleteStrategyItem(strId, strItemId);

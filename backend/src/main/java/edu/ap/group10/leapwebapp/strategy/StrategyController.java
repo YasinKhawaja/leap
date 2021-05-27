@@ -2,19 +2,14 @@ package edu.ap.group10.leapwebapp.strategy;
 
 
 import java.util.List;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
@@ -32,40 +27,25 @@ public class StrategyController {
 
 
     @GetMapping("/strategies/{environmentId}")
-    public @ResponseBody List<Strategy> getAllStrategies(@PathVariable String environmentId){
+    public List<Strategy> getAllStrategies(@PathVariable Long environmentId){
         return strategyService.getStrategies(environmentId);
     }
 	
 
   @PostMapping("/strategies/{environmentId}")
-  public ResponseEntity<Strategy> addStrategy(@PathVariable String environmentId, @RequestParam("name") String name, @RequestParam("timeframeFrom") String timeframeFrom,
+  public Strategy addStrategy(@PathVariable Long environmentId, @RequestParam("name") String name, @RequestParam("timeframeFrom") String timeframeFrom,
   @RequestParam("timeframeTo") String timeframeTo){
 
-	  Environment environment = environmentService.getEnvironmentById(Long.parseLong(environmentId));
+	  Environment environment = environmentService.getEnvironmentById(environmentId);
 	  Strategy strategy = new Strategy(name,timeframeFrom ,timeframeTo,environment);
-	  strategyService.createStrategy(strategy);
 	  
-	  ResponseEntity<Strategy> respEntity;
-
-	  Boolean present = strategyService.isPresent(strategy.getId());
-
-	  //null check and true check
-	  if(present != null && present){
-		  respEntity = ResponseEntity.ok().body(strategy);
-	  }
-	  else {
-		  respEntity = ResponseEntity.badRequest().body(strategy);
-	  }
-	  
-	  return respEntity;
+	  return strategyService.createStrategy(strategy);
   }
 
-
-
    @PutMapping("/strategies/{strId}")
-   public Strategy updateStrategy(@PathVariable String strId ,@RequestParam("name") String name, @RequestParam("timeframeFrom") String timeframeFrom,
+   public Strategy updateStrategy(@PathVariable Long strId ,@RequestParam("name") String name, @RequestParam("timeframeFrom") String timeframeFrom,
    @RequestParam("timeframeTo") String timeframeTo) {
-	   Strategy oldStrategy = strategyService.findStrategy(Long.parseLong(strId));
+	   Strategy oldStrategy = strategyService.findStrategy(strId);
 	  
 	   Strategy newStrategy = new Strategy(name,timeframeFrom ,timeframeTo,oldStrategy.getEnvironment());
 
@@ -74,11 +54,8 @@ public class StrategyController {
 
 
    @DeleteMapping("/strategies/{strId}")
-   public void deleteStrategy(@PathVariable String strId){        
-	   Long strategyId = Long.parseLong(strId);
-	   strategyService.deleteStrategy(strategyId);
+   public void deleteStrategy(@PathVariable Long strId){        
+	  
+	   strategyService.deleteStrategy(strId);
    }
-
-
-
 }

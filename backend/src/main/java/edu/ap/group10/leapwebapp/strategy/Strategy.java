@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.strategy_item.StrategyItem;
 
+
 @Entity
 public class Strategy {
 
@@ -27,19 +28,17 @@ public class Strategy {
 	@GeneratedValue
 	private Long id;
 
-	// bidirectional @OneToMany, foreign key in Strategy
 	@OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "strategyItems_reference")
 	private List<StrategyItem> strategyItems;
 
 	@ManyToOne
 	@JoinColumn(name = "environment_id")
-	//value omdat anders loop is !
 	@JsonBackReference(value = "strategy_reference")
 	private Environment environment;
 
 
-    // columns
+    
 	@Column(name = "strategy_name", nullable = false, unique = true)
 	private String name;
 
@@ -50,7 +49,7 @@ public class Strategy {
 	@Column(name = "timeframe_to") 
 	private String timeframeTo;
 
-    // CONSTRUCTORS
+    
 	public Strategy() {
 	}
 
@@ -61,7 +60,7 @@ public class Strategy {
 		this.setEnvironment(environment);
 	}
 
-	// GETTERS & SETTERS
+	
 	public Long getId() {
 			return id;
 	}
@@ -102,7 +101,7 @@ public class Strategy {
 		this.environment = environment;
 	}
 
-	//toegevoegd
+	
 	public List<StrategyItem> getStrategyItems() {
 		return strategyItems;
 	}

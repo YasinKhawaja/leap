@@ -8,7 +8,6 @@ import edu.ap.group10.leapwebapp.strategy.Strategy;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.data.repository.CrudRepository;
 
 @Repository
 public interface StrategyItemRepository extends JpaRepository<StrategyItem, Long> {
