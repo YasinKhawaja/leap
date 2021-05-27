@@ -21,14 +21,16 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
-
+import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
+import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
 
 import { StrategyItemsAddComponent } from './components/strategy-items-add/strategy-items-add.component';
 import { StrategyItemsDeleteComponent } from './components/strategy-items-delete/strategy-items-delete.component';
 import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
 
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
+import { StrategyComponent } from './components/strategy/strategy.component';
 
 
 
@@ -53,10 +55,10 @@ const routes: Routes = [
   { path: 'capability-application/:capabilityId/create', component: CapabilityApplicationAddComponent},
   { path: 'capability-application/:capabilityId/update/:capabilityapplicationId', component: CapabilityApplicationEditComponent},
   { path: 'capability-application/:capabilityId/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent},
-  //{ path: 'strategies/', component: StrategyComponent},
+  { path: 'strategies/', component: StrategyComponent},
 { path: 'strategies/:strId/delete', component: StrategyDeleteComponent},
- // { path: 'strategies/:strId/update', component: StrategyEditComponent},
- // { path: 'strategies/create', component: StrategyAddComponent},
+ { path: 'strategies/:strId/update', component: StrategyEditComponent},
+ { path: 'strategies/create', component: StrategyAddComponent},
   {path:  'strategies/:strId/strategyItems', component: StrategyItemsComponent},
   {path:  'strategies/:strId/strategyItems/create', component: StrategyItemsAddComponent},
   { path: 'strategies/:strId/strategyItems/:strItemId/update', component: StrategyItemsEditComponent },

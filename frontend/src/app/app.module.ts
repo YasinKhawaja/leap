@@ -24,12 +24,12 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
-//import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
+import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
-//import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
+import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
 import { StrategyItemsAddComponent } from './components/strategy-items-add/strategy-items-add.component';
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
-//import { StrategyComponent } from './components/strategy/strategy.component';
+import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
 import { StrategyItemsDeleteComponent } from './components/strategy-items-delete/strategy-items-delete.component';
@@ -49,8 +49,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'environments', component: EnvironmentComponent },
   { path: 'capabilities', component: CapabilityComponent },
-  { path: 'itapplication', component: ItapplicationComponent }
-  //{ path: 'strategies', component: StrategyComponent }
+  { path: 'itapplication', component: ItapplicationComponent },
+  { path: 'strategies', component: StrategyComponent }
   
 ]
 
@@ -78,10 +78,10 @@ const appRoutes: Routes = [
     CapabilityApplicationAddComponent,
     CapabilityApplicationDeleteComponent,
     CapabilityApplicationEditComponent,
-   // StrategyComponent,
-   // StrategyAddComponent,
+    StrategyComponent,
+    StrategyAddComponent,
     StrategyDeleteComponent,
-   // StrategyEditComponent,
+    StrategyEditComponent,
     StrategyItemsComponent,
     StrategyItemsAddComponent,
    StrategyItemsEditComponent,

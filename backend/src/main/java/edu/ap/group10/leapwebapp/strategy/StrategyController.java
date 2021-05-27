@@ -36,10 +36,9 @@ public class StrategyController {
   public Strategy addStrategy(@PathVariable Long environmentId, @RequestParam("name") String name, @RequestParam("timeframeFrom") String timeframeFrom,
   @RequestParam("timeframeTo") String timeframeTo){
 
-	  Environment environment = environmentService.getEnvironmentById(environmentId);
-	  Strategy strategy = new Strategy(name,timeframeFrom ,timeframeTo,environment);
-	  
-	  return strategyService.createStrategy(strategy);
+    Environment environment = environmentService.getEnvironment(environmentId);
+    Strategy strategy = new Strategy(name,timeframeFrom ,timeframeTo,environment);
+    return  strategyService.createStrategy(strategy);
   }
 
    @PutMapping("/strategies/{strId}")

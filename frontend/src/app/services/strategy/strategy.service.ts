@@ -55,8 +55,6 @@ deleteStrategy_CurrentEnvironment(strId: string) {
   this.http.delete(url).subscribe();
 }
 
-
-
 // Search one str by name
 searchOneStrategy(name: string): Observable<Strategy[]> {
   let url = `${this.strategiesServiceURI}/searchOne`
