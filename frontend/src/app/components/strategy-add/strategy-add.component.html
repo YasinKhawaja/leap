@@ -1,0 +1,46 @@
+
+<div class="middle-page">
+  <!-- Form -->
+  <form [formGroup]="strAddForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-header center">
+        <h5><strong>ADD STRATEGY</strong></h5>
+      </div>
+      <div class="card-body">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" class="form-control" formControlName="name" required>
+          <!-- Name field validation errors -->
+          <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
+            <div *ngIf="name!.errors!.required">
+              Name is required.
+            </div>
+            <div *ngIf="name!.errors!.pattern">
+              Name should only consist out of characters from the alphabet.
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="name">Timeframe from</label>
+          <input id="name" type="date" class="form-control" formControlName="timeframeFrom" required>
+          <!-- description field validation errors -->
+          
+        </div>
+
+
+        <div class="form-group">
+          <label for="name">Timeframe to</label>
+          <input id="name" type="date" class="form-control" formControlName="timeframeTo" required>
+        
+        </div>
+        <!-- Submit button -->
+        <div class="center">
+          <button type="submit" class="btn btn-success" [disabled]="strAddForm.invalid">ADD</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  </div>

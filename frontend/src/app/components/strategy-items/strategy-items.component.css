@@ -1,0 +1,25 @@
+.strItem {
+    margin: 25px;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.table {
+    margin: 0px;
+}
+
+th {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle !important;
+}

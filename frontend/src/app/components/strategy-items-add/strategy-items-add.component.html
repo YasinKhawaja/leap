@@ -1,0 +1,45 @@
+<div class="middle-page">
+<!-- Form -->
+<form [formGroup]="strItemAddForm" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="card-header center">
+      <h5><strong>ADD STRATEGY ITEM</strong></h5>
+    </div>
+    <div class="card-body">
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" class="form-control" formControlName="name" required>
+        <!-- Name field validation errors -->
+        <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
+          <div *ngIf="name!.errors!.required">
+            Name is required.
+          </div>
+          <div *ngIf="name!.errors!.pattern">
+            Name should only consist out of characters from the alphabet.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Description</label>
+        <input id="name" type="text" class="form-control" formControlName="description" required>
+        <!-- description field validation errors -->
+        <div class="alert alert-danger center" *ngIf="description!.invalid && (description!.dirty || description!.touched)">
+          <div *ngIf="description!.errors!.required">
+            Description is required.
+          </div>
+          <div *ngIf="description!.errors!.pattern">
+            Description should only consist out of characters from the alphabet.
+          </div>
+        </div>
+      </div>
+      <!-- Submit button -->
+      <div class="center">
+        <button type="submit" class="btn btn-success" [disabled]="strItemAddForm.invalid">ADD</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+</div>

@@ -22,6 +22,16 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 
+import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
+
+import { StrategyItemsAddComponent } from './components/strategy-items-add/strategy-items-add.component';
+import { StrategyItemsDeleteComponent } from './components/strategy-items-delete/strategy-items-delete.component';
+import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
+
+import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
+
+
+
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent },
   { path: 'environments/create', component: EnvironmentAddComponent },
@@ -42,7 +52,16 @@ const routes: Routes = [
   { path: 'capability-application/:capabilityId', component: CapabilityApplication},
   { path: 'capability-application/:capabilityId/create', component: CapabilityApplicationAddComponent},
   { path: 'capability-application/:capabilityId/update/:capabilityapplicationId', component: CapabilityApplicationEditComponent},
-  { path: 'capability-application/:capabilityId/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent}
+  { path: 'capability-application/:capabilityId/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent},
+  //{ path: 'strategies/', component: StrategyComponent},
+{ path: 'strategies/:strId/delete', component: StrategyDeleteComponent},
+ // { path: 'strategies/:strId/update', component: StrategyEditComponent},
+ // { path: 'strategies/create', component: StrategyAddComponent},
+  {path:  'strategies/:strId/strategyItems', component: StrategyItemsComponent},
+  {path:  'strategies/:strId/strategyItems/create', component: StrategyItemsAddComponent},
+  { path: 'strategies/:strId/strategyItems/:strItemId/update', component: StrategyItemsEditComponent },
+  { path: 'strategies/:strId/strategyItems/:strItemId/delete', component: StrategyItemsDeleteComponent },
+  
 ];
 
 @NgModule({
