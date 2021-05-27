@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,31 +21,41 @@ public class StrategyItemController {
 	private StrategyItemService strategyItemService;
 
 
-	@GetMapping("/strsItems/all")
+	@GetMapping("/strategyItems/all")
 	public List<StrategyItem> getAllCapabilities() {
 		return strategyItemService.getAllStrategyItems();
 	}
 
-	@GetMapping("/strsItems")
+	@GetMapping("/strategyItems")
 	public List<StrategyItem> getAllStrategiesInStrategy(@RequestParam Long strId) {
 		return strategyItemService.getAllStrategiesInStrategy(strId);
 	}
 
-
-	@GetMapping("/strsItems/{strItemId}")
+	@GetMapping("/strategyItems/{strItemId}")
 	public StrategyItem getStrategyItem(@RequestParam Long strId, @PathVariable Long strItemId) {
 		return strategyItemService.getStrategyItem(strId, strItemId);
 	}
 
-//	@GetMapping("/strategies/{strId}/strsItems/{environmentId}")
-	//public List<StrategyItem> getCapabilitiesInEnvironment(@PathVariable Long environmentId,@PathVariable Long strId) {
-//		return strategyItemService.getStrategyItem(environmentId, strId);
-		
-//	}
+	@PostMapping("/strategyItems")
+	public StrategyItem createStrategyItem(@RequestParam Long strId,
+			@RequestBody StrategyItem strItem) {
+		return strategyItemService.createStrategyItem(strId, strItem);
+	}
 
-//	@GetMapping("/strategies/{environmentId}")
-  //  public @ResponseBody List<Strategy> getAllStrategies(@PathVariable String environmentId){
-  //      return strategyService.getStrategies(environmentId);
-  //  }
+
+	//testen 
+	// To UPDATE 
+	@PutMapping("/strategyItems/{strItemId}")
+	public StrategyItem updateStrategyItem(@RequestParam Long strId, @PathVariable Long strItemId,
+			@RequestBody StrategyItem strategyItem) {
+		return strategyItemService.updateStrategyItem(strId, strItemId, strategyItem);
+	}
+
+	// To DELETE 
+	@DeleteMapping("/strategyItems/{strItemId}")
+	public void deleteStrategyItem(@RequestParam Long strId, @PathVariable Long strItemId) {
+		strategyItemService.deleteStrategyItem(strId, strItemId);
+	}
+
 
 }

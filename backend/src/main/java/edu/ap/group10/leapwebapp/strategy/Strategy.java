@@ -27,7 +27,7 @@ public class Strategy {
 	@GeneratedValue
 	private Long id;
 
-	// bidirectional @OneToMany, foreign key in Capability
+	// bidirectional @OneToMany, foreign key in Strategy
 	@OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "strategyItems_reference")
 	private List<StrategyItem> strategyItems;

@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
 import { Location } from '@angular/common';
+import { Strategy } from 'src/app/classes/strategy/strategy';
 
 @Component({
   selector: 'app-strategy-delete',
@@ -11,6 +12,7 @@ import { Location } from '@angular/common';
 })
 export class StrategyDeleteComponent implements OnInit {
   
+  str: Strategy;
 
   constructor(private ss: StrategyService,
               private router: Router, private location: Location) {
@@ -22,8 +24,6 @@ export class StrategyDeleteComponent implements OnInit {
   }
 
   deleteStrategyFromEnvironment() {
-    //var envId = this.router.url.split('/')[2];
-    //var straIdToDelete = this.router.url.split('/')[4];
 
     let strId = this.router.url.split('/')[2]; 
     this.ss.deleteStrategy_CurrentEnvironment(strId);

@@ -8,7 +8,7 @@ import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
 })
 export class StrategyItemService {
 
-  private strategyItemServiceURI: string = 'http://localhost:8080/api/strsItems';
+  private strategyItemServiceURI: string = 'http://localhost:8080/api/strategyItems';
   private contentHeaders: HttpHeaders;
 
   
@@ -27,5 +27,34 @@ export class StrategyItemService {
 
   return this.http.get<StrategyItem[]>(url, { params: { strId: strId } });
 }
+
+ // To GET 
+ getStrategyItem(strId: string, strItemId: string): Observable<StrategyItem> {
+  var url = `${this.strategyItemServiceURI}/${strItemId}`;
+
+  return this.http.get<StrategyItem>(url, { params: { strId: strId } });
+}
+
+// To CREATE 
+createStrategyItem(strId: string, strItem: StrategyItem): Observable<StrategyItem> {
+  var url = `${this.strategyItemServiceURI}`;
+
+  return this.http.post<StrategyItem>(url, strItem, { params: { strId: strId}});
+}
+
+ // To UPDATE => werkt
+ updateStrategyItem(strId: string, strItemId: string, strItem: StrategyItem): Observable<StrategyItem> {
+  var url = `${this.strategyItemServiceURI}/${strItemId}`;
+
+  return this.http.put<StrategyItem>(url, strItem, { params: { strId: strId } });
+}
+
+// To DELETE
+deleteStrategyItem(strId: string, strItemId: string): Observable<{}> {
+  var url = `${this.strategyItemServiceURI}/${strItemId}`;
+
+  return this.http.delete(url, { params: { strId: strId } });
+}
+
 
 }

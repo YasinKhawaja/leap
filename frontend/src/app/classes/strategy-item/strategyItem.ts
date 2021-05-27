@@ -2,9 +2,10 @@ import { HttpParams } from "@angular/common/http";
 
 export class StrategyItem {
 
-    public id: number
+    public id: string
 
     constructor(public name: string , public description: string){
+        this.id = '';
     }
 
     getParams(): HttpParams {

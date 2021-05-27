@@ -1,37 +1,43 @@
-<div class="container">
-   <br> <h1>Edit Strategy</h1><br>
+  <div class="middle-page">
+    <!-- Form -->
+    <form [formGroup]="strategyForm" (ngSubmit)="onSubmit()">
+      <div class="card">
+        <div class="card-header center">
+          <h5><strong>EDIT STRATEGY</strong></h5>
+        </div>
+        <div class="card-body">
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" class="form-control" formControlName="name" required>
+            <!-- Name field validation errors -->
+            <div class="alert alert-danger center" *ngIf="strategyForm.get('name')!.invalid && (strategyForm.get('name')!.dirty || strategyForm.get('name')!.touched)">
+              <div *ngIf="strategyForm.get('name')!.errors!.required">
+                  Name is required.
+              </div>
+          </div>
+          </div>
+    
+          <div class="form-group">
+            <label for="timeframeFrom">Timeframe from</label>
+            <input id="timeframeFrom" type="date" class="form-control" formControlName="timeframeFrom" required>
+            <!-- description field validation errors -->
+            
+          </div>
   
-  <form [formGroup]="strategyForm" (ngSubmit)="onSubmit()">
-    <div class='form-group w-50'>
-      <div class="custom">
-        <input type='text' formControlName='name' required/>
-        <label>Name</label>
+  
+          <div class="form-group">
+            <label for="timeframeTo">Timeframe to</label>
+            <input id="timeframeTo" type="date" class="form-control" formControlName="timeframeTo" required>
+          
+          </div>
+          <!-- Submit button -->
+          <div class="center">
+            <button type="submit" class="btn btn-success" [disabled]="strategyForm.invalid">ADD</button>
+          </div>
+        </div>
       </div>
-    </div> 
-    <br>
-    <br>
-    <div class='form-group w-50'>
-      <div class="custom">
-       
-        <input type='date' formControlName='timeframeFrom'required/>
-
-        <label>Timeframe from</label>
-      </div>
-        <br>
-        
-    </div>  
-    <br>
-    <div class='form-group w-50'>
-      <div class="custom">
-       
-        <input type='date' formControlName='timeframeTo' required/>
-
-        <label>Timeframe to</label>
-      </div>
-        <br>
-    </div>  
-    <button type="submit" class="btn btn-danger form-control" [disabled]="!strategyForm.valid">Edit</button>
-    <br><br><br><br><br>
-  </form>
-  </div>
+    </form>
+    
+    </div>
   

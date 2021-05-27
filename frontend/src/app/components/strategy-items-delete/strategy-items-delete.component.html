@@ -1,0 +1,12 @@
+<div class="center-page">
+    <div class="card">
+      <div class="card-header center">
+        <h4>Are you sure you want to delete strategy item <strong *ngIf="strItem != null">{{ strItem.name }}</strong>?</h4>
+      </div>
+      <div class="card-body center">
+        <button type="button" class="btn btn-light" (click)="navigateBack()">CANCEL</button>
+        &nbsp;
+        <button type="button" class="btn btn-danger" (click)="deleteStrategyItem()">DELETE</button>
+      </div>
+    </div>
+  </div>

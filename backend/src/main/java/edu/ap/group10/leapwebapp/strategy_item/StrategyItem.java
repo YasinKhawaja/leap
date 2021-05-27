@@ -1,13 +1,10 @@
 package edu.ap.group10.leapwebapp.strategy_item;
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -25,13 +22,11 @@ public class StrategyItem {
 
     @ManyToOne
 	@JoinColumn(name = "strategy_id")
-	@JsonBackReference
+	@JsonBackReference(value = "strategyItems_reference")
 	private Strategy strategy;
 
 
     // columns
-	
-
 	@Column(nullable = false)
 	private String name;
 
@@ -44,13 +39,11 @@ public class StrategyItem {
 	}
 
     public StrategyItem(String name, String description) {
-        //strategyid
-		
 		this.name = name;
         this.description=description;
-		
+			//dit 
+		//this.setStrategy(null);
 	}
-
 
     // GETTERS & SETTERS
 	public Long getId() {
@@ -60,8 +53,6 @@ public class StrategyItem {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-    //strategyid
 
     public String getName() {
 		return name;
@@ -78,7 +69,6 @@ public class StrategyItem {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	public Strategy getStrategy() {
 		return strategy;

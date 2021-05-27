@@ -19,8 +19,13 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
 import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
+import { StrategyItemsAddComponent } from './components/strategy-items-add/strategy-items-add.component';
+import { StrategyItemsDeleteComponent } from './components/strategy-items-delete/strategy-items-delete.component';
+import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
+
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
 import { StrategyComponent } from './components/strategy/strategy.component';
+
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent },
@@ -43,8 +48,10 @@ const routes: Routes = [
   { path: 'strategies/:strId/delete', component: StrategyDeleteComponent},
   { path: 'strategies/:strId/update', component: StrategyEditComponent},
   { path: 'strategies/create', component: StrategyAddComponent},
-  {path:  'strategies/:strId/strsItems', component: StrategyItemsComponent}
-
+  {path:  'strategies/:strId/strategyItems', component: StrategyItemsComponent},
+  {path:  'strategies/:strId/strategyItems/create', component: StrategyItemsAddComponent},
+  { path: 'strategies/:strId/strategyItems/:strItemId/update', component: StrategyItemsEditComponent },
+  { path: 'strategies/:strId/strategyItems/:strItemId/delete', component: StrategyItemsDeleteComponent },
   
 ];
 
