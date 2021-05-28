@@ -74,18 +74,23 @@ export class ExportComponent implements OnInit {
         // pdf.addImage(contentDataURL, 'PNG', 200, -50, 500, 2000);
         // pdf.save('Test.pdf');})
 
-        var w = document.getElementById("pdf").offsetWidth;
-        var h = document.getElementById("pdf").offsetHeight;
-        console.log(w + " " + h);
+        var htmlWidht = document.getElementById("pdf").offsetWidth;
+        var htmlHeight = document.getElementById("pdf").offsetHeight;
+        console.log(htmlWidht + " " + htmlHeight);
         let data = document.getElementById('pdf'); 
         html2canvas(data , {
-            height: h * 3,
-            width: 2500
+            height: htmlHeight * 20,
+            width: htmlWidht
            }).then(canvas => {
             var img = canvas.toDataURL("image/jpeg", 1);
-            var doc = new jsPDF('l', 'px', [w, h]);
-            doc.addImage(img, 'JPEG', 0, 0, w, h);
-            doc.save('sample-file.pdf');})
+            var pdf = new jsPDF('l', 'px');
+            const imgProps = pdf.getImageProperties(img);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(img, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('sample-file.pdf');
+            document.body.appendChild(canvas)
+          })
   }
 
   generateCSV() {

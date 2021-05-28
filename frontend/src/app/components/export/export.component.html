@@ -1,6 +1,6 @@
 
 <div class="flex-container" >
-  <section id="pdf">
+  <div id="pdf">
   <div class="flex-container-1" id="div" > 
    <ng-container class = 'container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
         <div id="div1" class="flex-container-2">{{capabilityLevel1.name}}
@@ -9,7 +9,7 @@
                <div  id="div2" class="flex-container-3" >
                <b>{{capabilityLevel2.name}}</b>
                <ng-container class = 'container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
-                    <div id="div3" >
+                    <div *ngIf="capabilityLevel3.parentId == capabilityLevel2.id "id="div3" >
                         {{capabilityLevel3.name}}
                     </div>
                </ng-container>
@@ -20,7 +20,7 @@
     </ng-container>
   </div>
   <br>
-</section>
+  </div>
   <div id="div" >
         <h4>Options</h4>
         <form (ngSubmit)="generateEntireMap()">
