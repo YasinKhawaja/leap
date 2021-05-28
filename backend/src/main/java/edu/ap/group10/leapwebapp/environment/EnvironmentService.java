@@ -2,6 +2,7 @@
 package edu.ap.group10.leapwebapp.environment;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,12 @@ public class EnvironmentService {
     }
 
     // To GET an environment
-    public Environment getEnvironment(Long id) {
+    public Environment getEnvironment(Long id) throws NoSuchElementException {
         return environmentRepository.findById(id).orElseThrow();
     }
 
     // To CREATE an environment
-    public Environment createEnvironment(String name) {
+    public Environment createEnvironment(String name) throws ArithmeticException {
         if (environmentRepository.existsByName(name)) {
             throw new ArithmeticException("Environment already exists!");
         }
@@ -34,7 +35,7 @@ public class EnvironmentService {
     }
 
     // To UPDATE an environment
-    public Environment updateEnvironment(Long id, String name) {
+    public Environment updateEnvironment(Long id, String name) throws NoSuchElementException, ArithmeticException {
         Environment envToUpdate = environmentRepository.findById(id).orElseThrow();
 
         if (environmentRepository.existsByName(name)) {
@@ -47,7 +48,7 @@ public class EnvironmentService {
     }
 
     // To DELETE an environment
-    public void deleteEnvironment(Long id) {
+    public void deleteEnvironment(Long id) throws IllegalArgumentException {
         environmentRepository.deleteById(id);
     }
 

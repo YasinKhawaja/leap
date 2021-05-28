@@ -1,0 +1,46 @@
+<main class="main">
+    <div class="flex-container">
+        <div class="flex-item">
+            <div>
+                <!-- TABLE -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th> <!-- DELETE icon -->
+                            <th scope="col"></th> <!-- EDIT icon -->
+                            <th scope="col">NAME</th>
+                            <th scope="col">DESCRIPTION</th>
+                            <th scope="col">FULL TIME EQUIVALENT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let res of resources">
+                            <!-- DELETE icon -->
+                            <td>
+                                <a>
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                </a>
+                            </td>
+                            <!-- EDIT icon -->
+                            <td>
+                                <a>
+                                    <img src='assets/edit-icon.png' alt="Edit" width='20' height='20'>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-light" role="button">
+                                    {{ res.name }}
+                                </a>
+                            </td>
+                            <td>{{ res.description }}</td>
+                            <td>{{ res.fullTimeEquivalentYearlyValue }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="flex-item">
+            <!-- Other res comps -->
+        </div>
+    </div>
+</main>

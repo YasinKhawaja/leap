@@ -1,11 +1,11 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from 'src/app/classes/company/company';
 import { CompanyService } from 'src/app/services/company/company.service';
 
 //Spelling mistakes might be present, sorry :(
-  //delete if not using enum
+//delete if not using enum
 enum Country {
   AFGHANISTAN = "Afghanistan",
   ALANDISLANDS = "Alandislands",
@@ -19,7 +19,7 @@ enum Country {
   ANTIGUAANDBARBUDA = "Antiguaandbarbuda",
   ARGENTINA = "Argentina",
   ARMENIA = "Armenia",
-  ARUBA  = "Aruba",
+  ARUBA = "Aruba",
   AUSTRALIA = "Australia",
   AUSTRIA = "Austria",
   AZERBAIJAN = "Azerbaijan",
@@ -30,7 +30,7 @@ enum Country {
   BELARUS = "Belarus",
   BELGIUM = "Belgium",
   BELIZE = "Belize",
-  BENIN  = "Benin",
+  BENIN = "Benin",
   BERMUDA = "Bermuda",
   BHUTAN = "Bhutan",
   BOLIVIA = "Bolivia",
@@ -263,16 +263,16 @@ enum Country {
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css']
 })
-export class RegisterFormComponent implements OnInit{
+export class RegisterFormComponent implements OnInit {
 
   //delete if not using enum
   eCountry = Country;
-  
+
   company = this.fb.group({
     vatNumber: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9 ]+$')]],
     companyName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-    streetName: ['',[Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    streetName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
     houseNumber: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     postcode: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     city: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
@@ -286,6 +286,7 @@ export class RegisterFormComponent implements OnInit{
     private cs: CompanyService) { }
 
   ngOnInit(): void {
+
   }
 
   //Add router navigate
@@ -301,7 +302,7 @@ export class RegisterFormComponent implements OnInit{
       this.company.value.country,
       this.company.value.businessActivity,
       this.company.value.taxOffice))
-      //show successful submit message -> redirect to a page that shows it was succesfull
+    //show successful submit message -> redirect to a page that shows it was succesfull
     this.router.navigate(['login'])
   }
 }

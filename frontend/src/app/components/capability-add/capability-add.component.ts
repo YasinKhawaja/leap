@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Capability } from 'src/app/classes/capability/capability';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 import { CapabilityService } from "../../services/capability/capability.service";
 
@@ -35,7 +36,7 @@ export class CapabilityAddComponent implements OnInit {
   // Form
   capAddForm: FormGroup;
 
-  constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router) { }
+  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -71,7 +72,7 @@ export class CapabilityAddComponent implements OnInit {
 
   // Form submit logic
   onSubmit() {
-    var envId = this.router.url.split('/')[2];
+    var envId = this.ns.getEnvironment();
 
     var parentCapId = '';
     if (this.cap == null) {

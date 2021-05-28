@@ -46,7 +46,7 @@ public class EnvironmentController {
 
 	// To DELETE an environment
 	@DeleteMapping("/environments/{id}")
-	public void deleteEnvironment(@PathVariable Long id) {
+	public void deleteEnvironment(@PathVariable Long id) throws IllegalArgumentException {
 		environmentService.deleteEnvironment(id);
 	}
 

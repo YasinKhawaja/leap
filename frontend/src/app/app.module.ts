@@ -7,6 +7,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CapabilityAddComponent } from './components/capability-add/capability-add.component';
+import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
+import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
+import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
+import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
 import { CapabilityComponent } from './components/capability/capability.component';
@@ -24,12 +28,9 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ResourceComponent } from './components/resource/resource.component';
 import { CapabilityService } from './services/capability/capability.service';
 
-import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
-import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
-import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
-import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
     CapabilityApplicationComponent,
     CapabilityApplicationAddComponent,
     CapabilityApplicationDeleteComponent,
-    CapabilityApplicationEditComponent
+    CapabilityApplicationEditComponent,
+    ResourceComponent
   ],
   imports: [
     BrowserModule,
