@@ -33,13 +33,6 @@ export class CapabilityEditComponent implements OnInit {
   // Form
   capEditForm: FormGroup;
 
-  capabilityForm = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    paceOfChange: ['', Validators.required],
-    tom: ['', Validators.required],
-    resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
-  });
-
   constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
@@ -49,7 +42,12 @@ export class CapabilityEditComponent implements OnInit {
   // To initialize the form in HTML
   private initializeForm() {
     this.capEditForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      name: [
+        '', [
+          Validators.required,
+          Validators.pattern('[a-zA-Z]+')
+        ]
+      ],
       paceOfChange: ['', Validators.required],
       targetOperationModel: ['', Validators.required],
       resourcesQuality: ['', [Validators.pattern('[1-5]')]]
@@ -89,12 +87,6 @@ export class CapabilityEditComponent implements OnInit {
       this.targetOperationModel.value,
       this.resourcesQuality.value
     );
-
-    // If no input given for "Resources Quality" field in form
-    if (newCapValues.resourcesQuality.length == 0) {
-      // Set default value 1 for API call 
-      newCapValues.resourcesQuality = '0';
-    }
 
     this.cs.updateCapabilityInEnvironment(envId, capIdToUpdate, newCapValues)
       .subscribe(

@@ -88,12 +88,6 @@ export class CapabilityAddComponent implements OnInit {
       this.resourcesQuality.value
     );
 
-    // If no input given for "Resources Quality" field in form
-    if (capToCreate.resourcesQuality.length == 0) {
-      // Set default value 1 for API call 
-      capToCreate.resourcesQuality = '0';
-    }
-
     this.cs.createCapability(envId, parentCapId, capToCreate)
       .subscribe(
         res => {

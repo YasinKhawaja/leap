@@ -46,13 +46,13 @@ public class Capability {
 	@Enumerated(EnumType.STRING)
 	private TargetOperationModel targetOperationModel;
 
-	@Column(name = "resources_quality", nullable = false)
+	@Column(name = "resources_quality")
 	private Integer resourcesQuality;
 
-	@Column(name = "information_quality", nullable = false)
+	@Column(name = "information_quality")
 	private Double informationQuality;
 
-	@Column(name = "application_fit", nullable = false)
+	@Column(name = "application_fit")
 	private Double applicationFit;
 
 	// foreign keys

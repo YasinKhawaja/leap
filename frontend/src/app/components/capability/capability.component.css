@@ -1,5 +1,7 @@
-.caps {
+.main {
+    margin-top: 82px !important;
     margin: 25px;
+    margin-bottom: 82px !important;
 }
 
 .flex-container {
