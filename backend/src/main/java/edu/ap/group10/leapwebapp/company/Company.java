@@ -6,16 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//add country as enum
-import edu.ap.group10.leapwebapp.company.Country;
-
 @Entity // This makes a table out of this class
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false, name = "company_id")
     private Long id;
-    
+
     @Column(nullable = false, name = "company_vat_number")
     private String vatNumber;
     @Column(nullable = false, name = "company_name")
@@ -38,10 +35,11 @@ public class Company {
     @Column(nullable = true, name = "company_tax_office")
     private String taxOffice;
 
-    public Company(){}
+    public Company() {
+    }
 
-    public Company(String vatNumber, String companyName, String email, String streetName, Integer houseNumber, Integer postcode, String city, String country, String businessActivity, String taxOffice)
-    {
+    public Company(String vatNumber, String companyName, String email, String streetName, Integer houseNumber,
+            Integer postcode, String city, String country, String businessActivity, String taxOffice) {
         this.setVatNumber(vatNumber);
         this.setCompanyName(companyName);
         this.setEmail(email);
@@ -53,15 +51,15 @@ public class Company {
         this.setTaxOffice(taxOffice);
         this.setBusinessActivity(businessActivity);
     }
-    
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getVatNumber() {
         return this.vatNumber;
     }
@@ -83,8 +81,8 @@ public class Company {
     }
 
     public void setTaxOffice(String taxOffice) {
-        if(taxOffice.equals("")) {
-        	taxOffice = null;
+        if (taxOffice.equals("")) {
+            taxOffice = null;
         }
         this.taxOffice = taxOffice;
     }
@@ -94,10 +92,10 @@ public class Company {
     }
 
     public void setBusinessActivity(String businessActivity) {
-    	if(businessActivity.equals("")) {
-    		businessActivity = null;
-    	}
-    	this.businessActivity = businessActivity;
+        if (businessActivity.equals("")) {
+            businessActivity = null;
+        }
+        this.businessActivity = businessActivity;
     }
 
     public String getEmail() {
