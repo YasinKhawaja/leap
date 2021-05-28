@@ -21,16 +21,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @DataJpaTest
 @ExtendWith(MockitoExtension.class)
 class EnvironmentServiceUnitTest {
-    
+
     @Mock
     private EnvironmentRepository environmentRepositoryMock;
-    // sut => system  under test
+    // sut => system under test
     @InjectMocks
     private EnvironmentService sut;
-    
+
     @Test
-    void givenEnvironmentId_whenGetEnvironmentById_returnsEnvironmentFound(){
-        //given 
+    void givenEnvironmentId_whenGetEnvironmentById_returnsEnvironmentFound() {
+        // given
         String name = "Siemens";
         Environment environment = new Environment(name);
         environment.setId(1L);
@@ -44,7 +44,6 @@ class EnvironmentServiceUnitTest {
         verify(environmentRepositoryMock).findById(longArgumentCaptor.capture());
 
         assertEquals(longArgumentCaptor.getValue(), environment.getId());
-
 
     }
 
@@ -99,7 +98,7 @@ class EnvironmentServiceUnitTest {
         verify(environmentRepositoryMock).save(environmentArgumentCaptor.capture());
 
         assertEquals(environmentArgumentCaptor.getValue().getName(), newName);
-        //test if updated with new name
+        // test if updated with new name
     }
 
     @Test

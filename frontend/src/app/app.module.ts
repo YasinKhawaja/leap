@@ -7,6 +7,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CapabilityAddComponent } from './components/capability-add/capability-add.component';
+import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
+import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
+import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
+import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
 import { CapabilityComponent } from './components/capability/capability.component';
@@ -24,22 +28,19 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ResourceComponent } from './components/resource/resource.component';
 import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
 import { StrategyEditComponent } from './components/strategy-edit/strategy-edit.component';
 import { StrategyItemsAddComponent } from './components/strategy-items-add/strategy-items-add.component';
+import { StrategyItemsDeleteComponent } from './components/strategy-items-delete/strategy-items-delete.component';
+import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
-import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
-import { StrategyItemsDeleteComponent } from './components/strategy-items-delete/strategy-items-delete.component';
 
 
 
-import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
-import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
-import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
-import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -51,7 +52,7 @@ const appRoutes: Routes = [
   { path: 'capabilities', component: CapabilityComponent },
   { path: 'itapplication', component: ItapplicationComponent },
   { path: 'strategies', component: StrategyComponent }
-  
+
 ]
 
 @NgModule({
@@ -84,8 +85,9 @@ const appRoutes: Routes = [
     StrategyEditComponent,
     StrategyItemsComponent,
     StrategyItemsAddComponent,
-   StrategyItemsEditComponent,
-   StrategyItemsDeleteComponent
+    StrategyItemsEditComponent,
+    StrategyItemsDeleteComponent,
+    ResourceComponent
   ],
   imports: [
     BrowserModule,

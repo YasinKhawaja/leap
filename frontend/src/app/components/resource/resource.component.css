@@ -1,7 +1,6 @@
 .main {
-    margin-top: 82px !important;
+    margin-top: 82.5px !important;
     margin: 25px;
-    margin-bottom: 82px !important;
 }
 
 .flex-container {
@@ -10,6 +9,11 @@
 
 .flex-item {
     flex: 1;
+    border: 1px solid black;
+}
+
+.flex-item:first-child {
+    margin-right: 20px;
 }
 
 .table {

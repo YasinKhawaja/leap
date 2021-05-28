@@ -10,17 +10,13 @@
     vertical-align: middle;
 }
 
-h5 {
+h5, label {
     margin: 0px;
 }
 
 td {
     text-align: center;
     vertical-align: middle !important;
-}
-
-label {
-    margin: 0px;
 }
 
 .red {

@@ -6,7 +6,6 @@ import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 import { CapabilityService } from "../../services/capability/capability.service";
 
-
 enum PaceOfChange {
   NONE = 'NONE',
   STANDARD = 'STANDARD',
@@ -37,7 +36,7 @@ export class CapabilityAddComponent implements OnInit {
   // Form
   capAddForm: FormGroup;
 
-  constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router, private ns: NavbarService) { }
+  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -73,7 +72,6 @@ export class CapabilityAddComponent implements OnInit {
 
   // Form submit logic
   onSubmit() {
-    //var envId = this.router.url.split('/')[2];
     var envId = this.ns.getEnvironment();
 
     var parentCapId = '';
@@ -89,12 +87,6 @@ export class CapabilityAddComponent implements OnInit {
       this.targetOperationModel.value,
       this.resourcesQuality.value
     );
-
-    // If no input given for "Resources Quality" field in form
-    if (capToCreate.resourcesQuality.length == 0) {
-      // Set default value 1 for API call 
-      capToCreate.resourcesQuality = '0';
-    }
 
     this.cs.createCapability(envId, parentCapId, capToCreate)
       .subscribe(

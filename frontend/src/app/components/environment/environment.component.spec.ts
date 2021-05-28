@@ -39,11 +39,12 @@ describe('EnvironmentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Positive test "getAllEnvironments" method
-  it('should call & save 3 envs in "environments" prop', () => {
+  // Test "getAllEnvironments" method
+  it('should get all environments', () => {
     // Given
-    var spyService_getAllEnvironments = spyOn(eService, "getAllEnvironments").and.callFake(() => {
+    spyOn(eService, "getAllEnvironments").and.callFake(() => {
       return Rx.of([
+        // Expected envs to be returned
         { id: '1', name: 'EnvA', capabilities: [] },
         { id: '2', name: 'EnvB', capabilities: [] },
         { id: '3', name: 'EnvC', capabilities: [] }
@@ -51,20 +52,12 @@ describe('EnvironmentComponent', () => {
     });
 
     // When
+    // Actual envs returned and saved in "environments" prop
     component.getAllEnvironments();
 
     // Then
-    expect(spyService_getAllEnvironments).toHaveBeenCalled();
-    expect(component.environments).toHaveSize(3);
-  });
-
-  // Negative test "getAllEnvironments" method
-  it('should throw error & save none', () => {
-    // Given
-    var spy_getAllEnvironments = spyOn(component, "getAllEnvironments").and.throwError('ERROR');
-
-    // Then
-    expect(spy_getAllEnvironments).toThrowError('ERROR');
-    expect(component.environments).toHaveSize(0);
+    expect(component.environments[0].name).toBe('EnvA');
+    expect(component.environments[1].name).toBe('EnvB');
+    expect(component.environments[2].name).toBe('EnvC');
   });
 });
