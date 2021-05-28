@@ -8,7 +8,8 @@ import { NavbarService } from './services/navbar/navbar.service';
 })
 export class AppComponent {
   title: string;
-  
+
+  environmentId: string;
 
   constructor(public ns: NavbarService) {
     this.title = 'LEAP-webapp'
@@ -17,6 +18,10 @@ export class AppComponent {
   deselect(): void{
     this.ns.environmentDeselect()
    
+  }
+
+  getEnvironmentId(){
+    this.environmentId = this.ns.getEnvironment();
   }
 
   //tijdelijk

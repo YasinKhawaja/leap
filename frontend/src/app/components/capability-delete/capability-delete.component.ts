@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capability } from 'src/app/classes/capability/capability';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { CapabilityService } from '../../services/capability/capability.service';
 
 @Component({
@@ -16,9 +17,9 @@ export class CapabilityDeleteComponent implements OnInit {
 
   cap: Capability;
 
-  constructor(private cs: CapabilityService, private router: Router, private location: Location) {
-    this.envId = this.router.url.split('/')[2];
-    this.capId = this.router.url.split('/')[4];
+  constructor(private cs: CapabilityService, private router: Router, private location: Location, private ns: NavbarService) {
+    this.envId = this.ns.getEnvironment();
+    this.capId = this.router.url.split('/')[2];
   }
 
   ngOnInit(): void {

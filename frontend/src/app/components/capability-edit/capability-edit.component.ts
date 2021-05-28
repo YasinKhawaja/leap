@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 import { CapabilityService } from '../../services/capability/capability.service';
@@ -40,7 +41,7 @@ export class CapabilityEditComponent implements OnInit {
     resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
   });
 
-  constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router) { }
+  constructor(private cs: CapabilityService, private fb: FormBuilder, private router: Router, private ns: NavbarService) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -80,8 +81,8 @@ export class CapabilityEditComponent implements OnInit {
   }
 
   onSubmit() {
-    var envId = this.router.url.split('/')[2];
-    var capIdToUpdate = this.router.url.split('/')[4];
+    var envId = this.ns.getEnvironment();
+    var capIdToUpdate = this.router.url.split('/')[2];
 
     var newCapValues = new Capability(
       this.name.value,
