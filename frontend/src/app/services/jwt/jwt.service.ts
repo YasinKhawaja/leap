@@ -60,12 +60,18 @@ export class JwtService {
 
   getUserStatus(): boolean{
     if(this.userstatus.getValue().toString() == "true" || this.validateJWT()){
-      console.log("logged in");
       return true;
     }
     else {
       return false;
     }
+  }
+
+  getUserBoolean(): BehaviorSubject<boolean>{
+    if(this.validateJWT()){
+      this.userstatus.next(true);
+    }
+    return this.userstatus;
   }
 
   validateJWT(): boolean{
@@ -105,6 +111,8 @@ export class JwtService {
 
   logout(){
     this.ns.createCookie("jwt", "", 0);
+    this.ns.createCookie("Capability", "", 0);
+    this.ns.environmentDeselect();
     this.userstatus.next(false);
     this.router.navigate(['login'])
   }

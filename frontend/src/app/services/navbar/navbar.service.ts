@@ -10,18 +10,16 @@ export class NavbarService {
 
 
   public environmentStatus(): BehaviorSubject<boolean> {
-    this.environmentSelected.next(JSON.parse(this.readCookie("Selected")));
     return this.environmentSelected;
   }
 
   public environmentSelect() {
     this.environmentSelected.next(true);
-    this.createCookie("Selected", this.environmentSelected.value.toString(), 1)
+  
   }
 
   public environmentDeselect() {
     this.environmentSelected.next(false);
-    this.eraseCookie("Selected");
     this.eraseCookie("Environment");
   }
 
