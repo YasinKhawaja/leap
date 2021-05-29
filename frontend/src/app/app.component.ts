@@ -23,11 +23,4 @@ export class AppComponent{
   getEnvironmentId(){
     this.environmentId = this.ns.getEnvironment();
   }
-
-  //tijdelijk
-  logout(): void {
-    this.ns.environmentDeselect()
-    this.ns.userLogout()
-  }
-
 }

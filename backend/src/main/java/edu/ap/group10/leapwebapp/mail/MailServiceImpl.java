@@ -1,8 +1,5 @@
 package edu.ap.group10.leapwebapp.mail;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 

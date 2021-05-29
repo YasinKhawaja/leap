@@ -67,7 +67,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
                 .anyRequest()
                 .permitAll();
-                //.authenticated();
     }
 
     @Bean

@@ -1,7 +1,5 @@
 package edu.ap.group10.leapwebapp.user;
 
-import javax.servlet.http.Cookie;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

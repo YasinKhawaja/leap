@@ -9,17 +9,6 @@ export class NavbarService {
   environmentID: string;
 
 
-  //tijdelijk tot inlog werkt 
-  user: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  public userLogin() {
-    this.user.next(true)
-  }
-  public userLogout() {
-    this.user.next(false)
-  }
-  //
-
-
   public environmentStatus(): BehaviorSubject<boolean> {
     this.environmentSelected.next(JSON.parse(this.readCookie("Selected")));
     return this.environmentSelected;

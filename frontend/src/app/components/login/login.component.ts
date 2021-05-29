@@ -28,12 +28,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //tijdelijk tot login werkt
-  deselect(): void{
-    this.ns.userLogin();
-  }
-  //
-
   //onSubmit check user and user admin repository if user exists with userdetails
   onSubmit() {
     //encode password here
