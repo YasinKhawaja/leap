@@ -32,3 +32,6 @@ The frontend of this project is generated with Angular.
 
 ### User Admin
 * Email -> can contain capital letters too
+
+### User
+* Combine admin and user into 1 class in frontend like the backend.

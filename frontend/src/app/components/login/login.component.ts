@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
           var token = data.headers.get("authorization").replace('Bearer ', '');
           this.jwt.storeJWT(token);
           this.jwt.loggedin(this.login.value.username);
-          this.router.navigate(['/environments'])
       },
       error => {
         console.log(error)

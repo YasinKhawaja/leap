@@ -30,9 +30,11 @@ export class JwtService {
 
     if(jwtIsExp){
       this.getNewJwt()
+    } else {
+      return role;
     }
 
-    return role;
+    return null;
   }
 
   getNewJwt(){
@@ -56,13 +58,31 @@ export class JwtService {
       );
   }
 
-  getUserStatus(){
-    if(this.userstatus.getValue.toString() == "true"){
+  getUserStatus(): boolean{
+    if(this.userstatus.getValue().toString() == "true" || this.validateJWT()){
+      console.log("logged in");
       return true;
     }
     else {
       return false;
     }
+  }
+
+  validateJWT(): boolean{
+    var token = this.ns.readCookie("jwt")
+    if(token == ""){
+      return null
+    }
+    var helper = new JwtHelperService();
+
+    var jwtIsExp = helper.isTokenExpired(token);
+
+    if(jwtIsExp){
+      this.getNewJwt()
+    } else {
+      return true;
+    }
+    return null;
   }
   
   loggedin(username: string){
@@ -76,6 +96,7 @@ export class JwtService {
 
     if(jwtUsername == username && !jwtIsExp){
       this.userstatus.next(true);
+      this.router.navigate(['/environments'])
     }
     else if(jwtIsExp){
       this.getNewJwt()
@@ -85,6 +106,6 @@ export class JwtService {
   logout(){
     this.ns.createCookie("jwt", "", 0);
     this.userstatus.next(false);
-    this.router.navigate(['/login'])
+    this.router.navigate(['login'])
   }
 }

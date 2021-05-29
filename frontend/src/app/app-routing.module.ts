@@ -29,41 +29,44 @@ import { StrategyItemsDeleteComponent } from './components/strategy-items-delete
 import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
 import { StrategyComponent } from './components/strategy/strategy.component';
+import { RouterGuard } from './services/guard/router.guard';
+import { JwtService } from './services/jwt/jwt.service';
 
 const routes: Routes = [
-  { path: 'environments', component: EnvironmentComponent },
-  { path: 'environments/create', component: EnvironmentAddComponent },
-  { path: 'environments/:envId/update', component: EnvironmentEditComponent },
-  { path: 'environments/:envId/delete', component: EnvironmentDeleteComponent },
-  { path: 'capabilities', component: CapabilityComponent },
-  { path: 'capabilities/:capId/update', component: CapabilityEditComponent },
-  { path: 'capabilities/:capId/delete', component: CapabilityDeleteComponent },
+  { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
+  { path: 'environments/create', component: EnvironmentAddComponent, canActivate: [RouterGuard] },
+  { path: 'environments/:envId/update', component: EnvironmentEditComponent, canActivate: [RouterGuard] },
+  { path: 'environments/:envId/delete', component: EnvironmentDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'capabilities', component: CapabilityComponent, canActivate: [RouterGuard] },
+  { path: 'capabilities/:capId/update', component: CapabilityEditComponent, canActivate: [RouterGuard] },
+  { path: 'capabilities/:capId/delete', component: CapabilityDeleteComponent, canActivate: [RouterGuard] },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'export', component: ExportComponent },
+  { path: 'export', component: ExportComponent, canActivate: [RouterGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'company/register', component: CompanyRequestComponent },
-  { path: 'strategies/', component: StrategyComponent },
-  { path: 'strategies/:strId/delete', component: StrategyDeleteComponent },
-  { path: 'strategies/:strId/update', component: StrategyEditComponent },
-  { path: 'strategies/create', component: StrategyAddComponent },
-  { path: 'strategies/:strId/strategyItems', component: StrategyItemsComponent },
-  { path: 'strategies/:strId/strategyItems/create', component: StrategyItemsAddComponent },
-  { path: 'strategies/:strId/strategyItems/:strItemId/update', component: StrategyItemsEditComponent },
-  { path: 'strategies/:strId/strategyItems/:strItemId/delete', component: StrategyItemsDeleteComponent },
-  { path: 'itapplication/', component: ItapplicationComponent},
-  { path: 'itapplication/:itapplicationId/delete', component: ItapplicationDeleteComponent},
-  { path: 'itapplication/:itapplicationId/update', component: ItapplicationEditComponent},
-  { path: 'itapplication/create', component: ItapplicationAddComponent},
-  { path: 'capability-application/', component: CapabilityApplication},
-  { path: 'capability-application/create', component: CapabilityApplicationAddComponent},
-  { path: 'capability-application/update/:capabilityapplicationId', component: CapabilityApplicationEditComponent},
-  { path: 'capability-application/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent},
-  { path: 'resources', component: ResourceComponent }
+  { path: 'strategies/', component: StrategyComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/:strId/delete', component: StrategyDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/:strId/update', component: StrategyEditComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/create', component: StrategyAddComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/:strId/strategyItems', component: StrategyItemsComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/:strId/strategyItems/create', component: StrategyItemsAddComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/:strId/strategyItems/:strItemId/update', component: StrategyItemsEditComponent, canActivate: [RouterGuard] },
+  { path: 'strategies/:strId/strategyItems/:strItemId/delete', component: StrategyItemsDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'itapplication/', component: ItapplicationComponent, canActivate: [RouterGuard] },
+  { path: 'itapplication/:itapplicationId/delete', component: ItapplicationDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'itapplication/:itapplicationId/update', component: ItapplicationEditComponent, canActivate: [RouterGuard] },
+  { path: 'itapplication/create', component: ItapplicationAddComponent, canActivate: [RouterGuard] },
+  { path: 'capability-application/', component: CapabilityApplication, canActivate: [RouterGuard] },
+  { path: 'capability-application/create', component: CapabilityApplicationAddComponent, canActivate: [RouterGuard] },
+  { path: 'capability-application/update/:capabilityapplicationId', component: CapabilityApplicationEditComponent, canActivate: [RouterGuard] },
+  { path: 'capability-application/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'resources', component: ResourceComponent, canActivate: [RouterGuard] }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [JwtService]
 })
 export class AppRoutingModule { }

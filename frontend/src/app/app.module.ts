@@ -38,6 +38,7 @@ import { StrategyItemsEditComponent } from './components/strategy-items-edit/str
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
+import { RouterGuard } from './services/guard/router.guard';
 
 
 
@@ -48,11 +49,11 @@ const appRoutes: Routes = [
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'environments', component: EnvironmentComponent },
-  { path: 'capabilities', component: CapabilityComponent },
-  { path: 'itapplication', component: ItapplicationComponent },
-  { path: 'capability-application', component: CapabilityApplicationComponent},
-  { path: 'strategies', component: StrategyComponent }
+  { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
+  { path: 'capabilities', component: CapabilityComponent, canActivate: [RouterGuard] },
+  { path: 'itapplication', component: ItapplicationComponent, canActivate: [RouterGuard] },
+  { path: 'capability-application', component: CapabilityApplicationComponent, canActivate: [RouterGuard] },
+  { path: 'strategies', component: StrategyComponent, canActivate: [RouterGuard] }
   
 ]
 
