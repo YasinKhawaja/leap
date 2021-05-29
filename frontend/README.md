@@ -4,6 +4,9 @@ The frontend of this project is generated with Angular.
 
 ## To-Do
 
+### Navbar
+* When deselecting an environment and return to a home page you will be stuck without a way to navigate to the environments page (unless you manually type in the url)
+
 ### IT-Applications
 * Check acquisition date vs End of Life
 * CSS on ITApplication & Capability-ITapplication link
