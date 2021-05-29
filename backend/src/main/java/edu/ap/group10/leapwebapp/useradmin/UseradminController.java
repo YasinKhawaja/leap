@@ -1,5 +1,5 @@
 package edu.ap.group10.leapwebapp.useradmin;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +9,7 @@ import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationToken;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenRepository;
 import edu.ap.group10.leapwebapp.user.UserLeap;
-import edu.ap.group10.leapwebapp.user.UserRepository;
+import edu.ap.group10.userleap.UserLeapRepository;
 
 @Controller
 public class UseradminController {
@@ -18,7 +18,7 @@ public class UseradminController {
   private UseradminRepository useradminRepository;
 
   @Autowired
-  private UserRepository userRepository;
+  private UserLeapRepository userRepository;
 
   @Autowired
   private ConfirmationTokenRepository confirmationTokenRepository;
@@ -48,4 +48,4 @@ public class UseradminController {
       return "You do not have access to create an user admin.\nPlease use the link from your email, if you did not get one then register your company first and wait for the application to be accepted.";
     }
   }
-}
+}*/

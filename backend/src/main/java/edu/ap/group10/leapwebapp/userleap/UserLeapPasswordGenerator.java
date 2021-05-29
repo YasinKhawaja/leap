@@ -1,12 +1,12 @@
-package edu.ap.group10.leapwebapp.user;
-
+package edu.ap.group10.leapwebapp.userleap;
+/*
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.CharacterData;
 import org.passay.PasswordGenerator;
 
-public class UserPasswordGenerator {
-       
+public class UserLeapPasswordGenerator {
+    
 public static final String ALLOWED_SPL_CHARACTERS = "!@#$%^&*()_+";
 public static final String ERROR_CODE = "ERRONEOUS_SPECIAL_CHARS";
 
@@ -37,7 +37,9 @@ public String generatePassayPassword(){
     CharacterRule splCharRule = new CharacterRule(specialChars);
     splCharRule.setNumberOfCharacters(2);
 
-    return gen.generatePassword(10, splCharRule, lowerCaseRule, 
+    String password = gen.generatePassword(10, splCharRule, lowerCaseRule, 
       upperCaseRule, digitRule);
+    return password;
 }
 }
+*/

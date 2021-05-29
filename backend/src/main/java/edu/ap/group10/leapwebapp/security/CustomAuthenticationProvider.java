@@ -1,6 +1,16 @@
 package edu.ap.group10.leapwebapp.security;
 
+import java.util.Date;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.Verification;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -9,50 +19,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import edu.ap.group10.leapwebapp.user.UserLeap;
-import edu.ap.group10.leapwebapp.user.UserRepository;
-import edu.ap.group10.leapwebapp.useradmin.Useradmin;
-import edu.ap.group10.leapwebapp.useradmin.UseradminRepository;
+import edu.ap.group10.leapwebapp.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 
-//Keep comment section for now since we'll need it if we switch to the given JWT System
-
-/*
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.authentication.AuthenticationProviderBeanDefinitionParser;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import edu.ap.group10.leapwebapp.JWT.SecurityConstraints;
-
-import edu.ap.group10.leapwebapp.user.UserDetailsServiceImpl;*/
-
+@Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UseradminRepository useradminRepository;
+    private UserService userService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -62,34 +39,29 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             final String username = (String) authentication.getPrincipal();
             final String password = (String) authentication.getCredentials();
 
-            UserLeap userLeap = userRepository.findByUsername(username);
-        Useradmin useradmin = useradminRepository.findByUsername(username);
+            UserDetails user = userService.loadUserByUsername(username);
 
-        //Make exceptions constant, put them in a class
         UsernamePasswordAuthenticationToken token;
 
-        if(userLeap != null) {
-            if(!userLeap.isEnabled()){
-                throw new DisabledException("This user has been disabled.");
+        try{
+            if(user != null) {
+                if(!user.isEnabled()){
+                    throw new DisabledException("This user has been disabled.");
+                }
+                if(!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+                    throw new BadCredentialsException("Incorrect username or password");
+                }
+                token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
+                return token;
             }
-            if(!bCryptPasswordEncoder.matches(password, userLeap.getPassword())) {
-                throw new BadCredentialsException("Incorrect username or password");
+            else {
+                throw new AuthenticationCredentialsNotFoundException("User credentials not found");
             }
-            token = new UsernamePasswordAuthenticationToken(userLeap, password, userLeap.getAuthorities());
+
+        } catch (AuthenticationException e){
+            log.error("Login error: ", e);
+            token = null;
             return token;
-        }
-        else if(useradmin != null){
-            if(!useradmin.isEnabled()){
-                throw new DisabledException("This admin has been disabled.");
-            }
-            if(!bCryptPasswordEncoder.matches(password, useradmin.getPassword())) {
-                throw new BadCredentialsException("Incorrect password.");
-            }
-            token = new UsernamePasswordAuthenticationToken(useradmin, password, useradmin.getAuthorities());
-            return token;
-        }
-        else {
-            throw new AuthenticationCredentialsNotFoundException("User credentials not found");
         }
     }
 
@@ -98,19 +70,33 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
-    /*@Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res,
-                                            FilterChain chain,
-                                            Authentication auth) throws IOException {
-        String token = JWT.create()
-                .withSubject(((User) auth.getPrincipal()).getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+    public String onAuthenticationSuccess(Authentication auth){
 
-        String body = ((User) auth.getPrincipal()).getUsername() + " " + token;
+        return JWT.create()
+        .withClaim("role", auth.getAuthorities().toString())
+        .withSubject(auth.getPrincipal().toString())
+        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+        .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+    }
 
-        res.getWriter().write(body);
-        res.getWriter().flush();
-    }*/
+    public String newJwt(String token){
+        DecodedJWT jwt = null;
+        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        try{
+            jwt = verifier.verify(token);
+        }catch (JWTVerificationException e){
+            log.error("JWT verification failed", e);
+        }
+
+        if(jwt != null){
+            return JWT.create()
+            .withClaim("role", jwt.getClaims())
+            .withSubject(jwt.getSubject())
+            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+            .sign(algorithm);
+        } else {
+            return null;
+        }
+    }
 }

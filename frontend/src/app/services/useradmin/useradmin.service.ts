@@ -21,7 +21,7 @@ export class UseradminService {
     console.log(token);
 
     //calls the api with the token to verify
-    let url = this.useradminsUrl + '/register?token=' + token;
+    let url = this.useradminsUrl + '?token=' + token;
 
     //check if url is correct
     console.log(url);

@@ -61,6 +61,7 @@ public class CapabilityService {
         } else {
             parentCapToLinkWith = null;
         }
+        // if level < 3 then level + 1
         // Define the cap level (1, 2 or 3)
         if (parentCapToLinkWith == null) {
             cap.setLevel(1);

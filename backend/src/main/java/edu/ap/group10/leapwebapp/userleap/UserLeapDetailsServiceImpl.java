@@ -1,5 +1,5 @@
-package edu.ap.group10.leapwebapp.user;
-
+package edu.ap.group10.leapwebapp.userleap;
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import edu.ap.group10.leapwebapp.useradmin.Useradmin;
 import edu.ap.group10.leapwebapp.useradmin.UseradminRepository;
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserLeapDetailsServiceImpl implements UserDetailsService{
 
     @Autowired
-    private UserRepository userRepository;
+    private UserLeapRepository userRepository;
 
     @Autowired
     private UseradminRepository useradminRepository;
@@ -30,5 +30,4 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             return useradmin;
         }
     }
-    
-}
+}*/

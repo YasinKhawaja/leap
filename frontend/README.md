@@ -3,8 +3,8 @@
 The frontend of this project is generated with Angular. 
 
 ## To-Do
-* CSS
-* Sign up form for user admin has to change so it automatically gives the company ID during submit.
-* Create user form
-* Make Company work with a country ENUM 
-* Change it so every call starts with /api
+* CSS on ITApplication & Capability-ITapplication link
+* Autofill in details when editing ITApplication & Capability-ITapplication link
+* Remove required from ITApplication (numbers) & Capability-ITapplication link
+* Fix the capabilities navbar redirect (clearing environment when pressed for some reason)
+* Make Company work with a country ENUM that has a search bar

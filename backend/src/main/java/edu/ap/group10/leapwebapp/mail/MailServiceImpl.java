@@ -32,14 +32,8 @@ public class MailServiceImpl implements MailService{
 
             mailSender.send(mimeMessageHelper.getMimeMessage());
         }
-        catch (MessagingException e) {
-            log.debug("Messaging Exception: " + e);
-        }
-        catch (UnsupportedOperationException e) {
-            log.debug("Operation Exception: " + e);
-        }
-        catch (UnsupportedEncodingException e) {
-            log.debug("Encoding Exception: " + e);
+        catch (Exception e) {
+            log.error("Exception: " + e);
         }
     }
     

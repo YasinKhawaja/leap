@@ -13,10 +13,10 @@ public class CapabilityApplicationService {
     @Autowired
     private CapabilityApplicationRepository capabilityApplicationRepository;
 
-    public List<CapabilityApplication> getCapabilityApplications(String environmentId){
+    public List<CapabilityApplication> getCapabilityApplications(String capabilityId){
         List<CapabilityApplication> capabilityApplications = new ArrayList<CapabilityApplication>();
         for (CapabilityApplication capabilityApplication : capabilityApplicationRepository.findAll()) {
-            if(capabilityApplication.getCapability().getEnvironment().getId().equals(Long.parseLong(environmentId))){
+            if(capabilityApplication.getCapability().getId().equals(Long.parseLong(capabilityId))){
                 capabilityApplications.add(capabilityApplication);
             }
         }
@@ -29,7 +29,11 @@ public class CapabilityApplicationService {
     }
 
     public CapabilityApplication createCapabilityApplication(CapabilityApplication capabilityApplication){
-        return capabilityApplicationRepository.save(capabilityApplication);
+        if(capabilityApplicationRepository.findById(capabilityApplication.getId()).isPresent()){
+            return null;
+        } else{
+            return capabilityApplicationRepository.save(capabilityApplication);
+        }
     }
 
     public CapabilityApplication updateCapabilityApplication(Long capabilityApplicationId, CapabilityApplication capabilityApplication){

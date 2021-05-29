@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
+import edu.ap.group10.leapwebapp.user.UserService;
 
 @SpringBootApplication
 public class LeapWebappApplication{
@@ -20,5 +21,9 @@ public class LeapWebappApplication{
 
 	@Bean public CustomAuthenticationProvider authProvider() {
 		return new CustomAuthenticationProvider();
+	}
+
+	@Bean public UserService userService() {
+		return new UserService();
 	}
 }

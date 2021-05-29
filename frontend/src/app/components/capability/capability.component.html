@@ -22,7 +22,7 @@
             </a>
           </td>
           <td>
-            <a class="btn btn-light" [routerLink]="[cap.id, 'update']" role="button">
+            <a class="btn btn-light" [routerLink]="[cap.id, 'update']" role="button" (click)="selectCapability(cap.id)">
               {{ cap.name }}
             </a>
           </td>

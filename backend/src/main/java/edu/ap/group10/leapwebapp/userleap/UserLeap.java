@@ -1,5 +1,5 @@
-package edu.ap.group10.leapwebapp.user;
-
+package edu.ap.group10.leapwebapp.userleap;
+/*
 import java.util.Collection;
 import java.util.Collections;
 
@@ -58,3 +58,4 @@ public Collection<? extends GrantedAuthority> getAuthorities() {
 
 }
 
+*/

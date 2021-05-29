@@ -50,14 +50,13 @@ export class ItapplicationAddComponent implements OnInit {
     timeValue: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(){
     let environmentId = this.ns.getEnvironment();
-    //let environmentId = this.router.url.split('/')[2];
 
     var newITApplication = new Itapplication(
       this.itapplication.value.name,
@@ -81,9 +80,6 @@ export class ItapplicationAddComponent implements OnInit {
     );
 
     this.its.createITApplication_CurrentEnvironment(environmentId, newITApplication);
-    
-    //make this link
-    this.router.navigate([`itapplication/`])
   }
 
 }

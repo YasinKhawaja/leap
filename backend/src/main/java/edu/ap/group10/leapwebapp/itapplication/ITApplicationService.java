@@ -24,6 +24,10 @@ public class ITApplicationService {
         return itApplications;
     }
 
+    public ITApplication findITApplicationByName(String application){
+        return itApplicationRepository.findByName(application);
+    }
+
     public ITApplication findITApplication(Long id){
         return itApplicationRepository.findById(id)
         .orElseThrow(ResourceNotFoundException::new);

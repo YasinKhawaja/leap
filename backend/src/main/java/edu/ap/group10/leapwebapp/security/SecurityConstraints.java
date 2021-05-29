@@ -10,11 +10,11 @@ public class SecurityConstraints {
     //authorization token
     public static final String HEADER_STRING = "Authorization";
     //sign up url
-    public static final String SIGN_UP_URL = "/user/register";
+    public static final String SIGN_UP_URL = "/user";
     //log in url
     public static final String SIGN_IN_URL = "/user/login";
     //sign up company url
     public static final String COMPANY_SIGN_UP = "/companies/register";
     //sign up useradmin url
-    public static final String USER_ADMIN_SIGN_UP = "/useradmin/register";
+    public static final String USER_ADMIN_SIGN_UP = "/useradmin";
 }

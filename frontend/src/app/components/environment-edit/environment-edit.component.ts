@@ -19,16 +19,9 @@ export class EnvironmentEditComponent implements OnInit {
   });
 
   constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router, private ls: LoginService) {
-    this.token = "";
   }
 
   ngOnInit(): void {
-    this.ls.getUserToken()
-      .subscribe(data => {
-        this.token = data;
-        console.log(data);
-      },
-        error => { console.error(error) });
   }
 
   // To be able to use all form controls (name) above in html
