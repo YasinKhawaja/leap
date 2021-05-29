@@ -74,7 +74,6 @@ export class CapabilityEditComponent implements OnInit {
 
   refer() {
     var capabilityId = this.router.url.split('/')[4];
-    console.log("TEST");
     this.router.navigate([`capability-application/${capabilityId}`])
   }
 

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 
@@ -11,7 +12,7 @@ export class ItapplicationService {
   private itApplicationURL: string = 'http://localhost:8080/api/itapplications';
   private contentHeaders: HttpHeaders;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   }
 
@@ -27,6 +28,7 @@ export class ItapplicationService {
     {headers: this.contentHeaders})
     .subscribe(data => {
       console.log(data)
+      this.router.navigate([`itapplication/`])
     },
     error => {
       console.log(error)
@@ -49,6 +51,10 @@ export class ItapplicationService {
   deleteITApplication_CurrentEnvironment(itApplicationID: string) {
     let url = `${this.itApplicationURL}/${itApplicationID}`
 
-    this.http.delete(url).subscribe();
+    this.http.delete(url).subscribe(
+      () => {
+        this.router.navigate([`itapplication/`])
+      }
+    );
   }
 }

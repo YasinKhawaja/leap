@@ -51,8 +51,9 @@ const appRoutes: Routes = [
   { path: 'environments', component: EnvironmentComponent },
   { path: 'capabilities', component: CapabilityComponent },
   { path: 'itapplication', component: ItapplicationComponent },
+  { path: 'capability-application', component: CapabilityApplicationComponent},
   { path: 'strategies', component: StrategyComponent }
-
+  
 ]
 
 @NgModule({

@@ -17,7 +17,6 @@ export class ItapplicationDeleteComponent implements OnInit {
   }
 
   deleteITApplication_CurrentEnvironment() {
-    //let environmentId = this.router.url.split('/')[2];
     let itApplicationId = this.router.url.split('/')[2];
 
     this.its.deleteITApplication_CurrentEnvironment(itApplicationId);

@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITApplicationRepository extends CrudRepository<ITApplication, Long>{
+    ITApplication findByName(String name);
 }

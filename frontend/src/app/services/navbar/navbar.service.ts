@@ -49,7 +49,15 @@ export class NavbarService {
     }
   }
 
-  createCookie(name: string, value: string, days: number) {
+  public setCapability(capabilityID: string) {
+    this.createCookie("Capability", capabilityID, 1);
+  }
+
+  public getCapability(): string{
+    return this.readCookie("Capability");
+  }
+
+  createCookie(name: string, value:string, days: number) {
     var expires = '';
     if (days) {
       var date = new Date();

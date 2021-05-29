@@ -1,80 +1,90 @@
 package edu.ap.group10.leapwebapp.user;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.ap.group10.leapwebapp.useradmin.Useradmin;
-import edu.ap.group10.leapwebapp.useradmin.UseradminRepository;
-import edu.ap.group10.leapwebapp.company.Company;
-import edu.ap.group10.leapwebapp.company.CompanyRepository;
-import edu.ap.group10.leapwebapp.mail.Mail;
-import edu.ap.group10.leapwebapp.mail.MailService;
-import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
+import edu.ap.group10.leapwebapp.security.SecurityConstraints;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class UserController {
-   
-    @Autowired
-    private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    @Autowired
-    private MailService mailService;
+    @PostMapping("/useradmin")
+    public User addUserAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
+    @RequestParam("token")String confirmationToken) {
+        try{
+            Boolean validateUsername = userService.findUsername(username);
+            Boolean validateEmail = userService.findUserEmail(email);
 
-    @Autowired
-    private UseradminRepository useradminRepository;
+            if(validateUsername != null && validateUsername){
+                throw new UnsupportedOperationException("User already exists");
+            }
+            else if (validateEmail != null && validateEmail){
+                throw new UnsupportedOperationException("Email is in use");
+            }
+            User user = new User(firstname, surname, email, username, password, 1, userService.validateToken(confirmationToken), null);
+            return userService.addUser(user);
 
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    //Be sure to send password encrypted via angular, decrypt again here! TO DO FOR WEB SECURITY
-    //Future web security JWT implementation: https://bezkoder.com/spring-boot-jwt-authentication/
-    //change to /user
-    @PostMapping("/user/login")
-    public String loginResult(@RequestParam("username") String username, @RequestParam("password") String password){
-        Authentication auth = customAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        return auth.getAuthorities().toString();
+        } catch (Exception e){
+            log.error("Exception", e);
+            return null;
+        }
     }
-    //change to /user
-    @PostMapping("/user/register")
-    public String register(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
+
+    @PostMapping("/user")
+    public User addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
     @RequestParam("email") String email, @RequestParam("company") Long company, @RequestParam("username") String username,
-    @RequestParam("environment") String environment){
+    @RequestParam("environment") Long environment, @RequestParam("role") Integer role){
+        try{
+            Boolean validateUsername = userService.findUsername(username);
+            Boolean validateEmail = userService.findUserEmail(email);
 
-        Company c = companyRepository.findById(company).get();
+            if(validateUsername != null && validateUsername){
+                throw new UnsupportedOperationException("User already exists");
+            }
+            else if (validateEmail != null && validateEmail){
+                throw new UnsupportedOperationException("Email is in use");
+            }
 
-        String password = null;
+            String password = userService.generatePassword();
+            User user = new User(firstName, surname, email, username, password, role, userService.findCompany(company), userService.findEnvironment(environment));
+            
+            userService.sendMail(email, username, password);
+            
+            return userService.addUser(user);
 
-        UserLeap validateUser = userRepository.findByUsername(username);
-        Useradmin validateAdmin = useradminRepository.findByUsername(username);
+        } catch (Exception e){
+            log.error("Exception", e);
+            return null;
+        }        
+    }
 
-        if(validateUser != null || validateAdmin != null){
-            return "Username is already in use! " + username;
-        }
-        else if(userRepository.findByEmail(email) != null || useradminRepository.findByEmail(email) != null){
-            return "Email is already in use! " + email;
-        }
+    @PostMapping("/user/login")
+    public void login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
+        response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
+        response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
+        response.setHeader("Authorization", SecurityConstraints.TOKEN_PREFIX + userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)));
+    }
 
-        if(c != null){
-            UserLeap u = new UserLeap(firstName, surname, email, username, password, c, environment);
-            userRepository.save(u);
+    //throw failed login exception
+    @GetMapping("/user/login")
+    public String error(@RequestParam("token") Authentication auth, HttpServletResponse response){
+        return "Failed to log in";
+    }
 
-            Mail mail = new Mail();
-            mail.setSender("leapwebapp@gmail.com");
-            //add all application admins? maybe send mail to the role and get all email records that fit this role -> later implementation
-            mail.setReceiver(email);
-            mail.setSubject("Your first login credentials.");
-            mail.setContent("Your username is: " + username + "\nAnd your automatically generated password is: " + password + "\nPlease change your password as soon as possible by going to this link: " + "Not implemented yet");
-            mailService.sendMail(mail);
-            return "Saved user.";   
-        }
-        else{
-            return "Failed to save user."; 
-        }
+    @PostMapping("/user/jwt")
+    public String jwt(@RequestParam String token){
+        return userService.refreshJwt(token);
     }
 }

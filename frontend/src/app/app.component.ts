@@ -6,7 +6,7 @@ import { NavbarService } from './services/navbar/navbar.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent{
   title: string;
 
   environmentId: string;

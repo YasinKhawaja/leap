@@ -13,13 +13,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import edu.ap.group10.leapwebapp.user.UserDetailsServiceImpl;
+import edu.ap.group10.leapwebapp.user.UserService;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserService userDetailsService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -40,67 +40,40 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .userDetailsService(this.userDetailsService)
         .passwordEncoder(bCryptPasswordEncoder);
     }
-/*
-    public WebSecurity(UserDetailsServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncoder, CustomAuthenticationProvider authprovider) {
-        //gets the user detail service and password encoder and instantiates them
-        this.userDetailsService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.authprovider = authprovider;
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //Enable csrf when supported, currently csrf makes the form and login work faulty.
         http.csrf().disable();
 
-        // this disables session creation on Spring Security.
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        //enables cors and handles authorization requests.
         http.cors().and().authorizeRequests()
-                //post requests on sign up are permitted by everything.
                 .antMatchers(HttpMethod.POST, SecurityConstraints.SIGN_UP_URL).permitAll()
-
-                //makes the login work with a form.
                 .and()
                 .formLogin()
                 .loginPage(SecurityConstraints.SIGN_IN_URL)
-                //.usernameParameter("username").passwordParameter("password")
-                .loginProcessingUrl(SecurityConstraints.SIGN_IN_URL)
-                //add message failed to log in
+
                 .failureUrl(SecurityConstraints.SIGN_IN_URL)
-                //get naar environments pagina in plaats van hardcoded?
+
                 .successForwardUrl(SecurityConstraints.SIGN_IN_URL)
                 
-                //Not implemented yet
-                //.defaultSuccessUrl("/")
-
-                //reference for if you fail to log in.
-                /*.failureUrl("/user/login-error")
-                .permitAll()*/
-
-                //Custom protected endpoints if needed, can add more with the permissions
                 .and()
                 .authorizeRequests()
-                //allows anyone to go to the homepage
+
                 .mvcMatchers("/").permitAll()
                 .mvcMatchers(HttpMethod.POST, SecurityConstraints.COMPANY_SIGN_UP).permitAll()
                 .mvcMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_SIGN_UP).permitAll()
-                //all other request require authenitcation.
-                //.anyRequest().authenticated();
-                .anyRequest().permitAll();
-                
-                
-        http.exceptionHandling().accessDeniedPage("/user/acess-denied");
+
+                .anyRequest()
+                .permitAll();
+                //.authenticated();
     }
 
-    //configures cors
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        //allows any url to access 
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
         corsConfiguration.addAllowedMethod("OPTIONS");
         corsConfiguration.addAllowedMethod("DELETE");

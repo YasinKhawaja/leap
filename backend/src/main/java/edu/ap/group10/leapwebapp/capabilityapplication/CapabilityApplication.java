@@ -3,8 +3,6 @@ package edu.ap.group10.leapwebapp.capabilityapplication;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -18,7 +16,6 @@ import edu.ap.group10.leapwebapp.itapplication.ITApplication;
 public class CapabilityApplication {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable =false, name="capitapp_id")
     private Long id;
 
@@ -52,6 +49,7 @@ public class CapabilityApplication {
     public CapabilityApplication(Double importance, Integer businessEfficiencySupport, Integer businessFunctionalCoverage, Integer businessCorrectness,
     Integer businessFuturePotential, Integer informationCompleteness, Integer informationCorrectness, Integer informationAvailability, Capability capability,
     ITApplication itApplications){
+        setId(Long.parseLong(itApplications.getId().toString() + capability.getId().toString()));
         setImportance(importance);
         setBusinessEfficiencySupport(businessEfficiencySupport);
         setBusinessFunctionalCoverage(businessFunctionalCoverage);
@@ -68,8 +66,8 @@ public class CapabilityApplication {
         return this.id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long capabilityApplicationId) {
+        this.id = capabilityApplicationId;
     }
 
     public Double getImportance() {
