@@ -9,8 +9,7 @@
             <tbody>
                 <tr *ngFor="let env of environments">
                     <td>
-                        <a class="btn btn-light" [routerLink]="['../capabilities']" (click)=environmentId(env.id)
-                            role="button">
+                        <a class="btn btn-light" [routerLink]="['../capabilities']" (click)='environmentId(env.id, env.name)' role="button">
                             {{ env.name }}
                         </a>
                     </td>

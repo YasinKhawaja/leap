@@ -16,8 +16,8 @@
                 <ul class="navbar-nav mr-auto" *ngIf="(ns.environmentStatus() | async) === true">
                     <div class="verticalLine ">
                         <li class='nav-item active'>
-                            <!-- EnvName moet dynamisch opgevuld worden -->
-                            <a class="nav-link " [routerLink]="['environments']" (click)="deselect()">EnvName</a>
+                            <a class="nav-link " [routerLink]="['environments']" (click)="deselect()">
+                                <span *ngIf="(getEnvironmentname() != '')"> {{ environmentName }} </span></a>
                         </li>
                     </div>
 
@@ -46,20 +46,14 @@
                         </li>
                     </div>
                 </ul>
-                <!--*ngIf="(jwt.getUserStatus() | async) === true-->
                 <ul class="navbar-nav" *ngIf="(jwt.getUserBoolean() | async) === true">
 
                     <li class="nav-item dropdown active" ngbDropdown>
-                        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="profileDropDown" data-toggle="dropdown">
-                            <i class="fa fa-fw fa-user"></i>
+                        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="profileDropDown" data-toggle="dropdown" *ngIf="(getUsername() != '')">
+                            {{ username }} <i class="fa fa-fw fa-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
 
-                            <div class="dropdown-header">
-                                <!--{{ user.name }}-->
-                                User name
-                            </div>
-                            <!--(click)="logout() "-->
                             <button [routerLink]="['login']" class="btn btn-link dropdown-item" id="qsLogoutBtn" (click)="logout()">
                                 <svg xmlns="http://www.w3.org/2000/svg " width="16" height="16" fill="currentColor"
                                     class="bi bi-power" viewBox="0 0 16 16">

@@ -28,7 +28,8 @@ export class EnvironmentComponent implements OnInit {
       );
   }
 
-  environmentId(environmentId): void {
+  environmentId(environmentId, environmentName): void {
     this.ns.setEnvironment(environmentId);
+    this.ns.setEnvironmentName(environmentName);
   }
 }

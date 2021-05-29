@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class NavbarService {
   environmentSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
   environmentID: string;
+  environmentName: string;
 
 
   public environmentStatus(): BehaviorSubject<boolean> {
@@ -21,6 +22,7 @@ export class NavbarService {
   public environmentDeselect() {
     this.environmentSelected.next(false);
     this.eraseCookie("Environment");
+    this.eraseCookie("EnvironmentName")
   }
 
   public setEnvironment(environmentID: string) {
@@ -33,6 +35,20 @@ export class NavbarService {
     }
     else {
       return "no environment was selected"
+    }
+  }
+
+  public setEnvironmentName(environmentName: string) {
+    this.environmentName = environmentName;
+    this.createCookie("EnvironmentName", this.environmentName, 1);
+  }
+
+  public getEnvironmentName():string {
+    this.environmentName = this.readCookie("EnvironmentName");
+    if(this.environmentName == undefined){
+      return "Environment";
+    }else{
+      return this.environmentName;
     }
   }
 

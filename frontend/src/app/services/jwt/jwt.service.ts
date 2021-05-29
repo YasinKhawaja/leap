@@ -90,6 +90,16 @@ export class JwtService {
     }
     return null;
   }
+
+  getUsername(): string{
+    var cookie = this.ns.readCookie("jwt");
+    if (cookie != ""){
+      var helper = new JwtHelperService();
+      var jwtBody = helper.decodeToken(cookie);
+      return jwtBody.sub;
+    }
+    return null;
+  }
   
   loggedin(username: string){
     var cookie = this.ns.readCookie("jwt")

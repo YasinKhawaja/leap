@@ -9,11 +9,13 @@ import { NavbarService } from './services/navbar/navbar.service';
 })
 export class AppComponent{
   title: string;
-
+  environmentName: string
+  username: string
   environmentId: string;
 
   constructor(public ns: NavbarService, public jwt: JwtService) {
     this.title = 'LEAP-webapp'
+    this.environmentName = this.getEnvironmentname();
   }
 
   deselect(): void{
@@ -27,5 +29,21 @@ export class AppComponent{
 
   logout(){
     this.jwt.logout();
+  }
+
+  getEnvironmentname(): string{
+    console.log("environment changed");
+    this.environmentName = this.ns.getEnvironmentName();
+    return this.environmentName;
+  }
+
+  getUsername(): string{
+    if (this.jwt.getUsername() != null){
+      this.username = this.jwt.getUsername();
+    }
+    else {
+      this.username = "User";
+    }
+    return this.username;
   }
 }
