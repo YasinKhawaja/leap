@@ -40,13 +40,29 @@ public class ITApplicationService {
 
     //update it application -> needs to be fully overwritten so send full object
     public ITApplication updateITApplication(Long itApplicationId, ITApplication itApplication){
-        itApplication.setId(itApplicationId);
         
-        ITApplication oldITApplication = itApplicationRepository.findById(itApplicationId)
+        ITApplication oITApp = itApplicationRepository.findById(itApplicationId)
         .orElseThrow(ResourceNotFoundException::new);
+        oITApp.setName(itApplication.getName());
+        oITApp.setTechnology(itApplication.getTechnology());
+        oITApp.setVersion(itApplication.getVersion());
+        oITApp.setAcquisitionDate(itApplication.getAcquisitionDate());
+        oITApp.setEndOfLife(itApplication.getEndOfLife());
+        oITApp.setCurrentScalability(itApplication.getCurrentScalability());
+        oITApp.setExpectedScalability(itApplication.getExpectedScalability());
+        oITApp.setCurrentPerformance(itApplication.getCurrentPerformance());
+        oITApp.setExpectedPerformance(itApplication.getExpectedPerformance());
+        oITApp.setCurrentSecurityLevel(itApplication.getCurrentSecurityLevel());
+        oITApp.setExpectedSecurityLevel(itApplication.getExpectedSecurityLevel());
+        oITApp.setCurrentStability(itApplication.getCurrentStability());
+        oITApp.setExpectedStability(itApplication.getExpectedStability());
+        oITApp.setCostCurrency(itApplication.getCostCurrency());
+        oITApp.setCurrentValueForMoney(itApplication.getCurrentValueForMoney());
+        oITApp.setCurrentTotalCostPerYear(itApplication.getCurrentTotalCostPerYear());
+        oITApp.setToleratedTotalCostPerYear(itApplication.getToleratedTotalCostPerYear());
+        oITApp.setTimeValue(itApplication.getTimeValue());
 
-        itApplicationRepository.delete(oldITApplication);
-        return itApplicationRepository.save(itApplication);
+        return itApplicationRepository.save(oITApp);
     }
 
     //delete it application
