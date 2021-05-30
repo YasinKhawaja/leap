@@ -27,38 +27,38 @@ public class ITApplication{
     private String name;
     @Column(nullable = false, name = "application_technology")
     private String technology;
-    @Column(nullable = false, name = "application_version")
+    @Column(nullable = true, name = "application_version")
     private String version;
-    @Column(nullable = false, name = "application_acquisition_date")
+    @Column(nullable = true, name = "application_acquisition_date")
     private String acquisitionDate;
     @Column(nullable = true, name = "application_end_of_life")
     private String endOfLife;
-    @Column(nullable = false, name = "application_current_scalability")
+    @Column(nullable = true, name = "application_current_scalability")
     private Integer currentScalability;
-    @Column(nullable = false, name = "application_expected_scalability")
+    @Column(nullable = true, name = "application_expected_scalability")
     private Integer expectedScalability;
-    @Column(nullable = false, name = "application_current_performance")
+    @Column(nullable = true, name = "application_current_performance")
     private Integer currentPerformance;
-    @Column(nullable = false, name = "application_expected_performance")
+    @Column(nullable = true, name = "application_expected_performance")
     private Integer expectedPerformance;
-    @Column(nullable = false, name = "application_current_security_level")
+    @Column(nullable = true, name = "application_current_security_level")
     private Integer currentSecurityLevel;
-    @Column(nullable = false, name = "application_expected_security_level")
+    @Column(nullable = true, name = "application_expected_security_level")
     private Integer expectedSecurityLevel;
-    @Column(nullable = false, name = "application_current_stability")
+    @Column(nullable = true, name = "application_current_stability")
     private Integer currentStability;
-    @Column(nullable = false, name = "application_expected_stability")
+    @Column(nullable = true, name = "application_expected_stability")
     private Integer expectedStability;
     // what's this?
-    @Column(nullable = false, name = "application_cost_currency")
+    @Column(nullable = true, name = "application_cost_currency")
     private String costCurrency;
-    @Column(nullable = false, name = "application_current_value_for_money")
+    @Column(nullable = true, name = "application_current_value_for_money")
     private Integer currentValueForMoney;
-    @Column(nullable = false, name = "application_current_total_cost_per_year")
+    @Column(nullable = true, name = "application_current_total_cost_per_year")
     private Double currentTotalCostPerYear;
-    @Column(nullable = false, name = "application_tolerated_total_cost_per_year")
+    @Column(nullable = true, name = "application_tolerated_total_cost_per_year")
     private Double toleratedTotalCostPerYear;
-    @Column(nullable = false, name = "application_time_value")
+    @Column(nullable = true, name = "application_time_value")
     @Enumerated(EnumType.STRING)
     private TimeValue timeValue;
 
@@ -67,6 +67,12 @@ public class ITApplication{
     private Environment environment;
 
     public ITApplication(){}
+    
+    public ITApplication(String name, String technology, Environment environment) {
+        this.setName(name);
+        this.setTechnology(technology);
+        this.setEnvironment(environment);
+    }
 
     public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife, Integer currentScalability, Integer expectedScalability,
     Integer currentPerformance, Integer expectedPerformance, Integer currentSecurityLevel, Integer expectedSecurityLevel, Integer currentStability,
