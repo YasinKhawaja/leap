@@ -113,10 +113,40 @@ class ITApplicationServiceUnitTests {
     }
 
     @Test
-    void givenITApplication_ITApplicationId_WhenUpdateITApplication_returnsITApplication(){
+    void givenITApplication_ITApplicationId_whenUpdateITApplication_returnsITApplication(){
 
         //Given
-        //Long itApplicationId
+        Long itApplicationId = 5L;
+        ITApplication oldITApp = new ITApplication("test", "test", new Environment("test"));
+        oldITApp.setId(itApplicationId);
+        when(itApplicationRepository.findById(itApplicationId)).thenReturn(Optional.of(oldITApp));
+
+        ITApplication newITApp = new ITApplication("app name", "app tech", "app version", "2012.05.30", "2012.05.30", 0, 0, 0, 0, 0, 0, 0, 0, "EUR", 0, 0.0, 0.0, TimeValue.ELIMINATE, new Environment("test"));
+
+        //When
+        itApplicationService.updateITApplication(itApplicationId, newITApp);
+        ArgumentCaptor<ITApplication> argCap = ArgumentCaptor.forClass(ITApplication.class);
+
+        //Then
+        verify(itApplicationRepository).save(argCap.capture());
+        assertEquals(oldITApp.getId(), argCap.getValue().getId());
+        assertEquals(newITApp.getName(), argCap.getValue().getName());
+    }
+
+    @Test
+    void givenITApplicationId_whenDeleteITApplication_returnsITApplicationDeleted(){
+
+        //Given
+        Long itApplicationId = 5L;
+        ITApplication itApplication = new ITApplication("test", "test", new Environment("test"));
+        when(itApplicationRepository.findById(itApplicationId)).thenReturn(Optional.of(itApplication));
+
+        //When
+        Boolean deleted = itApplicationService.deleteITApplication(itApplicationId);
+
+        //Then
+        verify(itApplicationRepository).delete(itApplication);
+        assertEquals(true, deleted);
     }
     
 }
