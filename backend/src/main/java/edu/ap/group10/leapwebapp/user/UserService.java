@@ -55,6 +55,14 @@ public class UserService implements UserDetailsService{
     public User addUser(User user){
         return userRepository.save(user);
     }
+
+    public void changePassword(Long userId, String password){
+        User user = userRepository.findById(userId)
+        .orElseThrow(ResourceNotFoundException::new);
+        user.setPassword(password);
+
+        userRepository.save(user);
+    }
  
     public Boolean findUsername(String username){
         Boolean validate = false;
@@ -99,7 +107,19 @@ public class UserService implements UserDetailsService{
         mailService.sendMail(mail);
     }
 
+    public String encodeId(String id){
+        return customAuthenticationProvider.newUserIdJwt(id);
+    }
+
+    public String getUserIDJwt(String token){
+        return customAuthenticationProvider.checkJwt(token);
+    }
+
     public String refreshJwt(String token){
         return customAuthenticationProvider.newJwt(token);
+    }
+
+    public User findUserByMail(String email){
+        return userRepository.findByEmail(email);
     }
 }
