@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
@@ -33,25 +34,38 @@ export class CapabilityEditComponent implements OnInit {
   eTom = TargetOperationModel;
   // Form
   capEditForm: FormGroup;
+  capCurrentValues: Capability;
 
   constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
-    this.initializeForm();
+    this.getCapabilityCurrentValues()
+      .subscribe(
+        res => {
+          this.capCurrentValues = res;
+          this.initializeForm();
+        }
+      );
   }
 
-  // To initialize the form in HTML
+  // To GET the cap current values to initialize the form with
+  private getCapabilityCurrentValues(): Observable<Capability> {
+    var envId = this.ns.getEnvironment();
+    var capId = this.ns.getCapability();
+
+    return this.cs.getCapability(envId, capId);
+  }
+
+  // To initialize the form in HTML with the cap current values ^
   private initializeForm() {
     this.capEditForm = this.fb.group({
-      name: [
-        '', [
-          Validators.required,
-          Validators.pattern('[a-zA-Z]+')
-        ]
+      name: [this.capCurrentValues.name, [
+        Validators.required,
+        Validators.pattern('[a-zA-Z]+')]
       ],
-      paceOfChange: ['', Validators.required],
-      targetOperationModel: ['', Validators.required],
-      resourcesQuality: ['', [Validators.pattern('[1-5]')]]
+      paceOfChange: [this.capCurrentValues.paceOfChange, Validators.required],
+      targetOperationModel: [this.capCurrentValues.targetOperationModel, Validators.required],
+      resourcesQuality: [this.capCurrentValues.resourcesQuality, [Validators.pattern('[1-5]')]]
     });
   }
 
@@ -60,43 +74,43 @@ export class CapabilityEditComponent implements OnInit {
     return this.capEditForm.get('name');
   }
 
-  get paceOfChange() {
+  get poc() {
     return this.capEditForm.get('paceOfChange');
   }
 
-  get targetOperationModel() {
+  get tom() {
     return this.capEditForm.get('targetOperationModel');
   }
 
-  get resourcesQuality() {
+  get rq() {
     return this.capEditForm.get('resourcesQuality');
   }
 
-  refer() {
-    var capabilityId = this.router.url.split('/')[4];
-    this.router.navigate([`capability-application/${capabilityId}`])
-  }
-
+  // When clicked on "EDIT" and submitting the form
   onSubmit() {
     var envId = this.ns.getEnvironment();
-    var capIdToUpdate = this.router.url.split('/')[2];
+    var capIdToUpdate = this.ns.getCapability();
 
     var newCapValues = new Capability(
       this.name.value,
-      this.paceOfChange.value,
-      this.targetOperationModel.value,
-      this.resourcesQuality.value
+      this.poc.value,
+      this.tom.value,
+      this.rq.value
     );
 
     this.cs.updateCapabilityInEnvironment(envId, capIdToUpdate, newCapValues)
       .subscribe(
         res => {
           console.log(res);
-          Swal.fire('Updated', `Capability updated.`, 'success');
-          this.capEditForm.reset();
+          Swal.fire('Updated', `Capability <strong>${newCapValues.name}</strong> updated.`, 'success');
         },
         err => console.error(err)
       );
+  }
+
+  refer() {
+    var capabilityId = this.ns.getCapability();
+    this.router.navigate([`capability-application/${capabilityId}`])
   }
 
 }

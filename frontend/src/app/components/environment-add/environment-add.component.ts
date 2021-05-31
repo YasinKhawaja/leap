@@ -36,7 +36,7 @@ export class EnvironmentAddComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          Swal.fire('Created', `Environment ${this.name.value} created.`, 'success');
+          Swal.fire('Created', `Environment <strong>${this.name.value}</strong> created.`, 'success');
           this.router.navigate(['environments']);
         },
         err => Swal.fire('Error', err.error.message, 'error')

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
 import { Capability } from 'src/app/classes/capability/capability';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
@@ -36,17 +35,19 @@ export class CapabilityAddComponent implements OnInit {
   // Form
   capAddForm: FormGroup;
 
-  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder, private router: Router) { }
+  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
-    console.log(this.cap);
   }
 
   // To initialize the form in HTML
   private initializeForm() {
     this.capAddForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      name: ['', [
+        Validators.required,
+        Validators.pattern('[a-zA-Z]+')]
+      ],
       paceOfChange: ['', Validators.required],
       targetOperationModel: ['', Validators.required],
       resourcesQuality: ['', [Validators.pattern('[1-5]')]]

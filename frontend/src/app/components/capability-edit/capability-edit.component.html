@@ -7,13 +7,14 @@
                 </div>
                 <div class="card-body">
                     <!-- Form -->
-                    <form class="form" [formGroup]="capEditForm" (ngSubmit)="onSubmit()">
+                    <form class="form" [formGroup]="capEditForm" (ngSubmit)="onSubmit()" *ngIf="capEditForm != null">
                         <!-- Name -->
                         <div class="form-group">
                             <label for="name">Name <span class="red">*</span></label>
                             <input id="name" type="text" class="form-control" formControlName="name" required>
                             <!-- Name field validation errors -->
-                            <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
+                            <div class="alert alert-danger center"
+                                *ngIf="name!.invalid && (name!.dirty || name!.touched)">
                                 <div *ngIf="name!.errors!.required">
                                     Name is required.
                                 </div>
@@ -26,11 +27,13 @@
                         <div class="form-group">
                             <label for="paceOfChange">Pace of Change <span class="red">*</span></label>
                             <select id="paceOfChange" class="form-control" formControlName='paceOfChange' required>
-                <option *ngFor="let type of ePoc | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
-              </select>
+                                <option *ngFor="let type of ePoc | keyvalue" [ngValue]="type.value">{{ type.value }}
+                                </option>
+                            </select>
                             <!-- Pace of Change dropdown validation errors -->
-                            <div class="alert alert-danger center" *ngIf="paceOfChange!.invalid && (paceOfChange!.dirty || paceOfChange!.touched)">
-                                <div *ngIf="paceOfChange!.errors!.required">
+                            <div class="alert alert-danger center"
+                                *ngIf="poc!.invalid && (poc!.dirty || poc!.touched)">
+                                <div *ngIf="poc!.errors!.required">
                                     Pace of Change is required.
                                 </div>
                             </div>
@@ -38,12 +41,15 @@
                         <!-- Target Operation Model -->
                         <div class="form-group">
                             <label for="targetOperationModel">Target Operation Model <span class="red">*</span></label>
-                            <select id="targetOperationModel" class="form-control" formControlName='targetOperationModel' required>
-                <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
-              </select>
+                            <select id="targetOperationModel" class="form-control"
+                                formControlName='targetOperationModel' required>
+                                <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{ type.value }}
+                                </option>
+                            </select>
                             <!-- Target Operation Model dropdown validation errors -->
-                            <div class="alert alert-danger center" *ngIf="targetOperationModel!.invalid && (targetOperationModel!.dirty || targetOperationModel!.touched)">
-                                <div *ngIf="targetOperationModel!.errors!.required">
+                            <div class="alert alert-danger center"
+                                *ngIf="tom!.invalid && (tom!.dirty || tom!.touched)">
+                                <div *ngIf="tom!.errors!.required">
                                     Target Operation Model is required.
                                 </div>
                             </div>
@@ -51,19 +57,21 @@
                         <!-- Resources Quality -->
                         <div class="form-group">
                             <label for="resourcesQuality">Resources Quality</label>
-                            <input id="resourcesQuality" type="text" class="form-control" formControlName="resourcesQuality">
+                            <input id="resourcesQuality" type="text" class="form-control"
+                                formControlName="resourcesQuality">
                             <!-- Resources Quality field validation errors -->
-                            <div class="alert alert-danger center" *ngIf="resourcesQuality!.invalid">
-                                <div *ngIf="resourcesQuality!.errors!.pattern">
-                                    Resources Quality should be a number between 1 and 5:<br>(1 = poor, 3 = fair, 5 = good).
+                            <div class="alert alert-danger center" *ngIf="rq!.invalid">
+                                <div *ngIf="rq!.errors!.pattern">
+                                    Resources Quality should be a number between 1 and 5:<br>(1 = poor, 3 = fair, 5 =
+                                    good).
                                 </div>
                             </div>
                         </div>
                         <!-- Submit button -->
                         <div class="center">
                             <button type="submit" class="btn btn-success" [disabled]="capEditForm.invalid">
-                EDIT
-              </button>
+                                EDIT
+                            </button>
                         </div>
                     </form>
                 </div>
