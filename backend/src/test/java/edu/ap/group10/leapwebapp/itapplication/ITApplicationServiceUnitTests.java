@@ -2,6 +2,8 @@ package edu.ap.group10.leapwebapp.itapplication;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,8 +19,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
+import edu.ap.group10.leapwebapp.resource.Resource;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -149,4 +153,16 @@ class ITApplicationServiceUnitTests {
         assertEquals(true, deleted);
     }
     
+    @Test
+    void givenITApplicationId_whenDeleteITApplication__doesNotReturnITApplicationDeleted(){
+
+        //Given
+        Long itApplicationId = 5L;
+        
+        //When
+        when(itApplicationRepository.findById(5L)).thenThrow(new ResourceNotFoundException());
+
+        //Then
+        assertThrows(ResourceNotFoundException.class, () -> itApplicationService.deleteITApplication(itApplicationId));
+    }
 }
