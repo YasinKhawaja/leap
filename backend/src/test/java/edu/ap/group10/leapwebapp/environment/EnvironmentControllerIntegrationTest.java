@@ -1,9 +1,9 @@
 package edu.ap.group10.leapwebapp.environment;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,12 +32,11 @@ public class EnvironmentControllerIntegrationTest {
 
     @AfterEach
     void tearDown(){
-        //environmentService.deleteAllEnvironments();
         environmentRepository.deleteAll();
     }
 
     @Test
-    public void givenEnvironments_whenGetAllEnvironments_thenEnvironmentsArePresent() throws Exception{
+    public void givenEnvironments_whenGetAllEnvironments_returnsEnvironmentsArePresent() throws Exception{
         environmentService.createEnvironment("Siemens");
         environmentService.createEnvironment("Philips");
 
@@ -48,7 +47,7 @@ public class EnvironmentControllerIntegrationTest {
     }
 
     @Test
-    public void givenEnvironmentId_whenGetEnvironment_thenEnvironment() throws Exception {
+    public void givenEnvironmentId_whenGetEnvironment_returnsEnvironment() throws Exception {
         Environment environment = environmentService.createEnvironment("Siemens");
         Long Id = environment.getId();
 
@@ -59,7 +58,7 @@ public class EnvironmentControllerIntegrationTest {
     }
 
     @Test
-    public void givenEnvironment_whenCreateEnvironment_thenEnvironmentSaved() throws Exception {
+    public void givenEnvironment_whenCreateEnvironment_returnsEnvironmentSaved() throws Exception {
 
         mvc.perform(post("/environments").param("name", "Siemens"))
             .andExpect(status().isOk())
@@ -68,10 +67,11 @@ public class EnvironmentControllerIntegrationTest {
     }
 
     @Test
-    public void givenNewEnvironmentName_whenUpdateEnvironment_thenEnvironmentUpdatedWithNewName() throws Exception {
-        environmentService.createEnvironment("Philips");
+    public void givenNewEnvironmentName_whenUpdateEnvironment_returnsEnvironmentUpdatedWithNewName() throws Exception {
+        Environment environment = environmentService.createEnvironment("Philips");
+        Long Id = environment.getId();
 
-        mvc.perform(put("/environments/{id}","1").param("name", "Siemens"))
+        mvc.perform(put("/environments/{id}",Id).param("name", "Siemens"))
             .andExpect(status().isOk())
             .andDo(print())
             .andExpect(content().json("{'name':'Siemens'}"));
@@ -79,7 +79,7 @@ public class EnvironmentControllerIntegrationTest {
     }
 
     @Test
-    public void givenEnvironemtId_whenDeleteEnvironment_thenEnvironmentDeleted() throws Exception {
+    public void givenEnvironmentId_whenDeleteEnvironment_returnsEnvironmentDeleted() throws Exception {
         Environment environment = environmentService.createEnvironment("Siemens");
         Long Id = environment.getId();
 
