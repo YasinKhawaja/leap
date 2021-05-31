@@ -1,9 +1,8 @@
 package edu.ap.group10.leapwebapp.itapplication;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
-import edu.ap.group10.leapwebapp.resource.Resource;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -150,7 +148,7 @@ class ITApplicationServiceUnitTests {
 
         //Then
         verify(itApplicationRepository).delete(itApplication);
-        assertEquals(true, deleted);
+        assertTrue(deleted);
     }
     
     @Test
