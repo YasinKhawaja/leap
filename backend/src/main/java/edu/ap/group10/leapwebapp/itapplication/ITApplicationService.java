@@ -71,10 +71,10 @@ public class ITApplicationService {
         .orElseThrow(ResourceNotFoundException::new);
 
         itApplicationRepository.delete(oldITApplication);
-        if(itApplicationRepository.findById(itApplicationId).isPresent()){
-            return true;
-        } else {
+        if(itApplicationRepository.existsById(itApplicationId)){
             return false;
+        } else {
+            return true;
         }
     }
     

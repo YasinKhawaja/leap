@@ -19,6 +19,20 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-const context = require.context('./', true, /environment\.service\.spec\.ts$/);
+const context = require.context('./', true, /environment\.component\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
+
+
+// Working tests
+/*
+component:
+environment
+environment-add
+
+class:
+environment
+
+service:
+none
+*/

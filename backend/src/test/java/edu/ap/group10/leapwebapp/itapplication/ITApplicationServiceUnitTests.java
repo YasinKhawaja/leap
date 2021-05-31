@@ -1,6 +1,7 @@
 package edu.ap.group10.leapwebapp.itapplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -59,6 +60,8 @@ class ITApplicationServiceUnitTests {
         assertEquals(environmentId, itApplications.get(0).getEnvironment().getId());
         assertEquals(environmentName, itApplications.get(1).getEnvironment().getName());
         assertEquals(environmentId, itApplications.get(1).getEnvironment().getId());
+
+        assertEquals(2, itApplications.size());
     }
     
     @Test
@@ -141,6 +144,7 @@ class ITApplicationServiceUnitTests {
         //Given
         Long itApplicationId = 5L;
         ITApplication itApplication = new ITApplication("test", "test", new Environment("test"));
+        when(itApplicationRepository.existsById(itApplicationId)).thenReturn(false);
         when(itApplicationRepository.findById(itApplicationId)).thenReturn(Optional.of(itApplication));
 
         //When
