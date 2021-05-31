@@ -12,9 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 
+@SpringBootTest
+@AutoConfigureTestDatabase
 @ExtendWith(MockitoExtension.class)
 public class CapabilityServiceUnitTests {
 
