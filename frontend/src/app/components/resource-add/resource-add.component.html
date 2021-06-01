@@ -1,0 +1,39 @@
+<!-- Form -->
+<form [formGroup]="resAddForm" (ngSubmit)="onSubmit()">
+    <div class="card">
+        <div class="card-header center">
+            <h5><strong>ADD RESOURCE</strong></h5>
+        </div>
+        <div class="card-body">
+            <!-- Name -->
+            <div class="form-group">
+                <label for="name">Name <span class="red">*</span></label>
+                <input id="name" type="text" class="form-control" formControlName="name" required>
+                <!-- Name field validation errors -->
+                <div class="alert alert-danger center" *ngIf="(name!.dirty || name!.touched) && name!.invalid">
+                    <div *ngIf="name!.errors!.required">
+                        Name is required.
+                    </div>
+                    <div *ngIf="name!.errors!.pattern">
+                        Name should only consist out of characters from the alphabet.
+                    </div>
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="5" class="form-control" formControlName="description"></textarea>
+            </div>
+            <!-- Full Time Equivalent Yearly Value -->
+            <div class="form-group">
+                <label for="fullTimeEquivalentYearlyValue">Full Time Equivalent Yearly Value</label>
+                <input id="fullTimeEquivalentYearlyValue" type="text" class="form-control"
+                    formControlName="fullTimeEquivalentYearlyValue">
+            </div>
+            <!-- Submit button -->
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="resAddForm.invalid">ADD</button>
+            </div>
+        </div>
+    </div>
+</form>

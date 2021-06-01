@@ -19,12 +19,16 @@ public class ResourceService {
     }
 
     // To GET a resource
-    public Resource getResource(Long id) throws NoSuchElementException {
+    public Resource getResource(Long id) {
         return resourceRepository.findById(id).orElseThrow();
     }
 
     // To CREATE a resource
-    public Resource createResource(Resource resource) throws IllegalArgumentException {
+    public Resource createResource(Resource resource) {
+        if (resourceRepository.existsByName(resource.getName())) {
+            throw new ResourceException(String.format("Resource %s already exists!", resource.getName()));
+        }
+
         return resourceRepository.save(resource);
     }
 

@@ -8,15 +8,24 @@ import { Resource } from 'src/app/classes/resource/resource';
 })
 export class ResourceService {
 
-  private resourcesServiceURI: string = 'http://localhost:8080/api/resources';
+  private resourceServiceURI: string = 'http://localhost:8080/api/resources';
 
   constructor(private http: HttpClient) { }
 
   // To GET all resources
   getAllResources(): Observable<Resource[]> {
-    var url = `${this.resourcesServiceURI}`;
+    var url = `${this.resourceServiceURI}`;
 
     return this.http.get<Resource[]>(url);
+  }
+
+  // To GET a resource
+
+  // To CREATE a resource
+  createResource(res: Resource): Observable<string> {
+    var url = `${this.resourceServiceURI}`;
+
+    return this.http.post<string>(url, res);
   }
 
 }
