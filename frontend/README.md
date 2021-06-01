@@ -27,7 +27,7 @@ The frontend of this project is made with Angular.
 * Edit environment shows create button instead of Edit
 
 ### Passwords
-* Upon signup and login the passwords are send as plain text to the api -> change this so it's encrypted
+* Upon signup, login and reset password the passwords are send as plain text to the api -> change this so it's encrypted
 
 ### Company
 * Postcode -> no letters
