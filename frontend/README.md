@@ -20,11 +20,7 @@ The frontend of this project is generated with Angular.
 * Capability map level 3 capabilities
 
 ### Capabilities
-* Add capability windows changes for lvl 3 capability & name isn't unique for capabilities
-* Edit capability doesn't refer to capabilities, doesn't show previous values
-
-### Environment
-* Edit environment shows create button instead of Edit
+* Name isn't unique for capabilities
 
 ### Passwords
 * Upon signup and login the passwords are send as plain text to the api -> change this so it's encrypted

@@ -2,6 +2,7 @@
 package edu.ap.group10.leapwebapp.resource;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,17 @@ public class ResourceService {
     }
 
     // To GET a resource
-    public Resource getResource(Long id) {
+    public Resource getResource(Long id) throws NoSuchElementException {
         return resourceRepository.findById(id).orElseThrow();
     }
 
     // To CREATE a resource
-    public Resource createResource(Resource resource) {
+    public Resource createResource(Resource resource) throws IllegalArgumentException {
         return resourceRepository.save(resource);
     }
 
     // To UPDATE a resource
-    public Resource updateResource(Long id, Resource resource) {
+    public Resource updateResource(Long id, Resource resource) throws NoSuchElementException {
         // Find the res to update & resave
         Resource resToUpdate = resourceRepository.findById(id).orElseThrow();
         // Update the found res
@@ -40,7 +41,7 @@ public class ResourceService {
     }
 
     // To DELETE a resource
-    public void deleteResource(Long id) {
+    public void deleteResource(Long id) throws IllegalArgumentException {
         resourceRepository.deleteById(id);
     }
 

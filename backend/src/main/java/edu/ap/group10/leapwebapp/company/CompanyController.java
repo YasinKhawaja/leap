@@ -46,7 +46,7 @@ public class CompanyController {
 
         Mail mail = new Mail();
         mail.setSender("leapwebapp@gmail.com");
-        mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com");
+        mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be");
         mail.setSubject("New application from: " + companyName);
         mail.setContent("Click on this link to view the request from: " + companyName + ".\n" + confirmationTokenString);
         mailService.sendMail(mail);
