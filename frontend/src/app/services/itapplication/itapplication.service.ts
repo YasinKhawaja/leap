@@ -22,6 +22,12 @@ export class ItapplicationService {
     return this.http.get<Itapplication[]>(url);
   }
 
+  public getITApplication(itapplicationId: string): Observable<Itapplication>{
+    var url = `${this.itApplicationURL}/${itapplicationId}`;
+
+    return this.http.get<Itapplication>(url);
+  }
+
   public createITApplication_CurrentEnvironment(environmentId: string, itApplication: Itapplication) {
     let url = `${this.itApplicationURL}/${environmentId}`;
     return this.http.post<Itapplication>(url, itApplication.getParams(),

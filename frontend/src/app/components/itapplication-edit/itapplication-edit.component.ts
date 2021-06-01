@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
@@ -26,33 +27,44 @@ enum TIME{
 })
 export class ItapplicationEditComponent implements OnInit {
 
+  currentITApplication: Itapplication;
+  itapplication: FormGroup;
   eCurrency = Currency
   etimeValue = TIME;
-
-  itapplication = this.fb.group({
-    name: ['', Validators.required],
-    technology: ['', Validators.required],
-    version: ['', Validators.required],
-    acquisitionDate: ['', Validators.required],
-    endOfLife: ['', Validators.required],
-    currentScalability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedScalability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentPerformance: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedPerformance: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentSecurityLevel: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedSecurityLevel: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentStability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedStability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    costCurrency:['', Validators.required],
-    currentValueForMoney: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentTotalCostPerYear: ['', Validators.required],
-    toleratedTotalCostPerYear: ['', Validators.required],
-    timeValue: ['', Validators.required]
-  });
 
   constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService, private ns: NavbarService) { }
 
   ngOnInit(): void {
+    this.getCurrentITApplication()
+    .subscribe(
+      result => {
+        this. itapplication = this.fb.group({
+          name: [result.name, Validators.required],
+          technology: [result.technology, Validators.required],
+          version: [result.version, [Validators.required, Validators.pattern('(([0-9](\\.[0-9]*))?){1,13}(\\.[0-9]*)?(\\.[0-9]*)?(\\.[0-9]*)?')]],
+          acquisitionDate: [result.acquisitionDate, Validators.required],
+          endOfLife: [result.endOfLife],
+          currentScalability: [result.currentScalability, Validators.pattern('[1-5]')],
+          expectedScalability: [result.expectedScalability, Validators.pattern('[1-5]')],
+          currentPerformance: [result.currentPerformance, Validators.pattern('[1-5]')],
+          expectedPerformance: [result.expectedPerformance, Validators.pattern('[1-5]')],
+          currentSecurityLevel: [result.currentSecurityLevel, Validators.pattern('[1-5]')],
+          expectedSecurityLevel: [result.expectedSecurityLevel, Validators.pattern('[1-5]')],
+          currentStability: [result.currentStability, Validators.pattern('[1-5]')],
+          expectedStability: [result.expectedStability, Validators.pattern('[1-5]')],
+          costCurrency:[result.costCurrency],
+          currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[1-5]')],
+          currentTotalCostPerYear: [result.currentTotalCostPerYear],
+          toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
+          timeValue: [result.timeValue]
+        });
+      }
+    );
+  }
+
+  private getCurrentITApplication(): Observable<Itapplication>{
+    var itApplicationId = this.router.url.split('/')[2];
+    return this.its.getITApplication(itApplicationId);
   }
 
   onSubmit() {

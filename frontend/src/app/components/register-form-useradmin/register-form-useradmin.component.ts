@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CustomErrorStateMatcher } from 'src/app/classes/errormatcher/custom-error-state-matcher';
 import { User } from 'src/app/classes/user/user';
 import { UserService } from 'src/app/services/user/user.service';
@@ -17,7 +16,7 @@ export class RegisterFormUseradminComponent implements OnInit{
   useradmin = this.fb.group({
     firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
     surname: ['',  [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    email: ['', [Validators.required,Validators.pattern("^[A-Za-Z0-9._%+-]+@[A-Za-Z0-9.-]+\\.[A-Za-Z]{2,4}$")]],
+    email: ['', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
     username: ['',  Validators.required],
     password: ['', [Validators.required, Validators.minLength(8)]],
     repeatPassword: ['', Validators.required]
