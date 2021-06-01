@@ -91,8 +91,11 @@ public class UserController {
     }
 
     @PostMapping("/user/jwt")
-    public String jwt(@RequestParam String token){
-        return userService.refreshJwt(token);
+    public void jwt(@RequestParam String token, HttpServletResponse response){
+        String newToken = userService.refreshJwt(token);
+        response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
+        response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
+        response.setHeader("Authorization", newToken);  
     }
 
     @PostMapping("/user/resetpassword")

@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,8 +11,11 @@ import { NavbarService } from '../navbar/navbar.service';
 export class JwtService {
   private jwtUrl: string = 'http://localhost:8080/api/user/jwt';
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private contentHeaders: HttpHeaders;
 
-  constructor(private ns: NavbarService, private http:HttpClient, private router:Router) { }
+  constructor(private ns: NavbarService, private http:HttpClient, private router:Router) {
+    this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+  }
 
   storeJWT(token: string){
     this.ns.createCookie("jwt", token, 1);
@@ -42,10 +45,13 @@ export class JwtService {
     var url = this.jwtUrl;
 
     var param = new URLSearchParams();
-    param.set("token", token);
+    param.set('token', token);
 
     return this.http.post<any>(url, param.toString(),
-      {observe: 'response' as 'body'})
+    {
+      headers: this.contentHeaders,
+      observe: 'response' as 'body'
+    })
       .pipe(jwt => {
         return jwt;
       })

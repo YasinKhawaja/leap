@@ -87,7 +87,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         if (jwt != null) {
-            return JWT.create().withClaim("role", jwt.getClaims()).withSubject(jwt.getSubject())
+            String role = jwt.getClaim("role").toString();
+            return JWT.create().withClaim("role", role)
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(algorithm);
         } else {
