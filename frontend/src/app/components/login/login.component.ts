@@ -6,6 +6,7 @@ import { Login } from 'src/app/classes/login/login';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
           this.jwt.loggedin(this.login.value.username);
       },
       error => {
-        console.log(error)
+        Swal.fire('Error', error.error.message, 'error')
       });
     }
 }

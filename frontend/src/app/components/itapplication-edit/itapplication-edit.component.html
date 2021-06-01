@@ -1,287 +1,125 @@
 <div class="container">
-    <h1>Edit IT Application</h1><br>
+    <h1>Add IT Application</h1>
     <form [formGroup]="itapplication" (ngSubmit)="onSubmit()">
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='text' formControlName='name' required />
+            <div class="custom"> <input type='text' formControlName='name' required placeholder="Name" />
                 <label>Name</label>
             </div>
-            <br>
             <div *ngIf="itapplication.get('name')!.invalid && (itapplication.get('name')!.dirty || itapplication.get('name')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('name')!.errors!.required">
-                    Name is required.
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter application name (e.g. IT Application Name)
-        </small>
+                <div *ngIf="itapplication.get('name')!.errors!.required"> Name is required. </div>
+            </div> <small class="text-muted"> </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='text' formControlName='technology' required />
-                <label>Technology</label>
+            <div class="custom"> <input type='text' formControlName='technology' required placeholder="Technology Name" /> <label>Technology</label>
             </div>
-            <br>
             <div *ngIf="itapplication.get('technology')!.invalid && (itapplication.get('technology')!.dirty || itapplication.get('technology')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('technology')!.errors!.required">
-                    Technology is required.
-                </div>
+                <div *ngIf="itapplication.get('technology')!.errors!.required"> Technology is required. </div>
             </div>
-            <small class="text-muted">
-          Enter technology name (e.g. Technology Name)
-        </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='text' formControlName='version' required />
+            <div class="custom"> <input type='text' formControlName='version' required placeholder="1.1.x" />
                 <label>Version</label>
             </div>
-            <br>
             <div *ngIf="itapplication.get('version')!.invalid && (itapplication.get('version')!.dirty || itapplication.get('version')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('version')!.errors!.required">
-                    Version is required.
-                </div>
+                <div *ngIf="itapplication.get('version')!.errors!.required"> Version is required. </div>
             </div>
-            <small class="text-muted">
-          Enter technology version (e.g. 2.4.1)
-        </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='date' formControlName='acquisitionDate' required />
-                <label>Acquisition Date</label>
-            </div>
-            <br>
+            <div class="custom"> <input type='date' formControlName='acquisitionDate' required /> <label>Acquisition
+                    Date</label> </div>
             <div *ngIf="itapplication.get('acquisitionDate')!.invalid && (itapplication.get('acquisitionDate')!.dirty || itapplication.get('acquisitionDate')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('acquisitionDate')!.errors!.required">
-                    Acquisition date is required.
+                <div *ngIf="itapplication.get('acquisitionDate')!.errors!.required"> Acquisition date is required.
                 </div>
-            </div>
-            <small class="text-muted">
-          Enter acquisition date (e.g. 13/12/2021)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='date' formControlName='endOfLife' />
-                <label>End of Life</label>
             </div>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='currentScalability' required />
-                <label>Current Scalability</label>
+            <div class="custom"> <input type='date' formControlName='endOfLife' /> <label>End of Life</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('currentScalability')!.invalid && (itapplication.get('currentScalability')!.dirty || itapplication.get('currentScalability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentScalability')!.errors!.pattern">
-                    Current scalability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter current scalability (e.g. 4)
-        </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='expectedScalability' required />
-                <label>Expected Scalability</label>
+            <div class="custom"> <input type='number' formControlName='currentScalability' placeholder="0 to 5" />
+                <label>Current
+                    Scalability</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('expectedScalability')!.invalid && (itapplication.get('expectedScalability')!.dirty || itapplication.get('expectedScalability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('expectedScalability')!.errors!.pattern">
-                    Expected scalability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter expected scalability (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='currentPerformance' required />
-                <label>Current Performance</label>
+            <div class="custom"> <input type='number' formControlName='expectedScalability' placeholder="0 to 5" />
+                <label>Expected
+                    Scalability</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('currentPerformance')!.invalid && (itapplication.get('currentPerformance')!.dirty || itapplication.get('currentPerformance')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentPerformance')!.errors!.required">
-                    Current performance is required.
-                </div>
-                <div *ngIf="itapplication.get('currentPerformance')!.errors!.pattern">
-                    Current performance should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter current performance (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='expectedPerformance' required />
-                <label>Expected Performance</label>
+            <div class="custom"> <input type='number' formControlName='currentPerformance' placeholder="0 to 5" />
+                <label>Current
+                    Performance</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('expectedPerformance')!.invalid && (itapplication.get('expectedPerformance')!.dirty || itapplication.get('expectedPerformance')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('expectedPerformance')!.errors!.required">
-                    Expected performance is required.
-                </div>
-                <div *ngIf="itapplication.get('expectedPerformance')!.errors!.pattern">
-                    Expected performance should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter expected performance (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='currentSecurityLevel' required />
-                <label>Current Security Level</label>
+            <div class="custom"> <input type='number' formControlName='expectedPerformance' placeholder="0 to 5" />
+                <label>Expected
+                    Performance</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('currentSecurityLevel')!.invalid && (itapplication.get('currentSecurityLevel')!.dirty || itapplication.get('currentSecurityLevel')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentSecurityLevel')!.errors!.required">
-                    Current security level is required.
-                </div>
-                <div *ngIf="itapplication.get('currentPerformance')!.errors!.pattern">
-                    Current security level should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter current security level (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='expectedSecurityLevel' required />
+            <div class="custom"> <input type='number' formControlName='currentSecurityLevel' placeholder="0 to 5" />
+                <label>Current
+                    Security Level</label>
+            </div>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
+        </div>
+        <div class='form-group w-50'>
+            <div class="custom"> <input type='number' formControlName='expectedSecurityLevel' placeholder="0 to 5" />
                 <label>Expected Security Level</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('expectedSecurityLevel')!.invalid && (itapplication.get('expectedSecurityLevel')!.dirty || itapplication.get('expectedSecurityLevel')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('expectedSecurityLevel')!.errors!.required">
-                    Expected security level is required.
-                </div>
-                <div *ngIf="itapplication.get('expectedSecurityLevel')!.errors!.pattern">
-                    Expected security level should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter expected security level (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='currentStability' required />
-                <label>Current Stability</label>
+            <div class="custom"> <input type='number' formControlName='currentStability' placeholder="0 to 5" />
+                <label>Current
+                    Stability</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('currentStability')!.invalid && (itapplication.get('currentStability')!.dirty || itapplication.get('currentStability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentStability')!.errors!.required">
-                    Current stability is required.
-                </div>
-                <div *ngIf="itapplication.get('currentStability')!.errors!.pattern">
-                    Current stability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter current stability (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='expectedStability' required />
-                <label>Expected Stability</label>
+            <div class="custom"> <input type='number' formControlName='expectedStability' placeholder="0 to 5" />
+                <label>Expected
+                    Stability</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('expectedStability')!.invalid && (itapplication.get('expectedStability')!.dirty || itapplication.get('expectedStability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('expectedStability')!.errors!.required">
-                    Expected stability is required.
-                </div>
-                <div *ngIf="itapplication.get('expectedStability')!.errors!.pattern">
-                    Expected stability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter expected stability (e.g. 4)
-        </small>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <select class="select1" formControlName='costCurrency' required>
-            <option *ngFor="let type of eCurrency | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-          </select>
-                <label>Cost Currency</label>
+            <div class="custom"> <select class="select1" formControlName='costCurrency'>
+                    <option *ngFor="let type of ecostCurrency | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+                </select> <label>Cost Currency</label> </div>
+        </div>
+        <div class='form-group w-50'>
+            <div class="custom"> <input type='number' formControlName='currentValueForMoney' placeholder="0 to 5" />
+                <label>Current
+                    Value for Money</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('costCurrency')!.invalid && (itapplication.get('costCurrency')!.dirty || itapplication.get('costCurrency')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('costCurrency')!.errors!.required">
-                    Cost currency is required.
-                </div>
+            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
+        </div>
+        <div class='form-group w-50'>
+            <div class="custom"> <input type='text' formControlName='currentTotalCostPerYear' placeholder="1234.56" />
+                <label>Current
+                    Total Cost per Year</label>
             </div>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='currentValueForMoney' required />
-                <label>Current Value for Money</label>
-            </div>
-            <br>
-            <div *ngIf="itapplication.get('currentValueForMoney')!.invalid && (itapplication.get('currentValueForMoney')!.dirty || itapplication.get('currentValueForMoney')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentValueForMoney')!.errors!.required">
-                    Current value for money is required.
-                </div>
-                <div *ngIf="itapplication.get('currentValueForMoney')!.errors!.pattern">
-                    Current value for money should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter current value for money (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='text' formControlName='currentTotalCostPerYear' required />
-                <label>Current Total Cost per Year</label>
-            </div>
-            <br>
-            <div *ngIf="itapplication.get('currentTotalCostPerYear')!.invalid && (itapplication.get('currentTotalCostPerYear')!.dirty || itapplication.get('currentTotalCostPerYear')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentTotalCostPerYear')!.errors!.required">
-                    Current total cost per year is required.
-                </div>
-            </div>
-            <small class="text-muted">
-      Enter current total cost per year (e.g. 1337.95)
-    </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='text' formControlName='toleratedTotalCostPerYear' required />
+            <div class="custom"> <input type='text' formControlName='toleratedTotalCostPerYear' placeholder="12345.67" />
                 <label>Tolerated Total Cost per Year</label>
             </div>
-            <br>
-            <div *ngIf="itapplication.get('toleratedTotalCostPerYear')!.invalid && (itapplication.get('toleratedTotalCostPerYear')!.dirty || itapplication.get('toleratedTotalCostPerYear')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('toleratedTotalCostPerYear')!.errors!.required">
-                    Tolerated total cost per year is required.
-                </div>
-            </div>
-            <small class="text-muted">
-      Enter tolerated total cost per year (e.g. 1337.95)
-    </small>
         </div>
         <div class='form-group w-50'>
-            <div class="custom">
-                <select class="select2" formControlName='timeValue' required>
-            <option *ngFor="let type of etimeValue | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-          </select>
-                <label>TIME Value</label>
-            </div>
-            <br>
-            <div *ngIf="itapplication.get('timeValue')!.invalid && (itapplication.get('timeValue')!.dirty || itapplication.get('timeValue')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('timeValue')!.errors!.required">
-                    TIME value is required.
-                </div>
+            <div class="custom"> <select class="select2" formControlName='timeValue'>
+                    <option *ngFor="let type of etimeValue | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+                </select> <label>TIME Value</label>
             </div>
         </div>
-        <button type="submit" class="btn btn-danger form-control" [disabled]="!itapplication.valid">Add</button>
-        <br><br><br><br><br>
+        <button type="submit" class="btn btn-danger form-control" [disabled]="!itapplication.valid">Edit</button>
     </form>
 </div>

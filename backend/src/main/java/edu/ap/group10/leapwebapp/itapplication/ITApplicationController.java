@@ -34,7 +34,7 @@ public class ITApplicationController {
     @RequestParam("expectedPerformance") Integer expectedPerformance, @RequestParam("currentSecurityLevel") Integer currentSecurityLevel, @RequestParam("expectedSecurityLevel") Integer expectedSecurityLevel,
     @RequestParam("currentStability") Integer currentStability, @RequestParam("expectedStability") Integer expectedStability, @RequestParam("costCurrency") String costCurrency,
     @RequestParam("currentValueForMoney") Integer currentValueForMoney, @RequestParam("currentTotalCostPerYear") Double currentTotalCostPerYear, @RequestParam("toleratedTotalCostPerYear") Double toleratedTotalCostPerYear,
-    @RequestParam("timeValue") TimeValue timeValue){
+    @RequestParam("timeValue") String timeValue){
 
         Environment environment = environmentService.getEnvironment(Long.parseLong(environmentId));
         ITApplication itApplication = new ITApplication(applicationName, technology, version, acquisitionDate, endOfLife, currentScalability, expectedScalability, currentPerformance, expectedPerformance,
@@ -49,7 +49,7 @@ public class ITApplicationController {
     @RequestParam("expectedPerformance") Integer expectedPerformance, @RequestParam("currentSecurityLevel") Integer currentSecurityLevel, @RequestParam("expectedSecurityLevel") Integer expectedSecurityLevel,
     @RequestParam("currentStability") Integer currentStability, @RequestParam("expectedStability") Integer expectedStability, @RequestParam("costCurrency") String costCurrency,
     @RequestParam("currentValueForMoney") Integer currentValueForMoney, @RequestParam("currentTotalCostPerYear") Double currentTotalCostPerYear, @RequestParam("toleratedTotalCostPerYear") Double toleratedTotalCostPerYear,
-    @RequestParam("timeValue") TimeValue timeValue){
+    @RequestParam("timeValue") String timeValue){
         ITApplication oldITApplication = itApplicationService.findITApplication(Long.parseLong(applicationId));
        
         ITApplication newITApplication = new ITApplication(applicationName, technology, version, acquisitionDate, endOfLife, currentScalability, expectedScalability, currentPerformance, expectedPerformance,
@@ -62,5 +62,10 @@ public class ITApplicationController {
     public void deleteITApplication(@PathVariable String applicationId){        
         Long applicationID = Long.parseLong(applicationId);
         itApplicationService.deleteITApplication(applicationID);
+    }
+
+    @GetMapping("itapplication/{applicationId}")
+    public ITApplication getITApplication(@PathVariable String applicationId){
+        return itApplicationService.getITApplication(Long.parseLong(applicationId));
     }
 }

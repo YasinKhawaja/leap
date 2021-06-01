@@ -78,4 +78,8 @@ public class ITApplicationService {
         }
     }
     
+    public ITApplication getITApplication(Long applicationId){
+        return itApplicationRepository.findById(applicationId)
+        .orElseThrow(ResourceNotFoundException::new);
+    }
 }

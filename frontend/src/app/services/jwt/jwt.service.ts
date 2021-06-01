@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 import { NavbarService } from '../navbar/navbar.service';
 
 @Injectable({
@@ -32,7 +33,8 @@ export class JwtService {
     var jwtIsExp = helper.isTokenExpired(token);
 
     if(jwtIsExp){
-      this.getNewJwt()
+      this.logout()
+      Swal.fire('Error', 'Your session has expired', 'error')
     } else {
       return role;
     }
@@ -60,9 +62,10 @@ export class JwtService {
           var newToken = data.headers.get("authorization").replace('Bearer ', '');
           this.storeJWT(newToken);
         },
-        error => {
-          console.log(error);
+        () => {
           this.logout();
+          Swal.fire('Error', 'Your session has expired', 'error')
+          return null;
         }
       );
   }
@@ -93,7 +96,8 @@ export class JwtService {
     var jwtIsExp = helper.isTokenExpired(token);
 
     if(jwtIsExp){
-      this.getNewJwt()
+      this.logout()
+      Swal.fire('Error', 'Your session has expired', 'error')
     } else {
       return true;
     }
@@ -124,7 +128,8 @@ export class JwtService {
       this.router.navigate(['/environments'])
     }
     else if(jwtIsExp){
-      this.getNewJwt()
+      this.logout()
+      Swal.fire('Error', 'Your session has expired', 'error')
     }
   }
 

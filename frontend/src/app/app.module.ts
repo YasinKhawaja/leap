@@ -42,6 +42,8 @@ import { RouterGuard } from './services/guard/router.guard';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
 import { ResourceAddComponent } from './components/resource-add/resource-add.component';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MomentModule } from 'angular2-moment';
 
 
 
@@ -104,7 +106,9 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule
   ],
   providers: [CapabilityService],
   bootstrap: [AppComponent]

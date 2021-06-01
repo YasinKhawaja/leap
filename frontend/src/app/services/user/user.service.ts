@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from "../../classes/user/user"
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({providedIn: "root"})
 export class UserService {
@@ -15,26 +15,19 @@ export class UserService {
 
 
    public register(user: User) {
-     //gets token from the url
+
     let token = new URL(window.location.href).searchParams.get("token");
-
-    //check if token is correct param
-    console.log(token);
-
-    //calls the api with the token to verify
     let url = this.useradminsUrl + '?token=' + token;
 
-    //check if url is correct
-    console.log(url);
-
-    //post request
     this.http.post(url, user.getParams(),
       { headers: this.contentHeaders})
       .subscribe(
-        data => {
-          console.log(data)
+        () => {
           this.router.navigate(['login'])
+          Swal.fire('Registered', 'You have succesfully registered', 'success')
         },
-      error => {console.log(error)});
+      error => {
+        Swal.fire('Error', error.error.message, 'error')
+      });
    }
 }

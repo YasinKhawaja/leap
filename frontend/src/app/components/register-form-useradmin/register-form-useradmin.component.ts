@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomErrorStateMatcher } from 'src/app/classes/errormatcher/custom-error-state-matcher';
 import { User } from 'src/app/classes/user/user';
@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './register-form-useradmin.component.html',
   styleUrls: ['./register-form-useradmin.component.css']
 })
-export class RegisterFormUseradminComponent implements OnInit{
+export class RegisterFormUseradminComponent{
 
   matcher = new CustomErrorStateMatcher();
 
@@ -32,9 +32,6 @@ export class RegisterFormUseradminComponent implements OnInit{
       const repeatPassword = group.controls.repeatPassword.value;
 
       return password === repeatPassword ? null : { different: true }
-    }
-    
-    ngOnInit(): void {
     }
 
     get f(){

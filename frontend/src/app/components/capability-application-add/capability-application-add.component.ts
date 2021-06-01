@@ -18,13 +18,13 @@ export class CapabilityApplicationAddComponent implements OnInit {
 
   capabilityApplication = this.fb.group({
     application: ['', Validators.required],
-    businessEfficiencySupport: ['', Validators.required],
-    businessFunctionalCoverage: ['', Validators.required],
-    businessCorrectness: ['', Validators.required],
-    businessFuturePotential: ['', Validators.required],
-    informationCompleteness: ['', Validators.required],
-    informationCorrectness: ['', Validators.required],
-    informationAvailability: ['', Validators.required]
+    businessEfficiencySupport: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFunctionalCoverage: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFuturePotential: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCompleteness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
   })
 
   constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {

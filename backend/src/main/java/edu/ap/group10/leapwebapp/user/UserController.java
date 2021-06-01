@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.ap.group10.leapwebapp.company.CompanyService;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.SecurityConstraints;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Slf4j
 @RestController
 public class UserController {
+
+    @Autowired
+    private CompanyService companyService;
 
     @Autowired
     private UserService userService;
@@ -41,6 +45,7 @@ public class UserController {
                 throw new UnsupportedOperationException("Email is in use");
             }
             User user = new User(firstname, surname, email, username, password, 1, userService.validateToken(confirmationToken), null);
+            companyService.deleteConfirmationToken(confirmationToken);
             return userService.addUser(user);
 
         } catch (Exception e){

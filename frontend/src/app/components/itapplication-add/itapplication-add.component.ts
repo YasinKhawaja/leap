@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
@@ -8,7 +7,8 @@ import { NavbarService } from 'src/app/services/navbar/navbar.service';
 enum Currency{
   EUR = "EUR",
   GBP = "GBP",
-  USD = "USD"
+  USD = "USD",
+  A = " "
 }
 
 //voluit schrijven
@@ -16,7 +16,8 @@ enum TIME{
   TOLERATE = "Tolerate",
   INVEST = "Invest",
   ELIMINATE = "Eliminate",
-  MIGRATE = "Migrate"
+  MIGRATE = "Migrate",
+  A = " "
 }
 
 @Component({
@@ -24,7 +25,7 @@ enum TIME{
   templateUrl: './itapplication-add.component.html',
   styleUrls: ['./itapplication-add.component.css']
 })
-export class ItapplicationAddComponent implements OnInit {
+export class ItapplicationAddComponent {
 
   ecostCurrency = Currency;
   etimeValue = TIME;
@@ -34,26 +35,23 @@ export class ItapplicationAddComponent implements OnInit {
     technology: ['', Validators.required],
     version: ['', Validators.required],
     acquisitionDate: ['', Validators.required],
-    endOfLife: ['', Validators.required],
-    currentScalability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedScalability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentPerformance: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedPerformance: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentSecurityLevel: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedSecurityLevel: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentStability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    expectedStability: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    costCurrency:['', Validators.required],
-    currentValueForMoney: ['', [Validators.required, Validators.pattern('[1-5]')]],
-    currentTotalCostPerYear: ['', Validators.required],
-    toleratedTotalCostPerYear: ['', Validators.required],
-    timeValue: ['', Validators.required]
+    endOfLife: [' ', Validators.nullValidator],
+    currentScalability: ['0', Validators.pattern('[0-5]')],
+    expectedScalability: ['0', Validators.pattern('[0-5]')],
+    currentPerformance: ['0', Validators.pattern('[0-5]')],
+    expectedPerformance: ['0', Validators.pattern('[0-5]')],
+    currentSecurityLevel: ['0', Validators.pattern('[0-5]')],
+    expectedSecurityLevel: ['0', Validators.pattern('[0-5]')],
+    currentStability: ['0', Validators.pattern('[0-5]')],
+    expectedStability: ['0', Validators.pattern('[0-5]')],
+    costCurrency:[' ', Validators.nullValidator],
+    currentValueForMoney: ['0', Validators.pattern('[0-5]')],
+    currentTotalCostPerYear: ['0', Validators.nullValidator],
+    toleratedTotalCostPerYear: ['0', Validators.nullValidator],
+    timeValue: [' ', Validators.nullValidator]
   });
 
   constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService) { }
-
-  ngOnInit(): void {
-  }
 
   onSubmit(){
     let environmentId = this.ns.getEnvironment();

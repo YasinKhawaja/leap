@@ -18,7 +18,8 @@ import edu.ap.group10.leapwebapp.mail.MailService;
 @RestController
 public class CompanyController {
 
-  //to do: put mail sender in a project wide variable
+  @Autowired
+  private CompanyService companyService;
 
   @Autowired
   private CompanyRepository companyRepository;
@@ -63,6 +64,7 @@ public class CompanyController {
       Company c = companyRepository.findById(companyID).get();
 
       if(c != null){
+        companyService.deleteConfirmationToken(confirmationToken);
         return c;
       }
       else{

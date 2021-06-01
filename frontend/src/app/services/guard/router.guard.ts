@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { JwtService } from '../jwt/jwt.service'
 
@@ -23,6 +24,7 @@ export class RouterGuard implements CanActivate {
       }
       else{
         this.router.navigate([`login`])
+        Swal.fire('Error', "Access denied, if you believe this was an error: contact support", 'error')
         return false;
       }
   }
