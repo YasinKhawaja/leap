@@ -74,9 +74,6 @@
             </div>
             <br>
             <div *ngIf="itapplication.get('currentScalability')!.invalid && (itapplication.get('currentScalability')!.dirty || itapplication.get('currentScalability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('currentScalability')!.errors!.required">
-                    Current scalability is required.
-                </div>
                 <div *ngIf="itapplication.get('currentScalability')!.errors!.pattern">
                     Current scalability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
                 </div>
@@ -92,9 +89,6 @@
             </div>
             <br>
             <div *ngIf="itapplication.get('expectedScalability')!.invalid && (itapplication.get('expectedScalability')!.dirty || itapplication.get('expectedScalability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('expectedScalability')!.errors!.required">
-                    Expected scalability is required.
-                </div>
                 <div *ngIf="itapplication.get('expectedScalability')!.errors!.pattern">
                     Expected scalability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
                 </div>
