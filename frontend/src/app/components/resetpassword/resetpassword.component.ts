@@ -10,7 +10,7 @@ import { ResetpasswordService } from 'src/app/services/resetpassword/resetpasswo
 export class ResetpasswordComponent implements OnInit {
 
   resetpassword = this.fb.group({
-    email: ['', Validators.required]
+    email: ['', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]]
   })
 
   constructor(private fb: FormBuilder, private rps: ResetpasswordService) { }
@@ -19,7 +19,7 @@ export class ResetpasswordComponent implements OnInit {
   }
 
   onSubmit(){
-    this.rps.resetPassword(this.resetpassword.value.email);
+    this.rps.resetPasswordMail(this.resetpassword.value.email);
   }
 }
 

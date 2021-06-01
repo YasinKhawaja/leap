@@ -17,7 +17,7 @@ export class RegisterFormUseradminComponent implements OnInit{
   useradmin = this.fb.group({
     firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
     surname: ['',  [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    email: ['', [Validators.required,Validators.pattern("^[A-Za-Z0-9._%+-]+@[A-Za-Z0-9.-]+\\.[A-Za-Z]{2,4}$")]],
     username: ['',  Validators.required],
     password: ['', [Validators.required, Validators.minLength(8)]],
     repeatPassword: ['', Validators.required]
@@ -26,7 +26,6 @@ export class RegisterFormUseradminComponent implements OnInit{
   })
 
   constructor(private fb: FormBuilder,
-    private router: Router,
     private cs: UserService) { }
 
     checkPasswords(group: FormGroup){
@@ -51,7 +50,5 @@ export class RegisterFormUseradminComponent implements OnInit{
         this.useradmin.value.username,
         this.useradmin.value.password
         ))
-        //success page not implemented yet
-      this.router.navigate(['login'])
     }
   }
