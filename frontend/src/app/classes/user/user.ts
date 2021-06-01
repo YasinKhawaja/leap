@@ -1,6 +1,6 @@
 import { HttpParams } from "@angular/common/http"    
 
-    export class Useradmin {
+    export class User {
         constructor(
             public firstName: string,
             public surname: string,

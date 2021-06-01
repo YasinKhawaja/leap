@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomErrorStateMatcher } from 'src/app/classes/errormatcher/custom-error-state-matcher';
-import { Useradmin } from 'src/app/classes/useradmin/useradmin';
-import { UseradminService } from 'src/app/services/useradmin/useradmin.service';
+import { User } from 'src/app/classes/user/user';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-register-form-useradmin',
@@ -27,7 +27,7 @@ export class RegisterFormUseradminComponent implements OnInit{
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private cs: UseradminService) { }
+    private cs: UserService) { }
 
     checkPasswords(group: FormGroup){
       const password = group.controls.password.value;
@@ -44,7 +44,7 @@ export class RegisterFormUseradminComponent implements OnInit{
     }
   
     onSubmit() {
-      this.cs.register(new Useradmin(
+      this.cs.register(new User(
         this.useradmin.value.firstName,
         this.useradmin.value.surname,
         this.useradmin.value.email,
