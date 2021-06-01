@@ -39,6 +39,7 @@ import { StrategyItemsComponent } from './components/strategy-items/strategy-ite
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 
 
 
@@ -89,7 +90,8 @@ const appRoutes: Routes = [
     StrategyItemsAddComponent,
     StrategyItemsEditComponent,
     StrategyItemsDeleteComponent,
-    ResourceComponent
+    ResourceComponent,
+    ResetpasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtService } from './services/jwt/jwt.service';
 import { NavbarService } from './services/navbar/navbar.service';
 
@@ -13,9 +14,9 @@ export class AppComponent{
   username: string
   environmentId: string;
 
-  constructor(public ns: NavbarService, public jwt: JwtService) {
+  constructor(public ns: NavbarService, public jwt: JwtService, public router: Router) {
     this.title = 'LEAP-webapp'
-    this.environmentName = this.getEnvironmentname();
+    this.environmentName = "Environments";
   }
 
   deselect(): void{
@@ -32,7 +33,6 @@ export class AppComponent{
   }
 
   getEnvironmentname(): string{
-    console.log("environment changed");
     this.environmentName = this.ns.getEnvironmentName();
     return this.environmentName;
   }
@@ -45,5 +45,13 @@ export class AppComponent{
       this.username = "User";
     }
     return this.username;
+  }
+
+  getRouter(): boolean{
+    if(this.router.isActive("home", true)){
+      return true;
+    } else {
+      return false;
+    }
   }
 }

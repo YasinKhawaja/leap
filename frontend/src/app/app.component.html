@@ -13,38 +13,41 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto" *ngIf="(ns.environmentStatus() | async) === true">
-                    <div class="verticalLine ">
+                <ul class="navbar-nav mr-auto">
+                    <div class="verticalLine" *ngIf="(jwt.getUserBoolean() | async) === true">
                         <li class='nav-item active'>
                             <a class="nav-link " [routerLink]="['environments']" (click)="deselect()">
                                 <span *ngIf="(getEnvironmentname() != '')"> {{ environmentName }} </span></a>
                         </li>
+
                     </div>
 
-                    <li class="nav-item active">
-                        <a class="nav-link" [routerLink]=" ['capabilities']">Capabilities</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" [routerLink]=" ['strategies']">Strategy/Strategy Items</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" [routerLink]="['itapplication']">IT-Applications</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link">Programs/Projects</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" [routerLink]="['resources']">Resources</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link">Business Processes</a>
-                    </li>
-
-                    <div class="verticalLine">
-                        <li class='nav-item active'>
-                            <a class='nav-link' [routerLink]="['export']">Export</a>
+                    <ul class="navbar-nav mr-auto" *ngIf="(ns.environmentStatus() | async) === true">
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]=" ['capabilities']">Capabilities</a>
                         </li>
-                    </div>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]=" ['strategies']">Strategy/Strategy Items</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['itapplication']">IT-Applications</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link">Programs/Projects</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['resources']">Resources</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link">Business Processes</a>
+                        </li>
+
+                        <div class="verticalLine">
+                            <li class='nav-item active'>
+                                <a class='nav-link' [routerLink]="['export']">Export</a>
+                            </li>
+                        </div>
+                    </ul>
                 </ul>
                 <ul class="navbar-nav" *ngIf="(jwt.getUserBoolean() | async) === true">
 
@@ -65,33 +68,31 @@
                         </div>
                     </li>
                 </ul>
-                <nav>
-                    <ul class="navbar-nav navbar-navright" *ngIf="(jwt.getUserBoolean() | async) === false">
-                        <li>
-                            <button class="btn btn-white btn-big navbar-right" [routerLink]="['login']"> LOGIN</button>
-                        </li>
+                <ul class="navbar-nav" *ngIf="(jwt.getUserBoolean() | async) === false">
+                    <li>
+                        <button class="btn btn-white btn-big navbar-right" [routerLink]="['login']"> LOGIN</button>
+                    </li>
 
-                        <li>
-                            <button class="btn btn-white btn-big navbar-right" [routerLink]="['register']" (click)="deselect()">SIGNUP</button>
-                        </li>
-                        <li>
-                            <div class="color" id="language">
-                                <select name="language" id="lang" class="dropdown color">
+                    <li>
+                        <button class="btn btn-white btn-big navbar-right" [routerLink]="['register']" (click)="deselect()">SIGNUP</button>
+                    </li>
+                    <li>
+                        <div class="color" id="language">
+                            <select name="language" id="lang" class="dropdown color">
                                     <option value="eng" selected>EN</option>
                                 </select>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
     <!-- Begin page content -->
     <router-outlet></router-outlet>
     <br>
-    <footer class="footer ">
+    <footer class="footer" *ngIf="(getRouter() === true)">
 
-        <div class="container ">
+        <div class="container">
             &copy; 2020-2021 leap.com | Terms of Service | Privacy Policy | Cookies
         </div>
     </footer>
