@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
-import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';

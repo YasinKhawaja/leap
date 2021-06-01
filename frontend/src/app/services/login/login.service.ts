@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from 'src/app/classes/login/login';
-import { NavbarService } from '../navbar/navbar.service';
 
 @Injectable({
   providedIn: 'root'

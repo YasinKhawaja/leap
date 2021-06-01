@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavbarService } from '../navbar/navbar.service';
 
@@ -13,9 +13,15 @@ export class JwtService {
   private jwtUrl: string = 'http://localhost:8080/api/user/jwt';
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
+  private userIdleCheck = new Subject<boolean>();
 
   constructor(private ns: NavbarService, private http:HttpClient, private router:Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    if(this.validateJWT()){
+      this.userIdleCheck.next(true);
+    } else {
+      this.userIdleCheck.next(false)
+    }
   }
 
   storeJWT(token: string){
@@ -68,6 +74,14 @@ export class JwtService {
           return null;
         }
       );
+  }
+
+  setUserIdle(userIdle: boolean){
+    this.userIdleCheck.next(userIdle);
+  }
+
+  getUserIdle(): Observable<boolean> {
+    return this.userIdleCheck.asObservable();
   }
 
   getUserStatus(): boolean{
@@ -138,6 +152,7 @@ export class JwtService {
     this.ns.createCookie("Capability", "", 0);
     this.ns.environmentDeselect();
     this.userstatus.next(false);
+    this.setUserIdle(false);
     this.router.navigate(['login'])
   }
 }
