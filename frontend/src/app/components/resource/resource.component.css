@@ -1,15 +1,16 @@
 .main {
-    margin-top: 82.5px !important;
+    margin-top: 82px !important;
+    /* TEMPORARY */
     margin: 25px;
 }
 
 .flex-container {
     display: flex;
+    margin-bottom: 25px;
 }
 
 .flex-item {
     flex: 1;
-    border: 1px solid black;
 }
 
 .flex-item:first-child {

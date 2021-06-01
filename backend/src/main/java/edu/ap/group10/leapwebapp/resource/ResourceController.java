@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class ResourceController {
 
@@ -27,14 +30,27 @@ public class ResourceController {
 
     // To GET a resource
     @GetMapping("/resources/{id}")
-    public Resource getResource(@PathVariable Long id) throws NoSuchElementException {
-        return resourceService.getResource(id);
+    public Resource getResource(@PathVariable Long id) {
+        try {
+            return resourceService.getResource(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 
     // To CREATE a resource
     @PostMapping("/resources")
-    public Resource createResource(@RequestBody Resource resource) {
-        return resourceService.createResource(resource);
+    public String createResource(@RequestBody Resource resource) {
+        String msg = "";
+        try {
+            resourceService.createResource(resource);
+            msg = String.format("Resource %s created.", resource.getName());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
+        }
+        return msg;
     }
 
     // To UPDATE a resource

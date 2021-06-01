@@ -17,7 +17,7 @@ export class ResourceComponent implements OnInit {
     this.getAllResources();
   }
 
-  getAllResources(): void {
+  private getAllResources(): void {
     this.rs.getAllResources().subscribe(res => this.resources = res, err => console.error(err));
   }
 
