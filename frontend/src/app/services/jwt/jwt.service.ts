@@ -41,7 +41,10 @@ export class JwtService {
     var token = this.ns.readCookie("jwt")
     var url = this.jwtUrl;
 
-    return this.http.post<any>(url, token,
+    var param = new URLSearchParams();
+    param.set("token", token);
+
+    return this.http.post<any>(url, param.toString(),
       {observe: 'response' as 'body'})
       .pipe(jwt => {
         return jwt;
@@ -77,7 +80,7 @@ export class JwtService {
   validateJWT(): boolean{
     var token = this.ns.readCookie("jwt")
     if(token == ""){
-      return null
+      return false;
     }
     var helper = new JwtHelperService();
 
@@ -88,7 +91,7 @@ export class JwtService {
     } else {
       return true;
     }
-    return null;
+    return false;
   }
 
   getUsername(): string{
