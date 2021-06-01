@@ -1,6 +1,6 @@
 
 # Frontend
-The frontend of this project is generated with Angular. 
+The frontend of this project is made with Angular. 
 
 ## To-Do
 
@@ -28,9 +28,13 @@ The frontend of this project is generated with Angular.
 ### Company
 * Postcode -> no letters
 * Email -> can contain capital letters too
+* Enum of countries in list with search option since too many options.
 
 ### User Admin
 * Email -> can contain capital letters too
 
 ### User
 * Combine admin and user into 1 class in frontend like the backend.
+
+### Cookies
+* Encrypt cookie values so they can't be changed/read easily.

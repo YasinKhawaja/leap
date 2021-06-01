@@ -66,11 +66,16 @@ public class ITApplicationService {
     }
 
     //delete it application
-    public void deleteITApplication(Long itApplicationId){
+    public Boolean deleteITApplication(Long itApplicationId){
         ITApplication oldITApplication = itApplicationRepository.findById(itApplicationId)
         .orElseThrow(ResourceNotFoundException::new);
 
         itApplicationRepository.delete(oldITApplication);
+        if(itApplicationRepository.existsById(itApplicationId)){
+            return false;
+        } else {
+            return true;
+        }
     }
     
 }

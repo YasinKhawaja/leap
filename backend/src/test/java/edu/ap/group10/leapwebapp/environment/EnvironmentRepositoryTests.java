@@ -1,16 +1,20 @@
 
 package edu.ap.group10.leapwebapp.environment;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
+@ExtendWith(MockitoExtension.class)
 public class EnvironmentRepositoryTests {
 
     @Autowired
@@ -28,11 +32,11 @@ public class EnvironmentRepositoryTests {
         Environment environment = new Environment(name);
         sut.save(environment);
 
-        // Act
+        //Act
         boolean actual = sut.existsByName(name);
 
-        // Assert
-        assertEquals(true, actual);
+        //Assert
+        assertTrue(actual);
     }
 
     @Test
@@ -40,11 +44,11 @@ public class EnvironmentRepositoryTests {
         // Arrange
         String name = "Siemens";
 
-        // Act
-        boolean expected = sut.existsByName(name);
+        //Act
+        boolean actual = sut.existsByName(name);
 
-        // Assert
-        assertEquals(expected, false);
+        //Assert
+        assertFalse(actual);
     }
 
 }

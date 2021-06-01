@@ -3,6 +3,8 @@ package edu.ap.group10.leapwebapp.security;
 public class SecurityConstraints {
     //jwt secret
     public static final String SECRET = "Is_this,32 characters long or no";
+    //base64 secret
+    public static final String USERID_SECRET = ",A32_Characters-Long_String_Yepp";
     //15 minute expiration time on token
     public static final long EXPIRATION_TIME = 900_000;
     //Needed to give the token the bearer prefix

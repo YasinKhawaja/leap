@@ -16,7 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import edu.ap.group10.leapwebapp.company.Company;
+import lombok.Data;
 
+@Data
 @Entity
 @Table
 public class ConfirmationToken {
@@ -42,37 +44,5 @@ public class ConfirmationToken {
         this.company = company;
         createdDate = new Date();
         confirmationToken = UUID.randomUUID().toString();
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }   
-
-    public String getConfirmationToken() {
-        return this.confirmationToken;
-    }
-
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
-    }
-    
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Company getCompany() {
-        return this.company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 }
