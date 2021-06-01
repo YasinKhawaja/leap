@@ -32,6 +32,7 @@ import { StrategyComponent } from './components/strategy/strategy.component';
 import { RouterGuard } from './services/guard/router.guard';
 import { JwtService } from './services/jwt/jwt.service';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
@@ -63,7 +64,8 @@ const routes: Routes = [
   { path: 'capability-application/update/:capabilityapplicationId', component: CapabilityApplicationEditComponent, canActivate: [RouterGuard] },
   { path: 'capability-application/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent, canActivate: [RouterGuard] },
   { path: 'resources', component: ResourceComponent, canActivate: [RouterGuard] },
-  { path: 'resetpassword', component: ResetpasswordComponent }
+  { path: 'resetpassword', component: ResetpasswordComponent },
+  { path: 'resetpassword/confirm', component: ResetpasswordConfirmComponent}
 ];
 
 @NgModule({

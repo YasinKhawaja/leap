@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     /* The html and body elements cannot have any padding or margin. */
 }
@@ -6,6 +7,10 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+}
+
+.header {
+    margin-bottom: 60px;
 }
 
 .footer {
@@ -50,7 +55,8 @@ body {
     transition: all .4s ease-in-out;
 }
 
-.btn:hover, input[type="submit"]:hover {
+.btn:hover,
+input[type="submit"]:hover {
     -webkit-transition: all .4s ease-in-out;
     -moz-transition: all .4s ease-in-out;
     -ms-transition: all .4s ease-in-out;
@@ -80,7 +86,7 @@ body {
 .dropdown {
     background: transparent;
     border: none;
-    top:4px;
+    top: 4px;
 }
 
 .color {

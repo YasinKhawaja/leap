@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ResetpasswordService } from 'src/app/services/resetpassword/resetpassword.service';
 
 @Component({
   selector: 'app-resetpassword',
@@ -9,17 +10,16 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class ResetpasswordComponent implements OnInit {
 
   resetpassword = this.fb.group({
-    email: ['', Validators.required]
+    email: ['', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]]
   })
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private rps: ResetpasswordService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(){
-//Swal.fire('Created', `Environment ${this.name.value} created.`, 'success');
-//Swal.fire('Error', err.error.message, 'error')
+    this.rps.resetPasswordMail(this.resetpassword.value.email);
   }
 }
 

@@ -91,8 +91,11 @@ public class UserController {
     }
 
     @PostMapping("/user/jwt")
-    public String jwt(@RequestParam String token){
-        return userService.refreshJwt(token);
+    public void jwt(@RequestParam String token, HttpServletResponse response){
+        String newToken = userService.refreshJwt(token);
+        response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
+        response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
+        response.setHeader("Authorization", newToken);  
     }
 
     @PostMapping("/user/resetpassword")
@@ -105,11 +108,11 @@ public class UserController {
         mail.setSender("leapwebapp@gmail.com");
         mail.setReceiver(user.getEmail());
         mail.setSubject("Password change");
-        mail.setContent("To reset your password click on the following link. \nhttp://localhost:4200/resetpassword?id=" + id);
+        mail.setContent("To reset your password click on the following link. \nhttp://localhost:4200/resetpassword/confirm?id=" + id);
         mailService.sendMail(mail);
     }
 
-    @PutMapping("/user/{token}")
+    @PutMapping("/user/resetpassword/{token}")
     public void resetPassword(@PathVariable String token, @RequestParam String password) {
 
         userService.changePassword(Long.parseLong(userService.getUserIDJwt(token)), password);

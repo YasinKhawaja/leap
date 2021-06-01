@@ -48,7 +48,7 @@ export class AppComponent{
   }
 
   getRouter(): boolean{
-    if(this.router.isActive("home", true)){
+    if(this.router.isActive("home", true) || this.router.isActive("/", true)){
       return true;
     } else {
       return false;
