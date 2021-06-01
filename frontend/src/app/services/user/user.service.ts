@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Useradmin } from "../../classes/useradmin/useradmin"
+import { User } from "../../classes/user/user"
 import { Observable } from 'rxjs';
 
 @Injectable({providedIn: "root"})
-export class UseradminService {
+export class UserService {
   private useradminsUrl: string = 'http://localhost:8080/api/useradmin';
   private contentHeaders: HttpHeaders;
 
@@ -13,7 +13,7 @@ export class UseradminService {
    }
 
 
-   public register(useradmin: Useradmin) {
+   public register(user: User) {
      //gets token from the url
     let token = new URL(window.location.href).searchParams.get("token");
 
@@ -27,7 +27,7 @@ export class UseradminService {
     console.log(url);
 
     //post request
-    this.http.post(url, useradmin.getParams(),
+    this.http.post(url, user.getParams(),
       { headers: this.contentHeaders})
       .subscribe(data => {console.log(data)},
       error => {console.log(error)});

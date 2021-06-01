@@ -11,6 +11,9 @@ export class NavbarService {
 
 
   public environmentStatus(): BehaviorSubject<boolean> {
+    if(this.readCookie("Environment") != undefined){
+      this.environmentSelected.next(true);
+    }
     return this.environmentSelected;
   }
 
@@ -30,7 +33,7 @@ export class NavbarService {
   }
 
   public getEnvironment(): string {
-    if (this.environmentSelected) {
+    if (this.environmentSelected || this.readCookie("Environment") != "") {
       return this.readCookie("Environment");
     }
     else {
