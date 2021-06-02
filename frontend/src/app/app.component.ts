@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
-import { interval, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { JwtService } from './services/jwt/jwt.service';
 import { NavbarService } from './services/navbar/navbar.service';
@@ -13,7 +12,6 @@ import { NavbarService } from './services/navbar/navbar.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  private sub: Subscription;
   title: string;
   environmentName: string
   username: string
@@ -73,14 +71,8 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     if(this.jwt.getUserBoolean().getValue()){
       this.idle.watch();
+      this.jwt.tokenRefresh();
     }
-      const source = interval(800000);
-      this.sub = source.subscribe(
-        () => {
-          if(this.jwt.getUserStatus){
-            this.jwt.getNewJwt()
-         }
-        });
   }
 
   deselect(): void{

@@ -33,6 +33,7 @@ export class LoginComponent {
           this.jwt.storeJWT(token);
           this.jwt.loggedin(this.login.value.username);
           this.jwt.setUserIdle(true);
+          this.jwt.tokenRefresh();
       },
       error => {
         Swal.fire('Error', error.error.message, 'error')
