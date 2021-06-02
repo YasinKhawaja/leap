@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, interval, observable, Observable, Subject, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavbarService } from '../navbar/navbar.service';
 
@@ -14,35 +14,30 @@ export class JwtService {
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
-  private timer = new Observable<number>();
-  private sub: Subscription;
 
-  constructor(private ns: NavbarService, private http:HttpClient, private router:Router) {
+  constructor(private ns: NavbarService, private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    this.timer = new Observable<80000>();
-    
-    if(this.validateJWT()){
+
+    if (this.validateJWT()) {
       this.userIdleCheck.next(true);
-      this.tokenRefresh();
     } else {
       this.userIdleCheck.next(false)
     }
   }
 
-  tokenRefresh(){
-    this.sub = this.timer.subscribe(
-      () => {
-        if(this.getUserStatus){
-          this.getNewJwt()
-       }
-      });
+  tokenRefresh() {
+    setInterval(() => {
+      if(this.getUserBoolean().getValue()){
+        this.getNewJwt()
+      }
+    }, 800000);
   }
 
-  storeJWT(token: string){
+  storeJWT(token: string) {
     this.ns.createCookie("jwt", token, 1);
   }
 
-  checkJWT(){
+  checkJWT() {
     var token = this.ns.readCookie("jwt")
     var helper = new JwtHelperService();
 
@@ -52,7 +47,7 @@ export class JwtService {
 
     var jwtIsExp = helper.isTokenExpired(token);
 
-    if(jwtIsExp){
+    if (jwtIsExp) {
       this.logout()
       Swal.fire('Error', 'Your session has expired', 'error')
     } else {
@@ -62,7 +57,8 @@ export class JwtService {
     return null;
   }
 
-  getNewJwt(){
+  getNewJwt() {
+    console.log("getting new JWT automatically")
     var token = this.ns.readCookie("jwt")
     var url = this.jwtUrl;
 
@@ -70,10 +66,10 @@ export class JwtService {
     param.set('token', token);
 
     return this.http.post<any>(url, param.toString(),
-    {
-      headers: this.contentHeaders,
-      observe: 'response' as 'body'
-    })
+      {
+        headers: this.contentHeaders,
+        observe: 'response' as 'body'
+      })
       .pipe(jwt => {
         return jwt;
       })
@@ -90,7 +86,7 @@ export class JwtService {
       );
   }
 
-  setUserIdle(userIdle: boolean){
+  setUserIdle(userIdle: boolean) {
     this.userIdleCheck.next(userIdle);
   }
 
@@ -98,8 +94,8 @@ export class JwtService {
     return this.userIdleCheck.asObservable();
   }
 
-  getUserStatus(): boolean{
-    if(this.userstatus.getValue().toString() == "true" || this.validateJWT()){
+  getUserStatus(): boolean {
+    if (this.userstatus.getValue().toString() == "true" || this.validateJWT()) {
       return true;
     }
     else {
@@ -107,23 +103,23 @@ export class JwtService {
     }
   }
 
-  getUserBoolean(): BehaviorSubject<boolean>{
-    if(this.validateJWT()){
+  getUserBoolean(): BehaviorSubject<boolean> {
+    if (this.validateJWT()) {
       this.userstatus.next(true);
     }
     return this.userstatus;
   }
 
-  validateJWT(): boolean{
+  validateJWT(): boolean {
     var token = this.ns.readCookie("jwt")
-    if(token == ""){
+    if (token == "") {
       return false;
     }
     var helper = new JwtHelperService();
 
     var jwtIsExp = helper.isTokenExpired(token);
 
-    if(jwtIsExp){
+    if (jwtIsExp) {
       this.logout()
       Swal.fire('Error', 'Your session has expired', 'error')
     } else {
@@ -132,17 +128,17 @@ export class JwtService {
     return false;
   }
 
-  getUsername(): string{
+  getUsername(): string {
     var cookie = this.ns.readCookie("jwt");
-    if (cookie != ""){
+    if (cookie != "") {
       var helper = new JwtHelperService();
       var jwtBody = helper.decodeToken(cookie);
       return jwtBody.sub;
     }
     return null;
   }
-  
-  loggedin(username: string){
+
+  loggedin(username: string) {
     var cookie = this.ns.readCookie("jwt")
     var helper = new JwtHelperService();
 
@@ -151,17 +147,17 @@ export class JwtService {
 
     var jwtUsername = jwtBody.sub;
 
-    if(jwtUsername == username && !jwtIsExp){
+    if (jwtUsername == username && !jwtIsExp) {
       this.userstatus.next(true);
       this.router.navigate(['/environments'])
     }
-    else if(jwtIsExp){
+    else if (jwtIsExp) {
       this.logout()
       Swal.fire('Error', 'Your session has expired', 'error')
     }
   }
 
-  logout(){
+  logout() {
     this.ns.createCookie("jwt", "", 0);
     this.ns.createCookie("Capability", "", 0);
     this.ns.environmentDeselect();

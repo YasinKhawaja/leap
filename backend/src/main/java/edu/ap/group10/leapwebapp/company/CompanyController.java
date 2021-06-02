@@ -30,9 +30,8 @@ public class CompanyController {
   @PostMapping("/companies")
   public void addNewCompany(@RequestParam("vatNumber") String vatNumber
       , @RequestParam("companyName") String companyName, @RequestParam("taxOffice") String taxOffice, @RequestParam("businessActivity") String businessActivity, @RequestParam("email") String email, @RequestParam("streetName") String streetName
-      , @RequestParam("houseNumber") Integer houseNumber, @RequestParam("postcode") Integer postcode, @RequestParam("city") String city, @RequestParam("country") String country) throws Exception{
+      , @RequestParam("houseNumber") Integer houseNumber, @RequestParam("postcode") Integer postcode, @RequestParam("city") String city, @RequestParam("country") String country){
 
-        try{
           Company n = new Company(vatNumber, companyName, email, streetName, houseNumber, postcode, city, country, businessActivity, taxOffice);
         
           companyService.addCompany(n);
@@ -47,9 +46,6 @@ public class CompanyController {
           mail.setSubject("New application from: " + companyName);
           mail.setContent("Click on this link to view the request from: " + companyName + ".\n" + confirmationTokenString);
           mailService.sendMail(mail);
-        } catch (Exception e){
-          throw new Exception(e);
-        }
   }
 
   @GetMapping("/companies/{token}")
