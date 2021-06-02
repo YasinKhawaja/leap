@@ -14,6 +14,7 @@ export class JwtService {
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
+  interval;
 
   constructor(private ns: NavbarService, private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -26,11 +27,9 @@ export class JwtService {
   }
 
   tokenRefresh() {
-    setInterval(() => {
-      if(this.getUserBoolean().getValue()){
-        this.getNewJwt()
-      }
-    }, 800000);
+    this.interval = setInterval(() => {
+          this.getNewJwt()
+    }, 600000);
   }
 
   storeJWT(token: string) {
@@ -163,6 +162,7 @@ export class JwtService {
     this.ns.environmentDeselect();
     this.userstatus.next(false);
     this.setUserIdle(false);
+    clearInterval(this.interval);
     this.router.navigate(['login'])
   }
 }
