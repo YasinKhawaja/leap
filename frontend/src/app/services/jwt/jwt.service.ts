@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavbarService } from '../navbar/navbar.service';
 
@@ -14,14 +14,28 @@ export class JwtService {
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
+  private timer = new Observable<number>();
+  private sub: Subscription;
 
   constructor(private ns: NavbarService, private http:HttpClient, private router:Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    this.timer = new Observable<80000>();
+    
     if(this.validateJWT()){
       this.userIdleCheck.next(true);
+      this.tokenRefresh();
     } else {
       this.userIdleCheck.next(false)
     }
+  }
+
+  tokenRefresh(){
+    this.sub = this.timer.subscribe(
+      () => {
+        if(this.getUserStatus){
+          this.getNewJwt()
+       }
+      });
   }
 
   storeJWT(token: string){

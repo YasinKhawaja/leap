@@ -30,22 +30,26 @@ public class CompanyController {
   @PostMapping("/companies")
   public void addNewCompany(@RequestParam("vatNumber") String vatNumber
       , @RequestParam("companyName") String companyName, @RequestParam("taxOffice") String taxOffice, @RequestParam("businessActivity") String businessActivity, @RequestParam("email") String email, @RequestParam("streetName") String streetName
-      , @RequestParam("houseNumber") Integer houseNumber, @RequestParam("postcode") Integer postcode, @RequestParam("city") String city, @RequestParam("country") String country) {
+      , @RequestParam("houseNumber") Integer houseNumber, @RequestParam("postcode") Integer postcode, @RequestParam("city") String city, @RequestParam("country") String country) throws Exception{
 
-        Company n = new Company(vatNumber, companyName, email, streetName, houseNumber, postcode, city, country, businessActivity, taxOffice);
+        try{
+          Company n = new Company(vatNumber, companyName, email, streetName, houseNumber, postcode, city, country, businessActivity, taxOffice);
         
-        companyService.addCompany(n);
-
-        String token = confirmationTokenService.addConfirmationToken(n);
-
-        String confirmationTokenString =  "http://localhost:4200/company/register/?id=" + n.getId() + "&token=" + token;
-
-        Mail mail = new Mail();
-        mail.setSender("leapwebapp@gmail.com");
-        mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be");
-        mail.setSubject("New application from: " + companyName);
-        mail.setContent("Click on this link to view the request from: " + companyName + ".\n" + confirmationTokenString);
-        mailService.sendMail(mail);
+          companyService.addCompany(n);
+  
+          String token = confirmationTokenService.addConfirmationToken(n);
+  
+          String confirmationTokenString =  "http://localhost:4200/company/register/?id=" + n.getId() + "&token=" + token;
+  
+          Mail mail = new Mail();
+          mail.setSender("leapwebapp@gmail.com");
+          mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be");
+          mail.setSubject("New application from: " + companyName);
+          mail.setContent("Click on this link to view the request from: " + companyName + ".\n" + confirmationTokenString);
+          mailService.sendMail(mail);
+        } catch (Exception e){
+          throw new Exception(e);
+        }
   }
 
   @GetMapping("/companies/{token}")
