@@ -36,7 +36,7 @@ export class JwtService {
     this.ns.createCookie("jwt", token, 1);
   }
 
-  checkJWT() {
+  checkRole() {
     var token = this.ns.readCookie("jwt")
     var helper = new JwtHelperService();
 
@@ -57,7 +57,6 @@ export class JwtService {
   }
 
   getNewJwt() {
-    console.log("getting new JWT automatically")
     var token = this.ns.readCookie("jwt")
     var url = this.jwtUrl;
 
@@ -111,7 +110,7 @@ export class JwtService {
 
   validateJWT(): boolean {
     var token = this.ns.readCookie("jwt")
-    if (token == "") {
+    if (token == '' || token == null) {
       return false;
     }
     var helper = new JwtHelperService();
@@ -157,7 +156,7 @@ export class JwtService {
   }
 
   logout() {
-    this.ns.createCookie("jwt", '', 0);
+    this.ns.eraseCookie("jwt");
     this.ns.eraseCookie("Capability");
     this.ns.eraseCookie("Environment");
     this.ns.eraseCookie("EnvironmentName");

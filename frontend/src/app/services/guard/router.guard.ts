@@ -18,6 +18,7 @@ export class RouterGuard implements CanActivate {
         if(this.auth.validateJWT()){
           return true
         } else {
+          Swal.fire('Error', "Access denied, if you believe this was an error: contact support", 'error')
           this.auth.logout();
           return false;
         }
@@ -25,6 +26,7 @@ export class RouterGuard implements CanActivate {
       else{
         this.router.navigate([`login`])
         Swal.fire('Error', "Access denied, if you believe this was an error: contact support", 'error')
+        this.auth.logout();
         return false;
       }
   }
