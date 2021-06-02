@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from 'src/app/classes/company/company';
 import { CompanyService } from 'src/app/services/company/company.service';
 
@@ -263,7 +262,7 @@ enum Country {
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.css']
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent{
 
   //delete if not using enum
   eCountry = Country;
@@ -271,7 +270,7 @@ export class RegisterFormComponent implements OnInit {
   company = this.fb.group({
     vatNumber: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9 ]+$')]],
     companyName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+    email: ['', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
     streetName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
     houseNumber: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     postcode: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
@@ -282,14 +281,8 @@ export class RegisterFormComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder,
-    private router: Router,
     private cs: CompanyService) { }
 
-  ngOnInit(): void {
-
-  }
-
-  //Add router navigate
   onSubmit() {
     this.cs.register(new Company(
       this.company.value.vatNumber,
