@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from 'src/app/classes/company/company';
 import { CompanyService } from 'src/app/services/company/company.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-company-request',
@@ -17,21 +18,19 @@ export class CompanyRequestComponent implements OnInit {
 
    accept(): void {
     this.c.accept(true);
-    this.router.navigate(['/'])
    }
 
    decline(): void{
     this.c.accept(false);
-    this.router.navigate(['/'])
    }
 
   ngOnInit(): void {
     this.c.getCompany().subscribe(data => { 
       this.company = data;
-      console.log(data);
     },
     error => {
-      console.error(error)
+      Swal.fire("Error", error.error.message, "error");
+      this.router.navigate(['/'])
     })
   }
 

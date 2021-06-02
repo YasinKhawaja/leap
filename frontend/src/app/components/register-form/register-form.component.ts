@@ -302,7 +302,5 @@ export class RegisterFormComponent implements OnInit {
       this.company.value.country,
       this.company.value.businessActivity,
       this.company.value.taxOffice))
-    //show successful submit message -> redirect to a page that shows it was succesfull
-    this.router.navigate(['login'])
   }
 }

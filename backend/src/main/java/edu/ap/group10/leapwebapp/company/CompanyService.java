@@ -1,9 +1,8 @@
 package edu.ap.group10.leapwebapp.company;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
-import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenRepository;
 
 @Service
 public class CompanyService {
@@ -11,11 +10,16 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    public void deleteCompany(Long companyId){
+        companyRepository.deleteById(companyId);
+    }
 
-    public void deleteConfirmationToken(String token){
-        confirmationTokenRepository.delete(confirmationTokenRepository.findByConfirmationToken(token));
+    public Company findCompany(Long companyId){
+        return companyRepository.findById(companyId)
+        .orElseThrow(ResourceNotFoundException::new);
     }
     
+    public Company addCompany(Company company){
+        return companyRepository.save(company);
+    }
 }
