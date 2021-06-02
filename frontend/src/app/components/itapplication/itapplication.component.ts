@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
@@ -13,7 +12,7 @@ export class ItapplicationComponent implements OnInit {
 
   itApplications: Itapplication[];
 
-  constructor(private its: ItapplicationService, private router: Router, private ns: NavbarService) { }
+  constructor(private its: ItapplicationService, private ns: NavbarService) { }
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironment();

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
@@ -26,7 +25,7 @@ export class CapabilityApplicationAddComponent implements OnInit {
     informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {
+  constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {
     this.itApplications = [];
    }
 

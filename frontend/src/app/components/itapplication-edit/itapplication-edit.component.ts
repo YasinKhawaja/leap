@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
-import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 enum Currency{
   EUR = "EUR",
@@ -34,7 +33,7 @@ export class ItapplicationEditComponent implements OnInit {
   ecostCurrency = Currency
   etimeValue = TIME;
 
-  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService) { }
 
   ngOnInit(): void {
     this.getCurrentITApplication()

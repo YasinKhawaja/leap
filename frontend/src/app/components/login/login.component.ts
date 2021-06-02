@@ -23,7 +23,6 @@ export class LoginComponent {
     private ls: LoginService,
     private jwt: JwtService) { }
 
-  //onSubmit check user and user admin repository if user exists with userdetails
   onSubmit() {
     //encode password here
     this.ls.login(new Login(this.login.value.username, this.login.value.password))
