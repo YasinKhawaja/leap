@@ -88,7 +88,6 @@ export class NavbarService {
         cookie = cookie.substring(1, cookie.length);
       }
       if (cookie.indexOf(nameCK) == 0) {
-        console.log(atob(cookie.substring(nameCK.length, cookie.length)));
         return atob(cookie.substring(nameCK.length, cookie.length));
       }
     }

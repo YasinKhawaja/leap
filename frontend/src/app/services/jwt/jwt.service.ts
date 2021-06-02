@@ -159,6 +159,8 @@ export class JwtService {
   logout() {
     this.ns.createCookie("jwt", '', 0);
     this.ns.createCookie("Capability", '', 0);
+    this.ns.createCookie("Environment", '', 0);
+    this.ns.createCookie("EnvironmentName", '', 0);
     this.ns.environmentDeselect();
     this.userstatus.next(false);
     this.setUserIdle(false);
