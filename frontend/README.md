@@ -21,8 +21,4 @@ The frontend of this project is made with Angular.
 * Upon signup, login and reset password the passwords are send as plain text to the api -> change this so it's encrypted
 
 ### Company
-* Postcode -> no letters
 * Enum of countries in list with search option since too many options.
-
-### Cookies
-* Encrypt cookie values so they can't be changed/read easily.

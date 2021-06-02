@@ -70,12 +70,15 @@ export class NavbarService {
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = `${name}=${value}${expires};path=/`;
+    if(value != ''){
+      value = btoa(value);
+    }
+    document.cookie = `${btoa(name)}=${value}${expires};path=/`;
   }
 
   readCookie(name: string) {
 
-    var nameCK = `${name}=`;
+    var nameCK = `${btoa(name)}=`;
     var cookieValues = document.cookie.split(';');
 
     for (var i = 0; i < cookieValues.length; i++) {
@@ -85,13 +88,14 @@ export class NavbarService {
         cookie = cookie.substring(1, cookie.length);
       }
       if (cookie.indexOf(nameCK) == 0) {
-        return cookie.substring(nameCK.length, cookie.length);
+        console.log(atob(cookie.substring(nameCK.length, cookie.length)));
+        return atob(cookie.substring(nameCK.length, cookie.length));
       }
     }
     return null;
   }
 
   eraseCookie(name: string) {
-    this.createCookie(name, "", -1);
+    this.createCookie(btoa(name), "", -1);
   }
 }
