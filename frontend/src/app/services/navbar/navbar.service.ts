@@ -95,6 +95,6 @@ export class NavbarService {
   }
 
   eraseCookie(name: string) {
-    this.createCookie(btoa(name), "", -1);
+    this.createCookie((name), "", -1);
   }
 }
