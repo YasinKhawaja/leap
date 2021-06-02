@@ -25,7 +25,8 @@ export class NavbarService {
   public environmentDeselect() {
     this.environmentSelected.next(false);
     this.eraseCookie("Environment");
-    this.eraseCookie("EnvironmentName")
+    this.eraseCookie("EnvironmentName");
+    this.eraseCookie("Capability")
   }
 
   public setEnvironment(environmentID: string) {

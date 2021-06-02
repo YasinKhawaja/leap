@@ -20,7 +20,6 @@ export class ItapplicationComponent implements OnInit {
     this.its.getITApplications_CurrentEnvironment(environmentId)
       .subscribe(result => {
         this.itApplications = result;
-        console.log(result);
       },
       error => console.log(error));
   }
