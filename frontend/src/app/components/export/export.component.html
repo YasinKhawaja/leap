@@ -9,7 +9,7 @@
                <div  id="div2" class="flex-container-3" >
                <b>{{capabilityLevel2.name}}</b>
                <ng-container class = 'container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
-                    <div *ngIf="capabilityLevel3.parentId == capabilityLevel2.id "id="div3" >
+                    <div id="div3" >
                         {{capabilityLevel3.name}}
                     </div>
                </ng-container>
@@ -23,26 +23,25 @@
   </div>
   <div id="div" >
         <h4>Options</h4>
-        <form (ngSubmit)="generateEntireMap()">
+        <!-- <form (ngSubmit)="generateEntireMap()">
           <br>
          <button type="submit">Show Entire Capability Map</button>
-        </form>
-        <form (ngSubmit)="generateLevel1and2Layer()">
+        </form> -->
+        <!-- <form (ngSubmit)="generateLevel1and2Layer()">
           <br>
          <button type="submit">Show Level 1 & 2 Layer</button>
         </form>
         <form (ngSubmit)="generateLevel1Layer()">
           <br>
          <button type="submit">Show Level 1 Layer</button>
-        </form>
+        </form> -->
         <br>
         <br>
         <br>
         <h4>Export</h4>
-        <form (ngSubmit)="generatePDF()">
-            <br>
-        <button type="submit">Export to PDF</button>
-        </form>
+        <br>
+        <button printSectionId="pdf" [useExistingCss]="true" printTitle="Capability Map" ngxPrint>Export To PDF</button>
+        <br>
         <form (ngSubmit)="generateCSV()">
           <br>
          <button type="submit">Export to CSV</button>

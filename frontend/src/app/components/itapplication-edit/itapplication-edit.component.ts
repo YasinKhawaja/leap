@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
-import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 enum Currency{
   EUR = "EUR",
   GBP = "GBP",
-  USD = "USD"
+  USD = "USD",
+  A = " "
 }
 
 //voluit schrijven
@@ -17,7 +17,8 @@ enum TIME{
   TOLERATE = "Tolerate",
   INVEST = "Invest",
   ELIMINATE = "Eliminate",
-  MIGRATE = "Migrate"
+  MIGRATE = "Migrate",
+  A = " "
 }
 
 @Component({
@@ -29,10 +30,10 @@ export class ItapplicationEditComponent implements OnInit {
 
   currentITApplication: Itapplication;
   itapplication: FormGroup;
-  eCurrency = Currency
+  ecostCurrency = Currency
   etimeValue = TIME;
 
-  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService) { }
 
   ngOnInit(): void {
     this.getCurrentITApplication()
@@ -41,19 +42,19 @@ export class ItapplicationEditComponent implements OnInit {
         this. itapplication = this.fb.group({
           name: [result.name, Validators.required],
           technology: [result.technology, Validators.required],
-          version: [result.version, [Validators.required, Validators.pattern('(([0-9](\\.[0-9]*))?){1,13}(\\.[0-9]*)?(\\.[0-9]*)?(\\.[0-9]*)?')]],
+          version: [result.version, Validators.required],
           acquisitionDate: [result.acquisitionDate, Validators.required],
           endOfLife: [result.endOfLife],
-          currentScalability: [result.currentScalability, Validators.pattern('[1-5]')],
-          expectedScalability: [result.expectedScalability, Validators.pattern('[1-5]')],
-          currentPerformance: [result.currentPerformance, Validators.pattern('[1-5]')],
-          expectedPerformance: [result.expectedPerformance, Validators.pattern('[1-5]')],
-          currentSecurityLevel: [result.currentSecurityLevel, Validators.pattern('[1-5]')],
-          expectedSecurityLevel: [result.expectedSecurityLevel, Validators.pattern('[1-5]')],
-          currentStability: [result.currentStability, Validators.pattern('[1-5]')],
-          expectedStability: [result.expectedStability, Validators.pattern('[1-5]')],
+          currentScalability: [result.currentScalability, Validators.pattern('[0-5]')],
+          expectedScalability: [result.expectedScalability, Validators.pattern('[0-5]')],
+          currentPerformance: [result.currentPerformance, Validators.pattern('[0-5]')],
+          expectedPerformance: [result.expectedPerformance, Validators.pattern('[0-5]')],
+          currentSecurityLevel: [result.currentSecurityLevel, Validators.pattern('[0-5]')],
+          expectedSecurityLevel: [result.expectedSecurityLevel, Validators.pattern('[0-5]')],
+          currentStability: [result.currentStability, Validators.pattern('[0-5]')],
+          expectedStability: [result.expectedStability, Validators.pattern('[0-5]')],
           costCurrency:[result.costCurrency],
-          currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[1-5]')],
+          currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[0-5]')],
           currentTotalCostPerYear: [result.currentTotalCostPerYear],
           toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
           timeValue: [result.timeValue]
@@ -92,7 +93,6 @@ export class ItapplicationEditComponent implements OnInit {
     );
 
     this.its.updateITApplication_CurrentEnvironment(itApplicationId, updatedITApplication);
-    this.router.navigate([`itapplication/`])
   }
 
 }

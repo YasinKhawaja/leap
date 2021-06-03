@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.user;
 
+import javax.persistence.EntityExistsException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenService;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.SecurityConstraints;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Slf4j
 @RestController
 public class UserController {
+
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
 
     @Autowired
     private UserService userService;
@@ -41,11 +46,12 @@ public class UserController {
                 throw new UnsupportedOperationException("Email is in use");
             }
             User user = new User(firstname, surname, email, username, password, 1, userService.validateToken(confirmationToken), null);
+            confirmationTokenService.deleteConfirmationToken(confirmationToken);
             return userService.addUser(user);
 
         } catch (Exception e){
             log.error("Exception", e);
-            return null;
+            throw new EntityExistsException(e);
         }
     }
 

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from '../../classes/company/company';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn: "root"})
 export class CompanyService {
@@ -9,42 +11,51 @@ export class CompanyService {
   private companiesUrl: string = 'http://localhost:8080/api/companies';
   private contentHeaders: HttpHeaders;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
    }
 
-   //get 
    public getCompany(): Observable<Company> {
      let token = new URL(window.location.href).searchParams.get("token");
-     let id = new URL(window.location.href).searchParams.get("id");
-     let url = this.companiesUrl + "/register/" + id + "/?token=" + token;
-     //testing url
-     console.log(url);
+     let url = this.companiesUrl + "/" + token;
 
      return this.http.get<Company>(url)
    }
 
-   //add a company
+
    public register(company: Company) {
-    let url = this.companiesUrl + '/register';
-    //post request
+    let url = this.companiesUrl;
+
     this.http.post(url, company.getParams(),
       { headers: this.contentHeaders})
-      .subscribe(data => {console.log(data)},
-      error => {console.log(error)});
+      .subscribe(
+        () => {
+          Swal.fire('Registered', 'You have succesfully registered your company', 'success')
+          this.router.navigate(['login'])
+        },
+      error => {
+        Swal.fire('Error', error.error.message, 'error')
+      });
    }
 
-   //change application status of a company
+
    public accept(accepted: boolean) {
-    let id = new URL(window.location.href).searchParams.get("id");
-    let url = this.companiesUrl + "/register/" + id + "/applicationStatus";
+    let token = new URL(window.location.href).searchParams.get("token");
+    let url = `${this.companiesUrl}/${token}/applicationStatus`;
 
     let params = new URLSearchParams();
     params.set("accepted", accepted.toString());
 
     this.http.post(url, params.toString(),
       { headers: this.contentHeaders})
-      .subscribe(data => {console.log(data)},
-      error => {console.log(error)});
+      .subscribe(
+        () => {
+          Swal.fire('Accepted', `You have ${accepted ? " approved ":" denied "} the application.`, 'success')
+          this.router.navigate(['/'])
+        },
+      error => {
+        Swal.fire('Error', error.error.message, 'error')
+        this.router.navigate(['/'])
+      });
    }
 }

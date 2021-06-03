@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ResetpasswordService } from 'src/app/services/resetpassword/resetpassword.service';
 
@@ -7,7 +7,7 @@ import { ResetpasswordService } from 'src/app/services/resetpassword/resetpasswo
   templateUrl: './resetpassword-confirm.component.html',
   styleUrls: ['./resetpassword-confirm.component.css']
 })
-export class ResetpasswordConfirmComponent implements OnInit {
+export class ResetpasswordConfirmComponent{
 
   resetpassword = this.fb.group({
     password: ['', [Validators.required, Validators.minLength(8)]],
@@ -17,9 +17,6 @@ export class ResetpasswordConfirmComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder, private rps: ResetpasswordService) { }
-
-  ngOnInit(): void {
-  }
 
   checkPasswords(group: FormGroup){
     const password = group.controls.password.value;

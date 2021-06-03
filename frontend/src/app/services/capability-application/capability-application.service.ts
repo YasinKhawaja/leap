@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,13 @@ export class CapabilityApplicationService {
     let url = `${this.capabilityApplicationURL}/${capabilityId}`;
     return this.http.post<CapabilityApplication>(url, capabilityApplication.getParams(),
     {headers: this.contentHeaders})
-    .subscribe(data => {
-      console.log(data)
+    .subscribe(
+      () => {
+      Swal.fire('Success', 'You have succesfully linked the IT-Application', 'success')
       this.router.navigate([`capability-application/`])
     },
     error => {
-      console.log(error)
+      Swal.fire('Error', error.error.message, 'error')
     });
   }
 
@@ -39,12 +41,13 @@ export class CapabilityApplicationService {
 
     this.http.put<CapabilityApplication>(url, capabilityApplication.getParams(),
     {headers: this.contentHeaders})
-    .subscribe(data => {
-      console.log(data)
+    .subscribe(
+      () => {
+      Swal.fire('Success', 'You have succesfully updated the Capability-Application link', 'success')
       this.router.navigate([`capability-application/`])
     },
     error => {
-      console.log(error)
+      Swal.fire('Error', error.error.message, 'error')
     });
   }
 
@@ -53,6 +56,7 @@ export class CapabilityApplicationService {
 
     this.http.delete(url).subscribe(
       () => {
+        Swal.fire('Success', 'You have succesfully deleted the Capability-Application link', 'success')
         this.router.navigate([`capability-application/`])
       });
   }

@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
-import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
-import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 @Component({
   selector: 'app-capability-application-edit',
   templateUrl: './capability-application-edit.component.html',
   styleUrls: ['./capability-application-edit.component.css']
 })
-export class CapabilityApplicationEditComponent implements OnInit {
+export class CapabilityApplicationEditComponent {
 
   capabilityApplication = this.fb.group({
     businessEfficiencySupport: ['', Validators.required],
@@ -23,11 +21,7 @@ export class CapabilityApplicationEditComponent implements OnInit {
     informationAvailability: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {}
-
-  //load in all the data from the previous capabilityApplication
-  ngOnInit(): void {
-  }
+  constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService) {}
 
   onSubmit(){
   

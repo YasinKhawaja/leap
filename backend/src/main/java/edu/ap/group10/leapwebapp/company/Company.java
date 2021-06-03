@@ -6,7 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity // This makes a table out of this class
+import lombok.Data;
+
+@Data
+@Entity
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,34 +55,6 @@ public class Company {
         this.setBusinessActivity(businessActivity);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getVatNumber() {
-        return this.vatNumber;
-    }
-
-    public void setVatNumber(String vatNumber) {
-        this.vatNumber = vatNumber;
-    }
-
-    public String getCompanyName() {
-        return this.companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getTaxOffice() {
-        return this.taxOffice;
-    }
-
     public void setTaxOffice(String taxOffice) {
         if (taxOffice.equals("")) {
             taxOffice = null;
@@ -87,62 +62,10 @@ public class Company {
         this.taxOffice = taxOffice;
     }
 
-    public String getBusinessActivity() {
-        return this.businessActivity;
-    }
-
     public void setBusinessActivity(String businessActivity) {
         if (businessActivity.equals("")) {
             businessActivity = null;
         }
         this.businessActivity = businessActivity;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getStreetName() {
-        return this.streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public Integer getHouseNumber() {
-        return this.houseNumber;
-    }
-
-    public void setHouseNumber(Integer houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public Integer getPostcode() {
-        return this.postcode;
-    }
-
-    public void setPostcode(Integer postcode) {
-        this.postcode = postcode;
-    }
-
-    public String getCity() {
-        return this.city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return this.country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 }

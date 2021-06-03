@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
-import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
@@ -18,16 +16,16 @@ export class CapabilityApplicationAddComponent implements OnInit {
 
   capabilityApplication = this.fb.group({
     application: ['', Validators.required],
-    businessEfficiencySupport: ['', Validators.required],
-    businessFunctionalCoverage: ['', Validators.required],
-    businessCorrectness: ['', Validators.required],
-    businessFuturePotential: ['', Validators.required],
-    informationCompleteness: ['', Validators.required],
-    informationCorrectness: ['', Validators.required],
-    informationAvailability: ['', Validators.required]
+    businessEfficiencySupport: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFunctionalCoverage: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFuturePotential: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCompleteness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {
+  constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {
     this.itApplications = [];
    }
 
