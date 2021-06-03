@@ -1,0 +1,33 @@
+<main class="main">
+    <div class="flex-container">
+        <div class="flex-item">
+            <div>
+                <a [routerLink]="['../businessprocess/add']">Add Business Process</a>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let process of businessprocesses">
+                            <td>
+                                <a [routerLink]="['../businessprocess/delete/', process.id]">
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-light" role="button" [routerLink]="['../businessprocess/edit/', process.id]">
+                                    {{ process.name }}
+                                </a>
+                            </td>
+                            <td>{{ process.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

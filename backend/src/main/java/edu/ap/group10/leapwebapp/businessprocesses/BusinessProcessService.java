@@ -43,5 +43,10 @@ public class BusinessProcessService {
 
         businessProcessRepository.delete(businessProcess);
     }
+
+    public BusinessProcess getBusinessProcess(Long businessprocessid) {
+        return businessProcessRepository.findById(businessprocessid)
+        .orElseThrow(ResourceNotFoundException::new);
+    }
     
 }

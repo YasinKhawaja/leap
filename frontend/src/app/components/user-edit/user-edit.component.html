@@ -1,6 +1,6 @@
 <div class="container">
     <article class="card-body mx-auto">
-        <h4 class="card-title mt-3 text-center">Create User</h4>
+        <h4 class="card-title mt-3 text-center">Edit User</h4>
 
         <form [formGroup]="user" (ngSubmit)="onSubmit()">
             <div class="form-group input-group">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" [disabled]="!user.valid" class="btn btn-danger">Create user</button>
+            <button type="submit" [disabled]="!user.valid" class="btn btn-danger">Edit user</button>
             <br><br>
             <br> <br>
         </form>

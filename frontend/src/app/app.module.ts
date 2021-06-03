@@ -48,6 +48,10 @@ import { NgxPrintModule } from "ngx-print";
 import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
+import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
+import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
+import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
+import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
 
 
 
@@ -104,7 +108,11 @@ const appRoutes: Routes = [
     ResourceAddComponent,
     UserAddComponent,
     UserEditComponent,
-    UserDeleteComponent
+    UserDeleteComponent,
+    BusinessprocessComponent,
+    BusinessprocessAddComponent,
+    BusinessprocessEditComponent,
+    BusinessprocessDeleteComponent
   ],
   imports: [
     BrowserModule,

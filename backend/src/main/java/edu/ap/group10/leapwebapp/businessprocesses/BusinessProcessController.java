@@ -22,9 +22,14 @@ public class BusinessProcessController {
 
     @Autowired EnvironmentService environmentService;
 
-    @GetMapping("/businessprocess/{environmentid}")
+    @GetMapping("/businessprocesses/{environmentid}")
     public List<BusinessProcess> getAllBussinessProcesses(@PathVariable String environmentid){
         return businessProcessService.getAllBusinessProcesses_Environment(environmentid);
+    }
+
+    @GetMapping("/businessprocess/{businessprocessid}")
+    public BusinessProcess getBusinessProcess(@PathVariable String businessprocessid){
+        return businessProcessService.getBusinessProcess(Long.parseLong(businessprocessid));
     }
 
     @PostMapping("/businessprocess/{environmentid}")
