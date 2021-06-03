@@ -32,7 +32,7 @@ export class CapabilityComponent implements OnInit {
       .subscribe(res => { this.capabilities = res; console.log(res); }, err => console.error(err));
   }
 
-  selectCapability(capabilityID: string): void{
+  selectCapability(capabilityID: string): void {
     this.ns.setCapability(capabilityID);
   }
 

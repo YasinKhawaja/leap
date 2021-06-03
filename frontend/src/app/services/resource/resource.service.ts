@@ -20,12 +20,31 @@ export class ResourceService {
   }
 
   // To GET a resource
+  getResource(resId: string): Observable<Resource> {
+    var url = `${this.resourceServiceURI}/${resId}`;
+
+    return this.http.get<Resource>(url);
+  }
 
   // To CREATE a resource
-  createResource(res: Resource): Observable<string> {
+  createResource(res: Resource): Observable<Resource> {
     var url = `${this.resourceServiceURI}`;
 
-    return this.http.post<string>(url, res);
+    return this.http.post<Resource>(url, res);
+  }
+
+  // To UPDATE a resource
+  updateResource(resId: string, resNewValues: Resource): Observable<Resource> {
+    var url = `${this.resourceServiceURI}/${resId}`;
+
+    return this.http.put<Resource>(url, resNewValues);
+  }
+
+  // To DELETE a resource
+  deleteResource(resId: string): Observable<any> {
+    var url = `${this.resourceServiceURI}/${resId}`;
+
+    return this.http.delete(url);
   }
 
 }

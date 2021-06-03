@@ -28,6 +28,10 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { ResourceAddComponent } from './components/resource-add/resource-add.component';
+import { ResourceEditComponent } from './components/resource-edit/resource-edit.component';
 import { ResourceComponent } from './components/resource/resource.component';
 import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
@@ -39,12 +43,6 @@ import { StrategyItemsComponent } from './components/strategy-items/strategy-ite
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
-import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
-import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
-import { ResourceAddComponent } from './components/resource-add/resource-add.component';
-
-
-
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,7 +55,7 @@ const appRoutes: Routes = [
   { path: 'itapplication', component: ItapplicationComponent, canActivate: [RouterGuard] },
   { path: 'capability-application', component: CapabilityApplicationComponent, canActivate: [RouterGuard] },
   { path: 'strategies', component: StrategyComponent, canActivate: [RouterGuard] }
-  
+
 ]
 
 @NgModule({
@@ -95,7 +93,8 @@ const appRoutes: Routes = [
     ResourceComponent,
     ResetpasswordComponent,
     ResetpasswordConfirmComponent,
-    ResourceAddComponent
+    ResourceAddComponent,
+    ResourceEditComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +105,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [CapabilityService],
+  providers: [
+    CapabilityService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

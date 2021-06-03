@@ -41,28 +41,33 @@ public class ResourceController {
 
     // To CREATE a resource
     @PostMapping("/resources")
-    public String createResource(@RequestBody Resource resource) {
-        String msg = "";
+    public Resource createResource(@RequestBody Resource resource) {
         try {
-            resourceService.createResource(resource);
-            msg = String.format("Resource %s created.", resource.getName());
+            return resourceService.createResource(resource);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
         }
-        return msg;
     }
 
     // To UPDATE a resource
     @PutMapping("/resources/{id}")
-    public Resource updateResource(@PathVariable Long id, @RequestBody Resource resource)
-            throws NoSuchElementException {
-        return resourceService.updateResource(id, resource);
+    public Resource updateResource(@PathVariable Long id, @RequestBody Resource resource) {
+        try {
+            return resourceService.updateResource(id, resource);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
+        }
     }
 
     // To DELETE a resource
     @DeleteMapping("/resources/{id}")
     public void deleteResource(@PathVariable Long id) {
-        resourceService.deleteResource(id);
+        try {
+            resourceService.deleteResource(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 }
