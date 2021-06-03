@@ -9,7 +9,7 @@
                <div  id="div2" class="flex-container-3" >
                <b>{{capabilityLevel2.name}}</b>
                <ng-container class = 'container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
-                    <div *ngIf="capabilityLevel3.parentId == capabilityLevel2.id "id="div3" >
+                    <div id="div3" >
                         {{capabilityLevel3.name}}
                     </div>
                </ng-container>
@@ -23,26 +23,39 @@
   </div>
   <div id="div" >
         <h4>Options</h4>
+        <h6>Choose IT Application to see which capability uses it the best.</h6>
+        <div [formGroup]="itApplication">
+        <select class="custom-select" (change)="changeITApplication()" formControlName="itApplicationName">
+          <option value="" disabled>Choose your IT Application</option>
+          <option *ngFor="let itApplication of itApplications  | keyvalue" [ngValue]="itApplication.value">{{itApplication.value}}</option>
+        </select>
+        </div>
+        <br>
+        <h6>Choose Strategy, then select Strategy Item.</h6>
+        <div [formGroup]="strategy">
+        <select class="custom-select" (change)="changeStrategy()" formControlName="strategyName">
+          <option value="" disabled>Choose your Strategy</option>
+          <option *ngFor="let strategy of strategies  | keyvalue" [ngValue]="strategy.value">{{strategy.value}}</option>
+        </select>
+      </div>
+        <h6>Choose Strategy Item to see which capability uses it the best.</h6>
+        <div [formGroup]="strategyItem">
+        <select class="custom-select" (change)="changeStrategyItem()" formControlName="strategyItemName">
+          <option value="" disabled>Choose your Strategy Item</option>
+          <option *ngFor="let strategyItem of strategyItems  | keyvalue" [ngValue]="strategyItem.value">{{strategyItem.value}}</option>
+        </select>
+      </div>
         <form (ngSubmit)="generateEntireMap()">
           <br>
-         <button type="submit">Show Entire Capability Map</button>
-        </form>
-        <form (ngSubmit)="generateLevel1and2Layer()">
-          <br>
-         <button type="submit">Show Level 1 & 2 Layer</button>
-        </form>
-        <form (ngSubmit)="generateLevel1Layer()">
-          <br>
-         <button type="submit">Show Level 1 Layer</button>
+         <button type="submit">Show Capability Map without filters.</button>
         </form>
         <br>
         <br>
         <br>
         <h4>Export</h4>
-        <form (ngSubmit)="generatePDF()">
-            <br>
-        <button type="submit">Export to PDF</button>
-        </form>
+        <br>
+        <button printSectionId="pdf" [useExistingCss]="true" printTitle="Capability Map" ngxPrint>Export To PDF</button>
+        <br>
         <form (ngSubmit)="generateCSV()">
           <br>
          <button type="submit">Export to CSV</button>
