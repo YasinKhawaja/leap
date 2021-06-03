@@ -20,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import edu.ap.group10.leapwebapp.user.User;
 import edu.ap.group10.leapwebapp.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,8 +70,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     }
 
     public String onAuthenticationSuccess(Authentication auth) {
+        User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
-        return JWT.create().withClaim("role", auth.getAuthorities().toString())
+        return JWT.create()
+        .withClaim("role", auth.getAuthorities().toString())
+        .withClaim("company", user.getCompany().getId().toString())
                 .withSubject(auth.getPrincipal().toString())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
@@ -89,7 +93,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (jwt != null) {
             String role = jwt.getClaim("role").toString();
             role = role.substring(1, role.length() - 1);
-            return JWT.create().withClaim("role", role)
+            String company = jwt.getClaim("company").toString();
+            company = company.substring(1, company.length() - 1);
+
+            return JWT.create()
+                    .withClaim("role", role)
+                    .withClaim("company", company)
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(algorithm);
         } else {

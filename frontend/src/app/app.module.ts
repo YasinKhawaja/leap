@@ -44,6 +44,9 @@ import { ResetpasswordConfirmComponent } from './components/resetpassword-confir
 import { ResourceAddComponent } from './components/resource-add/resource-add.component';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
+import { UserAddComponent } from './components/user-add/user-add.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { UserDeleteComponent } from './components/user-delete/user-delete.component';
 
 
 
@@ -97,7 +100,10 @@ const appRoutes: Routes = [
     ResourceComponent,
     ResetpasswordComponent,
     ResetpasswordConfirmComponent,
-    ResourceAddComponent
+    ResourceAddComponent,
+    UserAddComponent,
+    UserEditComponent,
+    UserDeleteComponent
   ],
   imports: [
     BrowserModule,

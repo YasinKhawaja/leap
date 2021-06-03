@@ -41,6 +41,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         .passwordEncoder(bCryptPasswordEncoder);
     }
 
+    //Make check if jwt signature matches (and role for create user endpoint)
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 

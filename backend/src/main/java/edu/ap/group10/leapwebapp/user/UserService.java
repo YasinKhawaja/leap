@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.company.CompanyRepository;
+import edu.ap.group10.leapwebapp.company.CompanyService;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenRepository;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
@@ -27,6 +30,9 @@ public class UserService implements UserDetailsService{
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    private CompanyService companyService;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -56,6 +62,22 @@ public class UserService implements UserDetailsService{
         return userRepository.save(user);
     }
 
+    public void delUser(Long userid){
+        userRepository.deleteById(userid);
+    }
+
+    public User updateUser(String userid, User user){
+        User oUser = userRepository.findById(Long.parseLong(userid))
+        .orElseThrow(ResourceNotFoundException::new);
+        oUser.setEmail(user.getEmail());
+        oUser.setFirstName(user.getFirstName());
+        oUser.setSurname(user.getSurname());
+        oUser.setUsername(user.getUsername());
+        oUser.setRole(user.getRole());
+
+        return userRepository.save(oUser);
+    }
+
     public void changePassword(Long userId, String password){
         User user = userRepository.findById(userId)
         .orElseThrow(ResourceNotFoundException::new);
@@ -82,6 +104,19 @@ public class UserService implements UserDetailsService{
 
     public Company findCompany(Long id){
         return companyRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public List<User> findUserByCompany(Long id){
+        return userRepository.findByCompany(companyService.findCompany(id));
+    }
+
+    public User findUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public User findUserById(String userid){
+        return userRepository.findById(Long.parseLong(userid))
+        .orElseThrow(ResourceNotFoundException::new);
     }
 
     public String generatePassword(){

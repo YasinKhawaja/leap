@@ -22,3 +22,9 @@ The frontend of this project is made with Angular.
 
 ### Company
 * Enum of countries in list with search option since too many options.
+
+### Security
+* Add authinterceptor in frontend that sends the JWT with each request.
+
+### User
+After selecting an environment you can press a tab in the navbar to add users to it assuming you're an useradmin (only show for user admins and have routerguard on it so only useradmins can access it)

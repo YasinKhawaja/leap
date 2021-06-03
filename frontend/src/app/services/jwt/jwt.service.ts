@@ -36,6 +36,24 @@ export class JwtService {
     this.ns.createCookie("jwt", token, 1);
   }
 
+  checkCompany() {
+    var token = this.ns.readCookie("jwt")
+    var helper = new JwtHelperService();
+
+    var jwtBody = helper.decodeToken(token);
+    var company = JSON.stringify(jwtBody.company);
+    company = company.substring(1, company.length - 1).toLowerCase();
+
+    var jwtIsExp = helper.isTokenExpired(token);
+    if (jwtIsExp) {
+      this.logout()
+      Swal.fire('Error', 'Your session has expired', 'error')
+    } else {
+      return company;
+    }
+    return null;
+  }
+
   checkRole() {
     var token = this.ns.readCookie("jwt")
     var helper = new JwtHelperService();
@@ -50,6 +68,7 @@ export class JwtService {
       this.logout()
       Swal.fire('Error', 'Your session has expired', 'error')
     } else {
+      console.log(role);
       return role;
     }
 
