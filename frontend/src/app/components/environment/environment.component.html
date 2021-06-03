@@ -1,33 +1,69 @@
-<div id="envs">
-    <div>
-        <table class="table">
-            <thead>
-                <tr class="middle-div">
-                    <th scope="col" colspan="3">ENVIRONMENTS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let env of environments">
-                    <td>
-                        <a class="btn btn-light" [routerLink]="['../capabilities']" (click)='environmentId(env.id, env.name)' role="button">
-                            {{ env.name }}
-                        </a>
-                    </td>
-                    <td class="middle-div">
-                        <a [routerLink]="[env.id + '/update']">
-                            <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
-                        </a>
-                    </td>
-                    <td class="middle-div">
-                        <a [routerLink]="[env.id + '/delete']">
-                            <img src="assets/delete-icon.png" alt="Delete" height="20" width="20">
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="middle-div">
-            <a class="btn btn-danger" [routerLink]="['create']" role="button">CREATE ENVIRONMENT</a>
+<div class="role" *ngIf="this.role != ''">
+    Your current role is: {{ this.role }} <br>
+</div>
+<main class="main">
+    <div id="envs">
+        <div class="flex-container">
+            <div class="flex-item">
+                <table class="table">
+                    <thead>
+                        <tr class="middle-div">
+                            <th scope="col" colspan="3">ENVIRONMENTS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let env of environments">
+                            <td>
+                                <a class="btn btn-light" [routerLink]="['../capabilities']" (click)='environmentId(env.id, env.name)' role="button">
+                                    {{ env.name }}
+                                </a>
+                            </td>
+                            <td class="middle-div">
+                                <a [routerLink]="[env.id + '/update']">
+                                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
+                                </a>
+                            </td>
+                            <td class="middle-div">
+                                <a [routerLink]="[env.id + '/delete']">
+                                    <img src="assets/delete-icon.png" alt="Delete" height="20" width="20">
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="middle-div">
+                    <a class="btn btn-danger" [routerLink]="['create']" role="button">CREATE ENVIRONMENT</a>
+                </div>
+            </div>
+            <div id="users" class="flex-item" *ngIf="this.role == 'admin'">
+                <table class="table">
+                    <thead>
+                        <tr class="middle-div">
+                            <th scope="col" colspan="3">USERS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td class="middle-div">
+                                <a class="btn btn-light" [routerLink]="['/edit-user/' + user.id]">
+                                    {{user.username}}
+                                </a>
+                            </td>
+                            <td class="middle-div">
+                                <a [routerLink]="['/del-user/' + user.id]">
+                                    <img src="assets/delete-icon.png" alt="Delete" height="20" width="20">
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="flex-button">
+                    <div class="middle-div">
+                        <a class="btn btn-danger" [routerLink]="['/add-user']" role="button">CREATE USER</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+</main>

@@ -39,7 +39,7 @@ export class ItapplicationEditComponent implements OnInit {
     this.getCurrentITApplication()
     .subscribe(
       result => {
-        this. itapplication = this.fb.group({
+        this.itapplication = this.fb.group({
           name: [result.name, Validators.required],
           technology: [result.technology, Validators.required],
           version: [result.version, Validators.required],
