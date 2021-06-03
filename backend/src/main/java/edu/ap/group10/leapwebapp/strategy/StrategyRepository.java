@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StrategyRepository extends CrudRepository<Strategy,Long> {
+
+    public Strategy findByName(String name);
    
 }

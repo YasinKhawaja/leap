@@ -28,6 +28,12 @@ export class StrategyItemService {
   return this.http.get<StrategyItem[]>(url, { params: { strId: strId } });
 }
 
+getAllStrategyItemsInStrategyByName(strategyName: string): Observable<StrategyItem[]> {
+  var url = `${this.strategyItemServiceURI}/strategy`;
+
+  return this.http.get<StrategyItem[]>(url, { params: { strategyName: strategyName } });
+}
+
  // To GET 
  getStrategyItem(strId: string, strItemId: string): Observable<StrategyItem> {
   var url = `${this.strategyItemServiceURI}/${strItemId}`;

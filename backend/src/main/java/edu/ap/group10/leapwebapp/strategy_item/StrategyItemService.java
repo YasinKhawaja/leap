@@ -31,6 +31,12 @@ public class StrategyItemService {
     return strategyItemRepository.findByStrategy(strategyToFindBy);
 }
 
+public List<StrategyItem> getAllStrategiesInStrategyByName(String strategyName) {
+  Strategy strategyToFindBy = strategyRepository.findByName(strategyName);
+
+  return strategyItemRepository.findByStrategy(strategyToFindBy);
+}
+
     public StrategyItem getStrategyItem(Long strId, Long strItemId) {
    
       List<StrategyItem> strItemFound = this.getAllStrategiesInStrategy(strId).stream()

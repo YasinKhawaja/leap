@@ -44,6 +44,7 @@ import { ResetpasswordConfirmComponent } from './components/resetpassword-confir
 import { ResourceAddComponent } from './components/resource-add/resource-add.component';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
+import { NgxPrintModule } from "ngx-print";
 import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
@@ -114,9 +115,10 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     NgIdleKeepaliveModule.forRoot(),
-    MomentModule
+    MomentModule,
+    NgxPrintModule
   ],
-  providers: [CapabilityService],
+  providers: [CapabilityService, NgxPrintModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

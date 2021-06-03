@@ -1,11 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Capability } from '../../classes/capability/capability';
 import { CapabilityService } from '../../services/capability/capability.service';
-import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import { saveAs } from "file-saver";
 import pptxgen from "pptxgenjs";
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import { NgxPrintModule } from "ngx-print";
+import { FormBuilder } from '@angular/forms';
+import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
+import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
+import { StrategyService } from 'src/app/services/strategy/strategy.service';
 @Component({
   selector: 'app-export',
   templateUrl: './export.component.html',
@@ -17,9 +21,31 @@ export class ExportComponent implements OnInit {
   capabilitiesLevel1: Capability[]
   capabilitiesLevel2: Capability[]
   capabilitiesLevel3: Capability[]
-  
-  constructor(private cs: CapabilityService, private ns: NavbarService) { 
+
+  itApplications: string[]
+
+  itApplication = this.fb.group({
+    itApplicationName: ['']
+  })
+
+  strategies: string[]
+
+  strategy = this.fb.group({
+    strategyName: ['']
+  })
+
+  strategyItems: string[]
+
+  strategyItem = this.fb.group({
+    strategyItemName: ['']
+  })
+
+  constructor(private cs: CapabilityService, private ns: NavbarService, private print: NgxPrintModule, private fb: FormBuilder,
+    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService) {
     this.capabilities = [];
+    this.itApplications = [];
+    this.strategies = [];
+    this.strategyItems = [];
   }
 
   ngOnInit(): void {
@@ -33,64 +59,55 @@ export class ExportComponent implements OnInit {
         console.log(this.capabilitiesLevel1)
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
         console.log(this.capabilitiesLevel2)
-        this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3') 
+        this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3')
         console.log(this.capabilitiesLevel3)
         console.log(result);
       },
-      error => console.log(error));
-     
-     
+        error => console.log(error));
+
+      this.itApplications = [];
+     this.its.getITApplications_CurrentEnvironment(environmentId)
+     .subscribe(result => {
+      result.forEach(e => {
+        this.itApplications.push(e.name);
+      })
+      console.log(result);
+    },
+    error => console.log(error));
+
+    this.strats.getAllStrategyInEnvironment(environmentId)
+     .subscribe(result => {
+      result.forEach(e => {
+        this.strategies.push(e.name);
+      })
+      console.log(result);
+    },
+    error => console.log(error));
+
+    
+
   }
-  
 
-  generatePDF() {
-        // let data = document.getElementById('pdf');  
-        // html2canvas(data , {
-        //   width: 2500,
-        //   height: 15000
-        // }).then(canvas => {
-        // var contentWidth = canvas.width;
-        // var contentHeight = canvas.height;
+  changeITApplication(){
+    console.log(this.itApplication.value.itApplicationName)
+  }
 
-        // const contentDataURL = canvas.toDataURL('image/png', 10.0)
-        // let pdf = new jsPDF(); //Generates PDF in landscape mode
-        // // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
-        // var imgWidth = 500;
-        // var imgHeight = 450/contentWidth * contentHeight;
-        // // imgHeight nog beter aanpassen
-        // // de canvas wordt niet helemaal meegenomen als er capabilities bijkomen waardoor de map groter wordt
-        // pdf.addImage(contentDataURL, 'PNG', 200, -50, imgWidth, imgHeight);  
-        // pdf.save('CapabilityMap.pdf');
-        // console.log(canvas);
-        // }); 
+  changeStrategy(){
+    this.strategyItems = [];
+    this.strategy.value.strategyName;
+    this.sis.getAllStrategyItemsInStrategyByName(this.strategy.value.strategyName)
+    .subscribe(result => {
+      result.forEach(e => {
+        
+        this.strategyItems.push(e.name);
+      })
+      console.log(result);
+    },
+    error => console.log(error));
+  }
 
-        // let data = document.getElementById('pdf');  
-        // html2canvas(data , {
-        //   width: 5000,
-        //   height: 3200
-        // }).then(canvas => {
-        // const contentDataURL = canvas.toDataURL('image/png');
-        // let pdf = new jsPDF();
-        // pdf.addImage(contentDataURL, 'PNG', 200, -50, 500, 2000);
-        // pdf.save('Test.pdf');})
-
-        var htmlWidht = document.getElementById("pdf").offsetWidth;
-        var htmlHeight = document.getElementById("pdf").offsetHeight;
-        console.log(htmlWidht + " " + htmlHeight);
-        let data = document.getElementById('pdf'); 
-        html2canvas(data , {
-            height: htmlHeight * 20,
-            width: htmlWidht
-           }).then(canvas => {
-            var img = canvas.toDataURL("image/jpeg", 1);
-            var pdf = new jsPDF('l', 'px');
-            const imgProps = pdf.getImageProperties(img);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addImage(img, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('sample-file.pdf');
-            document.body.appendChild(canvas)
-          })
+  changeStrategyItem(){
+    this.strategyItem.value.strategyItemName;
   }
 
   generateCSV() {
@@ -101,13 +118,15 @@ export class ExportComponent implements OnInit {
     csv.unshift(header.join(';'));
     let csvArray = csv.join('\r\n');
 
-    var blob = new Blob([csvArray], {type: 'text/csv' })
+    var blob = new Blob([csvArray], { type: 'text/csv' })
     saveAs(blob, "CapabilityMap.csv");
   }
 
   generatePowerPoint() {
+    window.scrollTo(0, 0);
     // create new powerpoint
     let powerpoint = new pptxgen();
+
 
     // add a slide
     let slide = powerpoint.addSlide();
@@ -117,20 +136,19 @@ export class ExportComponent implements OnInit {
     slide.addText(title, { x: 0.5, y: 0.7, w: '100%', color: "0000FF", fontSize: 40 });
 
     // add the capability map image
-    let data = document.getElementById('pdf');  
-        html2canvas(data , {
-          width: 2000,
-          height: 3200
-        }).then(canvas => {
-        const contentDataURL = canvas.toDataURL('image/png')
-    slide.addImage({data: contentDataURL, x: 1, y: 1,sizing:{type:'contain', w:5, h:4}});
- 
-    // save powerpoint
-    powerpoint.writeFile({fileName: "CapabilityMap"});
-  });
+
+    let data = document.getElementById('pdf');
+    html2canvas(data).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png', 4)
+      // w/h ratio 4/1 , w:20 h:5 was goed
+      slide.addImage({ data: contentDataURL, x: 0, y: 1.5, w: '100%', h:'100%'});
+
+      // save powerpoint
+      powerpoint.writeFile({ fileName: "CapabilityMap" });
+    });
   }
 
-  generateLevel1Layer(){
+  generateLevel1Layer() {
     let capabilitiesLevel1: Capability[]
     capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
     this.capabilities = capabilitiesLevel1;
@@ -138,7 +156,7 @@ export class ExportComponent implements OnInit {
     console.log("button called");
   }
 
-  generateLevel1and2Layer(){
+  generateLevel1and2Layer() {
     let capabilitiesLevel2: Capability[]
     capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
     this.capabilities = capabilitiesLevel2;
@@ -146,7 +164,7 @@ export class ExportComponent implements OnInit {
     console.log("button called");
   }
 
-  generateEntireMap(){
+  generateEntireMap() {
     this.ngOnInit();
   }
 }
