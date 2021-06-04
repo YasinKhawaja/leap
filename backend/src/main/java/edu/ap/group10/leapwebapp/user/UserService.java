@@ -119,11 +119,6 @@ public class UserService implements UserDetailsService{
         .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public String generatePassword(){
-        UserPasswordGenerator generatedpassword= new UserPasswordGenerator();
-        return generatedpassword.generatePassayPassword();
-    }
-
     public String authenticateUser(UsernamePasswordAuthenticationToken token) {
         Authentication auth = customAuthenticationProvider.authenticate(token);
         return customAuthenticationProvider.onAuthenticationSuccess(auth);
@@ -133,12 +128,14 @@ public class UserService implements UserDetailsService{
         return environmentRepository.findById(environment).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public void sendMail(String email, String username, String password) {
+    public void sendMail(String email, String username, String userid) {
+        String newPasswordLink = "http://localhost:4200/resetpassword/confirm?id=" + this.encodeId(userid);
+
         Mail mail = new Mail();
         mail.setSender("leapwebapp@gmail.com");
         mail.setReceiver(email);
         mail.setSubject("Your first login credentials.");
-        mail.setContent("Your username is: " + username + "\nAnd your automatically generated password is: " + password + "\nPlease change your password as soon as possible by going to this link: " + "Not implemented yet");
+        mail.setContent("Your username is: " + username + "\nTo active your account, set a password using this link: " + newPasswordLink);
         mailService.sendMail(mail);
     }
 
