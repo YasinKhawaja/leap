@@ -1,6 +1,8 @@
 import { HttpParams } from "@angular/common/http"    
 
     export class User {
+        public id: string;
+        public role: number;
         constructor(
             public firstName: string,
             public surname: string,

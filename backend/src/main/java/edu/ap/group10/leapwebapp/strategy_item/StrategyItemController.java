@@ -29,6 +29,11 @@ public class StrategyItemController {
 		return strategyItemService.getAllStrategiesInStrategy(strId);
 	}
 
+	@GetMapping("/strategyItems/strategy")
+	public List<StrategyItem> getAllStrategiesInStrategyByName(@RequestParam String strategyName) {
+		return strategyItemService.getAllStrategiesInStrategyByName(strategyName);
+	}
+
 	@GetMapping("/strategyItems/{strItemId}")
 	public StrategyItem getStrategyItem(@RequestParam Long strId, @PathVariable Long strItemId) {
 		return strategyItemService.getStrategyItem(strId, strItemId);

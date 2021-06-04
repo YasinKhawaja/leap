@@ -19,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import edu.ap.group10.leapwebapp.company.Company;
-import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
 @Data
@@ -40,21 +39,16 @@ public class User implements UserDetails{
     private String email;
     @Column(nullable = false, name = "user_password")
     private String password;
-    @Column(nullable = false, name = "user_admin")
+    @Column(nullable = false, name = "user_role")
     private Integer role;
 
     @OneToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = true, name = "company_id")
     private Company company;
 
-
-    @OneToOne(targetEntity = Environment.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = true, name = "environment_id")
-    private Environment environment;
-
     public User() {}
 
-    public User(String firstName, String surname, String email, String username, String password, Integer role, Company company, Environment environment)
+    public User(String firstName, String surname, String email, String username, String password, Integer role, Company company)
     {
         this.setRole(role);
       this.setFirstName(firstName);
@@ -63,7 +57,6 @@ public class User implements UserDetails{
       this.setUsername(username);
       this.setPassword(password);
       this.setCompany(company);
-      this.setEnvironment(environment);
     }
 
     public void setPassword(String password) {
@@ -75,10 +68,10 @@ public class User implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String userRole = "LEZER";
-        if (getRole() == 1){
+        if (getRole() == 0){
             userRole = "ADMIN";
         }
-        else if (getRole() == 2){
+        else if (getRole() == 1){
             userRole = "Bewerker";
         }
         return Collections.<GrantedAuthority>singleton(new SimpleGrantedAuthority(userRole));

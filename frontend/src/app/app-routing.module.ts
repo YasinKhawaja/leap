@@ -33,6 +33,13 @@ import { RouterGuard } from './services/guard/router.guard';
 import { JwtService } from './services/jwt/jwt.service';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
+import { UserAddComponent } from './components/user-add/user-add.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { UserDeleteComponent } from './components/user-delete/user-delete.component';
+import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
+import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
+import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
+import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
@@ -65,7 +72,14 @@ const routes: Routes = [
   { path: 'capability-application/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent, canActivate: [RouterGuard] },
   { path: 'resources', component: ResourceComponent, canActivate: [RouterGuard] },
   { path: 'resetpassword', component: ResetpasswordComponent },
-  { path: 'resetpassword/confirm', component: ResetpasswordConfirmComponent}
+  { path: 'resetpassword/confirm', component: ResetpasswordConfirmComponent},
+  { path: 'add-user', component: UserAddComponent},
+  { path: 'edit-user/:userId', component: UserEditComponent},
+  { path: 'del-user/:userId', component: UserDeleteComponent},
+  { path: 'businessprocess', component: BusinessprocessComponent},
+  { path: 'businessprocess/add', component: BusinessprocessAddComponent},
+  { path: 'businessprocess/edit/:businessprocessid', component: BusinessprocessEditComponent},
+  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent}
 ];
 
 @NgModule({

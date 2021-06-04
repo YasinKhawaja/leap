@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
@@ -25,7 +26,8 @@ export class CapabilityApplicationAddComponent implements OnInit {
     informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
   })
 
-  constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService) {
+  constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService,
+    private cs: CapabilityService) {
     this.itApplications = [];
    }
 
@@ -43,6 +45,8 @@ export class CapabilityApplicationAddComponent implements OnInit {
 
   onSubmit(){
     let capabilityId = this.ns.getCapability();
+    let environmentId = this.ns.getEnvironment();
+    let capability = this.cs.getCapability(environmentId, capabilityId);
     
     var newCapabilityApplication = new CapabilityApplication(
       this.capabilityApplication.value.application,

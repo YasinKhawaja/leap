@@ -1,11 +1,14 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.util.List;
+
 import javax.persistence.EntityExistsException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +48,7 @@ public class UserController {
             else if (validateEmail != null && validateEmail){
                 throw new UnsupportedOperationException("Email is in use");
             }
-            User user = new User(firstname, surname, email, username, password, 1, userService.validateToken(confirmationToken), null);
+            User user = new User(firstname, surname, email, username, password, 0, userService.validateToken(confirmationToken));
             confirmationTokenService.deleteConfirmationToken(confirmationToken);
             return userService.addUser(user);
 
@@ -57,8 +60,8 @@ public class UserController {
 
     @PostMapping("/user")
     public User addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
-    @RequestParam("email") String email, @RequestParam("company") Long company, @RequestParam("username") String username,
-    @RequestParam("environment") Long environment, @RequestParam("role") Integer role){
+    @RequestParam("email") String email, @RequestParam("companyId") String company, @RequestParam("username") String username,
+    @RequestParam("role") Integer role){
         try{
             Boolean validateUsername = userService.findUsername(username);
             Boolean validateEmail = userService.findUserEmail(email);
@@ -71,7 +74,7 @@ public class UserController {
             }
 
             String password = userService.generatePassword();
-            User user = new User(firstName, surname, email, username, password, role, userService.findCompany(company), userService.findEnvironment(environment));
+            User user = new User(firstName, surname, email, username, password, role, userService.findCompany(Long.parseLong(company)));
             
             userService.sendMail(email, username, password);
             
@@ -81,6 +84,27 @@ public class UserController {
             log.error("Exception", e);
             return null;
         }        
+    }
+
+    @GetMapping("/user")
+    public List<User> getUsers(@RequestParam("companyId") String companyId){
+        return userService.findUserByCompany(Long.parseLong(companyId));
+    }
+
+    @DeleteMapping("/user")
+    public void delUser(@RequestParam("userid") String userid){
+        userService.delUser(Long.parseLong(userid));
+    }
+
+    @PutMapping("/user")
+    public User updateUser(@RequestParam("userid") String userid, @RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
+    @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("role") Integer role){
+        return userService.updateUser(userid, new User(firstName, surname, email, username, "", role, userService.findUserById(userid).getCompany()));
+    }
+
+    @GetMapping("/user/{userid}")
+    public User getUser(@PathVariable String userid){
+        return userService.findUserById(userid);
     }
 
     @PostMapping("/user/login")

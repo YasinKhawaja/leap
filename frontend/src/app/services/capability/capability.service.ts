@@ -64,4 +64,5 @@ export class CapabilityService {
       { headers: this.contentHeaders })
   }
 
+
 }

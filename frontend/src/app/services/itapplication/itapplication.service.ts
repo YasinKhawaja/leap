@@ -34,7 +34,6 @@ export class ItapplicationService {
     return this.http.post<Itapplication>(url, itApplication.getParams(),
     {headers: this.contentHeaders})
     .subscribe(data => {
-      console.log(data)
       this.router.navigate([`itapplication/`])
       Swal.fire('Success', 'You have succesfully created an IT Application', 'success')
     },
@@ -49,7 +48,6 @@ export class ItapplicationService {
     this.http.put<Itapplication>(url, itApplication.getParams(),
     {headers: this.contentHeaders})
     .subscribe(data => {
-      console.log(data)
       this.router.navigate([`itapplication/`])
       Swal.fire('Success', 'You have succesfully updated the IT Application', 'success')
     },

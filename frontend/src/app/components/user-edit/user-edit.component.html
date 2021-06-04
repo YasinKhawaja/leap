@@ -1,0 +1,81 @@
+<div class="container">
+    <article class="card-body mx-auto">
+        <h4 class="card-title mt-3 text-center">Edit User</h4>
+
+        <form [formGroup]="user" (ngSubmit)="onSubmit()">
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input type="text" formControlName="firstName" required class="form-control" placeholder="First name*">
+
+                <div *ngIf="user.get('firstName')!.invalid && (user.get('firstName')!.dirty || user.get('firstName')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="user.get('firstName')!.errors!.required">
+                        Firstname is required.
+                    </div>
+                    <div *ngIf="user.get('firstName')!.errors!.pattern">
+                        Firstname should only consist out of characters from the alphabet.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input type="text" formControlName="surname" required class="form-control" placeholder="Surname*">
+                <div *ngIf="user.get('surname')!.invalid && (user.get('surname')!.dirty || user.get('surname')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="user.get('surname')!.errors!.required">
+                        Surname is required.
+                    </div>
+                    <div *ngIf="user.get('surname')!.errors!.pattern">
+                        Surname should only consist out of characters from the alphabet.
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input type="email" formControlName="email" class="form-control" placeholder="Email address*">
+                <div *ngIf="user.get('email')!.invalid && (user.get('email')!.dirty || user.get('email')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="user.get('email')!.errors!.required">
+                        Email is required.
+                    </div>
+                    <div *ngIf="user.get('email')!.errors!.pattern">
+                        Email must be a valid email.
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input type="text" formControlName="username" required class="form-control" placeholder="Username*">
+                <div *ngIf="user.get('username')!.invalid && (user.get('username')!.dirty || user.get('username')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="user.get('username')!.errors!.required">
+                        Username is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-group"></i></span>
+                </div>
+                <select formControlName="role" required class="form-control">
+                <option *ngFor="let type of eRole | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+            </select>
+                <div *ngIf="user.get('username')!.invalid && (user.get('username')!.dirty || user.get('username')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="user.get('username')!.errors!.required">
+                        Role is required.
+                    </div>
+                </div>
+            </div>
+            <button type="submit" [disabled]="!user.valid" class="btn btn-danger">Edit user</button>
+            <br><br>
+            <br> <br>
+        </form>
+    </article>
+</div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
