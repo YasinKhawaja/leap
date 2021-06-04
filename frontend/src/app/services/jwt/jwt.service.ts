@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, interval, observable, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavbarService } from '../navbar/navbar.service';
 
@@ -97,7 +97,8 @@ export class JwtService {
         },
         () => {
           this.logout();
-          Swal.fire('Error', 'Your session has expired', 'error')
+          Swal.fire("Cookie has expired when getting new jwt")
+          //Swal.fire('Error', 'Your session has expired', 'error')
           return null;
         }
       );

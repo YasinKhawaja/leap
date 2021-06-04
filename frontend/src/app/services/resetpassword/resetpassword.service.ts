@@ -41,10 +41,11 @@ export class ResetpasswordService {
       var param = new URLSearchParams();
       param.set("password", sha256(password + salt));
 
-      this.http.put(this.resetpasswordURL + token, param.toString(),
+      this.http.put(`${this.resetpasswordURL}?token=${token}`, param.toString(),
       {headers: this.contentHeaders})
       .subscribe(
         () => {
+          this.router.navigate(['login']);
           Swal.fire('Password reset', 'Your password has succesfully been reset!', 'success')
         },
         error => {

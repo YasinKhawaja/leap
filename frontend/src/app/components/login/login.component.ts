@@ -32,15 +32,16 @@ export class LoginComponent {
     var password = sha256(this.login.value.password + salt);
     this.ls.login(new Login(this.login.value.username, password))
       .subscribe(
-        (data: HttpResponse<any>) => {
-          var token = data.headers.get("authorization").replace('Bearer ', '');
-          this.jwt.storeJWT(token);
+        () =>{
+        //(data: HttpResponse<any>) => {
+          //var token = data.headers.get("authorization").replace('Bearer ', '');
+          //this.jwt.storeJWT(token);
           this.jwt.loggedin(this.login.value.username);
           this.jwt.setUserIdle(true);
           this.jwt.tokenRefresh();
       },
-      error => {
-        Swal.fire('Error', error.error.message, 'error')
+      () => {
+        Swal.fire('Error', "Wrong username or password.", 'error')
       });
     }
 }

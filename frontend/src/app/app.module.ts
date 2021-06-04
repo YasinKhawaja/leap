@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
@@ -57,6 +57,7 @@ import { CapabilityBusinessprocessDeleteComponent } from './components/capabilit
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
+import { AuthInterceptor } from './services/authinterceptor/auth-interceptor';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -130,9 +131,18 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
-    NgxPrintModule
+    NgxPrintModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN'
+    })
   ],
-  providers: [CapabilityService, NgxPrintModule],
+  providers: [CapabilityService, NgxPrintModule, 
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

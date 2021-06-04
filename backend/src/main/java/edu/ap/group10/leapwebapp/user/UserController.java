@@ -1,16 +1,15 @@
 package edu.ap.group10.leapwebapp.user;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
 import javax.persistence.EntityExistsException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -113,17 +112,14 @@ public class UserController {
         return userService.findUserById(userid);
     }
 
-    @PostMapping("/user/login")
-    public void login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
-        response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
-        response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
-        response.setHeader("Authorization", SecurityConstraints.TOKEN_PREFIX + userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)));
-    }
-
-    //throw failed login exception
     @GetMapping("/user/login")
-    public String error(@RequestParam("token") Authentication auth, HttpServletResponse response){
-        return "Failed to log in";
+    public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
+        String value = Base64.getEncoder().withoutPadding().encodeToString(userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)).getBytes());
+        String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(900);
+        response.addCookie(cookie);
     }
 
     @PostMapping("/user/jwt")
@@ -148,8 +144,8 @@ public class UserController {
         mailService.sendMail(mail);
     }
 
-    @PutMapping("/user/resetpassword/{token}")
-    public void resetPassword(@PathVariable String token, @RequestParam String password) {
+    @PutMapping("/user/resetpassword")
+    public void resetPassword(@RequestParam String token, @RequestParam String password) {
 
         userService.changePassword(Long.parseLong(userService.getUserIDJwt(token)), password);
     }
