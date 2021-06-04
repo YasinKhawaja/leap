@@ -68,6 +68,11 @@ public class CapabilityApplicationController {
         return capabilityApplicationService.getCapabilityApplications(capabilityId);
     }
 
+    @GetMapping("/capitapp/linked/{itApplicationName}")
+    public List<Capability> getAllCapabilitiesLinkedToITApplication(@PathVariable String itApplicationName) {
+            return capabilityApplicationService.getAllCapabilitiesLinkedToITApplication(itApplicationName);
+    }
+
     @PostMapping("/capitapp/{capabilityId}")
     public CapabilityApplication addCapabilityApplication(@RequestParam Integer businessEfficiencySupport,
             @RequestParam Integer businessFunctionalCoverage, @RequestParam Integer businessCorrectness,
@@ -117,5 +122,5 @@ public class CapabilityApplicationController {
     public void deleteCapabilityApplication(@PathVariable String capitappId) {
         Long capitappID = Long.parseLong(capitappId);
         capabilityApplicationService.deleteCapabilityApplication(capitappID);
-    }
+    } 
 }

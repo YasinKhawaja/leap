@@ -9,11 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import edu.ap.group10.leapwebapp.capability.Capability;
+import edu.ap.group10.leapwebapp.itapplication.ITApplication;
+import edu.ap.group10.leapwebapp.itapplication.ITApplicationRepository;
+
 @Service
 public class CapabilityApplicationService {
     
     @Autowired
     private CapabilityApplicationRepository capabilityApplicationRepository;
+
+    @Autowired
+    private ITApplicationRepository itApplicationRepository;
 
     public List<CapabilityApplication> getCapabilityApplications(String capabilityId){
         List<CapabilityApplication> capabilityApplications = new ArrayList<CapabilityApplication>();
@@ -24,6 +31,18 @@ public class CapabilityApplicationService {
         }
         return capabilityApplications;
     }
+
+    public List<Capability> getAllCapabilitiesLinkedToITApplication(String itApplicationName) {
+        ITApplication itApplication = itApplicationRepository.findByName(itApplicationName);
+        List<Capability> capabilities = new ArrayList<Capability>();
+        for (CapabilityApplication capabilityApplication : capabilityApplicationRepository.findAll()) {
+            if(capabilityApplication.getItApplication().getId().equals(itApplication.getId())){
+                capabilities.add(capabilityApplication.getCapability());
+            }
+        }
+        return capabilities;
+    }
+    
 
     public CapabilityApplication findCapabilityApplication(Long id){
         return capabilityApplicationRepository.findById(id)
@@ -54,4 +73,6 @@ public class CapabilityApplicationService {
 
         capabilityApplicationRepository.delete(oldCapabilityApplication);
     }
+
+    
 }

@@ -20,6 +20,7 @@
             "allowedCommonJsDependencies":[
               "file-saver",
               "pptxgenjs",
+              "angular2-moment",
               "@babel/runtime-corejs3/core-js-stable/parse-float",
               "@babel/runtime-corejs3/core-js-stable/map",
               "@babel/runtime-corejs3/core-js-stable/symbol",

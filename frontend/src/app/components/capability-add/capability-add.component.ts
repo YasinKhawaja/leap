@@ -45,8 +45,7 @@ export class CapabilityAddComponent implements OnInit {
   private initializeForm() {
     this.capAddForm = this.fb.group({
       name: ['', [
-        Validators.required,
-        Validators.pattern('[a-zA-Z]+')]
+        Validators.required]
       ],
       paceOfChange: ['', Validators.required],
       targetOperationModel: ['', Validators.required],
