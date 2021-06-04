@@ -1,0 +1,31 @@
+.main {
+    margin: 25px;
+}
+
+.flex-container {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.flex-item:first-child {
+    margin-right: 20px;
+}
+
+.table {
+    margin: 0px;
+}
+
+th {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle !important;
+    word-wrap: break-word;
+}

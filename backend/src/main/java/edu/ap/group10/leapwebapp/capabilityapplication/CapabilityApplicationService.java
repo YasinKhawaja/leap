@@ -3,6 +3,8 @@ package edu.ap.group10.leapwebapp.capabilityapplication;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ public class CapabilityApplicationService {
 
     public CapabilityApplication createCapabilityApplication(CapabilityApplication capabilityApplication){
         if(capabilityApplicationRepository.findById(capabilityApplication.getId()).isPresent()){
-            return null;
+            throw new EntityExistsException("Link already exists");
         } else{
             return capabilityApplicationRepository.save(capabilityApplication);
         }

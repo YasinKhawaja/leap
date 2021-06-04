@@ -1,4 +1,3 @@
-import { NumberInput } from "@angular/cdk/coercion";
 import { HttpParams } from "@angular/common/http";
 import { Capability } from "../capability/capability";
 import { Itapplication } from "../itapplication/itapplication";

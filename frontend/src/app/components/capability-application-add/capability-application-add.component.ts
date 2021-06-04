@@ -5,6 +5,7 @@ import { CapabilityApplicationService } from 'src/app/services/capability-applic
 import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-capability-application-add',
@@ -34,18 +35,20 @@ export class CapabilityApplicationAddComponent implements OnInit {
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironment();
     this.its.getITApplications_CurrentEnvironment(environmentId)
-      .subscribe(result => {
-        result.forEach(e => {
-          this.itApplications.push(e.name);
-        })
-        console.log(result);
-      },
-        error => console.log(error));
+    .subscribe(result => {
+      result.forEach(e => {
+        this.itApplications.push(e.name);
+      })
+    },
+    error => {
+      Swal.fire('Error', error.error.message, 'error')
+    }
+    )
   }
 
-  onSubmit() {
+  onSubmit(){
     let capabilityId = this.ns.getCapabilityCookie();
-
+    
     var newCapabilityApplication = new CapabilityApplication(
       this.capabilityApplication.value.application,
       this.capabilityApplication.value.businessEfficiencySupport,
