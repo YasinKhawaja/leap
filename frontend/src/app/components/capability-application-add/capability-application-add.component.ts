@@ -29,25 +29,23 @@ export class CapabilityApplicationAddComponent implements OnInit {
   constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService,
     private cs: CapabilityService) {
     this.itApplications = [];
-   }
+  }
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironment();
     this.its.getITApplications_CurrentEnvironment(environmentId)
-    .subscribe(result => {
-      result.forEach(e => {
-        this.itApplications.push(e.name);
-      })
-      console.log(result);
-    },
-    error => console.log(error));
+      .subscribe(result => {
+        result.forEach(e => {
+          this.itApplications.push(e.name);
+        })
+        console.log(result);
+      },
+        error => console.log(error));
   }
 
-  onSubmit(){
-    let capabilityId = this.ns.getCapability();
-    let environmentId = this.ns.getEnvironment();
-    let capability = this.cs.getCapability(environmentId, capabilityId);
-    
+  onSubmit() {
+    let capabilityId = this.ns.getCapabilityCookie();
+
     var newCapabilityApplication = new CapabilityApplication(
       this.capabilityApplication.value.application,
       this.capabilityApplication.value.businessEfficiencySupport,

@@ -1,15 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Capability } from '../../classes/capability/capability';
-import { CapabilityService } from '../../services/capability/capability.service';
-import html2canvas from 'html2canvas';
-import { saveAs } from "file-saver";
-import pptxgen from "pptxgenjs";
-import { NavbarService } from 'src/app/services/navbar/navbar.service';
-import { NgxPrintModule } from "ngx-print";
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { saveAs } from "file-saver";
+import html2canvas from 'html2canvas';
+import { NgxPrintModule } from "ngx-print";
+import pptxgen from "pptxgenjs";
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
+import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import { Capability } from '../../classes/capability/capability';
+import { CapabilityService } from '../../services/capability/capability.service';
+
 @Component({
   selector: 'app-export',
   templateUrl: './export.component.html',
@@ -50,7 +51,6 @@ export class ExportComponent implements OnInit {
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironment();
-    //let environmentId = this.router.url.split('/')[2];
 
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {
@@ -65,48 +65,45 @@ export class ExportComponent implements OnInit {
       },
         error => console.log(error));
 
-      this.itApplications = [];
-     this.its.getITApplications_CurrentEnvironment(environmentId)
-     .subscribe(result => {
-      result.forEach(e => {
-        this.itApplications.push(e.name);
-      })
-      console.log(result);
-    },
-    error => console.log(error));
+    this.itApplications = [];
+    this.its.getITApplications_CurrentEnvironment(environmentId)
+      .subscribe(result => {
+        result.forEach(e => {
+          this.itApplications.push(e.name);
+        })
+        console.log(result);
+      },
+        error => console.log(error));
 
     this.strats.getAllStrategyInEnvironment(environmentId)
-     .subscribe(result => {
-      result.forEach(e => {
-        this.strategies.push(e.name);
-      })
-      console.log(result);
-    },
-    error => console.log(error));
-
-    
-
+      .subscribe(result => {
+        result.forEach(e => {
+          this.strategies.push(e.name);
+        })
+        console.log(result);
+      },
+        error => console.log(error));
   }
 
-  changeITApplication(){
+  changeITApplication() {
     console.log(this.itApplication.value.itApplicationName)
   }
 
-  changeStrategy(){
+  changeStrategy() {
     this.strategyItems = [];
-    this.strategy.value.strategyName;
+
     this.sis.getAllStrategyItemsInStrategyByName(this.strategy.value.strategyName)
-    .subscribe(result => {
-      result.forEach(e => {
-        
-        this.strategyItems.push(e.name);
-      })
-      console.log(result);
-    },
-    error => console.log(error));
+      .subscribe(result => {
+        result.forEach(e => {
+
+          this.strategyItems.push(e.name);
+        })
+        console.log(result);
+      },
+        error => console.log(error));
   }
 
-  changeStrategyItem(){
+  changeStrategyItem() {
     this.strategyItem.value.strategyItemName;
   }
 
@@ -141,7 +138,7 @@ export class ExportComponent implements OnInit {
     html2canvas(data).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4)
       // w/h ratio 4/1 , w:20 h:5 was goed
-      slide.addImage({ data: contentDataURL, x: 0, y: 1.5, w: '100%', h:'100%'});
+      slide.addImage({ data: contentDataURL, x: 0, y: 1.5, w: '100%', h: '100%' });
 
       // save powerpoint
       powerpoint.writeFile({ fileName: "CapabilityMap" });

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Resource } from 'src/app/classes/resource/resource';
 import { ResourceService } from 'src/app/services/resource/resource.service';
 import Swal from 'sweetalert2';
+import { ResourceComponent } from '../resource/resource.component';
 
 @Component({
   selector: 'app-resource-add',
@@ -14,7 +15,7 @@ export class ResourceAddComponent implements OnInit {
   // Form
   resAddForm: FormGroup;
 
-  constructor(private rs: ResourceService, private fb: FormBuilder) { }
+  constructor(private rs: ResourceService, private fb: FormBuilder, private rc: ResourceComponent) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -51,9 +52,17 @@ export class ResourceAddComponent implements OnInit {
 
     this.rs.createResource(resToCreate)
       .subscribe(
-        resp => { },
+        resp => {
+          this.rc.ngOnInit();
+          this.resAddForm.reset();
+        },
         err => Swal.fire('Error', err.error.message, 'error')
       );
+  }
+
+  // To hide the form
+  hide(): void {
+    this.rc.hideAll();
   }
 
 }

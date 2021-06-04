@@ -1,9 +1,9 @@
 <main class="main">
-    <div class="flex-container">
+    <div class="flex-container-hor">
         <div class="flex-item">
             <div class="card">
-                <div class="card-header center">
-                    <h5><strong>EDIT CAPABILITY</strong></h5>
+                <div class="card-header center" *ngIf="capCurrentValues != null">
+                    <h5><strong>EDIT {{ capCurrentValues.name }}</strong></h5>
                 </div>
                 <div class="card-body">
                     <!-- Form -->
@@ -31,8 +31,7 @@
                                 </option>
                             </select>
                             <!-- Pace of Change dropdown validation errors -->
-                            <div class="alert alert-danger center"
-                                *ngIf="poc!.invalid && (poc!.dirty || poc!.touched)">
+                            <div class="alert alert-danger center" *ngIf="poc!.invalid && (poc!.dirty || poc!.touched)">
                                 <div *ngIf="poc!.errors!.required">
                                     Pace of Change is required.
                                 </div>
@@ -47,8 +46,7 @@
                                 </option>
                             </select>
                             <!-- Target Operation Model dropdown validation errors -->
-                            <div class="alert alert-danger center"
-                                *ngIf="tom!.invalid && (tom!.dirty || tom!.touched)">
+                            <div class="alert alert-danger center" *ngIf="tom!.invalid && (tom!.dirty || tom!.touched)">
                                 <div *ngIf="tom!.errors!.required">
                                     Target Operation Model is required.
                                 </div>
@@ -56,14 +54,14 @@
                         </div>
                         <!-- Resources Quality -->
                         <div class="form-group">
-                            <label for="resourcesQuality">Resources Quality</label>
+                            <label for="resourcesQuality">Resources quality</label>
                             <input id="resourcesQuality" type="text" class="form-control"
                                 formControlName="resourcesQuality">
                             <!-- Resources Quality field validation errors -->
                             <div class="alert alert-danger center" *ngIf="rq!.invalid">
                                 <div *ngIf="rq!.errors!.pattern">
-                                    Resources Quality should be a number between 1 and 5:<br>(1 = poor, 3 = fair, 5 =
-                                    good).
+                                    Resources quality should be a number between 1 and 5:<br>
+                                    (1 = poor, 3 = fair, 5 = good)
                                 </div>
                             </div>
                         </div>
@@ -78,9 +76,59 @@
             </div>
         </div>
         <div class="flex-item">
-            <!-- Other components, make table with button-->
-            <!-- SANDER: Have to change this to make it look nice, for now it's text.-->
-            <a [routerLink]="['/capability-application/']">Capability - IT Applications</a>
+            <div class="card-header center">
+                <h5><strong>LINKS</strong></h5>
+            </div>
+            <div class="flex-container-ver">
+                <div class="flex-item-table">
+                    <table class="table center" id="table-top">
+                        <thead>
+                            <tr>
+                                <th scope="col">STRATEGY ITEMS</th>
+                                <th scope="col">IT APPLICATIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-success" [routerLink]="['']" role="button">EDIT</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" [routerLink]="['/capability-application']" role="button">
+                                        EDIT
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-item-table">
+                    <table class="table center" id="table-bottom">
+                        <thead>
+                            <tr>
+                                <th scope="col">PROGRAMS/PROJECTS</th>
+                                <th scope="col">RESOURCES</th>
+                                <th scope="col">BUSINESS PROCESSES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a class="btn btn-success" [routerLink]="['']" role="button">EDIT</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" [routerLink]="['capresources']" role="button">
+                                        EDIT
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" [routerLink]="['']" role="button">EDIT</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </main>

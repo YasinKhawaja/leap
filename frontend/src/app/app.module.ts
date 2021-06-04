@@ -4,8 +4,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MomentModule } from 'angular2-moment';
+import { NgxPrintModule } from 'ngx-print';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
+import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
+import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
+import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
 import { CapabilityAddComponent } from './components/capability-add/capability-add.component';
 import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
 import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
@@ -13,6 +20,7 @@ import { CapabilityApplicationEditComponent } from './components/capability-appl
 import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
+import { CapabilityResourceComponent } from './components/capability-resource/capability-resource.component';
 import { CapabilityComponent } from './components/capability/capability.component';
 import { CompanyRequestComponent } from './components/company-request/company-request.component';
 import { EnvironmentAddComponent } from './components/environment-add/environment-add.component';
@@ -28,6 +36,10 @@ import { ItapplicationComponent } from './components/itapplication/itapplication
 import { LoginComponent } from './components/login/login.component';
 import { RegisterFormUseradminComponent } from './components/register-form-useradmin/register-form-useradmin.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { ResourceAddComponent } from './components/resource-add/resource-add.component';
+import { ResourceEditComponent } from './components/resource-edit/resource-edit.component';
 import { ResourceComponent } from './components/resource/resource.component';
 import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
 import { StrategyDeleteComponent } from './components/strategy-delete/strategy-delete.component';
@@ -37,24 +49,11 @@ import { StrategyItemsDeleteComponent } from './components/strategy-items-delete
 import { StrategyItemsEditComponent } from './components/strategy-items-edit/strategy-items-edit.component';
 import { StrategyItemsComponent } from './components/strategy-items/strategy-items.component';
 import { StrategyComponent } from './components/strategy/strategy.component';
+import { UserAddComponent } from './components/user-add/user-add.component';
+import { UserDeleteComponent } from './components/user-delete/user-delete.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
-import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
-import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
-import { ResourceAddComponent } from './components/resource-add/resource-add.component';
-import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
-import { MomentModule } from 'angular2-moment';
-import { NgxPrintModule } from "ngx-print";
-import { UserAddComponent } from './components/user-add/user-add.component';
-import { UserEditComponent } from './components/user-edit/user-edit.component';
-import { UserDeleteComponent } from './components/user-delete/user-delete.component';
-import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
-import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
-import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
-import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
-
-
-
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,7 +66,6 @@ const appRoutes: Routes = [
   { path: 'itapplication', component: ItapplicationComponent, canActivate: [RouterGuard] },
   { path: 'capability-application', component: CapabilityApplicationComponent, canActivate: [RouterGuard] },
   { path: 'strategies', component: StrategyComponent, canActivate: [RouterGuard] }
-  
 ]
 
 @NgModule({
@@ -112,7 +110,9 @@ const appRoutes: Routes = [
     BusinessprocessComponent,
     BusinessprocessAddComponent,
     BusinessprocessEditComponent,
-    BusinessprocessDeleteComponent
+    BusinessprocessDeleteComponent,
+    ResourceEditComponent,
+    CapabilityResourceComponent
   ],
   imports: [
     BrowserModule,

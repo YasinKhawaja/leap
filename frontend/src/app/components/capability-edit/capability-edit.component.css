@@ -1,29 +1,47 @@
 .main {
-    margin-top: 82px !important;
     margin: 25px;
-    margin-bottom: 82px !important;
 }
 
-.flex-container {
+.flex-container-hor {
     display: flex;
+}
+
+.flex-container-ver {
+    display: flex;
+    flex-direction: column;
+    height: 391px;
 }
 
 .flex-item {
     flex: 1;
-    border: 1px solid black;
+    border: 2px solid red;
 }
 
 .flex-item:first-child {
-    margin-right: 20px;
+    margin-right: 25px;
+}
+
+.flex-item-table {
+    flex: 1;
+    display: flex;
 }
 
 .center {
     text-align: center;
-    vertical-align: middle;
 }
 
 h5, label {
     margin: 0px;
+}
+
+#table-top th {
+    border-top: 0px;
+    width: 50%;
+}
+
+#table-bottom th {
+    border-top: 0px;
+    width: 33.33%;
 }
 
 .red {

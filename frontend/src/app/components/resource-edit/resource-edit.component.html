@@ -1,17 +1,8 @@
 <!-- Form -->
-<form [formGroup]="resAddForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="resEditForm" (ngSubmit)="onSubmit()">
     <div class="card">
-        <div class="flex-container card-header">
-            <div class="flex-item">
-                <div class="title">
-                    <h5><strong>ADD RESOURCE</strong></h5>
-                </div>
-            </div>
-            <div class="flex-item">
-                <div class="hide">
-                    <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
-                </div>
-            </div>
+        <div class="card-header center">
+            <h5><strong>EDIT {{ resCurrentValues.name }}</strong></h5>
         </div>
         <div class="card-body">
             <!-- Name -->
@@ -41,7 +32,7 @@
             </div>
             <!-- Submit button -->
             <div class="center">
-                <button type="submit" class="btn btn-success" [disabled]="resAddForm.invalid">ADD</button>
+                <button type="submit" class="btn btn-success" [disabled]="resEditForm.invalid">EDIT</button>
             </div>
         </div>
     </div>

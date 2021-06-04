@@ -5,13 +5,14 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NavbarService {
+
   environmentSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
   environmentID: string;
   environmentName: string;
 
 
   public environmentStatus(): BehaviorSubject<boolean> {
-    if(this.readCookie("Environment") != undefined){
+    if (this.readCookie("Environment") != undefined) {
       this.environmentSelected.next(true);
     }
     return this.environmentSelected;
@@ -19,7 +20,7 @@ export class NavbarService {
 
   public environmentSelect() {
     this.environmentSelected.next(true);
-  
+
   }
 
   public environmentDeselect() {
@@ -47,31 +48,31 @@ export class NavbarService {
     this.createCookie("EnvironmentName", this.environmentName, 1);
   }
 
-  public getEnvironmentName():string {
+  public getEnvironmentName(): string {
     this.environmentName = this.readCookie("EnvironmentName");
-    if(this.environmentName == undefined){
+    if (this.environmentName == undefined) {
       return "Environment";
-    }else{
+    } else {
       return this.environmentName;
     }
   }
 
-  public setCapability(capabilityID: string) {
+  public setCapabilityCookie(capabilityID: string) {
     this.createCookie("Capability", capabilityID, 1);
   }
 
-  public getCapability(): string{
+  public getCapabilityCookie(): string {
     return this.readCookie("Capability");
   }
 
-  createCookie(name: string, value:string, days: number) {
+  createCookie(name: string, value: string, days: number) {
     var expires = '';
     if (days) {
       var date = new Date();
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = "; expires=" + date.toUTCString();
     }
-    if(value != ''){
+    if (value != '') {
       value = btoa(value);
     }
     document.cookie = `${btoa(name)}=${value}${expires};path=/`;
@@ -98,4 +99,15 @@ export class NavbarService {
   eraseCookie(name: string) {
     this.createCookie((name), "", -1);
   }
+
+  // To SET the res cookie
+  setResourceCookie(resourceID: string) {
+    this.createCookie("Resource", resourceID, 1);
+  }
+
+  // To GET the res cookie
+  getResourceCookie(): string {
+    return this.readCookie("Resource");
+  }
+
 }
