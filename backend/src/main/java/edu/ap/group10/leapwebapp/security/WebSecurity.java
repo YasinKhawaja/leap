@@ -74,7 +74,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                                 SecurityConstraints.COMPANY_SIGN_UP,
                                 SecurityConstraints.USER_ADMIN_SIGN_UP,
                                 SecurityConstraints.PASSWORD_RESET
-                                //SecurityConstraints.JWT
                                 )
             .csrfTokenRepository(csrfTokenRepository());
     }
