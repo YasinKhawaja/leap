@@ -51,7 +51,7 @@ export class CapabilityEditComponent implements OnInit {
   // To GET the cap current values to initialize the form with
   private getCapabilityCurrentValues(): Observable<Capability> {
     var envId = this.ns.getEnvironment();
-    var capId = this.ns.getCapability();
+    var capId = this.ns.getCapabilityCookie();
 
     return this.cs.getCapability(envId, capId);
   }
@@ -89,7 +89,7 @@ export class CapabilityEditComponent implements OnInit {
   // When clicked on "EDIT" and submitting the form
   onSubmit() {
     var envId = this.ns.getEnvironment();
-    var capIdToUpdate = this.ns.getCapability();
+    var capIdToUpdate = this.ns.getCapabilityCookie();
 
     var newCapValues = new Capability(
       this.name.value,
@@ -101,15 +101,15 @@ export class CapabilityEditComponent implements OnInit {
     this.cs.updateCapabilityInEnvironment(envId, capIdToUpdate, newCapValues)
       .subscribe(
         res => {
-          console.log(res);
-          Swal.fire('Updated', `Capability <strong>${newCapValues.name}</strong> updated.`, 'success');
+          Swal.fire('Edited', `Capability <strong>${this.capCurrentValues.name}</strong> edited.`, 'success');
+          this.ngOnInit();
         },
         err => console.error(err)
       );
   }
 
   refer() {
-    var capabilityId = this.ns.getCapability();
+    var capabilityId = this.ns.getCapabilityCookie();
     this.router.navigate([`capability-application/${capabilityId}`])
   }
 

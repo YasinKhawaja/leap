@@ -42,7 +42,7 @@ export class CapabilityApplicationAddComponent implements OnInit {
   }
 
   onSubmit(){
-    let capabilityId = this.ns.getCapability();
+    let capabilityId = this.ns.getCapabilityCookie();
     
     var newCapabilityApplication = new CapabilityApplication(
       this.capabilityApplication.value.application,

@@ -25,7 +25,7 @@
                                 (click)="show('resource-edit', res)" />
                         </td>
                         <td>
-                            <a class="btn btn-light" role="button">
+                            <a class="btn btn-light" role="button" (click)="showLinkedCapabilities(res.id)">
                                 {{ res.name }}
                             </a>
                         </td>
@@ -42,17 +42,36 @@
                             ADD RESOURCE
                         </button>
                     </div>
-                    <!--<div class="flex-item hide-btn" *ngIf="showResAdd || showResEdit">
-                        <button type="button" class="btn btn-danger" (click)="hideAll()">
-                            HIDE FORM
-                        </button>
-                    </div>-->   
                 </div>
             </div>
         </div>
+        <!-- Child comps -->
         <div class="flex-item">
+            <!-- resource-add-component -->
             <app-resource-add *ngIf="showResAdd"></app-resource-add>
+            <!-- resource-edit-component -->
             <app-resource-edit *ngIf="showResEdit" [resCurrentValues]="resCurrentValues"></app-resource-edit>
+            <!-- Linked caps right panel -->
+            <div id="linkedCaps" *ngIf="showLinkedCaps">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="3">LINKED CAPABILITIES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let capres of capresources">
+                            <td>
+                                <a class="btn btn-light" role="button"
+                                    (click)="setCapabilityCookie(capres.capability.id)"
+                                    [routerLink]="['../capabilities', capres.capability.id, 'update']">
+                                    {{ capres.capability.name }}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>

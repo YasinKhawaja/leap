@@ -16,7 +16,7 @@ export class CapabilityApplicationComponent implements OnInit {
   constructor(private cas: CapabilityApplicationService, private ns: NavbarService) { }
 
   ngOnInit(): void {
-    let capabilityId = this.ns.getCapability();
+    let capabilityId = this.ns.getCapabilityCookie();
 
     this.cas.getCapabilityApplications(capabilityId)
       .subscribe(

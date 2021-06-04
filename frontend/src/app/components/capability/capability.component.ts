@@ -33,7 +33,7 @@ export class CapabilityComponent implements OnInit {
   }
 
   selectCapability(capabilityID: string): void {
-    this.ns.setCapability(capabilityID);
+    this.ns.setCapabilityCookie(capabilityID);
   }
 
   // To set the _cap prop to give its value to child comps

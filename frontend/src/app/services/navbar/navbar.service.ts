@@ -57,11 +57,11 @@ export class NavbarService {
     }
   }
 
-  public setCapability(capabilityID: string) {
+  public setCapabilityCookie(capabilityID: string) {
     this.createCookie("Capability", capabilityID, 1);
   }
 
-  public getCapability(): string {
+  public getCapabilityCookie(): string {
     return this.readCookie("Capability");
   }
 
@@ -72,7 +72,7 @@ export class NavbarService {
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = "; expires=" + date.toUTCString();
     }
-    if(value != ''){
+    if (value != '') {
       value = btoa(value);
     }
     document.cookie = `${btoa(name)}=${value}${expires};path=/`;
@@ -100,13 +100,13 @@ export class NavbarService {
     this.createCookie((name), "", -1);
   }
 
-  // To CREATE a res cookie
-  setResource(resourceID: string) {
+  // To SET the res cookie
+  setResourceCookie(resourceID: string) {
     this.createCookie("Resource", resourceID, 1);
   }
 
   // To GET the res cookie
-  getResource(): string {
+  getResourceCookie(): string {
     return this.readCookie("Resource");
   }
 

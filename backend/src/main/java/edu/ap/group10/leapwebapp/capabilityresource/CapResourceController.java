@@ -2,7 +2,6 @@
 package edu.ap.group10.leapwebapp.capabilityresource;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class CapResourceController {
 
@@ -33,28 +35,42 @@ public class CapResourceController {
 
     // To GET all cap res links by res id
     @GetMapping("/capresources/resource/{id}")
-    public List<CapResource> getCapResourceByResource(@PathVariable Long id) {
-        return capResourceService.getAllCapResourcesByResource(id);
+    public List<CapResource> getAllCapResourcesByResourceId(@PathVariable Long id) {
+        return capResourceService.getAllCapResourcesByResourceId(id);
     }
 
     // To CREATE a cap res link
     @PostMapping("/capresources")
-    public CapResource createCapResource(@RequestParam Long capId, @RequestParam Long resId)
-            throws NoSuchElementException {
-        return capResourceService.createCapResource(capId, resId);
+    public CapResource createCapResource(@RequestParam Long capId, @RequestParam Long resId) {
+        try {
+            return capResourceService.createCapResource(capId, resId);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+
     }
 
     // To UPDATE a cap res link props
     @PutMapping("/capresources/{id}")
-    public CapResource updateCapResource(@PathVariable Long id, @RequestParam Integer numberOfResources)
-            throws NoSuchElementException {
-        return capResourceService.updateCapResource(id, numberOfResources);
+    public CapResource updateCapResource(@PathVariable Long id, @RequestParam Integer numberOfResources) {
+        try {
+            return capResourceService.updateCapResource(id, numberOfResources);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 
     // To DELETE a cap res link
     @DeleteMapping("/capresources/{id}")
-    public void deleteCapResource(@PathVariable Long id) throws IllegalArgumentException {
-        capResourceService.deleteCapResource(id);
+    public void deleteCapResource(@PathVariable Long id) {
+        try {
+            capResourceService.deleteCapResource(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
     }
 
 }

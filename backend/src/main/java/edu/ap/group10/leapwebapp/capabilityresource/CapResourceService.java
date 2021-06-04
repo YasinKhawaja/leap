@@ -2,7 +2,6 @@
 package edu.ap.group10.leapwebapp.capabilityresource;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +34,12 @@ public class CapResourceService {
     }
 
     // To GET all cap res links by res id
-    public List<CapResource> getAllCapResourcesByResource(Long id) {
+    public List<CapResource> getAllCapResourcesByResourceId(Long id) {
         return capResourceRepository.findByResourceId(id);
     }
 
     // To CREATE a cap res link
-    public CapResource createCapResource(Long capId, Long resId) throws NoSuchElementException {
+    public CapResource createCapResource(Long capId, Long resId) {
         // Find the cap & res to link together
         Capability cap = capabilityRepository.findById(capId).orElseThrow();
         Resource res = resourceRepository.findById(resId).orElseThrow();
@@ -51,7 +50,7 @@ public class CapResourceService {
     }
 
     // To UPDATE a cap res link props
-    public CapResource updateCapResource(Long id, Integer numberOfResources) throws NoSuchElementException {
+    public CapResource updateCapResource(Long id, Integer numberOfResources) {
         CapResource capresToUp = capResourceRepository.findById(id).orElseThrow();
 
         capresToUp.setNumberOfResources(numberOfResources);
@@ -60,7 +59,7 @@ public class CapResourceService {
     }
 
     // To DELETE a cap res link
-    public void deleteCapResource(Long id) throws IllegalArgumentException {
+    public void deleteCapResource(Long id) {
         capResourceRepository.deleteById(id);
     }
 
