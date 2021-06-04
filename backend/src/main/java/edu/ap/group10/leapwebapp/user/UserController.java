@@ -1,6 +1,9 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.EntityExistsException;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +63,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
+    public void addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
     @RequestParam("email") String email, @RequestParam("companyId") String company, @RequestParam("username") String username,
     @RequestParam("role") Integer role){
         try{
@@ -74,16 +77,18 @@ public class UserController {
                 throw new UnsupportedOperationException("Email is in use");
             }
 
-            String password = userService.generatePassword();
+            byte[] bytes = new byte[10];
+            new Random().nextBytes(bytes);
+            String password = Base64.getEncoder().encodeToString(bytes);
             User user = new User(firstName, surname, email, username, password, role, userService.findCompany(Long.parseLong(company)));
-            
-            userService.sendMail(email, username, password);
-            
-            return userService.addUser(user);
+
+            userService.addUser(user);
+
+            userService.sendMail(email, username, user.getId().toString());
 
         } catch (Exception e){
             log.error("Exception", e);
-            return null;
+            throw e;
         }        
     }
 

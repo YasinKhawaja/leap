@@ -5,6 +5,9 @@ import { Login } from 'src/app/classes/login/login';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { LoginService } from 'src/app/services/login/login.service';
 import Swal from 'sweetalert2';
+import sha256 from 'crypto-js/sha256';
+
+const salt = "!sH@2.5.6?.-_#eNc0.d3Ds@L.t";
 
 @Component({
   selector: 'app-login',
@@ -12,6 +15,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
 
   //Password hashed send
   login = this.fb.group({
@@ -25,7 +29,8 @@ export class LoginComponent {
 
   onSubmit() {
     //encode password here
-    this.ls.login(new Login(this.login.value.username, this.login.value.password))
+    var password = sha256(this.login.value.password + salt);
+    this.ls.login(new Login(this.login.value.username, password))
       .subscribe(
         (data: HttpResponse<any>) => {
           var token = data.headers.get("authorization").replace('Bearer ', '');
