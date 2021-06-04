@@ -41,7 +41,7 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
   }
 
   onSubmit() {
-    var capabilityid = this.ns.getCapability();
+    var capabilityid = this.ns.getCapabilityCookie();
 
     var newCapabilityBusinessprocess = new CapabilityBusinessprocess(
       this.capabilityBusinessprocess.value.businessprocess

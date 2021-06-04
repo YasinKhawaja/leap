@@ -15,7 +15,7 @@ export class CapabilityBusinessprocessComponent implements OnInit {
   constructor(private cbp: CapabilityBusinessprocessService, private ns: NavbarService) { }
 
   ngOnInit(): void {
-    var capabilityid = this.ns.getCapability();
+    var capabilityid = this.ns.getCapabilityCookie();
 
     this.cbp.getCapabilityBusinessProcess(capabilityid)
     .subscribe(

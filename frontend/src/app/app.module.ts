@@ -9,10 +9,6 @@ import { MomentModule } from 'angular2-moment';
 import { NgxPrintModule } from 'ngx-print';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
-import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
-import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
-import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
 import { CapabilityAddComponent } from './components/capability-add/capability-add.component';
 import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
 import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
@@ -120,7 +116,7 @@ const appRoutes: Routes = [
     BusinessprocessDeleteComponent,
     CapabilityBusinessprocessComponent,
     CapabilityBusinessprocessAddComponent,
-    CapabilityBusinessprocessDeleteComponent
+    CapabilityBusinessprocessDeleteComponent,
     ResourceEditComponent,
     CapabilityResourceComponent
   ],
