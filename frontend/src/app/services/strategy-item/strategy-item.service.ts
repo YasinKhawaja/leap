@@ -8,7 +8,7 @@ import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
 })
 export class StrategyItemService {
 
-  private strategyItemServiceURI: string = 'http://localhost:8080/api/strategyItems';
+  private strategyItemServiceURI: string = '//localhost:8080/api/strategyItems';
   private contentHeaders: HttpHeaders;
 
   

@@ -11,7 +11,7 @@ const salt = "!sH@2.5.6?.-_#eNc0.d3Ds@L.t";
 })
 export class ResetpasswordService {
 
-  private resetpasswordURL: string = 'http://localhost:8080/api/user/resetpassword/';
+  private resetpasswordURL: string = '//localhost:8080/api/user/resetpassword/';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {

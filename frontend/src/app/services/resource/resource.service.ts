@@ -8,7 +8,7 @@ import { Resource } from 'src/app/classes/resource/resource';
 })
 export class ResourceService {
 
-  private resourceServiceURI: string = 'http://localhost:8080/api/resources';
+  private resourceServiceURI: string = '//localhost:8080/api/resources';
 
   constructor(private http: HttpClient) { }
 

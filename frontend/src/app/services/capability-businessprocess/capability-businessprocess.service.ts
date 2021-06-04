@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CapabilityBusinessprocessService {
 
-  private cbpURL: string = 'http://localhost:8080/api/capabilitybusinessprocess' 
+  private cbpURL: string = '//localhost:8080/api/capabilitybusinessprocess' 
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {

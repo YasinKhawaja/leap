@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable({providedIn: "root"})
 export class CompanyService {
 
-  private companiesUrl: string = 'http://localhost:8080/api/companies';
+  private companiesUrl: string = '//localhost:8080/api/companies';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {

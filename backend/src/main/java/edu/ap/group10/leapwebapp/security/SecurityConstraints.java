@@ -15,6 +15,4 @@ public class SecurityConstraints {
     public static final String COMPANY_SIGN_UP = "/companies";
     public static final String USER_ADMIN_SIGN_UP = "/useradmin";
     public static final String PASSWORD_RESET = "/user/resetpassword/";
-
-    public static final String JWT = "/user/jwt";
 }

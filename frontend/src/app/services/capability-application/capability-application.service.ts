@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class CapabilityApplicationService {
 
-  private capabilityApplicationURL: string = 'http://localhost:8080/api/capitapp';
+  private capabilityApplicationURL: string = '//localhost:8080/api/capitapp';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router:Router) {
