@@ -26,5 +26,11 @@ The frontend of this project is made with Angular.
 ### Security
 * Add authinterceptor in frontend that sends the JWT with each request.
 
-### User
-After selecting an environment you can press a tab in the navbar to add users to it assuming you're an useradmin (only show for user admins and have routerguard on it so only useradmins can access it)
+### Strategy
+* Strategy-items are deleted after renaming a strategy
+
+### Resources
+* Validator pattern -> only number for Full Time Equivalent yearly value
+
+### IT-Application link
+* Validator pattern -> 1 - 5 validator

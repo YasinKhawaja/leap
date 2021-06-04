@@ -14,6 +14,3 @@ The backend of this project is made with Java Spring Boot.
  
  ### User
  * Add user reset password when sending mail to a newly created user asking them to change their password
-
- ### Capability
- * IT application calculation algortihm

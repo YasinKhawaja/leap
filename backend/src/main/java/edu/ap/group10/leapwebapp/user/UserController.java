@@ -47,10 +47,11 @@ public class UserController {
             }
             else if (validateEmail != null && validateEmail){
                 throw new UnsupportedOperationException("Email is in use");
+            } else {
+                User user = new User(firstname, surname, email, username, password, 0, userService.validateToken(confirmationToken));
+                confirmationTokenService.deleteConfirmationToken(confirmationToken);
+                return userService.addUser(user);
             }
-            User user = new User(firstname, surname, email, username, password, 0, userService.validateToken(confirmationToken));
-            confirmationTokenService.deleteConfirmationToken(confirmationToken);
-            return userService.addUser(user);
 
         } catch (Exception e){
             log.error("Exception", e);

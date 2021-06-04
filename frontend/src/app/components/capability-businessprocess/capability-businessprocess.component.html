@@ -16,7 +16,10 @@
                                     <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                                 </a>
                             </td>
-                            <td> {{ capabilitybusinessprocess.businessProcess.name }}
+                            <td>
+                                <a class="btn btn-light" role="button" [routerLink]="['/businessprocess/edit/', capabilitybusinessprocess.businessProcess.id]">
+                                {{ capabilitybusinessprocess.businessProcess.name }}
+                                </a>
                             </td>
                         </tr>
                     </tbody>
