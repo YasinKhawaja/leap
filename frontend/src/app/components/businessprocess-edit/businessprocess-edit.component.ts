@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
-import { BusinessprocessService } from 'src/app/services/businessprocess.service';
+import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import Swal from 'sweetalert2';
 
 @Component({

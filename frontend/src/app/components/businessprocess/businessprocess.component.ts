@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
-import { BusinessprocessService } from 'src/app/services/businessprocess.service';
+import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 

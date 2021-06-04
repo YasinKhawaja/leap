@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { BusinessprocessService } from 'src/app/services/businessprocess.service';
+import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import { Location } from '@angular/common';
 
 @Component({

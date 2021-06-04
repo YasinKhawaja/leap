@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
-import { BusinessprocessService } from 'src/app/services/businessprocess.service';
+import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
 @Component({
