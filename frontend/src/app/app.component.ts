@@ -73,6 +73,9 @@ export class AppComponent implements OnInit{
       this.idle.watch();
       this.jwt.tokenRefresh();
     }
+    if(this.ns.readCookie("jwt") != undefined && this.ns.readCookie("jwt") != null && this.ns.readCookie("jwt") != ""){
+      this.jwt.getNewJwt();
+    }
   }
 
   deselect(): void{
