@@ -20,7 +20,8 @@ public class BusinessProcessController {
     @Autowired
     private BusinessProcessService businessProcessService;
 
-    @Autowired EnvironmentService environmentService;
+    @Autowired 
+    private EnvironmentService environmentService;
 
     @GetMapping("/businessprocesses/{environmentid}")
     public List<BusinessProcess> getAllBussinessProcesses(@PathVariable String environmentid){

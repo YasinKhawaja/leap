@@ -1,0 +1,25 @@
+<form [formGroup]="capabilityBusinessprocess" (ngSubmit)="onSubmit()">
+    <div class="card">
+        <div class="card-header center">
+            <h5><strong>ADD BUSINESS PROCESS LINK</strong></h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">Process<span class="red">*</span></label>
+                <select id="businessprocess" class="form-controle" formControlName="businessprocess" required>
+                    <option *ngFor="let businessprocess of businessprocesses | keyvalue" [ngValue]="businessprocess.value">
+                        {{ businessprocess.value }}
+                    </option>
+                </select>
+                <div class="alert alert-danger center" *ngIf="(capabilityBusinessprocess.get('businessprocess')!.dirty || capabilityBusinessprocess.get('businessprocess')!.touched) && capabilityBusinessprocess.get('businessprocess')!.invalid">
+                    <div *ngIf="capabilityBusinessprocess.get('businessprocess')!.errors!.required">
+                        Process is required.
+                    </div>
+                </div>
+            </div>
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="capabilityBusinessprocess.invalid">ADD</button>
+            </div>
+        </div>
+    </div>
+</form>

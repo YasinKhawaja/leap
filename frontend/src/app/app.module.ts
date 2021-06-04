@@ -51,6 +51,13 @@ import { StrategyItemsComponent } from './components/strategy-items/strategy-ite
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
+import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
+import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
+import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
+import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
+import { CapabilityBusinessprocessComponent } from './components/capability-businessprocess/capability-businessprocess.component';
+import { CapabilityBusinessprocessAddComponent } from './components/capability-businessprocess-add/capability-businessprocess-add.component';
+import { CapabilityBusinessprocessDeleteComponent } from './components/capability-businessprocess-delete/capability-businessprocess-delete.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
@@ -111,6 +118,9 @@ const appRoutes: Routes = [
     BusinessprocessAddComponent,
     BusinessprocessEditComponent,
     BusinessprocessDeleteComponent,
+    CapabilityBusinessprocessComponent,
+    CapabilityBusinessprocessAddComponent,
+    CapabilityBusinessprocessDeleteComponent
     ResourceEditComponent,
     CapabilityResourceComponent
   ],

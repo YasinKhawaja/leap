@@ -40,6 +40,9 @@ import { BusinessprocessComponent } from './components/businessprocess/businessp
 import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
 import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
 import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
+import { CapabilityBusinessprocessComponent } from './components/capability-businessprocess/capability-businessprocess.component';
+import { CapabilityBusinessprocessAddComponent } from './components/capability-businessprocess-add/capability-businessprocess-add.component';
+import { CapabilityBusinessprocessDeleteComponent } from './components/capability-businessprocess-delete/capability-businessprocess-delete.component';
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
@@ -79,7 +82,10 @@ const routes: Routes = [
   { path: 'businessprocess', component: BusinessprocessComponent},
   { path: 'businessprocess/add', component: BusinessprocessAddComponent},
   { path: 'businessprocess/edit/:businessprocessid', component: BusinessprocessEditComponent},
-  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent}
+  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent},
+  { path: 'capability-businessprocess', component:CapabilityBusinessprocessComponent},
+  { path: 'capability-businessprocess/add', component: CapabilityBusinessprocessAddComponent},
+  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent}
 ];
 
 @NgModule({
