@@ -17,9 +17,6 @@ The frontend of this project is made with Angular.
 ### Capabilities
 * Name isn't unique for capabilities
 
-### Passwords
-* Upon signup, login and reset password the passwords are send as plain text to the api -> change this so it's encrypted
-
 ### Company
 * Enum of countries in list with search option since too many options.
 
