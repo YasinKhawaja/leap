@@ -22,6 +22,7 @@ export class CapabilityApplicationService {
     return this.http.get<CapabilityApplication[]>(url);
   }
 
+
   public createCapabilityApplication(capabilityId: string, capabilityApplication: CapabilityApplication){
     let url = `${this.capabilityApplicationURL}/${capabilityId}`;
     return this.http.post<CapabilityApplication>(url, capabilityApplication.getParams(),
