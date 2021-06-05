@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
@@ -26,6 +26,9 @@ export class ExportComponent implements OnInit {
 
   capabilitiesLinkedToItApplication: Capability[]
 
+  style: { 'border-color': string };
+
+
   itApplications: string[]
 
   itApplication = this.fb.group({
@@ -45,7 +48,8 @@ export class ExportComponent implements OnInit {
   })
 
   constructor(private cs: CapabilityService, private ns: NavbarService, private print: NgxPrintModule, private fb: FormBuilder,
-    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService) {
+    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService,
+    private cd: ChangeDetectorRef) {
     this.capabilities = [];
     this.itApplications = [];
     this.strategies = [];
@@ -94,10 +98,19 @@ export class ExportComponent implements OnInit {
     this.cis.getCapabilitiesLinkedToITApplication(this.itApplication.value.itApplicationName)
       .subscribe(result => {
         this.capabilitiesLinkedToItApplication = result;
-        console.log(result);
+        console.log(this.capabilitiesLinkedToItApplication);
       },
         error => console.log(error))
-    
+  }
+
+  applySelectedITApplication(capability) {
+    for (var i = 0; i < this.capabilitiesLinkedToItApplication.length; i++) {
+      if (this.capabilitiesLinkedToItApplication[i].name == capability.name) {
+        this.style = { 'border-color': 'red' }
+        break;
+      } else this.style = { 'border-color': 'black' };
+    } return this.style;
+
   }
 
   changeStrategy() {
@@ -173,6 +186,6 @@ export class ExportComponent implements OnInit {
   }
 
   generateEntireMap() {
-    this.ngOnInit();
+    window.location.reload();
   }
 }
