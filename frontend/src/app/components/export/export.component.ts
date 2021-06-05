@@ -106,11 +106,18 @@ export class ExportComponent implements OnInit {
   applySelectedITApplication(capability) {
     for (var i = 0; i < this.capabilitiesLinkedToItApplication.length; i++) {
       if (this.capabilitiesLinkedToItApplication[i].name == capability.name) {
+        if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
+          this.style = { 'border-color': 'green' }
+          break;
+        } if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 5) {
+          this.style = { 'border-color': 'orange' }
+          break;
+        }
         this.style = { 'border-color': 'red' }
         break;
       } else this.style = { 'border-color': 'black' };
     } return this.style;
-
+   
   }
 
   changeStrategy() {
