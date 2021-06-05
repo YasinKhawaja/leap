@@ -16,13 +16,12 @@ export class AppComponent implements OnInit{
   environmentName: string
   username: string
   environmentId: string;
-
+  role: string;
   timedOut = false;
   lastPing?: Date = null;
 
   constructor(public ns: NavbarService, public jwt: JwtService, public router: Router, private idle: Idle, private keepalive: Keepalive) {
     this.title = 'LEAP-webapp'
-    this.environmentName = "Environments";
     
     idle.setIdle(600);
     idle.setTimeout(30);
@@ -92,7 +91,12 @@ export class AppComponent implements OnInit{
   }
 
   getEnvironmentname(): string{
-    this.environmentName = this.ns.getEnvironmentName();
+    this.role = this.jwt.checkRole();
+    if(this.role == "application admin"){
+      this.environmentName = "Companies";
+    } else {
+      this.environmentName = this.ns.getEnvironmentName();
+    }
     return this.environmentName;
   }
 

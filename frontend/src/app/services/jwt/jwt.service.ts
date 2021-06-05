@@ -68,7 +68,6 @@ export class JwtService {
       this.logout()
       Swal.fire('Error', 'Your session has expired', 'error')
     } else {
-      console.log(role);
       return role;
     }
 
@@ -97,8 +96,7 @@ export class JwtService {
         },
         () => {
           this.logout();
-          Swal.fire("Cookie has expired when getting new jwt")
-          //Swal.fire('Error', 'Your session has expired', 'error')
+          Swal.fire('Error', 'Your session has expired', 'error')
           return null;
         }
       );

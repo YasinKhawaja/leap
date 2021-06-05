@@ -13,9 +13,6 @@ The frontend of this project is made with Angular.
 ### Capability-Map
 * Capability map level 3 capabilities
 
-### Company
-* Enum of countries in list with search option since too many options.
-
 ### Strategy
 * Strategy-items are deleted after renaming a strategy
 
