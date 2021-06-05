@@ -6,24 +6,27 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
+import edu.ap.group10.leapwebapp.company.Company;
+import lombok.Data;
 
+@Data
 @Entity
 public class Environment {
 
-	// PROPERTIES
-	// primary key
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	// columns
 	@Column(name = "environment_name", nullable = false, unique = true)
 	private String name;
 
@@ -32,37 +35,16 @@ public class Environment {
 	@JsonManagedReference(value = "environment_reference")
 	private List<Capability> capabilities;
 
+	@ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "company_id", nullable = false)
+	private Company company;
+
 	// CONSTRUCTORS
 	public Environment() {
 	}
 
-	public Environment(String name) {
+	public Environment(String name, Company company) {
 		this.setName(name);
+		this.setCompany(company);
 	}
-
-	// GETTERS & SETTERS
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<Capability> getCapabilities() {
-		return capabilities;
-	}
-
-	public void setCapabilities(List<Capability> capabilities) {
-		this.capabilities = capabilities;
-	}
-
 }

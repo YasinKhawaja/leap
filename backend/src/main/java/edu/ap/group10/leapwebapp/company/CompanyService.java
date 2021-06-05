@@ -1,5 +1,8 @@
 package edu.ap.group10.leapwebapp.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,5 +24,13 @@ public class CompanyService {
     
     public Company addCompany(Company company){
         return companyRepository.save(company);
+    }
+
+    public List<Company> getCompanies() {
+        List<Company> companies = new ArrayList<Company>();
+        for (Company company : companyRepository.findAll()) {
+            companies.add(company);
+        }
+        return companies;
     }
 }

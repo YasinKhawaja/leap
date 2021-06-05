@@ -21,8 +21,8 @@ public class EnvironmentController {
 
 	// To GET all environments
 	@GetMapping("/environments")
-	public List<Environment> getAllEnvironments() {
-		return environmentService.getAllEnvironments();
+	public List<Environment> getAllEnvironments(@RequestParam String companyid) {
+		return environmentService.getAllEnvironments(companyid);
 	}
 
 	// To GET an environment
@@ -33,8 +33,8 @@ public class EnvironmentController {
 
 	// To CREATE an environment
 	@PostMapping("/environments")
-	public Environment createEnvironment(@RequestParam String name) throws ArithmeticException {
-		return environmentService.createEnvironment(name);
+	public Environment createEnvironment(@RequestParam String name, @RequestParam String companyid) throws ArithmeticException {
+		return environmentService.createEnvironment(name, companyid);
 	}
 
 	// To UPDATE an environment

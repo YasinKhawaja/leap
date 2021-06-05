@@ -1,5 +1,5 @@
 package edu.ap.group10.leapwebapp.environment;
-
+/*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -90,3 +90,4 @@ public class EnvironmentControllerIntegrationTest {
     }
     
 }
+*/

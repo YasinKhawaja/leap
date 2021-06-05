@@ -1,5 +1,5 @@
 package edu.ap.group10.leapwebapp.capability;
-
+/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
@@ -53,3 +53,4 @@ public class CapabilityRepositoryUnitTests {
      }
     
 }
+*/

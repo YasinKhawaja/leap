@@ -22,6 +22,11 @@ export class CompanyService {
      return this.http.get<Company>(url)
    }
 
+   public getAllCompanies(role: string): Observable<Company[]> {
+     var url = `${this.companiesUrl}?role=${role}`;
+     return this.http.get<Company[]>(url);
+   } 
+
 
    public register(company: Company) {
     let url = this.companiesUrl;

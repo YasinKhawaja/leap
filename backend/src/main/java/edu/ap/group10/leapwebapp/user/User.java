@@ -73,6 +73,8 @@ public class User implements UserDetails{
         }
         else if (getRole() == 1){
             userRole = "Bewerker";
+        } else if(getRole() == -1) {
+            userRole = "Application admin";
         }
         return Collections.<GrantedAuthority>singleton(new SimpleGrantedAuthority(userRole));
     }

@@ -61,6 +61,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, SecurityConstraints.USER_ADMIN_SIGN_UP).permitAll()
                 .antMatchers(HttpMethod.POST, SecurityConstraints.PASSWORD_RESET).permitAll()
                 .antMatchers(HttpMethod.PUT, SecurityConstraints.PASSWORD_RESET).permitAll()
+                .antMatchers(HttpMethod.POST, SecurityConstraints.APPLICATION_ADMIN).permitAll()
                     .anyRequest()
                     .authenticated()
                     .and()
@@ -73,7 +74,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                                 SecurityConstraints.SIGN_IN_URL,
                                 SecurityConstraints.COMPANY_SIGN_UP,
                                 SecurityConstraints.USER_ADMIN_SIGN_UP,
-                                SecurityConstraints.PASSWORD_RESET
+                                SecurityConstraints.PASSWORD_RESET,
+                                SecurityConstraints.APPLICATION_ADMIN
                                 )
             .csrfTokenRepository(csrfTokenRepository());
     }

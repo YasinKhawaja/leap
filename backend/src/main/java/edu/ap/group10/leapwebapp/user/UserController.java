@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
@@ -36,6 +37,34 @@ public class UserController {
 
     @Autowired
 	private MailService mailService;
+
+    @PostMapping("/application-admin")
+    public User addApplicationAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
+    @RequestParam("secret") String secret) {
+        try {
+            if (secret.equals(SecurityConstraints.APPLICATION_ADMIN_SECRET)){
+
+                Boolean validateUsername = userService.findUsername(username);
+                Boolean validateEmail = userService.findUserEmail(email);
+    
+                if(validateUsername != null && validateUsername){
+                    throw new UnsupportedOperationException("User already exists");
+                }
+                else if (validateEmail != null && validateEmail){
+                    throw new UnsupportedOperationException("Email is in use");
+                } else {
+                    User user = new User(firstname, surname, email, username, password, -1, null);
+                    return userService.addUser(user);
+                }
+            } else {
+                throw new AccessDeniedException("Wrong secret");
+            }
+
+        } catch (Exception e){
+            log.error("Exception", e);
+            throw new EntityExistsException(e);
+        }
+    }
 
     @PostMapping("/useradmin")
     public User addUserAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
