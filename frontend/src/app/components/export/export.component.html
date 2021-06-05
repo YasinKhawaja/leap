@@ -2,7 +2,8 @@
   <div id="pdf">
     <div class="flex-container-1" id="div">
       <ng-container class='container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
-        <div id="div1" class="flex-container-2">{{capabilityLevel1.name}}
+        <!-- <div id="div1" class="flex-container-2" [ngStyle]="{'border-color': capabilitiesLinkedToItApplication.includes(capabilityLevel1) ? 'red' : 'black'}">{{capabilityLevel1.name}} -->
+          <div id="div1" class="flex-container-2" [ngStyle]="{'border-color': 'red' }">{{capabilityLevel1.name}}
           <ng-container class='container' *ngFor='let capabilityLevel2 of capabilityLevel1.subcapabilities'>
             <div id="div2" class="flex-container-3">
               <b>{{capabilityLevel2.name}}</b>
