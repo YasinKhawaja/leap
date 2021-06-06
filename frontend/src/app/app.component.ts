@@ -81,7 +81,7 @@ export class AppComponent implements OnInit{
   }
 
   getEnvironmentId(){
-    this.environmentId = this.ns.getEnvironment();
+    this.environmentId = this.ns.getEnvironmentCookie();
   }
 
   logout(){

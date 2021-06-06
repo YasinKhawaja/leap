@@ -42,6 +42,8 @@ public class ResourceService {
         } else if (resourceRepository.existsByName(resource.getName())) {
             throw new ResourceException(
                     String.format("Resource <strong>%s</strong> already exists!", resource.getName()));
+        } else {
+            resToUpdate.setName(resource.getName());
         }
         resToUpdate.setDescription(resource.getDescription());
         resToUpdate.setFullTimeEquivalentYearlyValue(resource.getFullTimeEquivalentYearlyValue());

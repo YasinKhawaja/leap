@@ -13,4 +13,6 @@ public interface CapResourceRepository extends JpaRepository<CapResource, Long> 
 
     public List<CapResource> findByResourceId(Long id);
 
+    public Boolean existsByCapabilityIdAndResourceId(Long capabilityId, Long resourceId);
+
 }

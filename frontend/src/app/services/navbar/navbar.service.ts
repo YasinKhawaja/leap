@@ -34,7 +34,7 @@ export class NavbarService {
     this.createCookie("Environment", environmentID, 1);
   }
 
-  public getEnvironment(): string {
+  public getEnvironmentCookie(): string {
     if (this.environmentSelected || this.readCookie("Environment") != "") {
       return this.readCookie("Environment");
     }

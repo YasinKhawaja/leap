@@ -50,7 +50,7 @@ export class CapabilityEditComponent implements OnInit {
 
   // To GET the cap current values to initialize the form with
   private getCapabilityCurrentValues(): Observable<Capability> {
-    var envId = this.ns.getEnvironment();
+    var envId = this.ns.getEnvironmentCookie();
     var capId = this.ns.getCapabilityCookie();
 
     return this.cs.getCapability(envId, capId);
@@ -88,7 +88,7 @@ export class CapabilityEditComponent implements OnInit {
 
   // When clicked on "EDIT" and submitting the form
   onSubmit() {
-    var envId = this.ns.getEnvironment();
+    var envId = this.ns.getEnvironmentCookie();
     var capIdToUpdate = this.ns.getCapabilityCookie();
 
     var newCapValues = new Capability(

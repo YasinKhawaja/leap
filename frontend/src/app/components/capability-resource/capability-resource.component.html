@@ -1,1 +1,61 @@
-<p>capability-resource works!</p>
+<main class="main">
+    <h1>Resources of <strong>{{ capability?.name }}</strong></h1>
+    <br>
+    <div class="flex-container">
+        <div class="flex-item">
+            <!-- TABLE -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"></th> <!-- DELETE icon -->
+                        <th scope="col"></th> <!-- EDIT icon -->
+                        <th scope="col">CAPABILITY</th>
+                        <th scope="col">RESOURCE</th>
+                        <th scope="col">NUMBER OF RESOURCES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let capres of capresources">
+                        <!-- DELETE icon -->
+                        <td>
+                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20'
+                                (click)="show('capability-resource-delete', capres)" />
+                        </td>
+                        <!-- EDIT icon -->
+                        <td>
+                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20' />
+                        </td>
+                        <td>
+                            <a class="btn btn-light" role="button" [routerLink]="['/capabilities/update']">
+                                {{ capres.capability.name }}
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-light" role="button" [routerLink]="['/resources']">
+                                {{ capres.resource.name }}
+                            </a>
+                        </td>
+                        <td>{{ capres.numberOfResources }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <br>
+                <div class="flex-container" style="margin-bottom: 0px;">
+                    <div class="flex-item" *ngIf="!showCapResAdd">
+                        <button type="button" class="btn btn-danger" (click)="show('capability-resource-add')">
+                            ADD RESOURCE LINK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-item">
+            <!-- capability-resource-add.component -->
+            <app-capability-resource-add *ngIf="showCapResAdd" [capability]="capability">
+            </app-capability-resource-add>
+            <app-capability-resource-delete *ngIf="showCapResDelete" [capresCurrentValues]="capresCurrentValues">
+            </app-capability-resource-delete>
+        </div>
+    </div>
+</main>

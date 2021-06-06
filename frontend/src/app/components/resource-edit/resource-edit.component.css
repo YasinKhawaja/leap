@@ -1,6 +1,23 @@
-.center {
-    text-align: center;
-    vertical-align: middle;
+.flex-container {
+    display: flex;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.title {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 35px;
+}
+
+.hide {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 35px;
 }
 
 h5, label {
@@ -9,6 +26,18 @@ h5, label {
 
 .red {
     color: red;
+}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
 }
 
 .form-control.ng-touched.ng-invalid {

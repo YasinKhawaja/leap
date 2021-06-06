@@ -20,30 +20,10 @@
     height: 35px;
 }
 
-h5, label {
-    margin: 0px;
-}
-
-.red {
-    color: red;
-}
-
 .center {
     text-align: center;
 }
 
-.left {
-    text-align: left;
-}
-
-.right {
-    text-align: right;
-}
-
-.form-control.ng-touched.ng-invalid {
-    border: 2px solid red;
-}
-
-.form-control.ng-touched.ng-valid {
-    border: 2px solid green;
+h5 {
+    margin: 0px;
 }

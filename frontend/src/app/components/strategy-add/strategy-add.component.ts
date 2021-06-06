@@ -49,7 +49,7 @@ export class StrategyAddComponent implements OnInit {
   
   onSubmit() {
     //var envId = this.router.url.split('/')[2];
-    let envId = this.ns.getEnvironment();
+    let envId = this.ns.getEnvironmentCookie();
     console.log(envId);
     var straToCreate = new Strategy(
       this.name.value,

@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>ADD RESOURCE LINK</strong></h5>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Form -->
+        <form *ngIf="capresAddForm != null" [formGroup]="capresAddForm" (ngSubmit)="onSubmit()">
+            <!-- Resource -->
+            <div class="form-group">
+                <label for="resource">Resource <span class="red">*</span></label>
+                <select id="resource" class="form-control" formControlName="resource">
+                    <option></option>
+                    <option *ngFor="let res of resources" (click)="getResourceFromDropdown(res)">{{ res.name }}</option>
+                </select>
+                <!-- Resource field validation errors -->
+                <div class="alert alert-danger center" *ngIf="(res!.dirty || res!.touched) && res!.invalid">
+                    <div *ngIf="res!.errors!.required">
+                        Resource is required.
+                    </div>
+                </div>
+            </div>
+            <!-- Number of Resources -->
+            <div class="form-group">
+                <label for="numberOfResources">Number of Resources</label>
+                <input id="numberOfResources" type="text" class="form-control" formControlName="numberOfResources">
+                <!-- Number of Resources field validation errors -->
+                <div class="alert alert-danger center" *ngIf="(nor!.dirty || nor!.touched) && nor!.invalid">
+                    <div *ngIf="nor!.errors!.pattern">
+                        Number of Resources should only consist out of numbers.
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="capresAddForm.invalid">ADD</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,4 +1,6 @@
 <main class="main">
+    <h1>Resources</h1>
+    <br>
     <div class="flex-container">
         <div class="flex-item">
             <!-- TABLE -->
@@ -17,11 +19,11 @@
                         <!-- DELETE icon -->
                         <td>
                             <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20'
-                                (click)="deleteResource(res.id)" />
+                                (click)="show('resource-delete', res)" />
                         </td>
                         <!-- EDIT icon -->
                         <td>
-                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20'
+                            <input id="edit" type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20'
                                 (click)="show('resource-edit', res)" />
                         </td>
                         <td>
@@ -47,10 +49,12 @@
         </div>
         <!-- Child comps -->
         <div class="flex-item">
-            <!-- resource-add-component -->
+            <!-- resource-add.component -->
             <app-resource-add *ngIf="showResAdd"></app-resource-add>
-            <!-- resource-edit-component -->
+            <!-- resource-edit.component -->
             <app-resource-edit *ngIf="showResEdit" [resCurrentValues]="resCurrentValues"></app-resource-edit>
+            <!-- resource-delete.component -->
+            <app-resource-delete *ngIf="showResDelete" [resCurrentValues]="resCurrentValues"></app-resource-delete>
             <!-- Linked caps right panel -->
             <div id="linkedCaps" *ngIf="showLinkedCaps">
                 <table class="table table-striped">
@@ -64,7 +68,7 @@
                             <td>
                                 <a class="btn btn-light" role="button"
                                     (click)="setCapabilityCookie(capres.capability.id)"
-                                    [routerLink]="['../capabilities', capres.capability.id, 'update']">
+                                    [routerLink]="['../capabilities/update']">
                                     {{ capres.capability.name }}
                                 </a>
                             </td>

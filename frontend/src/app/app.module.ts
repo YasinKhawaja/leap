@@ -54,6 +54,9 @@ import { UserDeleteComponent } from './components/user-delete/user-delete.compon
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
+import { CapabilityResourceDeleteComponent } from './components/capability-resource-delete/capability-resource-delete.component';
+import { CapabilityResourceAddComponent } from './components/capability-resource-add/capability-resource-add.component';
+import { ResourceDeleteComponent } from './components/resource-delete/resource-delete.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -112,7 +115,10 @@ const appRoutes: Routes = [
     BusinessprocessEditComponent,
     BusinessprocessDeleteComponent,
     ResourceEditComponent,
-    CapabilityResourceComponent
+    CapabilityResourceComponent,
+    CapabilityResourceDeleteComponent,
+    CapabilityResourceAddComponent,
+    ResourceDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +132,7 @@ const appRoutes: Routes = [
     MomentModule,
     NgxPrintModule
   ],
-  providers: [CapabilityService, NgxPrintModule],
+  providers: [CapabilityService, NgxPrintModule, ResourceComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

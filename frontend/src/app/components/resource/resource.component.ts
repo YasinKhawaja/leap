@@ -12,7 +12,7 @@ import { ResourceService } from 'src/app/services/resource/resource.service';
 })
 export class ResourceComponent implements OnInit {
 
-  resources: Resource[];
+  resources: Resource[]; // For table
 
   constructor(private rs: ResourceService, private crs: CapabilityResourceService, private ns: NavbarService) { }
 
@@ -25,33 +25,33 @@ export class ResourceComponent implements OnInit {
     this.rs.getAllResources().subscribe(res => this.resources = res, err => console.error(err));
   }
 
-  // To DELETE a res
-  deleteResource(resId): void {
-    this.rs.deleteResource(resId).subscribe(resp => this.ngOnInit(), err => console.error(err));
-  }
-
   // To GET all cap res links by res id
   capresources: CapResource[];
 
   showLinkedCapabilities(resourceID: string): void {
     this.crs.getAllCapResourcesByResourceId(resourceID)
-      .subscribe(resp => {
-        this.capresources = resp;
+      .subscribe(response => {
+        this.capresources = response;
         this.show('linked-caps');
       });
   }
 
+  // To set the cap cookie when clicked on a cap
   setCapabilityCookie(capabilityID: string): void {
     this.ns.setCapabilityCookie(capabilityID);
   }
 
-  // To show the child comps
-  // resource-add-component
+  /////// To show the child comps ///////
+  resCurrentValues: Resource;
+
+  // resource-add.component
   showResAdd: boolean = false;
 
-  // resource-edit-component
+  // resource-edit.component
   showResEdit: boolean = false;
-  resCurrentValues: Resource;
+
+  // resource-delete.component
+  showResDelete: boolean = false;
 
   // Linked caps right panel
   showLinkedCaps: boolean = false;
@@ -66,10 +66,20 @@ export class ResourceComponent implements OnInit {
       case 'resource-edit':
         // Hide
         this.showResAdd = false;
+        this.showResDelete = false;
         this.showLinkedCaps = false;
         // Show
         this.resCurrentValues = resource;
         this.showResEdit = !this.showResEdit;
+        break;
+      case 'resource-delete':
+        // Hide
+        this.showResAdd = false;
+        this.showResEdit = false;
+        this.showLinkedCaps = false;
+        // Show
+        this.resCurrentValues = resource;
+        this.showResDelete = !this.showResDelete;
         break;
       case 'linked-caps':
         this.hideAll();
@@ -84,6 +94,7 @@ export class ResourceComponent implements OnInit {
   hideAll(): void {
     this.showResAdd = false;
     this.showResEdit = false;
+    this.showResDelete = false;
     this.showLinkedCaps = false;
   }
 

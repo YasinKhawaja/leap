@@ -54,7 +54,7 @@ export class ItapplicationAddComponent {
   constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService) { }
 
   onSubmit(){
-    let environmentId = this.ns.getEnvironment();
+    let environmentId = this.ns.getEnvironmentCookie();
 
     var newITApplication = new Itapplication(
       this.itapplication.value.name,

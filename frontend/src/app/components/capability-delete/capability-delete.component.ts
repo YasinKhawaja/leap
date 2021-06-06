@@ -18,7 +18,7 @@ export class CapabilityDeleteComponent implements OnInit {
   cap: Capability;
 
   constructor(private cs: CapabilityService, private router: Router, private location: Location, private ns: NavbarService) {
-    this.envId = this.ns.getEnvironment();
+    this.envId = this.ns.getEnvironmentCookie();
     this.capId = this.router.url.split('/')[2];
   }
 

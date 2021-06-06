@@ -31,7 +31,7 @@ export class ResourceEditComponent implements OnInit {
         Validators.pattern('[a-zA-Z]+')]
       ],
       description: this.resCurrentValues.description,
-      fullTimeEquivalentYearlyValue: this.resCurrentValues.fullTimeEquivalentYearlyValue
+      fullTimeEquivalentYearlyValue: [this.resCurrentValues.fullTimeEquivalentYearlyValue, Validators.pattern('[0-9]+')]
     });
   }
 
@@ -55,12 +55,17 @@ export class ResourceEditComponent implements OnInit {
 
     this.rs.updateResource(resIdToUpdate, resNewValues)
       .subscribe(
-        resp => {
+        response => {
           this.rc.ngOnInit();
           this.rc.hideAll();
         },
         err => Swal.fire('Error', err.error.message, 'error')
       );
+  }
+
+  // To hide the form
+  hide(): void {
+    this.rc.hideAll();
   }
 
 }

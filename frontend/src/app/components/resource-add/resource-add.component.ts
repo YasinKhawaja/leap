@@ -29,7 +29,7 @@ export class ResourceAddComponent implements OnInit {
         Validators.pattern('[a-zA-Z]+')]
       ],
       description: '',
-      fullTimeEquivalentYearlyValue: ''
+      fullTimeEquivalentYearlyValue: ['', Validators.pattern('[0-9]+')]
     });
   }
 
@@ -52,7 +52,7 @@ export class ResourceAddComponent implements OnInit {
 
     this.rs.createResource(resToCreate)
       .subscribe(
-        resp => {
+        response => {
           this.rc.ngOnInit();
           this.resAddForm.reset();
         },

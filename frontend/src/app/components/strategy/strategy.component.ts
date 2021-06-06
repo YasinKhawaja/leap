@@ -24,7 +24,7 @@ export class StrategyComponent implements OnInit {
 
     //var envId = this.router.url.split('/')[2];
     this.ns.environmentSelect();
-    var envId = this.ns.getEnvironment();
+    var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllStrategyInEnvironment(envId)
                .subscribe(res => { this.strategies = res;  console.log(res); }, 
