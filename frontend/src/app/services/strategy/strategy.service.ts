@@ -7,7 +7,7 @@ import { Strategy } from 'src/app/classes/strategy/strategy';
   providedIn: 'root'
 })
 export class StrategyService {
-  private strategiesServiceURI: string = 'http://localhost:8080/api/strategies';
+  private strategiesServiceURI: string = '//localhost:8080/api/strategies';
   private contentHeaders: HttpHeaders;
 
   

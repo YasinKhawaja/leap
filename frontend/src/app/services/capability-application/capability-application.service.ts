@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
+import { Capability } from 'src/app/classes/capability/capability';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class CapabilityApplicationService {
 
-  private capabilityApplicationURL: string = 'http://localhost:8080/api/capitapp';
+  private capabilityApplicationURL: string = '//localhost:8080/api/capitapp';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router:Router) {
@@ -21,6 +22,12 @@ export class CapabilityApplicationService {
     let url = `${this.capabilityApplicationURL}/${capabilityId}`;
     return this.http.get<CapabilityApplication[]>(url);
   }
+
+  public getCapabilitiesLinkedToITApplication(itApplicationName: string): Observable<Capability[]> {
+    let url = `${this.capabilityApplicationURL}/linked/${itApplicationName}`;
+    return this.http.get<Capability[]>(url);
+  }
+
 
   public createCapabilityApplication(capabilityId: string, capabilityApplication: CapabilityApplication){
     let url = `${this.capabilityApplicationURL}/${capabilityId}`;

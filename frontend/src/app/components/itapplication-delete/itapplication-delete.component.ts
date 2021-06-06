@@ -21,8 +21,6 @@ export class ItapplicationDeleteComponent {
     this.cas.deleteCapabilityApplication(itApplicationId + capabilityId);
     
     this.its.deleteITApplication_CurrentEnvironment(itApplicationId);
-
-    this.navigateBack();
   }
 
   navigateBack() {

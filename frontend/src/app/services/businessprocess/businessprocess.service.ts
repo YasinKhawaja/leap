@@ -10,7 +10,7 @@ import { Businessprocess } from '../../classes/businessprocess/businessprocess';
 })
 export class BusinessprocessService {
 
-  private businessprocessURL: string = 'http://localhost:8080/api/businessprocess'
+  private businessprocessURL: string = '//localhost:8080/api/businessprocess'
   private contentheaders: HttpHeaders
 
   constructor(private http: HttpClient, private router: Router) {

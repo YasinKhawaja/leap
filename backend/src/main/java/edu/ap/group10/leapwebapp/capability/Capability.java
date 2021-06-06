@@ -175,4 +175,35 @@ public class Capability {
 		this.environment = environment;
 	}
 
+	public void setCalculatedInformationQuality(Integer completeness, Integer correctness, Integer availability, Double importanceFactor) {
+		double calculatedInformationQuality;
+		if(getInformationQuality() == null) {
+		calculatedInformationQuality = (completeness + correctness + availability)/3 * importanceFactor;
+		} else {
+			System.out.println(getInformationQuality());
+		calculatedInformationQuality = getInformationQuality() + (completeness + correctness + availability)/3 * importanceFactor;
+		}
+
+		setInformationQuality(round(calculatedInformationQuality,1)); 
+		
+
+	}
+
+	public void setCalculatedApplicationFit(Integer efficiencySupport, Integer functionalCoverage, Integer correctness, Integer futurePotential, Double importanceFactor) {
+		double calculatedApplicationFit;
+		if (getApplicationFit() == null) {
+			calculatedApplicationFit = (efficiencySupport + functionalCoverage + correctness + futurePotential)/4 * importanceFactor;
+		}else {
+			System.out.println(getApplicationFit());
+		calculatedApplicationFit = getApplicationFit() + (efficiencySupport + functionalCoverage + correctness + futurePotential)/4 * importanceFactor;
+		}
+
+		setApplicationFit(round(calculatedApplicationFit, 1));
+	}
+
+	private static double round (double value, int precision) {
+		int scale = (int) Math.pow(10, precision);
+		return (double) Math.round(value * scale) / scale;
+	}
+
 }

@@ -21,7 +21,7 @@ export class ItapplicationComponent implements OnInit {
       .subscribe(result => {
         this.itApplications = result;
       },
-      error => console.log(error));
+        error => console.log(error));
   }
 
 }

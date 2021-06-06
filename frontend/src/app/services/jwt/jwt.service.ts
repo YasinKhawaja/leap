@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, interval, observable, Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { NavbarService } from '../navbar/navbar.service';
 
@@ -10,7 +10,7 @@ import { NavbarService } from '../navbar/navbar.service';
   providedIn: 'root'
 })
 export class JwtService {
-  private jwtUrl: string = 'http://localhost:8080/api/user/jwt';
+  private jwtUrl: string = '//localhost:8080/api/user/jwt';
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
@@ -68,7 +68,6 @@ export class JwtService {
       this.logout()
       Swal.fire('Error', 'Your session has expired', 'error')
     } else {
-      console.log(role);
       return role;
     }
 

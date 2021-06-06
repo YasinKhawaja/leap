@@ -1,13 +1,16 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.nio.file.AccessDeniedException;
+import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.EntityExistsException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +38,34 @@ public class UserController {
     @Autowired
 	private MailService mailService;
 
+    @PostMapping("/application-admin")
+    public User addApplicationAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
+    @RequestParam("secret") String secret) {
+        try {
+            if (secret.equals(SecurityConstraints.APPLICATION_ADMIN_SECRET)){
+
+                Boolean validateUsername = userService.findUsername(username);
+                Boolean validateEmail = userService.findUserEmail(email);
+    
+                if(validateUsername != null && validateUsername){
+                    throw new UnsupportedOperationException("User already exists");
+                }
+                else if (validateEmail != null && validateEmail){
+                    throw new UnsupportedOperationException("Email is in use");
+                } else {
+                    User user = new User(firstname, surname, email, username, password, -1, null);
+                    return userService.addUser(user);
+                }
+            } else {
+                throw new AccessDeniedException("Wrong secret");
+            }
+
+        } catch (Exception e){
+            log.error("Exception", e);
+            throw new EntityExistsException(e);
+        }
+    }
+
     @PostMapping("/useradmin")
     public User addUserAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
     @RequestParam("token")String confirmationToken) {
@@ -47,10 +78,11 @@ public class UserController {
             }
             else if (validateEmail != null && validateEmail){
                 throw new UnsupportedOperationException("Email is in use");
+            } else {
+                User user = new User(firstname, surname, email, username, password, 0, userService.validateToken(confirmationToken));
+                confirmationTokenService.deleteConfirmationToken(confirmationToken);
+                return userService.addUser(user);
             }
-            User user = new User(firstname, surname, email, username, password, 0, userService.validateToken(confirmationToken));
-            confirmationTokenService.deleteConfirmationToken(confirmationToken);
-            return userService.addUser(user);
 
         } catch (Exception e){
             log.error("Exception", e);
@@ -59,7 +91,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
+    public void addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
     @RequestParam("email") String email, @RequestParam("companyId") String company, @RequestParam("username") String username,
     @RequestParam("role") Integer role){
         try{
@@ -73,16 +105,18 @@ public class UserController {
                 throw new UnsupportedOperationException("Email is in use");
             }
 
-            String password = userService.generatePassword();
+            byte[] bytes = new byte[10];
+            new Random().nextBytes(bytes);
+            String password = Base64.getEncoder().encodeToString(bytes);
             User user = new User(firstName, surname, email, username, password, role, userService.findCompany(Long.parseLong(company)));
-            
-            userService.sendMail(email, username, password);
-            
-            return userService.addUser(user);
+
+            userService.addUser(user);
+
+            userService.sendMail(email, username, user.getId().toString());
 
         } catch (Exception e){
             log.error("Exception", e);
-            return null;
+            throw e;
         }        
     }
 
@@ -107,17 +141,14 @@ public class UserController {
         return userService.findUserById(userid);
     }
 
-    @PostMapping("/user/login")
-    public void login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
-        response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
-        response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
-        response.setHeader("Authorization", SecurityConstraints.TOKEN_PREFIX + userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)));
-    }
-
-    //throw failed login exception
     @GetMapping("/user/login")
-    public String error(@RequestParam("token") Authentication auth, HttpServletResponse response){
-        return "Failed to log in";
+    public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
+        String value = Base64.getEncoder().withoutPadding().encodeToString(userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)).getBytes());
+        String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(900);
+        response.addCookie(cookie);
     }
 
     @PostMapping("/user/jwt")
@@ -142,8 +173,8 @@ public class UserController {
         mailService.sendMail(mail);
     }
 
-    @PutMapping("/user/resetpassword/{token}")
-    public void resetPassword(@PathVariable String token, @RequestParam String password) {
+    @PutMapping("/user/resetpassword")
+    public void resetPassword(@RequestParam String token, @RequestParam String password) {
 
         userService.changePassword(Long.parseLong(userService.getUserIDJwt(token)), password);
     }

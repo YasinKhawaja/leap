@@ -1,8 +1,10 @@
 package edu.ap.group10.leapwebapp.company;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,15 @@ public class CompanyController {
 
   @Autowired
 	private MailService mailService;
+
+  @GetMapping("/companies")
+  public List<Company> getAllCompanies(@RequestParam String role){
+    if (role.equals("application admin")){
+      return companyService.getCompanies();
+    } else {
+      throw new AccessDeniedException("Only application admins can access this");
+    }
+  }
 
   @PostMapping("/companies")
   public void addNewCompany(@RequestParam("vatNumber") String vatNumber

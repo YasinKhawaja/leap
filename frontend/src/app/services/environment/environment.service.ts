@@ -8,23 +8,23 @@ import { Environment } from 'src/app/classes/environment/environment';
 })
 export class EnvironmentService {
 
-  private environmentsServiceURI: string = 'http://localhost:8080/api/environments';
+  private environmentsServiceURI: string = '//localhost:8080/api/environments';
 
   constructor(private http: HttpClient) { }
 
   // To GET all environments
-  getAllEnvironments(): Observable<Environment[]> {
-    var url = `${this.environmentsServiceURI}`;
+  getAllEnvironments(companyid: string): Observable<Environment[]> {
+    var url = `${this.environmentsServiceURI}?companyid=${companyid}`;
 
     return this.http.get<Environment[]>(url);
   }
 
   // To CREATE an environment
-  createEnvironment(envName: string): Observable<Environment> {
+  createEnvironment(envName: string, companyid: string): Observable<Environment> {
     var url = `${this.environmentsServiceURI}`;
     var env = new Environment(envName);
 
-    var nameParam = new HttpParams().set('name', env.name);
+    var nameParam = new HttpParams().set('name', env.name).set('companyid', companyid);
 
     return this.http.post<Environment>(url, nameParam);
   }

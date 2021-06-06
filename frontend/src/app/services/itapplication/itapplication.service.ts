@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class ItapplicationService {
 
-  private itApplicationURL: string = 'http://localhost:8080/api/itapplications';
+  private itApplicationURL: string = '//localhost:8080/api/itapplications';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,11 +13,13 @@ import Swal from 'sweetalert2';
 export class EnvironmentAddComponent implements OnInit {
 
   envAddForm: FormGroup;
+  companyid: string;
 
-  constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router) { }
+  constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router, private jwt: JwtService) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.companyid = this.jwt.checkCompany();
   }
 
   // To initialize the envAddForm
@@ -32,7 +35,7 @@ export class EnvironmentAddComponent implements OnInit {
   get name() { return this.envAddForm.get('name'); }
 
   onSubmit(): void {
-    this.es.createEnvironment(this.name.value)
+    this.es.createEnvironment(this.name.value, this.companyid)
       .subscribe(
         res => {
           console.log(res);

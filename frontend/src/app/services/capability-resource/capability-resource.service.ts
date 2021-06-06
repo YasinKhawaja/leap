@@ -8,7 +8,7 @@ import { CapResource } from 'src/app/classes/capabillity-resource/capresource';
 })
 export class CapabilityResourceService {
 
-  private capresourceServiceURI: string = 'http://localhost:8080/api/capresources';
+  private capresourceServiceURI: string = '//localhost:8080/api/capresources';
 
   constructor(private http: HttpClient) { }
 

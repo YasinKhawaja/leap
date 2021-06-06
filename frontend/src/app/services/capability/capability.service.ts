@@ -8,7 +8,7 @@ import { Capability } from '../../classes/capability/capability';
 })
 export class CapabilityService {
 
-  private capabilitiesServiceURI: string = 'http://localhost:8080/api/capabilities';
+  private capabilitiesServiceURI: string = '//localhost:8080/api/capabilities';
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient) {

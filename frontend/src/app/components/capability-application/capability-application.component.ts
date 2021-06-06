@@ -22,6 +22,7 @@ export class CapabilityApplicationComponent implements OnInit {
       .subscribe(
         result => {
           this.capabilityApplications = result;
+          console.log(this.capabilityApplications);
         },
         error => {
           Swal.fire('Error', error.error.message, 'error')

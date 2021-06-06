@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
 import { NgxPrintModule } from "ngx-print";
 import pptxgen from "pptxgenjs";
+import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
@@ -22,6 +23,8 @@ export class ExportComponent implements OnInit {
   capabilitiesLevel1: Capability[]
   capabilitiesLevel2: Capability[]
   capabilitiesLevel3: Capability[]
+
+  capabilitiesLinkedToItApplication: Capability[]
 
   itApplications: string[]
 
@@ -42,11 +45,12 @@ export class ExportComponent implements OnInit {
   })
 
   constructor(private cs: CapabilityService, private ns: NavbarService, private print: NgxPrintModule, private fb: FormBuilder,
-    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService) {
+    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService) {
     this.capabilities = [];
     this.itApplications = [];
     this.strategies = [];
     this.strategyItems = [];
+    this.capabilitiesLinkedToItApplication = [];
   }
 
   ngOnInit(): void {
@@ -86,7 +90,14 @@ export class ExportComponent implements OnInit {
   }
 
   changeITApplication() {
-    console.log(this.itApplication.value.itApplicationName)
+    console.log(this.itApplication.value.itApplicationName);
+    this.cis.getCapabilitiesLinkedToITApplication(this.itApplication.value.itApplicationName)
+      .subscribe(result => {
+        this.capabilitiesLinkedToItApplication = result;
+        console.log(result);
+      },
+        error => console.log(error))
+    
   }
 
   changeStrategy() {

@@ -13,8 +13,7 @@
                             <label for="name">Name <span class="red">*</span></label>
                             <input id="name" type="text" class="form-control" formControlName="name" required>
                             <!-- Name field validation errors -->
-                            <div class="alert alert-danger center"
-                                *ngIf="name!.invalid && (name!.dirty || name!.touched)">
+                            <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
                                 <div *ngIf="name!.errors!.required">
                                     Name is required.
                                 </div>
@@ -40,8 +39,7 @@
                         <!-- Target Operation Model -->
                         <div class="form-group">
                             <label for="targetOperationModel">Target Operation Model <span class="red">*</span></label>
-                            <select id="targetOperationModel" class="form-control"
-                                formControlName='targetOperationModel' required>
+                            <select id="targetOperationModel" class="form-control" formControlName='targetOperationModel' required>
                                 <option *ngFor="let type of eTom | keyvalue" [ngValue]="type.value">{{ type.value }}
                                 </option>
                             </select>
@@ -55,13 +53,11 @@
                         <!-- Resources Quality -->
                         <div class="form-group">
                             <label for="resourcesQuality">Resources quality</label>
-                            <input id="resourcesQuality" type="text" class="form-control"
-                                formControlName="resourcesQuality">
+                            <input id="resourcesQuality" type="text" class="form-control" formControlName="resourcesQuality">
                             <!-- Resources Quality field validation errors -->
                             <div class="alert alert-danger center" *ngIf="rq!.invalid">
                                 <div *ngIf="rq!.errors!.pattern">
-                                    Resources quality should be a number between 1 and 5:<br>
-                                    (1 = poor, 3 = fair, 5 = good)
+                                    Resources quality should be a number between 1 and 5:<br> (1 = poor, 3 = fair, 5 = good)
                                 </div>
                             </div>
                         </div>
@@ -122,7 +118,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success" [routerLink]="['']" role="button">EDIT</a>
+                                    <a class="btn btn-success" [routerLink]="['/capability-businessprocess']" role="button">EDIT</a>
                                 </td>
                             </tr>
                         </tbody>

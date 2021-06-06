@@ -96,6 +96,23 @@ export class NavbarService {
     return null;
   }
 
+  getCsrf(){
+    var nameCK = `XSRF-TOKEN=`;
+    var cookieValues = document.cookie.split(';');
+
+    for (var i = 0; i < cookieValues.length; i++) {
+      var cookie = cookieValues[i];
+
+      while (cookie.charAt(0) == ' ') {
+        cookie = cookie.substring(1, cookie.length);
+      }
+      if (cookie.indexOf(nameCK) == 0) {
+        return cookie.substring(nameCK.length, cookie.length);
+      }
+    }
+    return null;
+  }
+
   eraseCookie(name: string) {
     this.createCookie((name), "", -1);
   }

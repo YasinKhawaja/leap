@@ -72,12 +72,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public String onAuthenticationSuccess(Authentication auth) {
         User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
-        return JWT.create()
-        .withClaim("role", auth.getAuthorities().toString())
-        .withClaim("company", user.getCompany().getId().toString())
-                .withSubject(auth.getPrincipal().toString())
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+        if(user.getCompany() != null){
+            return JWT.create()
+            .withClaim("role", auth.getAuthorities().toString())
+            .withClaim("company", user.getCompany().getId().toString())
+            .withSubject(auth.getPrincipal().toString())
+            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+            .withIssuer("LEAP")
+            .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+        } else {
+            return JWT.create()
+            .withClaim("role", auth.getAuthorities().toString())
+            .withSubject(auth.getPrincipal().toString())
+            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+            .withIssuer("LEAP")
+            .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+        }
+       
     }
 
     public String newJwt(String token) {
@@ -99,6 +110,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             return JWT.create()
                     .withClaim("role", role)
                     .withClaim("company", company)
+                    .withSubject(jwt.getSubject())
+                    .withIssuer(jwt.getIssuer())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(algorithm);
         } else {
@@ -123,5 +136,37 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             log.error("JWT verification of user id failed", e);
             return null;
         }
+    }
+
+    public boolean verifyJwt(String token){
+        Boolean verify = false;
+        DecodedJWT jwt = null;
+        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        try {
+            jwt = verifier.verify(token);
+        } catch (JWTVerificationException e) {
+            log.error("JWT verification of user id failed", e);
+        }
+
+        if(jwt != null) {
+            verify = true;
+        }
+
+        return verify;
+    }
+
+    public Authentication confirmAuth(String token){
+        DecodedJWT jwt = null;
+        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        try {
+            jwt = verifier.verify(token);
+        } catch (JWTVerificationException e) {
+            log.error("JWT verification of user id failed", e);
+        }
+
+        UserDetails user = userService.findUserByUsername(jwt.getSubject());
+        return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());  
     }
 }

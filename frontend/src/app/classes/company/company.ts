@@ -1,6 +1,9 @@
 import { HttpParams } from "@angular/common/http";
 
 export class Company {
+
+    public id: string;
+    
     constructor(
         public vatNumber: string,
         public companyName: string,

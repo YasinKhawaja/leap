@@ -10,7 +10,9 @@ import javax.persistence.Table;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
 import edu.ap.group10.leapwebapp.itapplication.ITApplication;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "CapItApp")
 public class CapabilityApplication {
@@ -48,8 +50,8 @@ public class CapabilityApplication {
 
     public CapabilityApplication(Double importance, Integer businessEfficiencySupport, Integer businessFunctionalCoverage, Integer businessCorrectness,
     Integer businessFuturePotential, Integer informationCompleteness, Integer informationCorrectness, Integer informationAvailability, Capability capability,
-    ITApplication itApplications){
-        setId(Long.parseLong(itApplications.getId().toString() + capability.getId().toString()));
+    ITApplication itApplication){
+        setId(Long.parseLong(itApplication.getId().toString() + capability.getId().toString()));
         setImportance(importance);
         setBusinessEfficiencySupport(businessEfficiencySupport);
         setBusinessFunctionalCoverage(businessFunctionalCoverage);
@@ -59,95 +61,6 @@ public class CapabilityApplication {
         setInformationCorrectness(informationCorrectness);
         setInformationAvailability(informationAvailability);
         setCapability(capability);
-        setItApplications(itApplications);
+        setItApplication(itApplication);
     }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long capabilityApplicationId) {
-        this.id = capabilityApplicationId;
-    }
-
-    public Double getImportance() {
-        return this.importance;
-    }
-
-    public void setImportance(Double importance) {
-        this.importance = importance;
-    }
-
-    public Integer getBusinessEfficiencySupport() {
-        return this.businessEfficiencySupport;
-    }
-
-    public void setBusinessEfficiencySupport(Integer businessEfficiencySupport) {
-        this.businessEfficiencySupport = businessEfficiencySupport;
-    }
-
-    public Integer getBusinessFunctionalCoverage() {
-        return this.businessFunctionalCoverage;
-    }
-
-    public void setBusinessFunctionalCoverage(Integer businessFunctionalCoverage) {
-        this.businessFunctionalCoverage = businessFunctionalCoverage;
-    }
-
-    public Integer getBusinessCorrectness() {
-        return this.businessCorrectness;
-    }
-
-    public void setBusinessCorrectness(Integer businessCorrectness) {
-        this.businessCorrectness = businessCorrectness;
-    }
-
-    public Integer getBusinessFuturePotential() {
-        return this.businessFuturePotential;
-    }
-
-    public void setBusinessFuturePotential(Integer businessFuturePotential) {
-        this.businessFuturePotential = businessFuturePotential;
-    }
-
-    public Integer getInformationCompleteness() {
-        return this.informationCompleteness;
-    }
-
-    public void setInformationCompleteness(Integer informationCompleteness) {
-        this.informationCompleteness = informationCompleteness;
-    }
-
-    public Integer getInformationCorrectness() {
-        return this.informationCorrectness;
-    }
-
-    public void setInformationCorrectness(Integer informationCorrectness) {
-        this.informationCorrectness = informationCorrectness;
-    }
-
-    public Integer getInformationAvailability() {
-        return this.informationAvailability;
-    }
-
-    public void setInformationAvailability(Integer informationAvailability) {
-        this.informationAvailability = informationAvailability;
-    }
-
-    public Capability getCapability() {
-        return this.capability;
-    }
-
-    public void setCapability(Capability capability) {
-        this.capability = capability;
-    }
-    
-    public ITApplication getItApplication() {
-        return this.itApplication;
-    }
-
-    public void setItApplications(ITApplication itApplication) {
-        this.itApplication = itApplication;
-    }
-
 }
