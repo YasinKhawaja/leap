@@ -10,6 +10,11 @@ export class NavbarService {
   environmentID: string;
   environmentName: string;
 
+  strItemSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  strItemID: string;
+  strItemName: string;
+
+
 
   public environmentStatus(): BehaviorSubject<boolean> {
     if (this.readCookie("Environment") != undefined) {
@@ -126,5 +131,37 @@ export class NavbarService {
   getResourceCookie(): string {
     return this.readCookie("Resource");
   }
+
+
+ //
+
+ public strategyItemStatus(): BehaviorSubject<boolean> {
+  this.strItemSelected.next(JSON.parse(this.readCookie("Selected")));
+  return this.strItemSelected;
+}
+
+public strategyItemSelect() {
+  this.strItemSelected.next(true);
+  this.createCookie("Selected", this.strItemSelected.value.toString(), 1)
+}
+
+public strategyItemDeselect() {
+  this.strItemSelected.next(false);
+  this.eraseCookie("Selected");
+  this.eraseCookie("StrategyItem");
+}
+
+ public setStrategyItem(strategyItemId: string) {
+  this.createCookie("StrategyItem", strategyItemId, 1);
+}
+
+public getStrategyItem(): string{
+  if(this.strItemSelected) {
+    return this.readCookie("StrategyItem");
+  }
+  else {
+    return "no strategy Item was selected"
+  }
+}
 
 }

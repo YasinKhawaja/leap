@@ -76,4 +76,8 @@ public void deleteStrategyItem(Long strId, Long strItemId) {
   strategyItemRepository.delete(strItemFound.get(0));
 }
 
+public StrategyItem findStrategyItemByName(String strategyItemName){
+  return strategyItemRepository.findByName(strategyItemName);
+}
+
 }

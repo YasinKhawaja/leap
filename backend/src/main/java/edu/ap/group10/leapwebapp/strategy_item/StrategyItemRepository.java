@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface StrategyItemRepository extends JpaRepository<StrategyItem, Long> {
     
     public List<StrategyItem> findByStrategy(Strategy strategy);
+    public StrategyItem findByName(String name);
 }

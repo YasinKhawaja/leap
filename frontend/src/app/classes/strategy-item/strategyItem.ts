@@ -5,7 +5,6 @@ export class StrategyItem {
     public id: string
 
     constructor(public name: string , public description: string){
-        this.id = '';
     }
 
     getParams(): HttpParams {
