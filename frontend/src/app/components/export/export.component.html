@@ -2,12 +2,13 @@
   <div id="pdf">
     <div class="flex-container-1" id="div">
       <ng-container class='container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
-        <div id="div1" class="flex-container-2">{{capabilityLevel1.name}}
+        <!-- <div id="div1" class="flex-container-2" [ngStyle]="firstClick == true ? {'border-color': capabilitiesLinkedToItApplication.filter(e => e.name === capabilityLevel1.name) ? 'red' : 'black'} : {'border-color' : 'red'}">{{capabilityLevel1.name}} -->
+          <div id="div1" class="flex-container-2" [ngStyle]="applySelectedITApplication(capabilityLevel1)">{{capabilityLevel1.name}}
           <ng-container class='container' *ngFor='let capabilityLevel2 of capabilityLevel1.subcapabilities'>
-            <div id="div2" class="flex-container-3">
+            <div id="div2" class="flex-container-3" [ngStyle]="applySelectedITApplication(capabilityLevel2)">
               <b>{{capabilityLevel2.name}}</b>
               <ng-container class='container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
-                <div id="div3">
+                <div id="div3" [ngStyle]="applySelectedITApplication(capabilityLevel3)">
                   {{capabilityLevel3.name}}
                 </div>
               </ng-container>
