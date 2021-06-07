@@ -23,7 +23,7 @@ public class CapabilityApplicationService {
     private ITApplicationRepository itApplicationRepository;
 
     public List<CapabilityApplication> getCapabilityApplications(String capabilityId){
-        List<CapabilityApplication> capabilityApplications = new ArrayList<CapabilityApplication>();
+        List<CapabilityApplication> capabilityApplications = new ArrayList<>();
         for (CapabilityApplication capabilityApplication : capabilityApplicationRepository.findAll()) {
             if(capabilityApplication.getCapability().getId().equals(Long.parseLong(capabilityId))){
                 capabilityApplications.add(capabilityApplication);
@@ -34,7 +34,7 @@ public class CapabilityApplicationService {
 
     public List<Capability> getAllCapabilitiesLinkedToITApplication(String itApplicationName) {
         ITApplication itApplication = itApplicationRepository.findByName(itApplicationName);
-        List<Capability> capabilities = new ArrayList<Capability>();
+        List<Capability> capabilities = new ArrayList<>();
         for (CapabilityApplication capabilityApplication : capabilityApplicationRepository.findAll()) {
             if(capabilityApplication.getItApplication().getId().equals(itApplication.getId())){
                 capabilities.add(capabilityApplication.getCapability());

@@ -12,14 +12,11 @@ import lombok.Data;
 @Data
 public class Resource {
 
-    // PROPERTIES
-    // primary key
     @Id
     @GeneratedValue
     @Column(name = "resource_id")
     private Long id;
 
-    // columns
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -29,7 +26,6 @@ public class Resource {
     @Column
     private Integer fullTimeEquivalentYearlyValue;
 
-    // CONSTRUCTORS
     public Resource() {
     }
 

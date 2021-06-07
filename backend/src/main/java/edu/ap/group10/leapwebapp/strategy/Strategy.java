@@ -17,13 +17,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.strategy_item.StrategyItem;
+import lombok.Data;
 
 
 @Entity
+@Data
 public class Strategy {
 
-	// PROPERTIES
-	// primary key
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -59,56 +59,4 @@ public class Strategy {
 		this.setTimeframeTo(timeframeTo);
 		this.setEnvironment(environment);
 	}
-
-	
-	public Long getId() {
-			return id;
-	}
-	
-	public void setId(Long id) {
-			this.id = id;
-	}
-
-    public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getTimeframeFrom() {
-		return timeframeFrom;
-	}
-
-	public void setTimeframeFrom(String timeframeFrom) {
-		this.timeframeFrom = timeframeFrom;
-	}
-
-	public String getTimeframeTo() {
-		return timeframeTo;
-	}
-
-	public void setTimeframeTo(String timeframeTo) {
-		this.timeframeTo = timeframeTo;
-	}
-
-	public Environment getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(Environment environment) {
-		this.environment = environment;
-	}
-
-	
-	public List<StrategyItem> getStrategyItems() {
-		return strategyItems;
-	}
-
-	public void setStrategyItems(List<StrategyItem> strategyItems) {
-		this.strategyItems = strategyItems;
-	}
-
-
 }

@@ -27,7 +27,7 @@ public class CapabilityBusinessProcessService {
     private BusinessProcessRepository businessProcessRepository;
 
     public List<CapabilityBusinessProcess> getCapabilityBusinessProcesses(String capabilityid) {
-        List<CapabilityBusinessProcess> capabilityBusinessProcesses = new ArrayList<CapabilityBusinessProcess>();
+        List<CapabilityBusinessProcess> capabilityBusinessProcesses = new ArrayList<>();
         for (CapabilityBusinessProcess capabilityBusinessProcess : capabilityBusinessProcessRepository.findAll()){
             if(capabilityBusinessProcess.getCapability().getId().equals(Long.parseLong(capabilityid))){
                 capabilityBusinessProcesses.add(capabilityBusinessProcess);

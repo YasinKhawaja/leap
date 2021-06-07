@@ -9,7 +9,9 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import edu.ap.group10.leapwebapp.strategy.Strategy;
+import lombok.Data;
 
+@Data
 @Entity
 public class StrategyItem {
 
@@ -36,37 +38,5 @@ public class StrategyItem {
     public StrategyItem(String name, String description) {
 		this.name = name;
         this.description=description;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-    public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-    public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Strategy getStrategy() {
-		return strategy;
-	}
-
-	public void setStrategy(Strategy strategy) {
-		this.strategy = strategy;
 	}
 }

@@ -23,33 +23,25 @@ public class CapResourceService {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    // To GET all cap res links
     public List<CapResource> getAllCapResources() {
         return capResourceRepository.findAll();
     }
 
-    // To GET all cap res links by cap id
     public List<CapResource> getAllCapResourcesByCapability(Long id) {
         return capResourceRepository.findByCapabilityId(id);
     }
 
-    // To GET all cap res links by res id
     public List<CapResource> getAllCapResourcesByResourceId(Long id) {
         return capResourceRepository.findByResourceId(id);
     }
 
-    // To CREATE a cap res link
     public CapResource createCapResource(Long capId, Long resId) {
-        // Find the cap & res to link together
         Capability cap = capabilityRepository.findById(capId).orElseThrow();
         Resource res = resourceRepository.findById(resId).orElseThrow();
-        // Instantiate the link
         CapResource capresLink = new CapResource(cap, res);
-        // Save in DB
         return capResourceRepository.save(capresLink);
     }
 
-    // To UPDATE a cap res link props
     public CapResource updateCapResource(Long id, Integer numberOfResources) {
         CapResource capresToUp = capResourceRepository.findById(id).orElseThrow();
 
@@ -58,7 +50,6 @@ public class CapResourceService {
         return capResourceRepository.save(capresToUp);
     }
 
-    // To DELETE a cap res link
     public void deleteCapResource(Long id) {
         capResourceRepository.deleteById(id);
     }

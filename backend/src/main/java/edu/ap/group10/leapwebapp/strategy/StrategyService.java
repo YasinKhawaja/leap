@@ -15,7 +15,7 @@ public class StrategyService {
     private StrategyRepository strategyRepository;
 
  public List<Strategy> getStrategies(Long environmentId){
-    List<Strategy> strategies = new ArrayList<Strategy>();
+    List<Strategy> strategies = new ArrayList<>();
     for (Strategy strategy : strategyRepository.findAll()) {
         if(strategy.getEnvironment().getId().equals(environmentId)){
             strategies.add(strategy);

@@ -21,7 +21,6 @@ public class EnvironmentService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    // To GET all environments
     public List<Environment> getAllEnvironments(String companyid) {
         List<Environment> environments = new ArrayList<>();
         for (Environment environment : environmentRepository.findAll()) {
@@ -32,12 +31,10 @@ public class EnvironmentService {
         return environments;
     }
 
-    // To GET an environment
     public Environment getEnvironment(Long id) throws NoSuchElementException {
         return environmentRepository.findById(id).orElseThrow();
     }
 
-    // To CREATE an environment
     public Environment createEnvironment(String name, String companyid) throws ArithmeticException {
         if (environmentRepository.existsByName(name).booleanValue()) {
             throw new ArithmeticException("Environment already exists!");
@@ -49,7 +46,6 @@ public class EnvironmentService {
         return environmentRepository.save(envToSave);
     }
 
-    // To UPDATE an environment
     public Environment updateEnvironment(Long id, String name) throws NoSuchElementException, ArithmeticException {
         Environment envToUpdate = environmentRepository.findById(id).orElseThrow();
 
@@ -62,7 +58,6 @@ public class EnvironmentService {
         return environmentRepository.save(envToUpdate);
     }
 
-    // To DELETE an environment
     public void deleteEnvironment(Long id) throws IllegalArgumentException {
         environmentRepository.deleteById(id);
     }

@@ -14,7 +14,7 @@ public class ITApplicationService {
     private ITApplicationRepository itApplicationRepository;
 
     public List<ITApplication> getITApplications(String environmentId){
-        List<ITApplication> itApplications = new ArrayList<ITApplication>();
+        List<ITApplication> itApplications = new ArrayList<>();
         for (ITApplication itApplication : itApplicationRepository.findAll()) {
             if(itApplication.getEnvironment().getId().equals(Long.parseLong(environmentId))){
                 itApplications.add(itApplication);

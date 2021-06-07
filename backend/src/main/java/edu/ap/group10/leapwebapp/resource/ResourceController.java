@@ -21,13 +21,11 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    // To GET all resources
     @GetMapping("/resources")
     public List<Resource> getAllResources() {
         return resourceService.getAllResources();
     }
 
-    // To GET a resource
     @GetMapping("/resources/{id}")
     public Resource getResource(@PathVariable Long id) {
         try {
@@ -38,7 +36,6 @@ public class ResourceController {
         }
     }
 
-    // To CREATE a resource
     @PostMapping("/resources")
     public Resource createResource(@RequestBody Resource resource) {
         try {
@@ -49,7 +46,6 @@ public class ResourceController {
         }
     }
 
-    // To UPDATE a resource
     @PutMapping("/resources/{id}")
     public Resource updateResource(@PathVariable Long id, @RequestBody Resource resource) {
         try {
@@ -60,7 +56,6 @@ public class ResourceController {
         }
     }
 
-    // To DELETE a resource
     @DeleteMapping("/resources/{id}")
     public void deleteResource(@PathVariable Long id) {
         try {

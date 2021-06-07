@@ -38,7 +38,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompanies() {
-        List<Company> companies = new ArrayList<Company>();
+        List<Company> companies = new ArrayList<>();
         for (Company company : companyRepository.findAll()) {
             companies.add(company);
         }
