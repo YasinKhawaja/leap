@@ -1,5 +1,4 @@
 package edu.ap.group10.leapwebapp.capability;
-/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 
@@ -55,8 +55,9 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenEnvironmentId_whenGetAllCapabilitiesInEnvironment_returnsCapabilitiesInEnvironment() {
     // given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     String name = "Siemens";
-    Environment environment = new Environment(name);
+    Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -82,8 +83,9 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenEnvironmetId_whenGetACapabilityInEnvironment_returnsCapabilityInEnvironment() {
     // given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     String name = "Siemens";
-    Environment environment = new Environment(name);
+    Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -128,8 +130,9 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenCapabilityEnvironmentIdParentCapabilityId_whenCreateCapability_returnsCapabilityCreated() {
     // given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     String name = "Siemens";
-    Environment environment = new Environment(name);
+    Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -160,7 +163,7 @@ public class CapabilityServiceUnitTests {
     verify(capabilityRepositoryMock).save(capabilityArgumentCaptor.capture());
 
     assertEquals(capabilityArgumentCaptor.getValue().getName(), capabilityToCreate.getName());
-    assertEquals(capabilityArgumentCaptor.getValue().getLevel(), 3);
+    assertEquals(3, capabilityArgumentCaptor.getValue().getLevel());
     assertEquals(capabilityArgumentCaptor.getValue().getParent(), capabilityParent);
     assertEquals(capabilityArgumentCaptor.getValue().getEnvironment(), environment);
     assertEquals(capabilityArgumentCaptor.getValue(), capabilityToCreate);
@@ -170,8 +173,9 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenCapabilityEnvironmentIdCapabilityId_whenUpdateCapability_returnsUpdatedCapability() {
     // given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     String name = "Siemens";
-    Environment environment = new Environment(name);
+    Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -206,8 +210,9 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenEnvironmentIdCapabilityId_whenDeleteCapability_returnsCapabilityIsDeleted() {
     // given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     String name = "Siemens";
-    Environment environment = new Environment(name);
+    Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -235,4 +240,3 @@ public class CapabilityServiceUnitTests {
   }
 
 }
-*/

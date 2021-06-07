@@ -1,5 +1,4 @@
 package edu.ap.group10.leapwebapp.environment;
-/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,10 +17,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import edu.ap.group10.leapwebapp.company.Company;
+import edu.ap.group10.leapwebapp.company.CompanyRepository;
+
 @SpringBootTest
 @AutoConfigureTestDatabase
 @ExtendWith(MockitoExtension.class)
 class EnvironmentServiceUnitTest {
+
+    @Mock
+    private CompanyRepository companyRepositoryMock;
 
     @Mock
     private EnvironmentRepository environmentRepositoryMock;
@@ -32,8 +37,9 @@ class EnvironmentServiceUnitTest {
     @Test
     void givenEnvironmentId_whenGetEnvironmentById_returnsEnvironmentFound() {
         // given
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
         String name = "Siemens";
-        Environment environment = new Environment(name);
+        Environment environment = new Environment(name, company);
         environment.setId(1L);
         Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -51,10 +57,12 @@ class EnvironmentServiceUnitTest {
     @Test
     void givenThreeEnvironments_whenGetAllEnvironments_returnsAllEnvironments() {
         // When
-        when(environmentRepositoryMock.findAll()).thenReturn(Arrays.asList(new Environment("EnvironmentTest0"),
-                new Environment("EnvironmentTest1"), new Environment("EnvironmentTest2")));
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        company.setId(1L);
+        when(environmentRepositoryMock.findAll()).thenReturn(Arrays.asList(new Environment("EnvironmentTest0", company),
+                new Environment("EnvironmentTest1", company), new Environment("EnvironmentTest2", company)));
 
-        List<Environment> actualEnvsFound = sut.getAllEnvironments();
+        List<Environment> actualEnvsFound = sut.getAllEnvironments(company.getId().toString());
 
         // Then
         verify(environmentRepositoryMock).findAll();
@@ -67,24 +75,30 @@ class EnvironmentServiceUnitTest {
     @Test
     void givenEnvironmentName_whenCreateEnvironment_returnsEnvironmentCreated() {
         // Given
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        company.setId(1L);
         String envName = "EnvironmentTest";
         ArgumentCaptor<Environment> aCaptor = ArgumentCaptor.forClass(Environment.class);
 
+        Mockito.when(companyRepositoryMock.findById(company.getId())).thenReturn(Optional.of(company));
+
         // When
-        sut.createEnvironment(envName);
+        sut.createEnvironment(envName, company.getId().toString());
 
         // Then
         verify(environmentRepositoryMock).save(aCaptor.capture());
 
-        Environment actEnvToBeCreated = aCaptor.getValue();
-        assertEquals(envName, actEnvToBeCreated.getName());
+        // Environment actEnvToBeCreated = aCaptor.getValue();
+        assertEquals(envName, aCaptor.getValue().getName());
     }
 
     @Test
     void givenNewEnvironmentName_whenUpdateEnvironment_returnsEnvironmentNameIsUpdated() {
         // Given
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        company.setId(1L);
         String name = "Siemens";
-        Environment environment = new Environment(name);
+        Environment environment = new Environment(name, company);
         environment.setId(1L);
         Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
@@ -115,4 +129,3 @@ class EnvironmentServiceUnitTest {
     }
 
 }
-*/

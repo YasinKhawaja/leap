@@ -23,7 +23,7 @@ public class EnvironmentService {
 
     // To GET all environments
     public List<Environment> getAllEnvironments(String companyid) {
-        List<Environment> environments = new ArrayList<Environment>();
+        List<Environment> environments = new ArrayList<>();
         for (Environment environment : environmentRepository.findAll()) {
             if(environment.getCompany().getId().equals(Long.parseLong(companyid))){
                 environments.add(environment);
