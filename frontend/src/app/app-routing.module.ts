@@ -43,6 +43,10 @@ import { BusinessprocessDeleteComponent } from './components/businessprocess-del
 import { CapabilityBusinessprocessComponent } from './components/capability-businessprocess/capability-businessprocess.component';
 import { CapabilityBusinessprocessAddComponent } from './components/capability-businessprocess-add/capability-businessprocess-add.component';
 import { CapabilityBusinessprocessDeleteComponent } from './components/capability-businessprocess-delete/capability-businessprocess-delete.component';
+import { CapabilityStrategyitemsComponent } from './components/capability-strategyitems/capability-strategyitems.component';
+import { CapabilityStrategyitemsAddComponent } from './components/capability-strategyitems-add/capability-strategyitems-add.component';
+import { CapabilityStrategyitemsEditComponent } from './components/capability-strategyitems-edit/capability-strategyitems-edit.component';
+import { CapabilityStrategyitemsDeleteComponent } from './components/capability-strategyitems-delete/capability-strategyitems-delete.component';
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
@@ -85,7 +89,11 @@ const routes: Routes = [
   { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent},
   { path: 'capability-businessprocess', component:CapabilityBusinessprocessComponent},
   { path: 'capability-businessprocess/add', component: CapabilityBusinessprocessAddComponent},
-  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent}
+  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent},
+  { path: 'capstrategyitems', component: CapabilityStrategyitemsComponent, canActivate: [RouterGuard] },
+  { path: 'capstrategyitems/create', component: CapabilityStrategyitemsAddComponent , canActivate: [RouterGuard]},
+   { path: 'capstrategyitems/update/:capabilityStrategyItemID', component: CapabilityStrategyitemsEditComponent, canActivate: [RouterGuard] },
+  { path: 'capstrategyitems/delete/:capabilityStrategyItemID', component: CapabilityStrategyitemsDeleteComponent, canActivate: [RouterGuard] },
 ];
 
 @NgModule({

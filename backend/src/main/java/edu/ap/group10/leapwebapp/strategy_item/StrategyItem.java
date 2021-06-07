@@ -1,4 +1,5 @@
 package edu.ap.group10.leapwebapp.strategy_item;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,26 +18,25 @@ public class StrategyItem {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "strategyitem_id")
 	private Long id;
 
-
-    @ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "strategy_id")
-	@JsonBackReference(value = "strategyItems_reference")
+	@JsonBackReference(value = "strategyitem_reference")
 	private Strategy strategy;
-
 
 	@Column(nullable = false)
 	private String name;
 
-    @Column(nullable = false)
+	@Column(nullable = false)
 	private String description;
 
 	public StrategyItem() {
 	}
 
-    public StrategyItem(String name, String description) {
+	public StrategyItem(String name, String description) {
 		this.name = name;
-        this.description=description;
+		this.description = description;
 	}
 }

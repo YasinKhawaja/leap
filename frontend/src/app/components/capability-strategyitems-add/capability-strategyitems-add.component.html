@@ -1,0 +1,46 @@
+
+<!-- Form -->
+<form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">
+    <div class="card" style="width: 30%;">
+      <div class="card-header center">
+        <h5><strong>Add Strategy Items to capability</strong></h5>
+      </div>
+      <div class="card-body">
+        <!-- Name -->
+        <h6>Choose Strategy, then select Strategy Item.</h6>
+        <div [formGroup]="strategy">
+          <select class="custom-select" (change)="changeStrategy()" formControlName="strategyName">
+            <option value="" disabled>Choose your Strategy</option>
+            <option *ngFor="let strategy of strategies  | keyvalue" [ngValue]="strategy.value">{{strategy.value}}</option>
+          </select>
+        </div>
+        <h6>Choose Strategy Item to see which capability uses it the best.</h6>
+        <div>
+          <select class="custom-select" (change)="changeStrategyItem()" formControlName="strategyItemName" required>
+            <option value="" disabled>Choose your Strategy Item</option>
+            <option *ngFor="let strategyItem of strategyItems  | keyvalue" [ngValue]="strategyItem.value">
+              {{strategyItem.value}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label> Strategic Emphasis</label>
+          <select class="select1" formControlName='strategicEmphasis' required>
+            <option *ngFor="let type of eSe | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+          </select>
+        </div>
+        <br>
+          <div *ngIf="capabilityStrategyItem.get('strategicEmphasis')!.invalid && (capabilityStrategyItem.get('strategicEmphasis')!.dirty || capabilityStrategyItem.get('strategicEmphasis')!.touched)" class="alert alert-danger alertdiv">
+            <div *ngIf="capabilityStrategyItem.get('strategicEmphasis')!.errors!.required">
+                Strategic Emphasis is required.
+            </div>
+            
+    
+        </div>
+        <!-- Submit button -->
+        <div class="center">
+          <button type="submit" class="btn btn-success" [disabled]="capabilityStrategyItem.invalid">ADD</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  

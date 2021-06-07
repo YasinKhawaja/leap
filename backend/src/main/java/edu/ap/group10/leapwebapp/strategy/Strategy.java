@@ -1,6 +1,5 @@
 package edu.ap.group10.leapwebapp.strategy;
 
-
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,34 +25,37 @@ public class Strategy {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "strategy_id")
 	private Long id;
 
-	@OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)
-	@JsonManagedReference(value = "strategyItems_reference")
-	private List<StrategyItem> strategyItems;
+	/*
+	 * @OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)
+	 * 
+	 * @JsonManagedReference(value = "strategyItem_reference") private
+	 * List<StrategyItem> strategyItems;
+	 */
 
-	@ManyToOne
-	@JoinColumn(name = "environment_id")
-	@JsonBackReference(value = "strategy_reference")
-	private Environment environment;
-
-
-    
 	@Column(name = "strategy_name", nullable = false, unique = true)
 	private String name;
 
-
-	@Column(name = "timeframe_from") 
+	@Column(name = "timeframe_from")
 	private String timeframeFrom;
 
-	@Column(name = "timeframe_to") 
+	@Column(name = "timeframe_to")
 	private String timeframeTo;
 
-    
+	@ManyToOne
+	@JoinColumn(name = "environment_id")
+	private Environment environment;
+
+	@OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "strategyitem_reference")
+	private List<StrategyItem> strategyItems;
+
 	public Strategy() {
 	}
 
-    public Strategy(String name,String timeframeFrom,String timeframeTo , Environment environment) {
+	public Strategy(String name, String timeframeFrom, String timeframeTo, Environment environment) {
 		this.setName(name);
 		this.setTimeframeFrom(timeframeFrom);
 		this.setTimeframeTo(timeframeTo);

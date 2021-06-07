@@ -58,6 +58,10 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
 import { AuthInterceptor } from './services/authinterceptor/auth-interceptor';
+import { CapabilityStrategyitemsComponent } from './components/capability-strategyitems/capability-strategyitems.component';
+import { CapabilityStrategyitemsEditComponent } from './components/capability-strategyitems-edit/capability-strategyitems-edit.component';
+import { CapabilityStrategyitemsDeleteComponent } from './components/capability-strategyitems-delete/capability-strategyitems-delete.component';
+import { CapabilityStrategyitemsAddComponent } from './components/capability-strategyitems-add/capability-strategyitems-add.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -69,7 +73,8 @@ const appRoutes: Routes = [
   { path: 'capabilities', component: CapabilityComponent, canActivate: [RouterGuard] },
   { path: 'itapplication', component: ItapplicationComponent, canActivate: [RouterGuard] },
   { path: 'capability-application', component: CapabilityApplicationComponent, canActivate: [RouterGuard] },
-  { path: 'strategies', component: StrategyComponent, canActivate: [RouterGuard] }
+  { path: 'strategies', component: StrategyComponent, canActivate: [RouterGuard] },
+  { path: 'capstrategyitems', component: CapabilityStrategyitemsComponent, canActivate: [RouterGuard] }
 ]
 
 @NgModule({
@@ -119,7 +124,11 @@ const appRoutes: Routes = [
     CapabilityBusinessprocessAddComponent,
     CapabilityBusinessprocessDeleteComponent,
     ResourceEditComponent,
-    CapabilityResourceComponent
+    CapabilityResourceComponent,
+    CapabilityStrategyitemsComponent,
+    CapabilityStrategyitemsAddComponent,
+    CapabilityStrategyitemsEditComponent,
+    CapabilityStrategyitemsDeleteComponent
   ],
   imports: [
     BrowserModule,

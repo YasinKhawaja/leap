@@ -22,9 +22,16 @@ public class StrategyController {
 	@Autowired
     private EnvironmentService environmentService;
 
+    @Autowired
+private StrategyRepository temp;
+
+    @GetMapping("/strategies")
+    public List<Strategy> getAllStrategies(){
+        return temp.findAll();
+    }
 
     @GetMapping("/strategies/{environmentId}")
-    public List<Strategy> getAllStrategies(@PathVariable Long environmentId){
+    public List<Strategy> getStrategy(@PathVariable Long environmentId){
         return strategyService.getStrategies(environmentId);
     }
 	
