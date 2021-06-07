@@ -2,6 +2,8 @@ package edu.ap.group10.leapwebapp.user;
 
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,7 +57,7 @@ public class UserService implements UserDetailsService{
     }
 
     public Company validateToken(String token){
-        return confirmationTokenRepository.findByConfirmationToken(token).getCompany();
+        return confirmationTokenRepository.findByToken(token).getCompany();
     }
 
     public User addUser(User user){
@@ -85,21 +87,12 @@ public class UserService implements UserDetailsService{
 
         userRepository.save(user);
     }
- 
-    public Boolean findUsername(String username){
-        Boolean validate = false;
-        if (userRepository.findByUsername(username) != null){
-            validate = true;
-        }
-        return validate;
-    }
 
-    public Boolean findUserEmail(String email){
-        Boolean validate = false;
-        if (userRepository.findByEmail(email) != null){
-            validate = true;
+    public boolean checkUser(String email, String username){
+        if (userRepository.findByEmail(email) != null && userRepository.findByUsername(username) != null){
+            throw new EntityExistsException("User already exists");
         }
-        return validate;
+        return true;
     }
 
     public Company findCompany(Long id){
@@ -132,7 +125,6 @@ public class UserService implements UserDetailsService{
         String newPasswordLink = "http://localhost:4200/resetpassword/confirm?id=" + this.encodeId(userid);
 
         Mail mail = new Mail();
-        mail.setSender("leapwebapp@gmail.com");
         mail.setReceiver(email);
         mail.setSubject("Your first login credentials.");
         mail.setContent("Your username is: " + username + "\nTo active your account, set a password using this link: " + newPasswordLink);
@@ -144,7 +136,7 @@ public class UserService implements UserDetailsService{
     }
 
     public String getUserIDJwt(String token){
-        return customAuthenticationProvider.checkJwt(token);
+        return customAuthenticationProvider.checkUserID(token);
     }
 
     public String refreshJwt(String token){

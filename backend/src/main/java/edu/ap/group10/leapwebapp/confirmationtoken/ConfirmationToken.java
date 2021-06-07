@@ -29,7 +29,7 @@ public class ConfirmationToken {
     private Long id;
 
     @Column(name="token_name")
-    private String confirmationToken;
+    private String token;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -43,6 +43,6 @@ public class ConfirmationToken {
     public ConfirmationToken(Company company) {
         this.company = company;
         createdDate = new Date();
-        confirmationToken = UUID.randomUUID().toString();
+        token = UUID.randomUUID().toString();
     }
 }

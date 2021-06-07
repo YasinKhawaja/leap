@@ -12,16 +12,16 @@ public class ConfirmationTokenService {
     private ConfirmationTokenRepository confirmationTokenRepository;
 
     public void deleteConfirmationToken(String token){
-        confirmationTokenRepository.delete(confirmationTokenRepository.findByConfirmationToken(token));
+        confirmationTokenRepository.delete(confirmationTokenRepository.findByToken(token));
     }
 
     public String addConfirmationToken(Company company){
         ConfirmationToken confirmationToken = new ConfirmationToken(company);
         confirmationTokenRepository.save(confirmationToken);
-        return confirmationToken.getConfirmationToken();
+        return confirmationToken.getToken();
     }
 
     public ConfirmationToken getConfirmationToken(String token){
-        return confirmationTokenRepository.findByConfirmationToken(token);
+        return confirmationTokenRepository.findByToken(token);
     }
 }
