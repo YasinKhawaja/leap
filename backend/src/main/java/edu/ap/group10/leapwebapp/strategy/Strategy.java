@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
@@ -27,13 +26,6 @@ public class Strategy {
 	@GeneratedValue
 	@Column(name = "strategy_id")
 	private Long id;
-
-	/*
-	 * @OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)
-	 * 
-	 * @JsonManagedReference(value = "strategyItem_reference") private
-	 * List<StrategyItem> strategyItems;
-	 */
 
 	@Column(name = "strategy_name", nullable = false, unique = true)
 	private String name;

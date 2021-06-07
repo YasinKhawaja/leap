@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -18,13 +17,10 @@ import lombok.Data;
 @Data
 public class CapStrategyItems {
 
-    // primary key
     @Id
     @Column(name = "capstrategyitems_id")
     Long id;
 
-    // foreign keys
-    // Capability many-to-many Resource => CapResource intermediate class
     @OneToOne(targetEntity = Capability.class)
     @JoinColumn(name = "capability_id")
     private Capability capability;
@@ -33,12 +29,10 @@ public class CapStrategyItems {
     @JoinColumn(name = "strategyitem_id")
     private StrategyItem strategyItem;
 
-    // columns
     @Column
     @Enumerated(EnumType.STRING)
     private StrategicEmphasis strategicEmphasis;
 
-    // CONSTRUCTORS
     public CapStrategyItems() {
     }
 
