@@ -23,7 +23,7 @@ public class ITApplication{
     @Column(nullable = false, unique = true, updatable = false, name = "application_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, name = "application_name")
+    @Column(nullable = false, unique = false, name = "application_name")
     private String name;
     @Column(nullable = false, name = "application_technology")
     private String technology;

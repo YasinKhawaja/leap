@@ -23,7 +23,7 @@ public class BusinessProcess {
     @Column(nullable = false, unique = true, updatable = false, name = "business_process_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, name = "business_process_name")
+    @Column(nullable = false, unique = false, name = "business_process_name")
     private String name;
 
     @Column(nullable = true, unique = false, name = "business_process_description")
