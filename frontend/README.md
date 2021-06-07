@@ -1,4 +1,3 @@
-
 # Frontend
 The frontend of this project is made with Angular. 
 
@@ -9,9 +8,6 @@ The frontend of this project is made with Angular.
 
 ### Strategy
 * Strategy-items are deleted after renaming a strategy
-
-### Resources
-* Validator pattern -> only number for Full Time Equivalent yearly value
 
 ### IT-Application link
 * Validator pattern -> 1 - 5 validator
