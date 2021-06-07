@@ -40,6 +40,7 @@ export class CompanyService {
         },
       error => {
         Swal.fire('Error', error.error.message, 'error')
+        this.router.navigate(['/'])
       });
    }
 
