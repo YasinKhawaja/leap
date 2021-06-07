@@ -10,9 +10,6 @@ The frontend of this project is made with Angular.
 ### Company 
 * Make Company work with a country ENUM that has a search bar
 
-### Capability-Map
-* Capability map level 3 capabilities
-
 ### Strategy
 * Strategy-items are deleted after renaming a strategy
 
