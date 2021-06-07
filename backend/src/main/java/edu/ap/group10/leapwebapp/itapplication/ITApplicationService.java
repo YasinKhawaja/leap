@@ -13,7 +13,6 @@ public class ITApplicationService {
     @Autowired
     private ITApplicationRepository itApplicationRepository;
 
-    //find all itapplications from the current environment
     public List<ITApplication> getITApplications(String environmentId){
         List<ITApplication> itApplications = new ArrayList<ITApplication>();
         for (ITApplication itApplication : itApplicationRepository.findAll()) {
@@ -33,12 +32,10 @@ public class ITApplicationService {
         .orElseThrow(ResourceNotFoundException::new);
     }
 
-    //create itapplication
     public ITApplication createITApplication(ITApplication itApplication){
         return itApplicationRepository.save(itApplication);
     }
 
-    //update it application -> needs to be fully overwritten so send full object
     public ITApplication updateITApplication(Long itApplicationId, ITApplication itApplication){
         
         ITApplication oITApp = itApplicationRepository.findById(itApplicationId)
@@ -65,17 +62,16 @@ public class ITApplicationService {
         return itApplicationRepository.save(oITApp);
     }
 
-    //delete it application
-    public Boolean deleteITApplication(Long itApplicationId){
+    public boolean deleteITApplication(Long itApplicationId){
+        Boolean validator = false;
         ITApplication oldITApplication = itApplicationRepository.findById(itApplicationId)
         .orElseThrow(ResourceNotFoundException::new);
 
         itApplicationRepository.delete(oldITApplication);
         if(itApplicationRepository.existsById(itApplicationId)){
-            return false;
-        } else {
-            return true;
+            validator = true;
         }
+        return validator;
     }
     
     public ITApplication getITApplication(Long applicationId){

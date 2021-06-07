@@ -23,7 +23,7 @@ public class MailServiceImpl implements MailService{
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
             mimeMessageHelper.setSubject(mail.getSubject());
-            mimeMessageHelper.setFrom(new InternetAddress(mail.getSender(), "leapwebapp.com"));
+            mimeMessageHelper.setFrom(new InternetAddress("leapwebapp@gmail.com", "leapwebapp.com"));
             mimeMessageHelper.setTo(InternetAddress.parse(mail.getReceiver()));
             mimeMessageHelper.setText(mail.getContent());
 

@@ -49,7 +49,6 @@ public class ITApplication{
     private Integer currentStability;
     @Column(nullable = true, name = "application_expected_stability")
     private Integer expectedStability;
-    // what's this?
     @Column(nullable = true, name = "application_cost_currency")
     private String costCurrency;
     @Column(nullable = true, name = "application_current_value_for_money")
