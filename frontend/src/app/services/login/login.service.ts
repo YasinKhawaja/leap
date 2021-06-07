@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Login } from 'src/app/classes/login/login';
 
 const httpOptions= {
-  headers: new HttpHeaders({observe: 'response' as 'body'}),
+  headers: new HttpHeaders(),
   withCredentials: true
 };
 
