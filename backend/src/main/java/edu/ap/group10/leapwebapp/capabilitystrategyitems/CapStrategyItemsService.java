@@ -1,7 +1,6 @@
 
 package edu.ap.group10.leapwebapp.capabilitystrategyitems;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,12 +13,9 @@ import org.springframework.stereotype.Service;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
 import edu.ap.group10.leapwebapp.capability.CapabilityRepository;
-import edu.ap.group10.leapwebapp.strategy.Strategy;
 import edu.ap.group10.leapwebapp.strategy_item.StrategyItem;
 import edu.ap.group10.leapwebapp.strategy_item.StrategyItemRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class CapStrategyItemsService {
 
@@ -33,7 +29,7 @@ public class CapStrategyItemsService {
     private StrategyItemRepository strategyItemRepository;
 
     public List<CapStrategyItems> getCapabilityStrategyItems(Long capabilityId) {
-        List<CapStrategyItems> capStrategyItems = new ArrayList<CapStrategyItems>();
+        List<CapStrategyItems> capStrategyItems = new ArrayList<>();
         for (CapStrategyItems capStrategyItem : capStrategyItemsRepository.findAll()) {
             if (capStrategyItem.getCapability().getId().equals(capabilityId)) {
                 capStrategyItems.add(capStrategyItem);
@@ -54,12 +50,13 @@ public class CapStrategyItemsService {
         List<StrategyItem> stratItemFound = strategyItemRepository.findAll().stream()
                 .filter(strItem -> strItem.getName().equals(strategyItemName)).collect(Collectors.toList());
 
-        StrategyItem gevonden = stratItemFound.get(0);
+        StrategyItem stratItem = stratItemFound.get(0);
 
-        if(capStrategyItemsRepository.findById(Long.parseLong(capabilityId.toString() + gevonden.getId().toString())).isPresent()){
+        if (capStrategyItemsRepository.findById(Long.parseLong(capabilityId.toString() + stratItem.getId().toString()))
+                .isPresent()) {
             throw new EntityExistsException("This link already exists");
         } else {
-            CapStrategyItems capStrategyItem = new CapStrategyItems(capability, gevonden, strategicEmphasis);
+            CapStrategyItems capStrategyItem = new CapStrategyItems(capability, stratItem, strategicEmphasis);
             return capStrategyItemsRepository.save(capStrategyItem);
         }
     }
