@@ -65,6 +65,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { AuthInterceptor } from './services/authinterceptor/auth-interceptor';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
+import { CapabilityResourceEditComponent } from './components/capability-resource-edit/capability-resource-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -134,7 +135,8 @@ const appRoutes: Routes = [
     CapabilityStrategyitemsComponent,
     CapabilityStrategyitemsAddComponent,
     CapabilityStrategyitemsEditComponent,
-    CapabilityStrategyitemsDeleteComponent
+    CapabilityStrategyitemsDeleteComponent,
+    CapabilityResourceEditComponent
   ],
   imports: [
     BrowserModule,

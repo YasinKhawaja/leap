@@ -32,7 +32,7 @@ export class ResourceComponent implements OnInit {
   }
 
   showLinkedCapabilities(resourceID: string): void {
-    this.crs.getAllCapResourcesByResourceId(resourceID)
+    this.crs.getAllCapResourcesByResource(resourceID)
       .subscribe(response => {
         this.capresources = response;
         this.show('linked-caps');

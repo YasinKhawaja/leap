@@ -1,4 +1,5 @@
 package edu.ap.group10.leapwebapp.capability;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CapabilityRepositoryUnitTests {
 
     @Autowired
     CapabilityRepository sut;
-    
+
     @Autowired
     EnvironmentRepository environmentRespository;
 
@@ -35,28 +36,28 @@ public class CapabilityRepositoryUnitTests {
         sut.deleteAll();
     }
 
-     @Test
+    @Test
     void givenEnvironment_whenFindByEnvironment_returnsCapabilityFound() {
 
-       // Given
-      Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
-      companyRepository.save(company);
-      String name = "Siemens";
-      Environment env = new Environment(name, company);
-      environmentRespository.save(env);
+        // Given
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België",
+                "HR", "?");
+        companyRepository.save(company);
 
+        String name = "Siemens";
+        Environment env = new Environment(name, company);
+        environmentRespository.save(env);
 
-      Capability capability = new Capability("jan");
-      capability.setEnvironment(env);
-      sut.save(capability);
+        Capability capability = new Capability("jan", env);
+        capability.setEnvironment(env);
+        sut.save(capability);
 
+        // When
+        List<Capability> capabilities = sut.findByEnvironment(env);
 
-     // When
-      List<Capability> capabilities = sut.findByEnvironment(env);
+        // Then
+        assertEquals(capability.getId(), capabilities.get(0).getId());
+        assertEquals(capability.getEnvironment().getId(), capabilities.get(0).getEnvironment().getId());
+    }
 
-      // Then
-      assertEquals(capability.getId(), capabilities.get(0).getId());
-      assertEquals(capability.getEnvironment().getId(), capabilities.get(0).getEnvironment().getId());
-     }
-    
 }

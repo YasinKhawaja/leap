@@ -54,7 +54,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 }
                 token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
                         user.getAuthorities());
-                System.out.println(token);
                 return token;
             } else {
                 throw new AuthenticationCredentialsNotFoundException("User credentials not found");

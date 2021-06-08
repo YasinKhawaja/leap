@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>ADD LINK WITH {{ capresCurrentValues.resource.name }}</strong></h5>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Form -->
+        <form *ngIf="capresEditForm != null" [formGroup]="capresEditForm" (ngSubmit)="onSubmit()">
+            <!-- Number of Resources -->
+            <div class="form-group">
+                <label for="numberOfResources">Number of Resources</label>
+                <input id="numberOfResources" type="text" class="form-control" formControlName="numberOfResources">
+                <!-- Number of Resources field validation errors -->
+                <div class="alert alert-danger center" *ngIf="(nor!.dirty || nor!.touched) && nor!.invalid">
+                    <div *ngIf="nor!.errors!.pattern">
+                        Number of Resources should only consist out of numbers.
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="capresEditForm.invalid">EDIT</button>
+            </div>
+        </form>
+    </div>
+</div>

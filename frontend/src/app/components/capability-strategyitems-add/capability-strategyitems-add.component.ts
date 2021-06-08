@@ -51,7 +51,7 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
    ngOnInit(): void {
    // let environmentId = this.ns.getEnvironment();
    //haalt niet alle omdat ik van de strId pak en niet van envid
-    let environmentId = this.ns.getEnvironment();
+    let environmentId = this.ns.getEnvironmentCookie();
     this.sis.getAllStrategyInEnvironment(environmentId)
     .subscribe(result => {
       result.forEach(e => {

@@ -23,7 +23,8 @@
                         </td>
                         <!-- EDIT icon -->
                         <td>
-                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20' />
+                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20'
+                                (click)="show('capability-resource-edit', capres)" />
                         </td>
                         <td>
                             <a class="btn btn-light" role="button" [routerLink]="['/capabilities/update']">
@@ -54,6 +55,10 @@
             <!-- capability-resource-add.component -->
             <app-capability-resource-add *ngIf="showCapResAdd" [capability]="capability">
             </app-capability-resource-add>
+            <!-- capability-resource-edit.component -->
+            <app-capability-resource-edit *ngIf="showCapResEdit" [capresCurrentValues]="capresCurrentValues">
+            </app-capability-resource-edit>
+            <!-- capability-resource-delete.component -->
             <app-capability-resource-delete *ngIf="showCapResDelete" [capresCurrentValues]="capresCurrentValues">
             </app-capability-resource-delete>
         </div>

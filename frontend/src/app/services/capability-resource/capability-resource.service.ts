@@ -12,46 +12,41 @@ export class CapabilityResourceService {
 
   constructor(private http: HttpClient) { }
 
-  // To GET all cap res links by cap id
-  getAllCapResourcesByCapabilityId(capabilityID: string): Observable<CapResource[]> {
-    var url = `${this.capresourceServiceURI}/capability/${capabilityID}`;
+  getAllCapResourcesByCapability(capabilityId: string): Observable<CapResource[]> {
+    var url = `${this.capresourceServiceURI}/capability/${capabilityId}`;
 
     return this.http.get<CapResource[]>(url);
   }
 
-  // To GET all cap res links by res id
-  getAllCapResourcesByResourceId(resourceID: string): Observable<CapResource[]> {
-    var url = `${this.capresourceServiceURI}/resource/${resourceID}`;
+  getAllCapResourcesByResource(resourceId: string): Observable<CapResource[]> {
+    var url = `${this.capresourceServiceURI}/resource/${resourceId}`;
 
     return this.http.get<CapResource[]>(url);
   }
 
-  // To CREATE a cap res link
-  createCapResource(capId: string, resId: any, numberOfResources: string): Observable<CapResource> {
+  createCapResource(capabilityId: string, resourceId: string, numberOfResources: string): Observable<CapResource> {
     var url = `${this.capresourceServiceURI}`;
 
     var params;
     if (numberOfResources.length > 0) {
-      params = new HttpParams().set('capId', capId).set('resId', resId).set('numberOfResources', numberOfResources);
+      params = new HttpParams().set('capId', capabilityId).set('resId', resourceId).set('numberOfResources', numberOfResources);
     } else {
-      params = new HttpParams().set('capId', capId).set('resId', resId);
+      params = new HttpParams().set('capId', capabilityId).set('resId', resourceId);
     }
 
     return this.http.post<CapResource>(url, params);
   }
 
-  // To UPDATE a cap res link
-  updateCapResource(capresourceID: string, numberOfResources: string): Observable<CapResource> {
-    var url = `${this.capresourceServiceURI}/${capresourceID}`;
+  updateCapResource(capresourceId: string, numberOfResources: string): Observable<CapResource> {
+    var url = `${this.capresourceServiceURI}/${capresourceId}`;
 
     var param = new HttpParams().set('numberOfResources', numberOfResources);
 
     return this.http.put<CapResource>(url, param);
   }
 
-  // To DELETE a cap res link
-  deleteCapResource(capresourceID: string): Observable<{}> {
-    var url = `${this.capresourceServiceURI}/${capresourceID}`;
+  deleteCapResource(capresourceId: string): Observable<{}> {
+    var url = `${this.capresourceServiceURI}/${capresourceId}`;
 
     return this.http.delete<{}>(url);
   }

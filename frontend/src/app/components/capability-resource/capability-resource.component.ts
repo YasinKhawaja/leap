@@ -39,12 +39,15 @@ export class CapabilityResourceComponent implements OnInit {
   // To GET all cap res links by cap id
   private getAllCapResources(): void {
     var capabilityID = this.ns.getCapabilityCookie();
-    this.crs.getAllCapResourcesByCapabilityId(capabilityID).subscribe(response => this.capresources = response);
+    this.crs.getAllCapResourcesByCapability(capabilityID).subscribe(response => this.capresources = response);
   }
 
   /////// To show the child comps ///////
   // capability-resource-add.component
   showCapResAdd: boolean = false;
+
+  // capability-resource-edit.component
+  showCapResEdit: boolean = false;
 
   // capability-resource-delete.component
   showCapResDelete: boolean = false;
@@ -57,8 +60,16 @@ export class CapabilityResourceComponent implements OnInit {
         // Show
         this.showCapResAdd = true;
         break;
+      case 'capability-resource-edit':
+        this.showCapResAdd = false;
+        this.showCapResDelete = false;
+        // Show
+        this.capresCurrentValues = capresource;
+        this.showCapResEdit = !this.showCapResEdit;
+        break;
       case 'capability-resource-delete':
         this.showCapResAdd = false;
+        this.showCapResEdit = false;
         // Show
         this.capresCurrentValues = capresource;
         this.showCapResDelete = !this.showCapResDelete;
@@ -70,6 +81,7 @@ export class CapabilityResourceComponent implements OnInit {
 
   hideAll(): void {
     this.showCapResAdd = false;
+    this.showCapResEdit = false;
     this.showCapResDelete = false;
   }
 
