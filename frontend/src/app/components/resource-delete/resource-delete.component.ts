@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Resource } from 'src/app/classes/resource/resource';
-import { CapabilityResourceService } from 'src/app/services/capability-resource/capability-resource.service';
 import { ResourceService } from 'src/app/services/resource/resource.service';
-import { CapabilityResourceComponent } from '../capability-resource/capability-resource.component';
 import { ResourceComponent } from '../resource/resource.component';
 
 @Component({
@@ -12,20 +10,18 @@ import { ResourceComponent } from '../resource/resource.component';
 })
 export class ResourceDeleteComponent implements OnInit {
 
-  @Input() resCurrentValues: Resource; // From resource.component
+  @Input() resourceCurrentValues: Resource;
 
   constructor(private rs: ResourceService, private rc: ResourceComponent) { }
 
   ngOnInit(): void { }
 
-  // To hide the comp
   hide(): void {
     this.rc.hideAll();
   }
 
-  // To DELETE the resource
   deleteResource(): void {
-    this.rs.deleteResource(this.resCurrentValues.id)
+    this.rs.deleteResource(this.resourceCurrentValues.id)
       .subscribe(
         response => {
           this.rc.ngOnInit();

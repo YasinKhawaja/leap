@@ -74,8 +74,8 @@ public class Capability {
 	public Capability() {
 	}
 
-	public Capability(String name) {
-		this.setEnvironment(new Environment()); // Foreign key
+	public Capability(String name, Environment environment) {
+		this.setEnvironment(environment); // Foreign key
 		this.setParent(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
@@ -175,33 +175,37 @@ public class Capability {
 		this.environment = environment;
 	}
 
-	public void setCalculatedInformationQuality(Integer completeness, Integer correctness, Integer availability, Double importanceFactor) {
+	public void setCalculatedInformationQuality(Integer completeness, Integer correctness, Integer availability,
+			Double importanceFactor) {
 		double calculatedInformationQuality;
-		if(getInformationQuality() == null) {
-		calculatedInformationQuality = (completeness + correctness + availability)/3 * importanceFactor;
+		if (getInformationQuality() == null) {
+			calculatedInformationQuality = (completeness + correctness + availability) / 3 * importanceFactor;
 		} else {
 			System.out.println(getInformationQuality());
-		calculatedInformationQuality = getInformationQuality() + (completeness + correctness + availability)/3 * importanceFactor;
+			calculatedInformationQuality = getInformationQuality()
+					+ (completeness + correctness + availability) / 3 * importanceFactor;
 		}
 
-		setInformationQuality(round(calculatedInformationQuality,1)); 
-		
+		setInformationQuality(round(calculatedInformationQuality, 1));
 
 	}
 
-	public void setCalculatedApplicationFit(Integer efficiencySupport, Integer functionalCoverage, Integer correctness, Integer futurePotential, Double importanceFactor) {
+	public void setCalculatedApplicationFit(Integer efficiencySupport, Integer functionalCoverage, Integer correctness,
+			Integer futurePotential, Double importanceFactor) {
 		double calculatedApplicationFit;
 		if (getApplicationFit() == null) {
-			calculatedApplicationFit = (efficiencySupport + functionalCoverage + correctness + futurePotential)/4 * importanceFactor;
-		}else {
+			calculatedApplicationFit = (efficiencySupport + functionalCoverage + correctness + futurePotential) / 4
+					* importanceFactor;
+		} else {
 			System.out.println(getApplicationFit());
-		calculatedApplicationFit = getApplicationFit() + (efficiencySupport + functionalCoverage + correctness + futurePotential)/4 * importanceFactor;
+			calculatedApplicationFit = getApplicationFit()
+					+ (efficiencySupport + functionalCoverage + correctness + futurePotential) / 4 * importanceFactor;
 		}
 
 		setApplicationFit(round(calculatedApplicationFit, 1));
 	}
 
-	private static double round (double value, int precision) {
+	private static double round(double value, int precision) {
 		int scale = (int) Math.pow(10, precision);
 		return (double) Math.round(value * scale) / scale;
 	}

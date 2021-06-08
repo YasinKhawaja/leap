@@ -23,6 +23,7 @@ export class CapabilityResourceAddComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private rs: ResourceService,
+    private ns: NavbarService,
     private crs: CapabilityResourceService,
     private crc: CapabilityResourceComponent
   ) {
@@ -35,7 +36,9 @@ export class CapabilityResourceAddComponent implements OnInit {
 
   // To GET all res
   private getAllResources(): Observable<Resource[]> {
-    return this.rs.getAllResources();
+    var environmentId = this.ns.getEnvironmentCookie();
+
+    return this.rs.getAllResources(environmentId);
   }
 
   // To initialize the form in HTML

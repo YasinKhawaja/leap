@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.ap.group10.leapwebapp.resource.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

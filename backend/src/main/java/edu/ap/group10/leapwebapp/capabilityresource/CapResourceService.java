@@ -1,7 +1,6 @@
 
 package edu.ap.group10.leapwebapp.capabilityresource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +23,14 @@ public class CapResourceService {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    // To GET all cap res links
     public List<CapResource> getAllCapResources() {
         return capResourceRepository.findAll();
     }
 
-    // To GET all cap res links by cap id
     public List<CapResource> getAllCapResourcesByCapabilityId(Long id) {
         return capResourceRepository.findByCapabilityId(id);
     }
 
-    // To GET all cap res links by res id
     public List<CapResource> getAllCapResourcesByResourceId(Long id) {
         return capResourceRepository.findByResourceId(id);
     }

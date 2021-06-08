@@ -40,6 +40,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserDetails user = userService.loadUserByUsername(username);
 
+        System.out.println(bCryptPasswordEncoder.matches(password, user.getPassword()));
+        System.out.println(user.getPassword());
+
         UsernamePasswordAuthenticationToken token;
 
         try {
@@ -52,6 +55,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 }
                 token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
                         user.getAuthorities());
+                System.out.println(token);
                 return token;
             } else {
                 throw new AuthenticationCredentialsNotFoundException("User credentials not found");
@@ -72,23 +76,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public String onAuthenticationSuccess(Authentication auth) {
         User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
-        if(user.getCompany() != null){
-            return JWT.create()
-            .withClaim("role", auth.getAuthorities().toString())
-            .withClaim("company", user.getCompany().getId().toString())
-            .withSubject(auth.getPrincipal().toString())
-            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-            .withIssuer("LEAP")
-            .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+        if (user.getCompany() != null) {
+            return JWT.create().withClaim("role", auth.getAuthorities().toString())
+                    .withClaim("company", user.getCompany().getId().toString())
+                    .withSubject(auth.getPrincipal().toString())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                    .withIssuer("LEAP").sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {
-            return JWT.create()
-            .withClaim("role", auth.getAuthorities().toString())
-            .withSubject(auth.getPrincipal().toString())
-            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-            .withIssuer("LEAP")
-            .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+            return JWT.create().withClaim("role", auth.getAuthorities().toString())
+                    .withSubject(auth.getPrincipal().toString())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                    .withIssuer("LEAP").sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         }
-       
+
     }
 
     public String newJwt(String token) {
@@ -107,10 +107,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String company = jwt.getClaim("company").toString();
             company = company.substring(1, company.length() - 1);
 
-            return JWT.create()
-                    .withClaim("role", role)
-                    .withClaim("company", company)
-                    .withSubject(jwt.getSubject())
+            return JWT.create().withClaim("role", role).withClaim("company", company).withSubject(jwt.getSubject())
                     .withIssuer(jwt.getIssuer())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(algorithm);
@@ -138,7 +135,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    public boolean verifyJwt(String token){
+    public boolean verifyJwt(String token) {
         Boolean verify = false;
         DecodedJWT jwt = null;
         Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
@@ -149,14 +146,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             log.error("JWT verification of user id failed", e);
         }
 
-        if(jwt != null) {
+        if (jwt != null) {
             verify = true;
         }
 
         return verify;
     }
 
-    public Authentication confirmAuth(String token){
+    public Authentication confirmAuth(String token) {
         DecodedJWT jwt = null;
         Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
@@ -167,6 +164,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         UserDetails user = userService.findUserByUsername(jwt.getSubject());
-        return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());  
+        return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 }

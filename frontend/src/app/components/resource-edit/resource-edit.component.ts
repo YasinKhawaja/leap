@@ -13,47 +13,47 @@ import { ResourceComponent } from '../resource/resource.component';
 })
 export class ResourceEditComponent implements OnInit {
 
-  // Form
-  resEditForm: FormGroup;
-  @Input() resCurrentValues: Resource;
+  resourceEditForm: FormGroup;
+  @Input() resourceCurrentValues: Resource;
 
-  constructor(private rs: ResourceService, private ns: NavbarService, private fb: FormBuilder, private rc: ResourceComponent) { }
+  constructor(
+    private rs: ResourceService,
+    private fb: FormBuilder,
+    private rc: ResourceComponent
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
-  // To initialize the form in HTML with the res current values
   initializeForm() {
-    this.resEditForm = this.fb.group({
-      name: [this.resCurrentValues.name, [
+    this.resourceEditForm = this.fb.group({
+      name: [this.resourceCurrentValues.name, [
         Validators.required,
         Validators.pattern('[a-zA-Z]+')]
       ],
-      description: this.resCurrentValues.description,
-      fullTimeEquivalentYearlyValue: [this.resCurrentValues.fullTimeEquivalentYearlyValue, Validators.pattern('[0-9]+')]
+      description: this.resourceCurrentValues.description,
+      fullTimeEquivalentYearlyValue: [this.resourceCurrentValues.fullTimeEquivalentYearlyValue, Validators.pattern('[0-9]+')]
     });
   }
 
-  // Form GETTERS
   get name() {
-    return this.resEditForm.get('name');
+    return this.resourceEditForm.get('name');
   }
 
   get desc() {
-    return this.resEditForm.get('description');
+    return this.resourceEditForm.get('description');
   }
 
   get fteyv() {
-    return this.resEditForm.get('fullTimeEquivalentYearlyValue');
+    return this.resourceEditForm.get('fullTimeEquivalentYearlyValue');
   }
 
-  // Form submit logic
   onSubmit() {
-    var resIdToUpdate = this.resCurrentValues.id;
-    var resNewValues = new Resource(this.name.value, this.desc.value, this.fteyv.value);
+    var resourceIdToUpdate = this.resourceCurrentValues.id;
+    var resourceNewValues = new Resource(this.name.value, this.desc.value, this.fteyv.value);
 
-    this.rs.updateResource(resIdToUpdate, resNewValues)
+    this.rs.updateResource(resourceIdToUpdate, resourceNewValues)
       .subscribe(
         response => {
           this.rc.ngOnInit();
@@ -63,7 +63,6 @@ export class ResourceEditComponent implements OnInit {
       );
   }
 
-  // To hide the form
   hide(): void {
     this.rc.hideAll();
   }

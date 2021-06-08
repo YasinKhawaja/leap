@@ -13,7 +13,7 @@
     </div>
     <div class="card-body">
         <!-- Form -->
-        <form [formGroup]="resAddForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="resourceAddForm" (ngSubmit)="onSubmit()">
             <!-- Name -->
             <div class="form-group">
                 <label for="name">Name <span class="red">*</span></label>
@@ -47,7 +47,7 @@
             </div>
             <!-- Submit button -->
             <div class="center">
-                <button type="submit" class="btn btn-success" [disabled]="resAddForm.invalid">ADD</button>
+                <button type="submit" class="btn btn-success" [disabled]="resourceAddForm.invalid">ADD</button>
             </div>
         </form>
     </div>

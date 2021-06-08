@@ -2,58 +2,51 @@
 package edu.ap.group10.leapwebapp.resource;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import edu.ap.group10.leapwebapp.environment.Environment;
+import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 
 @Service
 public class ResourceService {
 
     @Autowired
+    private EnvironmentRepository environmentRepository;
+
+    @Autowired
     private ResourceRepository resourceRepository;
 
-    // To GET all resources
-    public List<Resource> getAllResources() {
-        return resourceRepository.findAll();
+    public List<Resource> getAllResourcesInEnvironment(Long environmentId) {
+        return resourceRepository.findAll().stream()
+                .filter(resource -> resource.getEnvironment().getId().equals(environmentId))
+                .collect(Collectors.toList());
     }
 
-    // To GET a resource
-    public Resource getResource(Long id) {
-        return resourceRepository.findById(id).orElseThrow();
+    public Resource getResourceInEnvironment(Long resourceId, Long environmentId) {
+        List<Resource> resourcesFound = this.getAllResourcesInEnvironment(environmentId).stream()
+                .filter(resource -> resource.getId().equals(resourceId)).collect(Collectors.toList());
+        return resourcesFound.get(0);
     }
 
-    // To CREATE a resource
-    public Resource createResource(Resource resource) {
-        if (resourceRepository.existsByName(resource.getName())) {
-            throw new ResourceException(
-                    String.format("Resource <strong>%s</strong> already exists!", resource.getName()));
-        }
-
+    public Resource createResource(Long environmentId, Resource resource) {
+        Environment environmentToLinkWith = environmentRepository.findById(environmentId).orElseThrow();
+        resource.setEnvironment(environmentToLinkWith);
         return resourceRepository.save(resource);
     }
 
-    // To UPDATE a resource
-    public Resource updateResource(Long id, Resource resource) {
-        // Find the res to update & resave
-        Resource resToUpdate = resourceRepository.findById(id).orElseThrow();
-        // Update the found res
-        if (resToUpdate.getName().equals(resource.getName())) {
-            resToUpdate.setName(resource.getName());
-        } else if (resourceRepository.existsByName(resource.getName())) {
-            throw new ResourceException(
-                    String.format("Resource <strong>%s</strong> already exists!", resource.getName()));
-        } else {
-            resToUpdate.setName(resource.getName());
-        }
-        resToUpdate.setDescription(resource.getDescription());
-        resToUpdate.setFullTimeEquivalentYearlyValue(resource.getFullTimeEquivalentYearlyValue());
-        // Save the updated res
-        return resourceRepository.save(resToUpdate);
+    public Resource updateResource(Long resourceId, Resource resource) {
+        Resource resourceToUpdate = resourceRepository.findById(resourceId).orElseThrow();
+        resourceToUpdate.setName(resource.getName());
+        resourceToUpdate.setDescription(resource.getDescription());
+        resourceToUpdate.setFullTimeEquivalentYearlyValue(resource.getFullTimeEquivalentYearlyValue());
+        return resourceRepository.save(resourceToUpdate);
     }
 
-    // To DELETE a resource
-    public void deleteResource(Long id) {
-        resourceRepository.deleteById(id);
+    public void deleteResource(Long resourceId) {
+        resourceRepository.deleteById(resourceId);
     }
 
 }

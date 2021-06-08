@@ -36,21 +36,22 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-	private MailService mailService;
+    private MailService mailService;
 
     @PostMapping("/application-admin")
-    public User addApplicationAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
-    @RequestParam("secret") String secret) {
+    public User addApplicationAdmin(@RequestParam("firstName") String firstname,
+            @RequestParam("surname") String surname, @RequestParam("email") String email,
+            @RequestParam("username") String username, @RequestParam("password") String password,
+            @RequestParam("secret") String secret) {
         try {
-            if (secret.equals(SecurityConstraints.APPLICATION_ADMIN_SECRET)){
+            if (secret.equals(SecurityConstraints.APPLICATION_ADMIN_SECRET)) {
 
                 Boolean validateUsername = userService.findUsername(username);
                 Boolean validateEmail = userService.findUserEmail(email);
-    
-                if(validateUsername != null && validateUsername){
+
+                if (validateUsername != null && validateUsername) {
                     throw new UnsupportedOperationException("User already exists");
-                }
-                else if (validateEmail != null && validateEmail){
+                } else if (validateEmail != null && validateEmail) {
                     throw new UnsupportedOperationException("Email is in use");
                 } else {
                     User user = new User(firstname, surname, email, username, password, -1, null);
@@ -60,31 +61,32 @@ public class UserController {
                 throw new AccessDeniedException("Wrong secret");
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Exception", e);
             throw new EntityExistsException(e);
         }
     }
 
     @PostMapping("/useradmin")
-    public User addUserAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname, @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("password") String password,
-    @RequestParam("token")String confirmationToken) {
-        try{
+    public User addUserAdmin(@RequestParam("firstName") String firstname, @RequestParam("surname") String surname,
+            @RequestParam("email") String email, @RequestParam("username") String username,
+            @RequestParam("password") String password, @RequestParam("token") String confirmationToken) {
+        try {
             Boolean validateUsername = userService.findUsername(username);
             Boolean validateEmail = userService.findUserEmail(email);
 
-            if(validateUsername != null && validateUsername){
+            if (validateUsername != null && validateUsername) {
                 throw new UnsupportedOperationException("User already exists");
-            }
-            else if (validateEmail != null && validateEmail){
+            } else if (validateEmail != null && validateEmail) {
                 throw new UnsupportedOperationException("Email is in use");
             } else {
-                User user = new User(firstname, surname, email, username, password, 0, userService.validateToken(confirmationToken));
+                User user = new User(firstname, surname, email, username, password, 0,
+                        userService.validateToken(confirmationToken));
                 confirmationTokenService.deleteConfirmationToken(confirmationToken);
                 return userService.addUser(user);
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Exception", e);
             throw new EntityExistsException(e);
         }
@@ -92,58 +94,63 @@ public class UserController {
 
     @PostMapping("/user")
     public void addUser(@RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
-    @RequestParam("email") String email, @RequestParam("companyId") String company, @RequestParam("username") String username,
-    @RequestParam("role") Integer role){
-        try{
+            @RequestParam("email") String email, @RequestParam("companyId") String company,
+            @RequestParam("username") String username, @RequestParam("role") Integer role) {
+        try {
             Boolean validateUsername = userService.findUsername(username);
             Boolean validateEmail = userService.findUserEmail(email);
 
-            if(validateUsername != null && validateUsername){
+            if (validateUsername != null && validateUsername) {
                 throw new UnsupportedOperationException("User already exists");
-            }
-            else if (validateEmail != null && validateEmail){
+            } else if (validateEmail != null && validateEmail) {
                 throw new UnsupportedOperationException("Email is in use");
             }
 
             byte[] bytes = new byte[10];
             new Random().nextBytes(bytes);
             String password = Base64.getEncoder().encodeToString(bytes);
-            User user = new User(firstName, surname, email, username, password, role, userService.findCompany(Long.parseLong(company)));
+            User user = new User(firstName, surname, email, username, password, role,
+                    userService.findCompany(Long.parseLong(company)));
 
             userService.addUser(user);
 
             userService.sendMail(email, username, user.getId().toString());
 
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Exception", e);
             throw e;
-        }        
+        }
     }
 
     @GetMapping("/user")
-    public List<User> getUsers(@RequestParam("companyId") String companyId){
+    public List<User> getUsers(@RequestParam("companyId") String companyId) {
         return userService.findUserByCompany(Long.parseLong(companyId));
     }
 
     @DeleteMapping("/user")
-    public void delUser(@RequestParam("userid") String userid){
+    public void delUser(@RequestParam("userid") String userid) {
         userService.delUser(Long.parseLong(userid));
     }
 
     @PutMapping("/user")
-    public User updateUser(@RequestParam("userid") String userid, @RequestParam("firstName") String firstName, @RequestParam("surname") String surname,
-    @RequestParam("email") String email, @RequestParam("username") String username, @RequestParam("role") Integer role){
-        return userService.updateUser(userid, new User(firstName, surname, email, username, "", role, userService.findUserById(userid).getCompany()));
+    public User updateUser(@RequestParam("userid") String userid, @RequestParam("firstName") String firstName,
+            @RequestParam("surname") String surname, @RequestParam("email") String email,
+            @RequestParam("username") String username, @RequestParam("role") Integer role) {
+        return userService.updateUser(userid,
+                new User(firstName, surname, email, username, "", role, userService.findUserById(userid).getCompany()));
     }
 
     @GetMapping("/user/{userid}")
-    public User getUser(@PathVariable String userid){
+    public User getUser(@PathVariable String userid) {
         return userService.findUserById(userid);
     }
 
     @GetMapping("/user/login")
-    public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
-        String value = Base64.getEncoder().withoutPadding().encodeToString(userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)).getBytes());
+    public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password,
+            HttpServletResponse response) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        String auth = userService.authenticateUser(token);
+        String value = Base64.getEncoder().withoutPadding().encodeToString(auth.getBytes());
         String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
@@ -152,24 +159,26 @@ public class UserController {
     }
 
     @PostMapping("/user/jwt")
-    public void jwt(@RequestParam String token, HttpServletResponse response){
+    public void jwt(@RequestParam String token, HttpServletResponse response) {
         String newToken = userService.refreshJwt(token);
         response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
         response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
-        response.setHeader("Authorization", newToken);  
+        response.setHeader("Authorization", newToken);
     }
 
     @PostMapping("/user/resetpassword")
     public void requestResetPassword(@RequestParam String email) {
         User user = userService.findUserByMail(email);
-        
+
         String id = userService.encodeId(user.getId().toString());
 
         Mail mail = new Mail();
         mail.setSender("leapwebapp@gmail.com");
         mail.setReceiver(user.getEmail());
         mail.setSubject("Password change");
-        mail.setContent("To reset your password click on the following link. \nhttp://localhost:4200/resetpassword/confirm?id=" + id);
+        mail.setContent(
+                "To reset your password click on the following link. \nhttp://localhost:4200/resetpassword/confirm?id="
+                        + id);
         mailService.sendMail(mail);
     }
 

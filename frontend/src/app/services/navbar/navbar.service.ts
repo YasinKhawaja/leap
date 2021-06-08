@@ -30,7 +30,7 @@ export class NavbarService {
     this.eraseCookie("Capability")
   }
 
-  public setEnvironment(environmentID: string) {
+  public setEnvironmentCookie(environmentID: string) {
     this.createCookie("Environment", environmentID, 1);
   }
 

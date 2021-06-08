@@ -75,7 +75,7 @@ export class EnvironmentComponent implements OnInit {
   }
 
   environmentId(environmentId, environmentName): void {
-    this.ns.setEnvironment(environmentId);
+    this.ns.setEnvironmentCookie(environmentId);
     this.ns.setEnvironmentName(environmentName);
   }
 }

@@ -11,7 +11,7 @@ const httpOptions= {
   providedIn: 'root'
 })
 export class LoginService {
-  private loginUrl: string = '//localhost:8080/api/user/login';
+  private loginUrl: string = 'http://localhost:8080/api/user/login';
   
   constructor(private http: HttpClient) {
   }

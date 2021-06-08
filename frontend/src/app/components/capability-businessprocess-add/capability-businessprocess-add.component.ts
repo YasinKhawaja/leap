@@ -24,7 +24,7 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var environmentid = this.ns.getEnvironment();
+    var environmentid = this.ns.getEnvironmentCookie();
 
     this.bps.getBusinessProcesses(environmentid)
       .subscribe(

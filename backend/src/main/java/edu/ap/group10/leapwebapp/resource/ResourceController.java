@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,50 +22,45 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    // To GET all resources
     @GetMapping("/resources")
-    public List<Resource> getAllResources() {
-        return resourceService.getAllResources();
+    public List<Resource> getAllResourcesInEnvironment(@RequestParam Long environmentId) {
+        return resourceService.getAllResourcesInEnvironment(environmentId);
     }
 
-    // To GET a resource
-    @GetMapping("/resources/{id}")
-    public Resource getResource(@PathVariable Long id) {
+    @GetMapping("/resources/{resourceId}")
+    public Resource getResourceInEnvironment(@PathVariable Long resourceId, @RequestParam Long environmentId) {
         try {
-            return resourceService.getResource(id);
+            return resourceService.getResourceInEnvironment(resourceId, environmentId);
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
     }
 
-    // To CREATE a resource
     @PostMapping("/resources")
-    public Resource createResource(@RequestBody Resource resource) {
+    public Resource createResource(@RequestParam Long environmentId, @RequestBody Resource resource) {
         try {
-            return resourceService.createResource(resource);
+            return resourceService.createResource(environmentId, resource);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
         }
     }
 
-    // To UPDATE a resource
-    @PutMapping("/resources/{id}")
-    public Resource updateResource(@PathVariable Long id, @RequestBody Resource resource) {
+    @PutMapping("/resources/{resourceId}")
+    public Resource updateResource(@PathVariable Long resourceId, @RequestBody Resource resource) {
         try {
-            return resourceService.updateResource(id, resource);
+            return resourceService.updateResource(resourceId, resource);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
         }
     }
 
-    // To DELETE a resource
-    @DeleteMapping("/resources/{id}")
-    public void deleteResource(@PathVariable Long id) {
+    @DeleteMapping("/resources/{resourceId}")
+    public void deleteResource(@PathVariable Long resourceId) {
         try {
-            resourceService.deleteResource(id);
+            resourceService.deleteResource(resourceId);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
