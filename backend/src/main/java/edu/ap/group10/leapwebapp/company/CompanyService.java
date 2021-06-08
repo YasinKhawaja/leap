@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.company;
 
+import org.springframework.security.access.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,16 @@ public class CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    public boolean checkRole(String role) throws AccessDeniedException {
+        Boolean validator = false;
+        if (role.equals("application admin")) {
+            validator = true;
+        } else {
+            throw new AccessDeniedException("Only application admins can access this");
+        }
+        return validator;
+    }
 
     public void deleteCompany(Long companyId){
         companyRepository.deleteById(companyId);
@@ -27,7 +38,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompanies() {
-        List<Company> companies = new ArrayList<Company>();
+        List<Company> companies = new ArrayList<>();
         for (Company company : companyRepository.findAll()) {
             companies.add(company);
         }

@@ -1,0 +1,33 @@
+.middle-page {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center {
+    text-align: center;
+    vertical-align: middle;
+}
+
+h5 {
+    margin: 0px;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+label {
+    margin: 0px;
+}
+
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.form-control.ng-touched.ng-valid {
+    border: 2px solid green;
+}
+

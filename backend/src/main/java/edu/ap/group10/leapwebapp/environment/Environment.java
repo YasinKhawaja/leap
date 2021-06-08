@@ -31,7 +31,6 @@ public class Environment {
 	@Column(name = "environment_name", nullable = false, unique = true)
 	private String name;
 
-	// bidirectional @OneToMany, foreign key in Capability
 	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "environment_reference")
 	private List<Capability> capabilities;
@@ -40,7 +39,6 @@ public class Environment {
 	@JoinColumn(name = "company_id", nullable = false)
 	private Company company;
 
-	// CONSTRUCTORS
 	public Environment() {
 	}
 

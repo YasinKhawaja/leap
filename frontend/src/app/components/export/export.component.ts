@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
@@ -26,6 +26,9 @@ export class ExportComponent implements OnInit {
 
   capabilitiesLinkedToItApplication: Capability[]
 
+  style: { 'border-color': string };
+
+
   itApplications: string[]
 
   itApplication = this.fb.group({
@@ -45,7 +48,8 @@ export class ExportComponent implements OnInit {
   })
 
   constructor(private cs: CapabilityService, private ns: NavbarService, private print: NgxPrintModule, private fb: FormBuilder,
-    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService) {
+    private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService,
+    private cd: ChangeDetectorRef) {
     this.capabilities = [];
     this.itApplications = [];
     this.strategies = [];
@@ -94,10 +98,26 @@ export class ExportComponent implements OnInit {
     this.cis.getCapabilitiesLinkedToITApplication(this.itApplication.value.itApplicationName)
       .subscribe(result => {
         this.capabilitiesLinkedToItApplication = result;
-        console.log(result);
+        console.log(this.capabilitiesLinkedToItApplication);
       },
         error => console.log(error))
-    
+  }
+
+  applySelectedITApplication(capability) {
+    for (var i = 0; i < this.capabilitiesLinkedToItApplication.length; i++) {
+      if (this.capabilitiesLinkedToItApplication[i].name == capability.name) {
+        if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
+          this.style = { 'border-color': 'green' }
+          break;
+        } if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 5) {
+          this.style = { 'border-color': 'orange' }
+          break;
+        }
+        this.style = { 'border-color': 'red' }
+        break;
+      } else this.style = { 'border-color': 'black' };
+    } return this.style;
+   
   }
 
   changeStrategy() {
@@ -139,17 +159,13 @@ export class ExportComponent implements OnInit {
     // add a slide
     let slide = powerpoint.addSlide();
 
-    // add object(s)
-    let title = "Capability Map";
-    slide.addText(title, { x: 0.5, y: 0.7, w: '100%', color: "0000FF", fontSize: 40 });
-
     // add the capability map image
 
     let data = document.getElementById('pdf');
     html2canvas(data).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4)
       // w/h ratio 4/1 , w:20 h:5 was goed
-      slide.addImage({ data: contentDataURL, x: 0, y: 1.5, w: '100%', h: '100%' });
+      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
 
       // save powerpoint
       powerpoint.writeFile({ fileName: "CapabilityMap" });
@@ -173,6 +189,6 @@ export class ExportComponent implements OnInit {
   }
 
   generateEntireMap() {
-    this.ngOnInit();
+    window.location.reload();
   }
 }

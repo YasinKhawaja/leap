@@ -23,7 +23,7 @@ public class ITApplication{
     @Column(nullable = false, unique = true, updatable = false, name = "application_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, name = "application_name")
+    @Column(nullable = false, unique = false, name = "application_name")
     private String name;
     @Column(nullable = false, name = "application_technology")
     private String technology;
@@ -49,7 +49,6 @@ public class ITApplication{
     private Integer currentStability;
     @Column(nullable = true, name = "application_expected_stability")
     private Integer expectedStability;
-    // what's this?
     @Column(nullable = true, name = "application_cost_currency")
     private String costCurrency;
     @Column(nullable = true, name = "application_current_value_for_money")

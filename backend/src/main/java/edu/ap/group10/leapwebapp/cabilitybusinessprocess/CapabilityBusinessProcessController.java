@@ -22,8 +22,8 @@ public class CapabilityBusinessProcessController {
     }
 
     @PostMapping("/capabilitybusinessprocess/{capabilityid}")
-    public CapabilityBusinessProcess addCapabilityBusinessProcess(@PathVariable String capabilityid, @RequestParam String businessprocess){
-        return capabilityBusinessProcessService.addCapabilityBusinessProcess(capabilityid, businessprocess);
+    public void addCapabilityBusinessProcess(@PathVariable String capabilityid, @RequestParam String businessprocess){
+        capabilityBusinessProcessService.addCapabilityBusinessProcess(capabilityid, businessprocess);
     }
 
     @DeleteMapping("/capabilitybusinessprocess/{businessprocessid}")

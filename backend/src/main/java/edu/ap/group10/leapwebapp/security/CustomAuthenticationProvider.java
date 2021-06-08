@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,17 +32,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    // attempt authentication of the user
+    private static final String CLAIM_COMPANY = "company";
+    private static final String CLAIM_ROLE = "role";
+    private static final String ISSUER = "LEAP";
+
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         final String username = (String) authentication.getPrincipal();
         final String password = (String) authentication.getCredentials();
 
         UserDetails user = userService.loadUserByUsername(username);
 
-        System.out.println(bCryptPasswordEncoder.matches(password, user.getPassword()));
-        System.out.println(user.getPassword());
-
-        UsernamePasswordAuthenticationToken token;
+        UsernamePasswordAuthenticationToken token = null;
 
         try {
             if (user != null) {
@@ -63,7 +62,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         } catch (AuthenticationException e) {
             log.error("Login error: ", e);
-            token = null;
             return token;
         }
     }
@@ -77,40 +75,33 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
         if (user.getCompany() != null) {
-            return JWT.create().withClaim("role", auth.getAuthorities().toString())
-                    .withClaim("company", user.getCompany().getId().toString())
+            return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
+                    .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
                     .withSubject(auth.getPrincipal().toString())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                    .withIssuer("LEAP").sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+                    .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {
-            return JWT.create().withClaim("role", auth.getAuthorities().toString())
+            return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
                     .withSubject(auth.getPrincipal().toString())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                    .withIssuer("LEAP").sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+                    .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         }
 
     }
 
     public String newJwt(String token) {
-        DecodedJWT jwt = null;
-        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes());
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        try {
-            jwt = verifier.verify(token);
-        } catch (JWTVerificationException e) {
-            log.error("JWT verification failed", e);
-        }
+        DecodedJWT jwt = verifyJWTUser(token);
 
         if (jwt != null) {
-            String role = jwt.getClaim("role").toString();
+            String role = jwt.getClaim(CLAIM_ROLE).toString();
             role = role.substring(1, role.length() - 1);
-            String company = jwt.getClaim("company").toString();
+            String company = jwt.getClaim(CLAIM_COMPANY).toString();
             company = company.substring(1, company.length() - 1);
 
-            return JWT.create().withClaim("role", role).withClaim("company", company).withSubject(jwt.getSubject())
-                    .withIssuer(jwt.getIssuer())
+            return JWT.create().withClaim(CLAIM_ROLE, role).withClaim(CLAIM_COMPANY, company)
+                    .withSubject(jwt.getSubject()).withIssuer(jwt.getIssuer())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                    .sign(algorithm);
+                    .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {
             return null;
         }
@@ -122,48 +113,34 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 .sign(Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes()));
     }
 
-    public String checkJwt(String token) {
-        DecodedJWT jwt = null;
-        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        try {
-            jwt = verifier.verify(token);
-            return jwt.getClaim("id").asString();
-        } catch (JWTVerificationException e) {
-            log.error("JWT verification of user id failed", e);
-            return null;
-        }
+    public String checkUserID(String token) {
+        DecodedJWT jwt = verifyJWTPasswordReset(token);
+        return jwt.getClaim("id").asString();
     }
 
-    public boolean verifyJwt(String token) {
-        Boolean verify = false;
+    public DecodedJWT verifyJWTPasswordReset(String token) {
         DecodedJWT jwt = null;
         Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
         try {
             jwt = verifier.verify(token);
         } catch (JWTVerificationException e) {
-            log.error("JWT verification of user id failed", e);
+            log.error("JWT for password reset failed", e);
         }
 
-        if (jwt != null) {
-            verify = true;
-        }
-
-        return verify;
+        return jwt;
     }
 
-    public Authentication confirmAuth(String token) {
+    public DecodedJWT verifyJWTUser(String token) {
         DecodedJWT jwt = null;
-        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
+        Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
         try {
             jwt = verifier.verify(token);
         } catch (JWTVerificationException e) {
-            log.error("JWT verification of user id failed", e);
+            log.error("JWT for Authentication failed", e);
         }
 
-        UserDetails user = userService.findUserByUsername(jwt.getSubject());
-        return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
+        return jwt;
     }
 }

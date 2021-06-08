@@ -25,7 +25,7 @@ public class BusinessProcessController {
 
     @GetMapping("/businessprocesses/{environmentid}")
     public List<BusinessProcess> getAllBussinessProcesses(@PathVariable String environmentid){
-        return businessProcessService.getAllBusinessProcesses_Environment(environmentid);
+        return businessProcessService.getAllBusinessProcessesEnvironment(environmentid);
     }
 
     @GetMapping("/businessprocess/{businessprocessid}")
@@ -34,10 +34,10 @@ public class BusinessProcessController {
     }
 
     @PostMapping("/businessprocess/{environmentid}")
-    public BusinessProcess addBusinessProcess(@PathVariable String environmentid, @RequestParam String name, @RequestParam String description){
+    public void addBusinessProcess(@PathVariable String environmentid, @RequestParam String name, @RequestParam String description){
         Environment environment = environmentService.getEnvironment(Long.parseLong(environmentid));
         BusinessProcess businessProcess = new BusinessProcess(name, description, environment);
-        return businessProcessService.addBusinessProcess(businessProcess);
+        businessProcessService.addBusinessProcess(businessProcess);
     }
     
     @PutMapping("/businessprocess/{businessprocessid}")

@@ -1,5 +1,4 @@
 package edu.ap.group10.leapwebapp.capability;
-/*
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import edu.ap.group10.leapwebapp.company.Company;
+import edu.ap.group10.leapwebapp.company.CompanyRepository;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 
@@ -25,6 +26,9 @@ public class CapabilityRepositoryUnitTests {
     @Autowired
     EnvironmentRepository environmentRespository;
 
+    @Autowired
+    private CompanyRepository companyRepository;
+
     @BeforeEach
     void setUp() {
         // Fresh H2 DB before each test
@@ -35,7 +39,10 @@ public class CapabilityRepositoryUnitTests {
     void givenEnvironment_whenFindByEnvironment_returnsCapabilityFound() {
 
        // Given
-      Environment env = new Environment("EnvironmentTest");
+      Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+      companyRepository.save(company);
+      String name = "Siemens";
+      Environment env = new Environment(name, company);
       environmentRespository.save(env);
 
 
@@ -53,4 +60,3 @@ public class CapabilityRepositoryUnitTests {
      }
     
 }
-*/

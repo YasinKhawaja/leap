@@ -19,32 +19,27 @@ public class EnvironmentController {
 	@Autowired
 	private EnvironmentService environmentService;
 
-	// To GET all environments
 	@GetMapping("/environments")
 	public List<Environment> getAllEnvironments(@RequestParam String companyid) {
 		return environmentService.getAllEnvironments(companyid);
 	}
 
-	// To GET an environment
 	@GetMapping("/environments/{id}")
 	public Environment getEnvironment(@PathVariable Long id) throws NoSuchElementException {
 		return environmentService.getEnvironment(id);
 	}
 
-	// To CREATE an environment
 	@PostMapping("/environments")
 	public Environment createEnvironment(@RequestParam String name, @RequestParam String companyid) throws ArithmeticException {
 		return environmentService.createEnvironment(name, companyid);
 	}
 
-	// To UPDATE an environment
 	@PutMapping("/environments/{id}")
 	public Environment updateEnvironment(@PathVariable Long id, @RequestParam String name)
 			throws NoSuchElementException, ArithmeticException {
 		return environmentService.updateEnvironment(id, name);
 	}
 
-	// To DELETE an environment
 	@DeleteMapping("/environments/{id}")
 	public void deleteEnvironment(@PathVariable Long id) throws IllegalArgumentException {
 		environmentService.deleteEnvironment(id);

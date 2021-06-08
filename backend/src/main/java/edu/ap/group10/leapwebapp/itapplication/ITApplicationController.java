@@ -28,7 +28,7 @@ public class ITApplicationController {
     }
 
     @PostMapping("/itapplications/{environmentId}")
-    public ITApplication addITApplication(@PathVariable String environmentId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
+    public void addITApplication(@PathVariable String environmentId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
     @RequestParam("version") String version, @RequestParam("acquisitionDate") String acquisitionDate, @RequestParam("endOfLife") String endOfLife, 
     @RequestParam("currentScalability") Integer currentScalability, @RequestParam("expectedScalability") Integer expectedScalability, @RequestParam("currentPerformance") Integer currentPerformance,
     @RequestParam("expectedPerformance") Integer expectedPerformance, @RequestParam("currentSecurityLevel") Integer currentSecurityLevel, @RequestParam("expectedSecurityLevel") Integer expectedSecurityLevel,
@@ -39,11 +39,11 @@ public class ITApplicationController {
         Environment environment = environmentService.getEnvironment(Long.parseLong(environmentId));
         ITApplication itApplication = new ITApplication(applicationName, technology, version, acquisitionDate, endOfLife, currentScalability, expectedScalability, currentPerformance, expectedPerformance,
         currentSecurityLevel, expectedSecurityLevel, currentStability, expectedStability, costCurrency, currentValueForMoney, currentTotalCostPerYear, toleratedTotalCostPerYear, timeValue, environment);
-        return itApplicationService.createITApplication(itApplication);
+        itApplicationService.createITApplication(itApplication);
     }
 
     @PutMapping("/itapplications/{applicationId}")
-    public ITApplication updateITApplication(@PathVariable String applicationId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
+    public void updateITApplication(@PathVariable String applicationId, @RequestParam("name") String applicationName, @RequestParam("technology") String technology,
     @RequestParam("version") String version, @RequestParam("acquisitionDate") String acquisitionDate, @RequestParam("endOfLife") String endOfLife, 
     @RequestParam("currentScalability") Integer currentScalability, @RequestParam("expectedScalability") Integer expectedScalability, @RequestParam("currentPerformance") Integer currentPerformance,
     @RequestParam("expectedPerformance") Integer expectedPerformance, @RequestParam("currentSecurityLevel") Integer currentSecurityLevel, @RequestParam("expectedSecurityLevel") Integer expectedSecurityLevel,
@@ -55,7 +55,7 @@ public class ITApplicationController {
         ITApplication newITApplication = new ITApplication(applicationName, technology, version, acquisitionDate, endOfLife, currentScalability, expectedScalability, currentPerformance, expectedPerformance,
         currentSecurityLevel, expectedSecurityLevel, currentStability, expectedStability, costCurrency, currentValueForMoney, currentTotalCostPerYear, toleratedTotalCostPerYear, timeValue, oldITApplication.getEnvironment());
 
-        return itApplicationService.updateITApplication(oldITApplication.getId(), newITApplication);
+        itApplicationService.updateITApplication(oldITApplication.getId(), newITApplication);
     }
 
     @DeleteMapping("/itapplications/{applicationId}")

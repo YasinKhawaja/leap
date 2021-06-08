@@ -15,9 +15,9 @@ export class CompanyService {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
    }
 
-   public getCompany(): Observable<Company> {
+   public getCompany(role: string): Observable<Company> {
      let token = new URL(window.location.href).searchParams.get("token");
-     let url = this.companiesUrl + "/" + token;
+     let url = `${this.companiesUrl}/${token}?role=${role}`;
 
      return this.http.get<Company>(url)
    }
@@ -40,13 +40,14 @@ export class CompanyService {
         },
       error => {
         Swal.fire('Error', error.error.message, 'error')
+        this.router.navigate(['/'])
       });
    }
 
 
-   public accept(accepted: boolean) {
+   public accept(accepted: boolean, role: string) {
     let token = new URL(window.location.href).searchParams.get("token");
-    let url = `${this.companiesUrl}/${token}/applicationStatus`;
+    let url = `${this.companiesUrl}/${token}/applicationStatus?role=${role}`;
 
     let params = new URLSearchParams();
     params.set("accepted", accepted.toString());

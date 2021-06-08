@@ -21,25 +21,21 @@ public class CapResourceController {
     @Autowired
     private CapResourceService capResourceService;
 
-    // To GET all cap res links
     @GetMapping("/capresources")
     public List<CapResource> getAllCapResources() {
         return capResourceService.getAllCapResources();
     }
 
-    // To GET all cap res links by cap id
     @GetMapping("/capresources/capability/{id}")
     public List<CapResource> getAllCapResourcesByCapabilityId(@PathVariable Long id) {
         return capResourceService.getAllCapResourcesByCapabilityId(id);
     }
 
-    // To GET all cap res links by res id
     @GetMapping("/capresources/resource/{id}")
     public List<CapResource> getAllCapResourcesByResourceId(@PathVariable Long id) {
         return capResourceService.getAllCapResourcesByResourceId(id);
     }
 
-    // To CREATE a cap res link
     @PostMapping("/capresources")
     public CapResource createCapResource(@RequestParam Long capId, @RequestParam Long resId,
             @RequestParam(required = false) Integer numberOfResources) {
@@ -51,7 +47,6 @@ public class CapResourceController {
         }
     }
 
-    // To UPDATE a cap res link props
     @PutMapping("/capresources/{id}")
     public CapResource updateCapResource(@PathVariable Long id, @RequestParam Integer numberOfResources) {
         try {
@@ -62,7 +57,6 @@ public class CapResourceController {
         }
     }
 
-    // To DELETE a cap res link
     @DeleteMapping("/capresources/{id}")
     public void deleteCapResource(@PathVariable Long id) {
         try {

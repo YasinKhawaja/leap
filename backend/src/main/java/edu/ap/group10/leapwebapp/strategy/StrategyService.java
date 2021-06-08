@@ -15,7 +15,7 @@ public class StrategyService {
     private StrategyRepository strategyRepository;
 
  public List<Strategy> getStrategies(Long environmentId){
-    List<Strategy> strategies = new ArrayList<Strategy>();
+    List<Strategy> strategies = new ArrayList<>();
     for (Strategy strategy : strategyRepository.findAll()) {
         if(strategy.getEnvironment().getId().equals(environmentId)){
             strategies.add(strategy);
@@ -40,16 +40,25 @@ public class StrategyService {
     Strategy oldStrategy = strategyRepository.findById(strId)
     .orElseThrow(ResourceNotFoundException::new);
 
-    strategyRepository.delete(oldStrategy);
+    oldStrategy.setEnvironment(strategy.getEnvironment());
+    oldStrategy.setName(strategy.getName());
+    
     return strategyRepository.save(strategy);
 }
 
-public void deleteStrategy(Long strId){
+public Boolean deleteStrategy(Long strId){
   
     Strategy oldStrategy = strategyRepository.findById(strId)
     .orElseThrow(ResourceNotFoundException::new);
 
+   // strategyRepository.delete(oldStrategy);
+
     strategyRepository.delete(oldStrategy);
+    if(strategyRepository.findById(strId).isPresent()){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 

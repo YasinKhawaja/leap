@@ -51,7 +51,6 @@ public class CapResourceService {
         return capResourceRepository.save(capresLink);
     }
 
-    // To UPDATE a cap res link props
     public CapResource updateCapResource(Long id, Integer numberOfResources) {
         CapResource capresToUp = capResourceRepository.findById(id).orElseThrow();
 
@@ -60,7 +59,6 @@ public class CapResourceService {
         return capResourceRepository.save(capresToUp);
     }
 
-    // To DELETE a cap res link
     public void deleteCapResource(Long id) {
         capResourceRepository.deleteById(id);
     }

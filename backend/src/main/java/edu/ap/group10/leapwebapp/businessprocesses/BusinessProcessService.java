@@ -13,8 +13,8 @@ public class BusinessProcessService {
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
 
-    public List<BusinessProcess> getAllBusinessProcesses_Environment(String environmentId) {
-        List<BusinessProcess> businessProcesses = new ArrayList<BusinessProcess>();
+    public List<BusinessProcess> getAllBusinessProcessesEnvironment(String environmentId) {
+        List<BusinessProcess> businessProcesses = new ArrayList<>();
         for (BusinessProcess businessProcess : businessProcessRepository.findAll()) {
             if(businessProcess.getEnvironment().getId().equals(Long.parseLong(environmentId))){
                 businessProcesses.add(businessProcess);
