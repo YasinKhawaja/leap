@@ -40,6 +40,7 @@ export class CapabilityResourceEditComponent implements OnInit {
       .subscribe(
         response => {
           this.crc.ngOnInit();
+          this.crc.hideAll();
         },
         error => Swal.fire('Error', error.error.message, 'error')
       );
