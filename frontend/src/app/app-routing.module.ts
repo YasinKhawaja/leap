@@ -47,6 +47,7 @@ import { CapabilityStrategyitemsComponent } from './components/capability-strate
 import { CapabilityStrategyitemsAddComponent } from './components/capability-strategyitems-add/capability-strategyitems-add.component';
 import { CapabilityStrategyitemsEditComponent } from './components/capability-strategyitems-edit/capability-strategyitems-edit.component';
 import { CapabilityStrategyitemsDeleteComponent } from './components/capability-strategyitems-delete/capability-strategyitems-delete.component';
+import { CapabilityResourceComponent } from './components/capability-resource/capability-resource.component';
 
 const routes: Routes = [
   { path: 'environments', component: EnvironmentComponent, canActivate: [RouterGuard] },
@@ -79,21 +80,22 @@ const routes: Routes = [
   { path: 'capability-application/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent, canActivate: [RouterGuard] },
   { path: 'resources', component: ResourceComponent, canActivate: [RouterGuard] },
   { path: 'resetpassword', component: ResetpasswordComponent },
-  { path: 'resetpassword/confirm', component: ResetpasswordConfirmComponent},
-  { path: 'add-user', component: UserAddComponent},
-  { path: 'edit-user/:userId', component: UserEditComponent},
-  { path: 'del-user/:userId', component: UserDeleteComponent},
-  { path: 'businessprocess', component: BusinessprocessComponent},
-  { path: 'businessprocess/add', component: BusinessprocessAddComponent},
-  { path: 'businessprocess/edit/:businessprocessid', component: BusinessprocessEditComponent},
-  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent},
-  { path: 'capability-businessprocess', component:CapabilityBusinessprocessComponent},
-  { path: 'capability-businessprocess/add', component: CapabilityBusinessprocessAddComponent},
-  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent},
+  { path: 'resetpassword/confirm', component: ResetpasswordConfirmComponent },
+  { path: 'add-user', component: UserAddComponent },
+  { path: 'edit-user/:userId', component: UserEditComponent },
+  { path: 'del-user/:userId', component: UserDeleteComponent },
+  { path: 'businessprocess', component: BusinessprocessComponent },
+  { path: 'businessprocess/add', component: BusinessprocessAddComponent },
+  { path: 'businessprocess/edit/:businessprocessid', component: BusinessprocessEditComponent },
+  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent },
+  { path: 'capability-businessprocess', component: CapabilityBusinessprocessComponent },
+  { path: 'capability-businessprocess/add', component: CapabilityBusinessprocessAddComponent },
+  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent },
   { path: 'capstrategyitems', component: CapabilityStrategyitemsComponent, canActivate: [RouterGuard] },
-  { path: 'capstrategyitems/create', component: CapabilityStrategyitemsAddComponent , canActivate: [RouterGuard]},
-   { path: 'capstrategyitems/update/:capabilityStrategyItemID', component: CapabilityStrategyitemsEditComponent, canActivate: [RouterGuard] },
+  { path: 'capstrategyitems/create', component: CapabilityStrategyitemsAddComponent, canActivate: [RouterGuard] },
+  { path: 'capstrategyitems/update/:capabilityStrategyItemID', component: CapabilityStrategyitemsEditComponent, canActivate: [RouterGuard] },
   { path: 'capstrategyitems/delete/:capabilityStrategyItemID', component: CapabilityStrategyitemsDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'capability-resource', component: CapabilityResourceComponent, canActivate: [RouterGuard] }
 ];
 
 @NgModule({
