@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,23 +73,19 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public String onAuthenticationSuccess(Authentication auth) {
         User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
-        if(user.getCompany() != null){
-            return JWT.create()
-            .withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
-            .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
-            .withSubject(auth.getPrincipal().toString())
-            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-            .withIssuer(ISSUER)
-            .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+        if (user.getCompany() != null) {
+            return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
+                    .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
+                    .withSubject(auth.getPrincipal().toString())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                    .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {
-            return JWT.create()
-            .withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
-            .withSubject(auth.getPrincipal().toString())
-            .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-            .withIssuer(ISSUER)
-            .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+            return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
+                    .withSubject(auth.getPrincipal().toString())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                    .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         }
-       
+
     }
 
     public String newJwt(String token) {
@@ -102,11 +97,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             String company = jwt.getClaim(CLAIM_COMPANY).toString();
             company = company.substring(1, company.length() - 1);
 
-            return JWT.create()
-                    .withClaim(CLAIM_ROLE, role)
-                    .withClaim(CLAIM_COMPANY, company)
-                    .withSubject(jwt.getSubject())
-                    .withIssuer(jwt.getIssuer())
+            return JWT.create().withClaim(CLAIM_ROLE, role).withClaim(CLAIM_COMPANY, company)
+                    .withSubject(jwt.getSubject()).withIssuer(jwt.getIssuer())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {
@@ -125,7 +117,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return jwt.getClaim("id").asString();
     }
 
-    public DecodedJWT verifyJWTPasswordReset(String token){
+    public DecodedJWT verifyJWTPasswordReset(String token) {
         DecodedJWT jwt = null;
         Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();
@@ -138,7 +130,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return jwt;
     }
 
-    public DecodedJWT verifyJWTUser(String token){
+    public DecodedJWT verifyJWTUser(String token) {
         DecodedJWT jwt = null;
         Algorithm algorithm = Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes());
         JWTVerifier verifier = JWT.require(algorithm).build();

@@ -13,45 +13,47 @@ import { ResourceService } from 'src/app/services/resource/resource.service';
 export class ResourceComponent implements OnInit {
 
   resources: Resource[];
+  capresources: CapResource[];
 
-  constructor(private rs: ResourceService, private crs: CapabilityResourceService, private ns: NavbarService) { }
+  constructor(
+    private rs: ResourceService,
+    private crs: CapabilityResourceService,
+    private ns: NavbarService
+  ) { }
 
   ngOnInit(): void {
     this.getAllResources();
   }
 
-  // To GET all res
   private getAllResources(): void {
-    this.rs.getAllResources().subscribe(res => this.resources = res, err => console.error(err));
-  }
+    var environmentId = this.ns.getEnvironmentCookie();
 
-  // To DELETE a res
-  deleteResource(resId): void {
-    this.rs.deleteResource(resId).subscribe(resp => this.ngOnInit(), err => console.error(err));
+    this.rs.getAllResources(environmentId).subscribe(response => this.resources = response);
   }
-
-  // To GET all cap res links by res id
-  capresources: CapResource[];
 
   showLinkedCapabilities(resourceID: string): void {
-    this.crs.getAllCapResourcesByResourceId(resourceID)
-      .subscribe(resp => {
-        this.capresources = resp;
+    this.crs.getAllCapResourcesByResource(resourceID)
+      .subscribe(response => {
+        this.capresources = response;
         this.show('linked-caps');
       });
   }
 
-  setCapabilityCookie(capabilityID: string): void {
-    this.ns.setCapabilityCookie(capabilityID);
+  setCapabilityCookie(capabilityId: string): void {
+    this.ns.setCapabilityCookie(capabilityId);
   }
 
-  // To show the child comps
-  // resource-add-component
-  showResAdd: boolean = false;
+  /////// To show the child comps ///////
+  resourceCurrentValues: Resource;
 
-  // resource-edit-component
-  showResEdit: boolean = false;
-  resCurrentValues: Resource;
+  // resource-add.component
+  showResourceAdd: boolean = false;
+
+  // resource-edit.component
+  showResourceEdit: boolean = false;
+
+  // resource-delete.component
+  showResourceDelete: boolean = false;
 
   // Linked caps right panel
   showLinkedCaps: boolean = false;
@@ -61,15 +63,25 @@ export class ResourceComponent implements OnInit {
       case 'resource-add':
         this.hideAll();
         // Show
-        this.showResAdd = true;
+        this.showResourceAdd = true;
         break;
       case 'resource-edit':
         // Hide
-        this.showResAdd = false;
+        this.showResourceAdd = false;
+        this.showResourceDelete = false;
         this.showLinkedCaps = false;
         // Show
-        this.resCurrentValues = resource;
-        this.showResEdit = !this.showResEdit;
+        this.resourceCurrentValues = resource;
+        this.showResourceEdit = !this.showResourceEdit;
+        break;
+      case 'resource-delete':
+        // Hide
+        this.showResourceAdd = false;
+        this.showResourceEdit = false;
+        this.showLinkedCaps = false;
+        // Show
+        this.resourceCurrentValues = resource;
+        this.showResourceDelete = !this.showResourceDelete;
         break;
       case 'linked-caps':
         this.hideAll();
@@ -82,8 +94,9 @@ export class ResourceComponent implements OnInit {
   }
 
   hideAll(): void {
-    this.showResAdd = false;
-    this.showResEdit = false;
+    this.showResourceAdd = false;
+    this.showResourceEdit = false;
+    this.showResourceDelete = false;
     this.showLinkedCaps = false;
   }
 

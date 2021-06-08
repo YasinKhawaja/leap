@@ -1,4 +1,6 @@
 <main class="main">
+  <h1>Capabilities</h1>
+  <br>
   <div>
     <table class="table table-striped">
       <thead>
@@ -17,7 +19,7 @@
       <tbody>
         <tr *ngFor="let cap of capabilities">
           <td>
-            <a [routerLink]="['delete']">
+            <a [routerLink]="[cap.id, 'delete']">
               <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
             </a>
           </td>

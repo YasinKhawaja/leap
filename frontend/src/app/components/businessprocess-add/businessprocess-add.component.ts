@@ -19,7 +19,7 @@ export class BusinessprocessAddComponent {
   constructor(private fb: FormBuilder, private bps: BusinessprocessService, private ns: NavbarService) { }
 
   onSubmit(){
-    var environmentid = this.ns.getEnvironment();
+    var environmentid = this.ns.getEnvironmentCookie();
 
     var newBusinessProcess = new Businessprocess(
       this.businessprocess.value.name,

@@ -4,6 +4,7 @@ import { Capability } from 'src/app/classes/capability/capability';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 import { CapabilityService } from "../../services/capability/capability.service";
+import { CapabilityComponent } from '../capability/capability.component';
 
 enum PaceOfChange {
   NONE = 'NONE',
@@ -35,7 +36,7 @@ export class CapabilityAddComponent implements OnInit {
   // Form
   capAddForm: FormGroup;
 
-  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder) { }
+  constructor(private cs: CapabilityService, private ns: NavbarService, private cc: CapabilityComponent, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -72,7 +73,7 @@ export class CapabilityAddComponent implements OnInit {
 
   // Form submit logic
   onSubmit() {
-    var envId = this.ns.getEnvironment();
+    var envId = this.ns.getEnvironmentCookie();
 
     var parentCapId = '';
     if (this.cap == null) {
@@ -91,8 +92,8 @@ export class CapabilityAddComponent implements OnInit {
     this.cs.createCapability(envId, parentCapId, capToCreate)
       .subscribe(
         res => {
-          console.log(res);
-          window.location.reload();
+          this.capAddForm.reset();
+          this.cc.ngOnInit();
         },
         err => Swal.fire('Error', err.error.message, 'error')
       );

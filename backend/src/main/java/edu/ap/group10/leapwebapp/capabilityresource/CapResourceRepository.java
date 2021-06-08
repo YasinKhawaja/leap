@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CapResourceRepository extends JpaRepository<CapResource, Long> {
 
-    public List<CapResource> findByCapabilityId(Long id);
+    List<CapResource> findByCapabilityId(Long id);
 
-    public List<CapResource> findByResourceId(Long id);
+    List<CapResource> findByResourceId(Long id);
+
+    Boolean existsByCapabilityIdAndResourceId(Long capabilityId, Long resourceId);
 
 }

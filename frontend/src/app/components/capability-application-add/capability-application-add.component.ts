@@ -33,7 +33,7 @@ export class CapabilityApplicationAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let environmentId = this.ns.getEnvironment();
+    let environmentId = this.ns.getEnvironmentCookie();
     this.its.getITApplications_CurrentEnvironment(environmentId)
     .subscribe(result => {
       result.forEach(e => {

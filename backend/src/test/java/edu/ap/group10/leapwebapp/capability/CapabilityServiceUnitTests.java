@@ -1,4 +1,5 @@
 package edu.ap.group10.leapwebapp.capability;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -39,8 +40,8 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenCapabilities_whenGetAllCapabilities_returnsAllCapabilites() {
     // When
-    when(capabilityRepositoryMock.findAll())
-        .thenReturn(Arrays.asList(new Capability("test1"), new Capability("test2"), new Capability("test3")));
+    when(capabilityRepositoryMock.findAll()).thenReturn(Arrays.asList(new Capability("test1", new Environment()),
+        new Capability("test2", new Environment()), new Capability("test3", new Environment())));
 
     List<Capability> capabilities = sut.getAllCapabilities();
 
@@ -55,16 +56,15 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenEnvironmentId_whenGetAllCapabilitiesInEnvironment_returnsCapabilitiesInEnvironment() {
     // given
-    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
     String name = "Siemens";
     Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
-    Capability capability1 = new Capability("Youth");
-    capability1.setEnvironment(environment);
-    Capability capability2 = new Capability("Trainers");
-    capability2.setEnvironment(environment);
+    Capability capability1 = new Capability("Youth", environment);
+    Capability capability2 = new Capability("Trainers", environment);
     Mockito.when(capabilityRepositoryMock.findByEnvironment(environment))
         .thenReturn(Arrays.asList(capability1, capability2));
 
@@ -83,17 +83,16 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenEnvironmetId_whenGetACapabilityInEnvironment_returnsCapabilityInEnvironment() {
     // given
-    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
     String name = "Siemens";
     Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
-    Capability capability1 = new Capability("Youth");
-    capability1.setEnvironment(environment);
+    Capability capability1 = new Capability("Youth", environment);
     capability1.setId(1L);
-    Capability capability2 = new Capability("Trainers");
-    capability2.setEnvironment(environment);
+    Capability capability2 = new Capability("Trainers", environment);
     capability2.setId(2L);
     Mockito.when(capabilityRepositoryMock.findByEnvironment(environment))
         .thenReturn(Arrays.asList(capability1, capability2));
@@ -113,7 +112,7 @@ public class CapabilityServiceUnitTests {
   void givenCapabilityId_whenGetCapabilityById_returnsCapability() {
 
     // given
-    Capability capability = new Capability("Youth");
+    Capability capability = new Capability("Youth", new Environment());
     capability.setId(1L);
     Mockito.when(capabilityRepositoryMock.findById(1L)).thenReturn(Optional.of(capability));
 
@@ -130,19 +129,18 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenCapabilityEnvironmentIdParentCapabilityId_whenCreateCapability_returnsCapabilityCreated() {
     // given
-    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
     String name = "Siemens";
     Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
-    Capability capabilityParent = new Capability("Youth");
-    capabilityParent.setEnvironment(environment);
+    Capability capabilityParent = new Capability("Youth", environment);
     capabilityParent.setId(1L);
     capabilityParent.setLevel(2);
 
-    Capability capabilityToCreate = new Capability("Trainers");
-    capabilityToCreate.setEnvironment(environment);
+    Capability capabilityToCreate = new Capability("Trainers", environment);
     capabilityToCreate.setId(2L);
 
     Mockito.when(capabilityRepositoryMock.findByEnvironment(environment))
@@ -173,14 +171,14 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenCapabilityEnvironmentIdCapabilityId_whenUpdateCapability_returnsUpdatedCapability() {
     // given
-    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
     String name = "Siemens";
     Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
-    Capability capability = new Capability("Youth");
-    capability.setEnvironment(environment);
+    Capability capability = new Capability("Youth", environment);
     capability.setId(1L);
     capability.setLevel(2);
 
@@ -210,14 +208,14 @@ public class CapabilityServiceUnitTests {
   @Test
   void givenEnvironmentIdCapabilityId_whenDeleteCapability_returnsCapabilityIsDeleted() {
     // given
-    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
     String name = "Siemens";
     Environment environment = new Environment(name, company);
     environment.setId(1L);
     Mockito.when(environmentRepositoryMock.findById(1L)).thenReturn(Optional.of(environment));
 
-    Capability capability = new Capability("Youth");
-    capability.setEnvironment(environment);
+    Capability capability = new Capability("Youth", environment);
     capability.setId(1L);
     capability.setLevel(2);
 

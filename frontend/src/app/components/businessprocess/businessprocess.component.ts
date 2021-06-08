@@ -16,7 +16,7 @@ export class BusinessprocessComponent implements OnInit {
   constructor(private bps: BusinessprocessService, private ns:NavbarService) { }
 
   ngOnInit(): void {
-    let environmentid = this.ns.getEnvironment()
+    let environmentid = this.ns.getEnvironmentCookie()
     this.bps.getBusinessProcesses(environmentid)
       .subscribe(
         result => {

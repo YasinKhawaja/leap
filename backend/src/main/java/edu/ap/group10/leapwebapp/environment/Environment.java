@@ -25,6 +25,7 @@ public class Environment {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "environment_id")
 	private Long id;
 
 	@Column(name = "environment_name", nullable = false, unique = true)

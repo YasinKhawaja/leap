@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,6 @@ import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.SecurityConstraints;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Slf4j
 @RestController
@@ -75,15 +75,15 @@ public class UserController {
             @RequestParam("username") String username, @RequestParam("role") Integer role) {
         try {
             if (userService.checkUser(email, username)) {
-            byte[] bytes = new byte[10];
-            new Random().nextBytes(bytes);
-            String password = Base64.getEncoder().encodeToString(bytes);
-            User user = new User(firstName, surname, email, username, password, role,
-                    userService.findCompany(Long.parseLong(company)));
+                byte[] bytes = new byte[10];
+                new Random().nextBytes(bytes);
+                String password = Base64.getEncoder().encodeToString(bytes);
+                User user = new User(firstName, surname, email, username, password, role,
+                        userService.findCompany(Long.parseLong(company)));
 
-            userService.addUser(user);
+                userService.addUser(user);
 
-            userService.sendMail(email, username, user.getId().toString());
+                userService.sendMail(email, username, user.getId().toString());
             }
         } catch (EntityExistsException e) {
             log.error(e.getMessage());

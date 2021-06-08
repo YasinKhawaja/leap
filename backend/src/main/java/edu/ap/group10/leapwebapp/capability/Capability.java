@@ -69,8 +69,8 @@ public class Capability {
 	public Capability() {
 	}
 
-	public Capability(String name) {
-		this.setEnvironment(new Environment()); // Foreign key
+	public Capability(String name, Environment environment) {
+		this.setEnvironment(environment); // Foreign key
 		this.setParent(null); // Foreign key
 		this.setLevel(1);
 		this.name = name;
@@ -99,11 +99,12 @@ public class Capability {
 			Integer futurePotential, Double importanceFactor) {
 		double calculatedApplicationFit;
 		if (getApplicationFit() == null) {
-			calculatedApplicationFit = (double) (efficiencySupport + functionalCoverage + correctness + futurePotential) / 4
-					* importanceFactor;
+			calculatedApplicationFit = (double) (efficiencySupport + functionalCoverage + correctness + futurePotential)
+					/ 4 * importanceFactor;
 		} else {
 			calculatedApplicationFit = getApplicationFit()
-					+ (double) (efficiencySupport + functionalCoverage + correctness + futurePotential) / 4 * importanceFactor;
+					+ (double) (efficiencySupport + functionalCoverage + correctness + futurePotential) / 4
+							* importanceFactor;
 		}
 
 		setApplicationFit(round(calculatedApplicationFit, 1));

@@ -15,13 +15,13 @@ export class ItapplicationComponent implements OnInit {
   constructor(private its: ItapplicationService, private ns: NavbarService) { }
 
   ngOnInit(): void {
-    let environmentId = this.ns.getEnvironment();
-    console.log(environmentId);
+    let environmentId = this.ns.getEnvironmentCookie();
+
     this.its.getITApplications_CurrentEnvironment(environmentId)
       .subscribe(result => {
         this.itApplications = result;
       },
-      error => console.log(error));
+        error => console.log(error));
   }
 
 }

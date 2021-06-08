@@ -27,8 +27,8 @@ public class CapResourceController {
     }
 
     @GetMapping("/capresources/capability/{id}")
-    public List<CapResource> getCapResourceByCapability(@PathVariable Long id) {
-        return capResourceService.getAllCapResourcesByCapability(id);
+    public List<CapResource> getAllCapResourcesByCapabilityId(@PathVariable Long id) {
+        return capResourceService.getAllCapResourcesByCapabilityId(id);
     }
 
     @GetMapping("/capresources/resource/{id}")
@@ -37,14 +37,14 @@ public class CapResourceController {
     }
 
     @PostMapping("/capresources")
-    public CapResource createCapResource(@RequestParam Long capId, @RequestParam Long resId) {
+    public CapResource createCapResource(@RequestParam Long capId, @RequestParam Long resId,
+            @RequestParam(required = false) Integer numberOfResources) {
         try {
-            return capResourceService.createCapResource(capId, resId);
+            return capResourceService.createCapResource(capId, resId, numberOfResources);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return null;
+            throw e;
         }
-
     }
 
     @PutMapping("/capresources/{id}")
@@ -64,7 +64,6 @@ public class CapResourceController {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
-
     }
 
 }

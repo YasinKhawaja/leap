@@ -5,7 +5,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
 @Entity
@@ -17,7 +20,7 @@ public class Resource {
     @Column(name = "resource_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Column
@@ -26,13 +29,18 @@ public class Resource {
     @Column
     private Integer fullTimeEquivalentYearlyValue;
 
+    @ManyToOne(targetEntity = Environment.class)
+    @JoinColumn(name = "environment_id", nullable = false)
+    private Environment environment;
+
     public Resource() {
     }
 
-    public Resource(String name, String desc, Integer fte) {
+    public Resource(String name, String description, Integer fullTimeEquivalentYearlyValue, Environment environment) {
         this.name = name;
-        this.description = desc;
-        this.fullTimeEquivalentYearlyValue = fte;
+        this.description = description;
+        this.fullTimeEquivalentYearlyValue = fullTimeEquivalentYearlyValue;
+        this.environment = environment;
     }
 
 }

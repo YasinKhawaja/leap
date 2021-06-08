@@ -68,13 +68,13 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.jwt.getUserBoolean().getValue()){
-      this.idle.watch();
-      this.jwt.tokenRefresh();
-    }
-    if(this.ns.readCookie("jwt") != undefined && this.ns.readCookie("jwt") != null && this.ns.readCookie("jwt") != ""){
-      this.jwt.getNewJwt();
-    }
+    // if(this.jwt.getUserBoolean().getValue()){
+    //   this.idle.watch();
+    //   this.jwt.tokenRefresh();
+    // }
+    // if(this.ns.readCookie("jwt") != undefined && this.ns.readCookie("jwt") != null && this.ns.readCookie("jwt") != ""){
+    //   this.jwt.getNewJwt();
+    // }
   }
 
   deselect(): void{
@@ -83,7 +83,7 @@ export class AppComponent implements OnInit{
   }
 
   getEnvironmentId(){
-    this.environmentId = this.ns.getEnvironment();
+    this.environmentId = this.ns.getEnvironmentCookie();
   }
 
   logout(){

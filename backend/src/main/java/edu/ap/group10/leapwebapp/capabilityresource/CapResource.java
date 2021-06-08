@@ -35,9 +35,10 @@ public class CapResource {
     public CapResource() {
     }
 
-    public CapResource(Capability cap, Resource res) {
+    public CapResource(Capability cap, Resource res, Integer numberOfResources) {
         this.capability = cap;
         this.resource = res;
+        this.numberOfResources = numberOfResources;
     }
 
 }

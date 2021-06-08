@@ -58,7 +58,7 @@ export class ExportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let environmentId = this.ns.getEnvironment();
+    let environmentId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {

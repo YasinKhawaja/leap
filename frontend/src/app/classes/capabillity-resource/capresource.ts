@@ -5,6 +5,6 @@ export class CapResource {
 
     public id: string;
 
-    constructor(public capability: Capability, public resource: Resource) { }
+    constructor(public capability: Capability, public resource: Resource, public numberOfResources: string) { }
 
 }

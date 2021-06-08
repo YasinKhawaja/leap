@@ -9,14 +9,27 @@ import { MomentModule } from 'angular2-moment';
 import { NgxPrintModule } from 'ngx-print';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
+import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
+import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
+import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
 import { CapabilityAddComponent } from './components/capability-add/capability-add.component';
 import { CapabilityApplicationAddComponent } from './components/capability-application-add/capability-application-add.component';
 import { CapabilityApplicationDeleteComponent } from './components/capability-application-delete/capability-application-delete.component';
 import { CapabilityApplicationEditComponent } from './components/capability-application-edit/capability-application-edit.component';
 import { CapabilityApplicationComponent } from './components/capability-application/capability-application.component';
+import { CapabilityBusinessprocessAddComponent } from './components/capability-businessprocess-add/capability-businessprocess-add.component';
+import { CapabilityBusinessprocessDeleteComponent } from './components/capability-businessprocess-delete/capability-businessprocess-delete.component';
+import { CapabilityBusinessprocessComponent } from './components/capability-businessprocess/capability-businessprocess.component';
 import { CapabilityDeleteComponent } from './components/capability-delete/capability-delete.component';
 import { CapabilityEditComponent } from './components/capability-edit/capability-edit.component';
+import { CapabilityResourceAddComponent } from './components/capability-resource-add/capability-resource-add.component';
+import { CapabilityResourceDeleteComponent } from './components/capability-resource-delete/capability-resource-delete.component';
 import { CapabilityResourceComponent } from './components/capability-resource/capability-resource.component';
+import { CapabilityStrategyitemsAddComponent } from './components/capability-strategyitems-add/capability-strategyitems-add.component';
+import { CapabilityStrategyitemsDeleteComponent } from './components/capability-strategyitems-delete/capability-strategyitems-delete.component';
+import { CapabilityStrategyitemsEditComponent } from './components/capability-strategyitems-edit/capability-strategyitems-edit.component';
+import { CapabilityStrategyitemsComponent } from './components/capability-strategyitems/capability-strategyitems.component';
 import { CapabilityComponent } from './components/capability/capability.component';
 import { CompanyRequestComponent } from './components/company-request/company-request.component';
 import { EnvironmentAddComponent } from './components/environment-add/environment-add.component';
@@ -35,6 +48,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { ResetpasswordConfirmComponent } from './components/resetpassword-confirm/resetpassword-confirm.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { ResourceAddComponent } from './components/resource-add/resource-add.component';
+import { ResourceDeleteComponent } from './components/resource-delete/resource-delete.component';
 import { ResourceEditComponent } from './components/resource-edit/resource-edit.component';
 import { ResourceComponent } from './components/resource/resource.component';
 import { StrategyAddComponent } from './components/strategy-add/strategy-add.component';
@@ -47,21 +61,11 @@ import { StrategyItemsComponent } from './components/strategy-items/strategy-ite
 import { StrategyComponent } from './components/strategy/strategy.component';
 import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
-import { BusinessprocessComponent } from './components/businessprocess/businessprocess.component';
-import { BusinessprocessAddComponent } from './components/businessprocess-add/businessprocess-add.component';
-import { BusinessprocessEditComponent } from './components/businessprocess-edit/businessprocess-edit.component';
-import { BusinessprocessDeleteComponent } from './components/businessprocess-delete/businessprocess-delete.component';
-import { CapabilityBusinessprocessComponent } from './components/capability-businessprocess/capability-businessprocess.component';
-import { CapabilityBusinessprocessAddComponent } from './components/capability-businessprocess-add/capability-businessprocess-add.component';
-import { CapabilityBusinessprocessDeleteComponent } from './components/capability-businessprocess-delete/capability-businessprocess-delete.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { AuthInterceptor } from './services/authinterceptor/auth-interceptor';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
-import { AuthInterceptor } from './services/authinterceptor/auth-interceptor';
-import { CapabilityStrategyitemsComponent } from './components/capability-strategyitems/capability-strategyitems.component';
-import { CapabilityStrategyitemsEditComponent } from './components/capability-strategyitems-edit/capability-strategyitems-edit.component';
-import { CapabilityStrategyitemsDeleteComponent } from './components/capability-strategyitems-delete/capability-strategyitems-delete.component';
-import { CapabilityStrategyitemsAddComponent } from './components/capability-strategyitems-add/capability-strategyitems-add.component';
+import { CapabilityResourceEditComponent } from './components/capability-resource-edit/capability-resource-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -125,10 +129,14 @@ const appRoutes: Routes = [
     CapabilityBusinessprocessDeleteComponent,
     ResourceEditComponent,
     CapabilityResourceComponent,
+    CapabilityResourceDeleteComponent,
+    CapabilityResourceAddComponent,
+    ResourceDeleteComponent,
     CapabilityStrategyitemsComponent,
     CapabilityStrategyitemsAddComponent,
     CapabilityStrategyitemsEditComponent,
-    CapabilityStrategyitemsDeleteComponent
+    CapabilityStrategyitemsDeleteComponent,
+    CapabilityResourceEditComponent
   ],
   imports: [
     BrowserModule,
@@ -146,12 +154,12 @@ const appRoutes: Routes = [
       headerName: 'X-XSRF-TOKEN'
     })
   ],
-  providers: [CapabilityService, NgxPrintModule, 
+  providers: [CapabilityService, NgxPrintModule, ResourceComponent,
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi:true
-  }],
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

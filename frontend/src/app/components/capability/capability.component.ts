@@ -26,7 +26,7 @@ export class CapabilityComponent implements OnInit {
   ngOnInit(): void {
     this.ns.environmentSelect();
 
-    var envId = this.ns.getEnvironment();
+    var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllCapabilitiesInEnvironment(envId)
       .subscribe(res => { this.capabilities = res; console.log(res); }, err => console.error(err));
