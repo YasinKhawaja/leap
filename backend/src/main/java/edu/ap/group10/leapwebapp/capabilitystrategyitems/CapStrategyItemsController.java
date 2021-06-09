@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 public class CapStrategyItemsController {
 
@@ -21,6 +22,11 @@ public class CapStrategyItemsController {
     @GetMapping("/capstrategyitems/{capabilityId}")
     public List<CapStrategyItems> getCapStrategyItemsByCapability(@PathVariable Long capabilityId) {
         return capStrategyItemService.getCapabilityStrategyItems(capabilityId);
+    }
+
+    @GetMapping("/capstrategyitems/linked/{strategyItemName}")
+    public List<CapStrategyItems> getAllCapabilityStrategyItemsLinkedToStrategyItem(@PathVariable String strategyItemName) {
+        return capStrategyItemService.getAllCapabilityStrategyItemsLinkedToStrategyItem(strategyItemName);
     }
 
     @PostMapping("/capstrategyitems/{capabilityId}") // {capabilityId}"

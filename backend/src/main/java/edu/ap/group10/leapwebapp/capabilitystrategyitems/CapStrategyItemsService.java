@@ -77,4 +77,15 @@ public class CapStrategyItemsService {
 
     }
 
+    public List<CapStrategyItems> getAllCapabilityStrategyItemsLinkedToStrategyItem(String strategyItemName) {
+        StrategyItem strategyItem = strategyItemRepository.findByName(strategyItemName);
+        List<CapStrategyItems> capabilityStrategyItems = new ArrayList<>();
+        for (CapStrategyItems capStrategyItems: capStrategyItemsRepository.findAll()) {
+            if(capStrategyItems.getStrategyItem().getId().equals(strategyItem.getId())){
+                capabilityStrategyItems.add(capStrategyItems);
+            }
+        }
+        return capabilityStrategyItems;
+    }
+
 }

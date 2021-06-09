@@ -2,12 +2,13 @@
   <div id="pdf">
     <div class="flex-container-1" id="div">
       <ng-container class='container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
-          <div id="div1" class="flex-container-2" [ngStyle]="applySelectedITApplication(capabilityLevel1)">{{capabilityLevel1.name}}
+        <!-- <div id="div1" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}} -->
+          <div id="div1" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel1) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}}
           <ng-container class='container' *ngFor='let capabilityLevel2 of capabilityLevel1.subcapabilities'>
-            <div id="div2" class="flex-container-3" [ngStyle]="applySelectedITApplication(capabilityLevel2)">
+            <div id="div2" class="flex-container-3" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel2) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel2) : { 'border-color': 'black' }">
               {{capabilityLevel2.name}}
               <ng-container class='container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
-                <div id="div3" [ngStyle]="applySelectedITApplication(capabilityLevel3)">
+                <div id="div3" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel3) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel3) : { 'border-color': 'black' }">
                   {{capabilityLevel3.name}}
                 </div>
               </ng-container>
@@ -36,7 +37,8 @@
         <option *ngFor="let strategy of strategies  | keyvalue" [ngValue]="strategy.value">{{strategy.value}}</option>
       </select>
     </div>
-    <h6>Choose Strategy Item to see which capability uses it the best.</h6>
+    <br>
+    <h6>Choose Strategy Item to see how high the strategic emphasis is on each capability.</h6>
     <div [formGroup]="strategyItem">
       <select class="custom-select" (change)="changeStrategyItem()" formControlName="strategyItemName">
         <option value="" disabled>Choose your Strategy Item</option>
