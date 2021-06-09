@@ -24,9 +24,10 @@
                     <a [routerLink]="['../itapplication/', itapplication.id, 'delete']"><img src="assets/delete-icon.png" alt="Delete" height="20" width="20"></a>&nbsp;&nbsp;
                 </td>
                 <td>
-                    <a class="btn btn-light" [routerLink]="['../itapplication/', itapplication.id, 'update']">{{ itapplication.name }}</a>
+                    <a class="btn btn-light" [routerLink]="['../itapplication/', itapplication.id, 'update']">{{
+                        itapplication.name }}</a>
                 </td>
-                <td> {{ itapplication.technology }} V{{itapplication.version}} </td>
+                <td> {{ itapplication.technology }} {{itapplication.version}} </td>
                 <td> {{ itapplication.acquisitionDate }} </td>
                 <td> {{ itapplication.endOfLife }} </td>
                 <td class="numbers"> {{ itapplication.currentScalability }}/{{ itapplication.expectedScalability }}

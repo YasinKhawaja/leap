@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -11,10 +11,8 @@ import Swal from 'sweetalert2';
 export class ProjectService {
 
   private projectURL: string = '//localhost:8080/api/project'
-  private contentheaders: HttpHeaders
 
   constructor(private http: HttpClient, private router: Router) {
-    this.contentheaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   }
 
   public getProjects(programid: string): Observable<Project[]> {
@@ -34,8 +32,7 @@ export class ProjectService {
 
   public addProject(programid: string, project: Project) {
     var url = `${this.projectURL}/${programid}`
-    return this.http.post<Project>(url, project.getParams(),
-      { headers: this.contentheaders })
+    return this.http.post<Project>(url, project)
       .subscribe(
         () => {
           this.router.navigate(['project'])
@@ -48,8 +45,7 @@ export class ProjectService {
 
   public updateProject(projectid: string, project: Project) {
     var url = `${this.projectURL}/${projectid}`
-    this.http.put<Project>(url, project.getParams(),
-      { headers: this.contentheaders })
+    this.http.put<Project>(url, project)
       .subscribe(
         () => {
           this.router.navigate(['project'])

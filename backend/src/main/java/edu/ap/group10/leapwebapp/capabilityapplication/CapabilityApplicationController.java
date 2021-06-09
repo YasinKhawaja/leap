@@ -30,7 +30,8 @@ public class CapabilityApplicationController {
 
         @GetMapping("/capitapp/{capabilityId}")
         public List<CapabilityApplication> getAllCapabilityApplications(@PathVariable String capabilityId) {
-                List<CapabilityApplication> capabilityApplicationsList = capabilityApplicationService.getCapabilityApplications(capabilityId);
+                List<CapabilityApplication> capabilityApplicationsList = capabilityApplicationService
+                                .getCapabilityApplications(capabilityId);
                 Capability capability = capabilityService.getCapabilityById(Long.parseLong(capabilityId));
                 capability.setInformationQuality(0.0);
                 capability.setApplicationFit(0.0);
@@ -39,33 +40,28 @@ public class CapabilityApplicationController {
 
                 for (CapabilityApplication capabilityApplication : capabilityApplicationsList) {
 
-                        Integer[] importanceCalc = { 
-                                        capabilityApplication.getBusinessEfficiencySupport(),
+                        Integer[] importanceCalc = { capabilityApplication.getBusinessEfficiencySupport(),
                                         capabilityApplication.getBusinessFunctionalCoverage(),
                                         capabilityApplication.getBusinessCorrectness(),
                                         capabilityApplication.getBusinessFuturePotential(),
                                         capabilityApplication.getInformationCompleteness(),
                                         capabilityApplication.getInformationCorrectness(),
-                                        capabilityApplication.getInformationAvailability() 
-                                };
+                                        capabilityApplication.getInformationAvailability() };
 
-                        Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum() / (importanceCalc.length * 5);
+                        Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
+                                        / (importanceCalc.length * 5);
                         capabilityApplication.setImportance(importance);
-                        
-                        capability.setCalculatedInformationQuality(
-                                        capabilityApplication.getInformationCompleteness(),
+
+                        capability.setCalculatedInformationQuality(capabilityApplication.getInformationCompleteness(),
                                         capabilityApplication.getInformationCorrectness(),
                                         capabilityApplication.getInformationAvailability(),
-                                        capabilityApplication.getImportance()
-                                );
+                                        capabilityApplication.getImportance());
 
-                        capability.setCalculatedApplicationFit(
-                                        capabilityApplication.getBusinessEfficiencySupport(),
+                        capability.setCalculatedApplicationFit(capabilityApplication.getBusinessEfficiencySupport(),
                                         capabilityApplication.getBusinessFunctionalCoverage(),
                                         capabilityApplication.getBusinessCorrectness(),
                                         capabilityApplication.getBusinessFuturePotential(),
-                                        capabilityApplication.getImportance()
-                                );
+                                        capabilityApplication.getImportance());
 
                         capabilityService.updateCapability(environmentId, capability.getId(), capability);
 
@@ -78,6 +74,7 @@ public class CapabilityApplicationController {
                 return capabilityApplicationService.getAllCapabilitiesLinkedToITApplication(itApplicationName);
         }
 
+        // change to requestbody
         @PostMapping("/capitapp/{capabilityId}")
         public void addCapabilityApplication(@RequestParam Integer businessEfficiencySupport,
                         @RequestParam Integer businessFunctionalCoverage, @RequestParam Integer businessCorrectness,
@@ -101,6 +98,7 @@ public class CapabilityApplicationController {
                 capabilityApplicationService.createCapabilityApplication(capabilityApplication);
         }
 
+        // change to requestbody
         @PutMapping("/capitapp/{capitappId}")
         public void updateCapabilityApplication(@RequestParam Integer businessEfficiencySupport,
                         @RequestParam Integer businessFunctionalCoverage, @RequestParam Integer businessCorrectness,
