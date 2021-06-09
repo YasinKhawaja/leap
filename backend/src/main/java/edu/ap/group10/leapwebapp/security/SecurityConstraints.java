@@ -8,6 +8,7 @@ public class SecurityConstraints {
     public static final String USERID_SECRET = ",A32_Characters-Long_String_Yepp";
     public static final String APPLICATION_ADMIN_SECRET = "@ppl1c@t10n_@7m1n";
     public static final long EXPIRATION_TIME = 900_000;
+    public static final long EXPIRATION_TIME_PASSWORDRESET = 600*  600 * 10l;
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
 

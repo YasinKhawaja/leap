@@ -45,7 +45,7 @@ export class ResetpasswordService {
       {headers: this.contentHeaders})
       .subscribe(
         () => {
-          this.router.navigate(['login']);
+          this.router.navigate(['environments']);
           Swal.fire('Password reset', 'Your password has succesfully been reset!', 'success')
         },
         error => {

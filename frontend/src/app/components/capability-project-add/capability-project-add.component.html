@@ -1,0 +1,25 @@
+<form [formGroup]="capabilityproject" (ngSubmit)="onSubmit()">
+    <div class="card">
+        <div class="card-header center">
+            <h5><strong>ADD PROJECT LINK</strong></h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="name">Project<span class="red">*</span></label>
+                <select id="project" class="form-controle" formControlName="project" required>
+                    <option *ngFor="let project of projects | keyvalue" [ngValue]="project.value">
+                        {{ project.value }}
+                    </option>
+                </select>
+                <div class="alert alert-danger center" *ngIf="(capabilityproject.get('project')!.dirty || capabilityproject.get('project')!.touched) && capabilityproject.get('project')!.invalid">
+                    <div *ngIf="capabilityproject.get('project')!.errors!.required">
+                        Project is required.
+                    </div>
+                </div>
+            </div>
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="capabilityproject.invalid">ADD</button>
+            </div>
+        </div>
+    </div>
+</form>

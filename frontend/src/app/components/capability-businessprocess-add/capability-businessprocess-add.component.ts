@@ -35,7 +35,7 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
           })
         },
         error => {
-          Swal.fire('Error', error.error.message, 'error')
+          Swal.fire('Error', `Failed to load projects of environment (${environmentid})`, 'error')
         }
       )
   }

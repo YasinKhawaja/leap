@@ -20,11 +20,10 @@ export class CapabilityBusinessprocessComponent implements OnInit {
     this.cbp.getCapabilityBusinessProcess(capabilityid)
     .subscribe(
       result => {
-        console.log(result);
         this.capabilityBusinessProcesses = result;
       },
-      error => {
-        Swal.fire('Error', error.error.message, 'error')
+      () => {
+        Swal.fire('Error', `Failed to load the business processes linked to capability (${capabilityid}).`, 'error')
       }
     )    
   }
