@@ -28,11 +28,10 @@ export class CapabilityBusinessprocessService {
     {headers: this.contentHeaders})
       .subscribe(
         () => {
-          Swal.fire('Success', 'You have succesfully linked the Process', 'success')
           this.router.navigate(['capability-businessprocess'])
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error')
+        () => {
+          Swal.fire('Error', 'Failed to add capability-business process link', 'error')
         }
       );
   }
@@ -41,7 +40,6 @@ export class CapabilityBusinessprocessService {
     var url = `${this.cbpURL}/${capabilitybusinessprocessid}`;
     this.http.delete(url).subscribe(
       () => {
-        Swal.fire('Success', 'You have succesfully deleted the Process', 'success')
         this.router.navigate(['capability-businessprocess'])
       }
     )

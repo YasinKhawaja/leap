@@ -108,7 +108,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     public String newUserIdJwt(String id) {
         return JWT.create().withClaim("id", id)
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME_PASSWORDRESET))
                 .sign(Algorithm.HMAC512(SecurityConstraints.USERID_SECRET.getBytes()));
     }
 

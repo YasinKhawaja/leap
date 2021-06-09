@@ -127,7 +127,8 @@ public class UserService implements UserDetailsService{
         Mail mail = new Mail();
         mail.setReceiver(email);
         mail.setSubject("Your first login credentials.");
-        mail.setContent("Your username is: " + username + "\nTo active your account, set a password using this link: " + newPasswordLink);
+        mail.setContent("Your username is: " + username + "\nTo active your account, set a password using this link: " + newPasswordLink + 
+        "\nThis link is only valid for 1h, after 1h please reset your password using the password reset option on the site.");
         mailService.sendMail(mail);
     }
 

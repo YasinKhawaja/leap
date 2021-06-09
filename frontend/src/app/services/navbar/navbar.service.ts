@@ -70,6 +70,14 @@ export class NavbarService {
     return this.readCookie("Capability");
   }
 
+  public setProgramCookie(programid: string) {
+    this.createCookie("Program", programid, 1)
+  }
+
+  public getProgramCookie(): string {
+    return this.readCookie("Program")
+  }
+
   createCookie(name: string, value: string, days: number) {
     var expires = '';
     if (days) {

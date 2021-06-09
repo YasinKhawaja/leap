@@ -16,24 +16,23 @@
                 <ul class="navbar-nav mr-auto">
                     <div class="verticalLine" *ngIf="(jwt.getUserBoolean() | async) === true">
                         <li class='nav-item active'>
-                            <a class="nav-link " [routerLink]="['environments']" (click)="deselect()">
-                                <span *ngIf="(getEnvironmentname() != '')"> {{ environmentName }} </span></a>
+                            <a class="nav-link" style="margin-left: 0px;" [routerLink]="['environments']" (click)="deselect()" *ngIf="(getEnvironmentname() != '')">
+                                {{ environmentName }}</a>
                         </li>
 
                     </div>
-
                     <ul class="navbar-nav mr-auto" *ngIf="(ns.environmentStatus() | async) === true">
                         <li class="nav-item active">
-                            <a class="nav-link" [routerLink]=" ['capabilities']">Capabilities</a>
+                            <a class="nav-link" [routerLink]="['capabilities']">Capabilities</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" [routerLink]=" ['strategies']">Strategy/Strategy Items</a>
+                            <a class="nav-link" [routerLink]="['strategies']">Strategy</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['itapplication']">IT-Applications</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link">Programs/Projects</a>
+                            <a class="nav-link" [routerLink]="['program']">Programs</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['resources']">Resources</a>
@@ -41,17 +40,19 @@
                         <li class="nav-item active">
                             <a class="nav-link" [routerLink]="['businessprocess']">Business Processes</a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['information']">Information</a>
+                        </li>
 
-                        <div class="verticalLine">
-                            <li class='nav-item active'>
-                                <a class='nav-link' [routerLink]="['export']">Export</a>
-                            </li>
-                        </div>
+                        <li class='nav-item active'>
+                            <a class='nav-link' [routerLink]="['export']">Export</a>
+                        </li>
                     </ul>
                 </ul>
+                <div class="verticalLine"> </div>
                 <ul class="navbar-nav" *ngIf="(jwt.getUserBoolean() | async) === true">
                     <li class="nav-item dropdown active" ngbDropdown>
-                        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="profileDropDown" data-toggle="dropdown" *ngIf="(getUsername() != '')">
+                        <a ngbDropdownToggle class="nav-link dropdown-toggle" style="margin-left: 0px;" id="profileDropDown" data-toggle="dropdown" *ngIf="(getUsername() != '')">
                             {{ username }} <i class="fa fa-fw fa-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
@@ -98,8 +99,6 @@
 
 
     <br /><br />
-
-    <link rel="stylesheet " href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css " integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T " crossorigin="anonymous ">
 </body>
 
 </html>

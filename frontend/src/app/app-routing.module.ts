@@ -48,6 +48,17 @@ import { UserDeleteComponent } from './components/user-delete/user-delete.compon
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { RouterGuard } from './services/guard/router.guard';
 import { JwtService } from './services/jwt/jwt.service';
+import { ProgramComponent } from './components/program/program.component';
+import { ProgramAddComponent } from './components/program-add/program-add.component';
+import { ProgramEditComponent } from './components/program-edit/program-edit.component';
+import { ProgramDeleteComponent } from './components/program-delete/program-delete.component';
+import { ProjectComponent } from './components/project/project.component';
+import { ProjectAddComponent } from './components/project-add/project-add.component';
+import { ProjectEditComponent } from './components/project-edit/project-edit.component';
+import { ProjectDeleteComponent } from './components/project-delete/project-delete.component';
+import { CapabilityProjectComponent } from './components/capability-project/capability-project.component';
+import { CapabilityProjectAddComponent } from './components/capability-project-add/capability-project-add.component';
+import { CapabilityProjectDeleteComponent } from './components/capability-project-delete/capability-project-delete.component';
 
 const routes: Routes = [
   { path: 'company/register', component: CompanyRequestComponent },
@@ -82,21 +93,33 @@ const routes: Routes = [
   { path: 'capability-application/delete/:capabilityapplicationId', component: CapabilityApplicationDeleteComponent, canActivate: [RouterGuard] },
   { path: 'resources', component: ResourceComponent, canActivate: [RouterGuard] },
   { path: 'capability-resource', component: CapabilityResourceComponent, canActivate: [RouterGuard] },
+  { path: 'resetpassword', component: ResetpasswordComponent },
+  { path: 'resetpassword/confirm', component: ResetpasswordConfirmComponent},
   { path: 'add-user', component: UserAddComponent, canActivate: [RouterGuard] },
-  { path: 'edit-user/:userId', component: UserEditComponent, canActivate: [RouterGuard] },
-  { path: 'del-user/:userId', component: UserDeleteComponent, canActivate: [RouterGuard] },
-  { path: 'businessprocess', component: BusinessprocessComponent, canActivate: [RouterGuard] },
-  { path: 'businessprocess/add', component: BusinessprocessAddComponent, canActivate: [RouterGuard] },
-  { path: 'businessprocess/edit/:businessprocessid', component: BusinessprocessEditComponent, canActivate: [RouterGuard] },
-  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent, canActivate: [RouterGuard] },
-  { path: 'capability-businessprocess', component: CapabilityBusinessprocessComponent, canActivate: [RouterGuard] },
-  { path: 'capability-businessprocess/add', component: CapabilityBusinessprocessAddComponent, canActivate: [RouterGuard] },
-  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'edit-user/:userId', component: UserEditComponent, canActivate: [RouterGuard]},
+  { path: 'del-user/:userId', component: UserDeleteComponent, canActivate: [RouterGuard]},
+  { path: 'businessprocess', component: BusinessprocessComponent, canActivate: [RouterGuard]},
+  { path: 'businessprocess/add', component: BusinessprocessAddComponent, canActivate: [RouterGuard]},
+  { path: 'businessprocess/edit/:businessprocessid', component: BusinessprocessEditComponent, canActivate: [RouterGuard]},
+  { path: 'businessprocess/delete/:businessprocessid', component: BusinessprocessDeleteComponent, canActivate: [RouterGuard]},
+  { path: 'capability-businessprocess', component:CapabilityBusinessprocessComponent, canActivate: [RouterGuard]},
+  { path: 'capability-businessprocess/add', component: CapabilityBusinessprocessAddComponent, canActivate: [RouterGuard]},
+  { path: 'capability-businessprocess/delete/:capabilitybusinessprocessid', component: CapabilityBusinessprocessDeleteComponent, canActivate: [RouterGuard]},
   { path: 'capstrategyitems', component: CapabilityStrategyitemsComponent, canActivate: [RouterGuard] },
-  { path: 'capstrategyitems/create', component: CapabilityStrategyitemsAddComponent, canActivate: [RouterGuard] },
+  { path: 'capstrategyitems/create', component: CapabilityStrategyitemsAddComponent , canActivate: [RouterGuard]},
   { path: 'capstrategyitems/update/:capabilityStrategyItemID', component: CapabilityStrategyitemsEditComponent, canActivate: [RouterGuard] },
   { path: 'capstrategyitems/delete/:capabilityStrategyItemID', component: CapabilityStrategyitemsDeleteComponent, canActivate: [RouterGuard] },
-  { path: 'capability-resource', component: CapabilityResourceComponent, canActivate: [RouterGuard] }
+  { path: 'program', component: ProgramComponent, canActivate: [RouterGuard]},
+  { path: 'program/create', component: ProgramAddComponent, canActivate: [RouterGuard]},
+  { path: 'program/edit/:programid', component: ProgramEditComponent, canActivate: [RouterGuard]},
+  { path: 'program/delete/:programid', component:ProgramDeleteComponent, canActivate: [RouterGuard]},
+  { path: 'project', component: ProjectComponent, canActivate: [RouterGuard]},
+  { path: 'project/create', component: ProjectAddComponent, canActivate: [RouterGuard]},
+  { path: 'project/edit/:projectid', component:ProjectEditComponent, canActivate: [RouterGuard]},
+  { path: 'project/delete/:projectid', component: ProjectDeleteComponent, canActivate: [RouterGuard]},
+  { path: 'capability-project', component: CapabilityProjectComponent, canActivate: [RouterGuard]},
+  { path: 'capability-project/create', component: CapabilityProjectAddComponent, canActivate: [RouterGuard]},
+  { path: 'capability-project/delete/:capabilityprojectid', component: CapabilityProjectDeleteComponent, canActivate: [RouterGuard]}
 ];
 
 @NgModule({

@@ -26,8 +26,8 @@ export class BusinessprocessEditComponent implements OnInit {
             description: [result.description, [Validators.nullValidator]]
           })
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error');
+        () => {
+          Swal.fire('Error', `Failed to load business process`, 'error');
         }
       )
   }

@@ -26,7 +26,7 @@ public class CapabilityBusinessProcess {
     private Capability capability;
 
     @OneToOne(targetEntity = BusinessProcess.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "application_id", nullable = false)
+    @JoinColumn(name = "businessprocess_id", nullable = false)
     private BusinessProcess businessProcess;
 
     public CapabilityBusinessProcess() {}
