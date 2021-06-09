@@ -10,7 +10,7 @@ import { NavbarService } from '../navbar/navbar.service';
   providedIn: 'root'
 })
 export class JwtService {
-  private jwtUrl: string = 'http://localhost:8080/api/user/jwt';
+  private jwtUrl: string = '//localhost:8080/api/user/jwt';
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
@@ -28,7 +28,7 @@ export class JwtService {
 
   tokenRefresh() {
     this.interval = setInterval(() => {
-          this.getNewJwt()
+      this.getNewJwt()
     }, 600000);
   }
 

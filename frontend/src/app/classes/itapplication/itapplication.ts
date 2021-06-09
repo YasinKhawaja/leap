@@ -1,18 +1,14 @@
-import { HttpParams } from "@angular/common/http";
+//import { HttpParams } from "@angular/common/http";
 
 export class Itapplication {
     public id: number
-    
+
     constructor(
         public name: string,
         public technology: string,
         public version: string,
-
-        //dates
         public acquisitionDate: string,
         public endOfLife: string,
-
-        //integers
         public currentScalability: string,
         public expectedScalability: string,
         public currentPerformance: string,
@@ -21,20 +17,14 @@ export class Itapplication {
         public expectedSecurityLevel: string,
         public currentStability: string,
         public expectedStability: string,
-
         public costCurrency: string,
-
-        //integer
-        public currentValueForMoney: string, 
-
-        //double
+        public currentValueForMoney: string,
         public currentTotalCostPerYear: string,
-        public toleratedTotalCostPerYear: string, 
-
+        public toleratedTotalCostPerYear: string,
         public timeValue: string
-    ){}
+    ) { }
 
-    getParams(): HttpParams{
+    /*getParams(): HttpParams{
         return new HttpParams()
         .set('name', this.name)
         .set('technology', this.technology)
@@ -54,5 +44,5 @@ export class Itapplication {
         .set('currentTotalCostPerYear', this.currentTotalCostPerYear)
         .set('toleratedTotalCostPerYear', this.toleratedTotalCostPerYear)
         .set('timeValue', this.timeValue)
-    }
+    }*/
 }

@@ -4,7 +4,7 @@ import { User } from 'src/app/classes/user/user';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { UserService } from 'src/app/services/user/user.service';
 
-enum Role{
+enum Role {
   ADMIN = "User-admin",
   BEWERKER = "Bewerker",
   LEZER = "Lezer"
@@ -21,21 +21,21 @@ export class UserAddComponent {
 
   user = this.fb.group({
     firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    surname: ['',  [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    surname: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
     email: ['', [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
-    username: ['',  Validators.required],
+    username: ['', Validators.required],
     role: ['', Validators.required]
   })
 
   constructor(private fb: FormBuilder, private us: UserService, private jwt: JwtService) { }
 
-  onSubmit(){
+  onSubmit() {
     this.us.addUser(this.jwt.checkCompany(), new User(
       this.user.value.firstName,
       this.user.value.surname,
       this.user.value.email,
       this.user.value.username,
-      null
+      ' '
     ), (Object.values(Role).indexOf(this.user.value.role)).toString())
   }
 }

@@ -14,8 +14,8 @@ public class ProjectService {
 
     public List<Project> getAllProjects(String programid) {
         List<Project> projects = new ArrayList<>();
-        for (Project project : projectRepository.findAll()){
-            if (project.getProgram().getId().equals(Long.parseLong(programid))){
+        for (Project project : projectRepository.findAll()) {
+            if (project.getProgram().getId().equals(Long.parseLong(programid))) {
                 projects.add(project);
             }
         }
@@ -23,36 +23,33 @@ public class ProjectService {
     }
 
     public Project getProject(String projectid) {
-        return projectRepository.findById(Long.parseLong(projectid))
-        .orElseThrow();
+        return projectRepository.findById(Long.parseLong(projectid)).orElseThrow();
     }
 
     public void addProject(Project project) {
         projectRepository.save(project);
     }
 
-    public void updateProject(String projectid, String name, String description) {
-        Project oProject = projectRepository.findById(Long.parseLong(projectid))
-        .orElseThrow();
-        oProject.setName(name);
-        oProject.setDescription(description);
+    public void updateProject(String projectid, Project project) {
+        Project oProject = projectRepository.findById(Long.parseLong(projectid)).orElseThrow();
+        oProject.setName(project.getName());
+        oProject.setDescription(project.getDescription());
         projectRepository.save(oProject);
     }
 
     public void deleteProject(String projectid) {
-        Project project = projectRepository.findById(Long.parseLong(projectid))
-        .orElseThrow();
+        Project project = projectRepository.findById(Long.parseLong(projectid)).orElseThrow();
         projectRepository.delete(project);
     }
 
     public List<Project> getAllProjectsOfEnvironment(String environmentid) {
         List<Project> projects = new ArrayList<>();
-        for (Project project : projectRepository.findAll()){
-            if (project.getProgram().getEnvironment().getId().equals(Long.parseLong(environmentid))){
+        for (Project project : projectRepository.findAll()) {
+            if (project.getProgram().getEnvironment().getId().equals(Long.parseLong(environmentid))) {
                 projects.add(project);
             }
         }
         return projects;
     }
-    
+
 }

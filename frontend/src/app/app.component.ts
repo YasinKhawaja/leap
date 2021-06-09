@@ -11,7 +11,7 @@ import { NavbarService } from './services/navbar/navbar.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title: string;
   environmentName: string
   username: string
@@ -22,12 +22,12 @@ export class AppComponent implements OnInit{
 
   constructor(public ns: NavbarService, public jwt: JwtService, public router: Router, private idle: Idle, private keepalive: Keepalive) {
     this.title = 'LEAP-webapp'
-    
+
     idle.setIdle(600);
     idle.setTimeout(30);
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES)
 
-    idle.onIdleEnd.subscribe(() =>{
+    idle.onIdleEnd.subscribe(() => {
       this.reset();
       Swal.close();
     });
@@ -47,9 +47,9 @@ export class AppComponent implements OnInit{
       Swal.getTitle().textContent = `Idle for too long, press button within ${countdown} seconds to stay logged in`;
     })
 
-    
-    this.jwt.getUserIdle().subscribe(userIsLoggedIn =>{
-      if(userIsLoggedIn) {
+
+    this.jwt.getUserIdle().subscribe(userIsLoggedIn => {
+      if (userIsLoggedIn) {
         this.idle.watch()
         this.timedOut = false;
       } else {
@@ -68,31 +68,31 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // if(this.jwt.getUserBoolean().getValue()){
-    //   this.idle.watch();
-    //   this.jwt.tokenRefresh();
-    // }
-    // if(this.ns.readCookie("jwt") != undefined && this.ns.readCookie("jwt") != null && this.ns.readCookie("jwt") != ""){
-    //   this.jwt.getNewJwt();
-    // }
+    if (this.jwt.getUserBoolean().getValue()) {
+      this.idle.watch();
+      this.jwt.tokenRefresh();
+    }
+    if (this.ns.readCookie("jwt") != undefined && this.ns.readCookie("jwt") != null && this.ns.readCookie("jwt") != "") {
+      this.jwt.getNewJwt();
+    }
   }
 
-  deselect(): void{
+  deselect(): void {
     this.ns.environmentDeselect()
-   
+
   }
 
-  getEnvironmentId(){
+  getEnvironmentId() {
     this.environmentId = this.ns.getEnvironmentCookie();
   }
 
-  logout(){
+  logout() {
     this.jwt.logout();
   }
 
-  getEnvironmentname(): string{
+  getEnvironmentname(): string {
     this.role = this.jwt.checkRole();
-    if(this.role == "application admin"){
+    if (this.role == "application admin") {
       this.environmentName = "Companies";
     } else {
       this.environmentName = this.ns.getEnvironmentName();
@@ -100,8 +100,8 @@ export class AppComponent implements OnInit{
     return this.environmentName;
   }
 
-  getUsername(): string{
-    if (this.jwt.getUsername() != null){
+  getUsername(): string {
+    if (this.jwt.getUsername() != null) {
       this.username = this.jwt.getUsername();
     }
     else {
@@ -110,8 +110,8 @@ export class AppComponent implements OnInit{
     return this.username;
   }
 
-  getRouter(): boolean{
-    if(this.router.isActive("home", true) || this.router.isActive("/", true)){
+  getRouter(): boolean {
+    if (this.router.isActive("home", true) || this.router.isActive("/", true)) {
       return true;
     } else {
       return false;

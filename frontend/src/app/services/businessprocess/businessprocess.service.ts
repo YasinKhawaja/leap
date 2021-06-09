@@ -14,7 +14,7 @@ export class BusinessprocessService {
   private contentheaders: HttpHeaders
 
   constructor(private http: HttpClient, private router: Router) {
-    this.contentheaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    this.contentheaders = new HttpHeaders().set('Content-Type', 'application/json')
   }
 
   public getBusinessProcesses(environmentid: string): Observable<Businessprocess[]> {
@@ -23,17 +23,17 @@ export class BusinessprocessService {
     return this.http.get<Businessprocess[]>(url);
   }
 
-  public getBusinessProcess(businessprocessid: string): Observable<Businessprocess>{
+  public getBusinessProcess(businessprocessid: string): Observable<Businessprocess> {
     var url = `${this.businessprocessURL}/${businessprocessid}`;
 
     return this.http.get<Businessprocess>(url);
   }
 
-  public addBusinessProcess(environmentid: string, businessprocess: Businessprocess){
+  public addBusinessProcess(environmentid: string, businessprocess: Businessprocess) {
     var url = `${this.businessprocessURL}/${environmentid}`;
 
-    return this.http.post<Businessprocess>(url, businessprocess.getParams(),
-    {headers: this.contentheaders})
+    return this.http.post<Businessprocess>(url, businessprocess,
+      { headers: this.contentheaders })
       .subscribe(
         () => {
           this.router.navigate(['businessprocess'])
@@ -44,22 +44,22 @@ export class BusinessprocessService {
       )
   }
 
-  public updateBusinessProcess(businessprocessid: string, businessprocess: Businessprocess){
+  public updateBusinessProcess(businessprocessid: string, businessprocess: Businessprocess) {
     var url = `${this.businessprocessURL}/${businessprocessid}`;
 
-    return this.http.put<Businessprocess>(url, businessprocess.getParams(),
-    {headers: this.contentheaders})
-    .subscribe (
-      () => {
-        this.router.navigate(['businessprocess'])
-      },
-      () => {
-        Swal.fire('Error', `Failed to update business process with id: ${businessprocess.id}`, 'error')
-      }
-    )
+    return this.http.put<Businessprocess>(url, businessprocess,
+      { headers: this.contentheaders })
+      .subscribe(
+        () => {
+          this.router.navigate(['businessprocess'])
+        },
+        () => {
+          Swal.fire('Error', `Failed to update business process with id: ${businessprocess.id}`, 'error')
+        }
+      )
   }
 
-  public deleteBusinessProcess(businessprocessid: string){
+  public deleteBusinessProcess(businessprocessid: string) {
     var url = `${this.businessprocessURL}/${businessprocessid}`;
 
     this.http.delete(url).subscribe(

@@ -16,7 +16,7 @@ public class BusinessProcessService {
     public List<BusinessProcess> getAllBusinessProcessesEnvironment(String environmentId) {
         List<BusinessProcess> businessProcesses = new ArrayList<>();
         for (BusinessProcess businessProcess : businessProcessRepository.findAll()) {
-            if(businessProcess.getEnvironment().getId().equals(Long.parseLong(environmentId))){
+            if (businessProcess.getEnvironment().getId().equals(Long.parseLong(environmentId))) {
                 businessProcesses.add(businessProcess);
             }
         }
@@ -27,26 +27,25 @@ public class BusinessProcessService {
         return businessProcessRepository.save(businessProcess);
     }
 
-    public Object updateBusinessProcess(Long businessprocessid, String name, String description) {
-        
+    public Object updateBusinessProcess(Long businessprocessid, BusinessProcess businessprocess) {
+
         BusinessProcess oBusPro = businessProcessRepository.findById(businessprocessid)
-        .orElseThrow(ResourceNotFoundException::new);
-        oBusPro.setDescription(description);
-        oBusPro.setName(name);
+                .orElseThrow(ResourceNotFoundException::new);
+        oBusPro.setDescription(businessprocess.getDescription());
+        oBusPro.setName(businessprocess.getName());
 
         return businessProcessRepository.save(oBusPro);
     }
 
     public void deleteBusinessProcess(Long businessprocessid) {
         BusinessProcess businessProcess = businessProcessRepository.findById(businessprocessid)
-        .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException::new);
 
         businessProcessRepository.delete(businessProcess);
     }
 
     public BusinessProcess getBusinessProcess(Long businessprocessid) {
-        return businessProcessRepository.findById(businessprocessid)
-        .orElseThrow(ResourceNotFoundException::new);
+        return businessProcessRepository.findById(businessprocessid).orElseThrow(ResourceNotFoundException::new);
     }
-    
+
 }

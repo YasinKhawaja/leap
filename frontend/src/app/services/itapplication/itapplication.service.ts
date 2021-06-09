@@ -14,16 +14,15 @@ export class ItapplicationService {
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/json')
   }
 
-  //gets all the it applications for the current environment
   public getITApplications_CurrentEnvironment(environmentId: string): Observable<Itapplication[]> {
     let url = `${this.itApplicationURL}/${environmentId}`;
     return this.http.get<Itapplication[]>(url);
   }
 
-  public getITApplication(itapplicationId: string): Observable<Itapplication>{
+  public getITApplication(itapplicationId: string): Observable<Itapplication> {
     var url = `${this.itApplicationURL.slice(0, this.itApplicationURL.length - 1)}/${itapplicationId}`;
 
     return this.http.get<Itapplication>(url);
@@ -31,29 +30,28 @@ export class ItapplicationService {
 
   public createITApplication_CurrentEnvironment(environmentId: string, itApplication: Itapplication) {
     let url = `${this.itApplicationURL}/${environmentId}`;
-    return this.http.post<Itapplication>(url, itApplication.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(data => {
-      this.router.navigate([`itapplication/`])
-      Swal.fire('Success', 'You have succesfully created an IT Application', 'success')
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    });
+    return this.http.post<Itapplication>(url, itApplication,
+      { headers: this.contentHeaders })
+      .subscribe(
+        () => {
+          this.router.navigate([`itapplication/`])
+        },
+        () => {
+          Swal.fire('Error', 'Failed to create this application', 'error')
+        });
   }
 
-  updateITApplication_CurrentEnvironment(itApplicationID: string, itApplication: Itapplication){
+  updateITApplication_CurrentEnvironment(itApplicationID: string, itApplication: Itapplication) {
     let url = `${this.itApplicationURL}/${itApplicationID}`
 
-    this.http.put<Itapplication>(url, itApplication.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(data => {
-      this.router.navigate([`itapplication/`])
-      Swal.fire('Success', 'You have succesfully updated the IT Application', 'success')
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    });
+    this.http.put<Itapplication>(url, itApplication,
+      { headers: this.contentHeaders })
+      .subscribe(data => {
+        this.router.navigate([`itapplication/`])
+      },
+        error => {
+          Swal.fire('Error', 'Failed to update the application', 'error')
+        });
   }
 
   deleteITApplication_CurrentEnvironment(itApplicationID: string) {
@@ -62,10 +60,9 @@ export class ItapplicationService {
     this.http.delete(url).subscribe(
       () => {
         this.router.navigate([`itapplication/`])
-        Swal.fire('Success', 'You have succesfully deleted the IT Application', 'success')
       },
-      error => {
-        Swal.fire('Error', error.error.message, 'error')
+      () => {
+        Swal.fire('Error', 'Failed to delete the application', 'error')
       }
     );
   }
