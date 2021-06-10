@@ -1,18 +1,17 @@
 package edu.ap.group10.leapwebapp.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import edu.ap.group10.leapwebapp.company.Company;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-@AutoConfigureMockMvc
 public class UserUnitTests {
 
     private static final Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5,
@@ -43,25 +42,48 @@ public class UserUnitTests {
     @Test
     void givenUsers_whenHashCode_returnsTrue() {
         // Given
-        User user1 = new User(firstName, surname, email, username, "", role, company);
-        User user2 = new User(firstName, surname, email, username, "", role, company);
+        User userAdmin1 = new User(firstName, surname, email, username, "", 0, company);
+        User userAdmin2 = new User(firstName, surname, email, username, "", 0, company);
+        User editor = new User(firstName, surname, email, username, "", 1, company);
+        User applicationAdmin = new User(firstName, surname, email, username, "", -1, company);
+        User reader = new User(firstName, surname, email, username, "", 2, company);
 
         // When
-        int user1Hash = user1.hashCode();
-        int user2Hash = user2.hashCode();
+        int userA1Hash = userAdmin1.hashCode();
+        int userA2Hash = userAdmin2.hashCode();
+        int userE3Hash = editor.hashCode();
+        int userAA4Hash = applicationAdmin.hashCode();
+        int userR5Hash = reader.hashCode();
 
         // Then
-        assertEquals(user1Hash, user2Hash);
+        assertEquals(userA1Hash, userA2Hash);
+        assertNotEquals(userA1Hash, userE3Hash);
+        assertNotEquals(userA1Hash, userAA4Hash);
+        assertNotEquals(userE3Hash, userAA4Hash);
+        assertNotEquals(userA1Hash, userR5Hash);
     }
 
     @Test
     void givenUsers_whenEquals_returnsTrue() {
         // Given
-        User user1 = new User(firstName, surname, email, username, "", role, company);
-        User user2 = new User(firstName, surname, email, username, "", role, company);
+        User userAdmin1 = new User(firstName, surname, email, username, "", 0, company);
+        User userAdmin2 = new User(firstName, surname, email, username, "", 0, company);
+        User editor = new User(firstName, surname, email, username, "", 1, company);
+        User applicationAdmin = new User(firstName, surname, email, username, "", -1, company);
+        User reader3 = new User(firstName, surname, email, username, "", 2, company);
 
         // When
-        boolean validator = user1.equals(user2);
+        boolean validator = userAdmin1.equals(userAdmin2)
+                && userAdmin1.getAuthorities().equals(userAdmin2.getAuthorities())
+                && userAdmin1.isAccountNonExpired() == (userAdmin2.isAccountNonExpired())
+                && userAdmin1.isAccountNonLocked() == userAdmin2.isAccountNonLocked()
+                && userAdmin1.isCredentialsNonExpired() == userAdmin2.isCredentialsNonExpired()
+                && userAdmin1.isEnabled() == userAdmin2.isEnabled()
+                && userAdmin1.getAuthorities() != editor.getAuthorities()
+                && userAdmin1.getAuthorities() != (reader3.getAuthorities())
+                && editor.getAuthorities() != reader3.getAuthorities()
+                && editor.getAuthorities() != applicationAdmin.getAuthorities()
+                && userAdmin1.getAuthorities() != applicationAdmin.getAuthorities();
 
         // Then
         assertTrue(validator);
