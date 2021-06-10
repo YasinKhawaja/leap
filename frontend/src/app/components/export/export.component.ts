@@ -72,7 +72,7 @@ export class ExportComponent implements OnInit {
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
 
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
-        
+
         this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3')
       },
         error => console.log(error));
@@ -140,17 +140,17 @@ export class ExportComponent implements OnInit {
     this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName)
       .subscribe(result => {
         this.capabilityStrategyItemsLinkedToStrategyItem = result;
-    
+
         this.itApplication.get("itApplicationName").reset();
       },
         error => console.log(error))
-    
+
   }
 
   applySelectedStrategyItem(capability) {
     for (var i = 0; i < this.capabilityStrategyItemsLinkedToStrategyItem.length; i++) {
       if (this.capabilityStrategyItemsLinkedToStrategyItem[i].capability.id == capability.id) {
-        
+
         if (this.capabilityStrategyItemsLinkedToStrategyItem[i].strategicEmphasis == "HIGH") {
           this.style = { 'border-color': 'green' }
           break;
@@ -163,7 +163,7 @@ export class ExportComponent implements OnInit {
         } this.style = { 'border-color': 'black' }
         break;
       } else this.style = { 'border-color': 'black' };
-    } 
+    }
     return this.style;
   }
 
@@ -190,10 +190,9 @@ export class ExportComponent implements OnInit {
     // add the capability map image
 
     let data = document.getElementById('divLeftHalf');
-    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
+    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4)
-      // w/h ratio 4/1 , w:20 h:5 was goed
-      slide.addImage({ data: contentDataURL, x: 2, y: 0, w: '60%', h: '100%' });
+      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
 
       // save powerpoint
       powerpoint.writeFile({ fileName: "CapabilityMap" });
@@ -201,7 +200,6 @@ export class ExportComponent implements OnInit {
   }
 
   generatePDF() {
-    // add the capability map image
     let doc = new jsPDF();
     
     let data = document.getElementById('divLeftHalf');
@@ -221,21 +219,21 @@ export class ExportComponent implements OnInit {
       // save powerpoint
       doc.save( "CapabilityMap");
     });
-  }
+    }
 
-  generateLevel1Layer() {
-    let capabilitiesLevel1: Capability[]
-    capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
-    this.capabilities = capabilitiesLevel1;
-  }
+    generateLevel1Layer() {
+      let capabilitiesLevel1: Capability[]
+      capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
+      this.capabilities = capabilitiesLevel1;
+    }
 
-  generateLevel1and2Layer() {
-    let capabilitiesLevel2: Capability[]
-    capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
-    this.capabilities = capabilitiesLevel2;
-  }
+    generateLevel1and2Layer() {
+      let capabilitiesLevel2: Capability[]
+      capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
+      this.capabilities = capabilitiesLevel2;
+    }
 
-  generateEntireMap() {
-    window.location.reload();
+    generateEntireMap() {
+      window.location.reload();
+    }
   }
-}
