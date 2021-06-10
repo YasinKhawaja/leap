@@ -45,7 +45,6 @@ class ITApplicationRepositoryUnitTests {
 
     @BeforeEach
     void delete() {
-        // Fresh H2 DB before each test
         sut.deleteAll();
     }
 
