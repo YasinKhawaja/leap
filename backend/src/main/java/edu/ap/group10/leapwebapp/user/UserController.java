@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
@@ -7,6 +8,7 @@ import java.util.Random;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +30,9 @@ import edu.ap.group10.leapwebapp.security.SecurityConstraints;
 public class UserController {
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     private ConfirmationTokenService confirmationTokenService;
 
     @Autowired
@@ -36,9 +41,9 @@ public class UserController {
     @Autowired
     private MailService mailService;
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/application-admin")
-    public void addApplicationAdmin(@RequestBody User user, @RequestParam String secret) {
+    public void addApplicationAdmin(@RequestBody UserDTO userDTO, @RequestParam String secret) {
+        User user = modelMapper.map(userDTO, User.class);
         if (secret.equals(SecurityConstraints.APPLICATION_ADMIN_SECRET)
                 && userService.checkUser(user.getEmail(), user.getUsername())) {
             user.setRole(-1);
@@ -47,9 +52,9 @@ public class UserController {
         }
     }
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/useradmin")
-    public void addUserAdmin(@RequestParam String token, @RequestBody User user) {
+    public void addUserAdmin(@RequestParam String token, @RequestBody UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
         if (userService.checkUser(user.getEmail(), user.getUsername())) {
             user.setRole(0);
             user.setCompany(userService.validateToken(token));
@@ -58,9 +63,9 @@ public class UserController {
         }
     }
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/user")
-    public void addUser(@RequestBody User user, @RequestParam String company, @RequestParam Integer role) {
+    public void addUser(@RequestBody UserDTO userDTO, @RequestParam String company, @RequestParam Integer role) {
+        User user = modelMapper.map(userDTO, User.class);
         if (userService.checkUser(user.getEmail(), user.getUsername())) {
             byte[] bytes = new byte[10];
             new Random().nextBytes(bytes);
@@ -77,8 +82,13 @@ public class UserController {
 
     @ExceptionHandler(Exception.class)
     @GetMapping("/user")
-    public List<User> getUsers(@RequestParam("companyId") String companyId) {
-        return userService.findUserByCompany(Long.parseLong(companyId));
+    public List<UserDTO> getUsers(@RequestParam("companyId") String companyId) {
+        List<User> users = userService.findUserByCompany(Long.parseLong(companyId));
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+            userDTOs.add(modelMapper.map(user, UserDTO.class));
+        }
+        return userDTOs;
     }
 
     @ExceptionHandler(Exception.class)
@@ -89,7 +99,8 @@ public class UserController {
 
     @ExceptionHandler(Exception.class)
     @PutMapping("/user")
-    public void updateUser(@RequestParam String userid, @RequestBody User user, @RequestParam Integer role) {
+    public void updateUser(@RequestParam String userid, @RequestBody UserDTO userDTO, @RequestParam Integer role) {
+        User user = modelMapper.map(userDTO, User.class);
         user.setRole(role);
         user.setCompany(userService.findUserById(userid).getCompany());
         userService.updateUser(userid, user);
@@ -97,8 +108,9 @@ public class UserController {
 
     @ExceptionHandler(Exception.class)
     @GetMapping("/user/{userid}")
-    public User getUser(@PathVariable String userid) {
-        return userService.findUserById(userid);
+    public UserDTO getUser(@PathVariable String userid) {
+        User user = userService.findUserById(userid);
+        return modelMapper.map(user, UserDTO.class);
     }
 
     @ExceptionHandler(Exception.class)
