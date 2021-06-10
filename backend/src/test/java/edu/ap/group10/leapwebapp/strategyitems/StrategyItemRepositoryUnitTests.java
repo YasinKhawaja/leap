@@ -26,76 +26,76 @@ import edu.ap.group10.leapwebapp.strategy_item.StrategyItemRepository;
 @ExtendWith(MockitoExtension.class)
 public class StrategyItemRepositoryUnitTests {
 
-    @Autowired
-    StrategyItemRepository sir;
-    
-    @Autowired
-    StrategyRepository strategyRepository;
+  @Autowired
+  StrategyItemRepository sir;
 
-    @Autowired 
-    private CompanyRepository companyRepository;
+  @Autowired
+  StrategyRepository strategyRepository;
 
-    @Autowired
-    EnvironmentRepository environmentRespository;
+  @Autowired
+  private CompanyRepository companyRepository;
 
-    @BeforeEach
-    void setUp() {
-       
-        sir.deleteAll();
-        strategyRepository.deleteAll();
-        environmentRespository.deleteAll();
-    }
+  @Autowired
+  EnvironmentRepository environmentRespository;
 
-     @Test
-    void givenStrategy_whenFindByStrategy_returnsStrategyItemFound() {
+  @BeforeEach
+  void setUp() {
 
-       // Given
-      Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
-      companyRepository.save(company);
-      String name = "Siemens";
-      Environment env = new Environment(name, company);
-      environmentRespository.save(env);
+    sir.deleteAll();
+    strategyRepository.deleteAll();
+    environmentRespository.deleteAll();
+  }
 
-      Strategy strategy = new Strategy ( "TestStrategy","2020-02-01", "2020-05-03", env);
-      strategyRepository.save(strategy);
-  
-        StrategyItem strategyItem = new StrategyItem("TestStrategyItem","description1");
-        strategyItem.setStrategy(strategy);
-        sir.save(strategyItem);
+  @Test
+  void givenStrategy_whenFindByStrategy_returnsStrategyItemFound() {
 
-     // When
-      List<StrategyItem> strItems = sir.findByStrategy(strategy);
+    // Given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
+    companyRepository.save(company);
+    String name = "Siemens";
+    Environment env = new Environment(name, company);
+    environmentRespository.save(env);
 
-      // Then
-      assertEquals(strategyItem.getId(), strItems.get(0).getId());
-      assertEquals(strategyItem.getStrategy().getId(), strItems.get(0).getStrategy().getId());
-     }
-    
-     @Test
-     void givenStrategyItemName_whenFindByName_returnsStrategyItemFound() {
- 
-        // Given
-       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
-       companyRepository.save(company);
-       String name = "Siemens";
-       Environment env = new Environment(name, company);
-       environmentRespository.save(env);
- 
-     
-       Strategy strategy = new Strategy("TestStrategy","2020-03-04","2020-10-05",env);
-       strategyRepository.save(strategy);
+    Strategy strategy = new Strategy("TestStrategy", "2020-02-01", "2020-05-03", env);
+    strategyRepository.save(strategy);
 
-       String strategyItemName = "Jan";
-       StrategyItem strategyItem = new StrategyItem(strategyItemName,"description1");
-        strategyItem.setStrategy(strategy);
-        sir.save(strategyItem);
-      
-      // When
-       StrategyItem strItemFound = sir.findByName(strategyItemName);
- 
-       // Then
-       assertEquals(strategyItem.getId(), strItemFound.getId());
-       assertEquals(strategyItem.getStrategy().getId(), strItemFound.getStrategy().getId());
-      }
-    
+    StrategyItem strategyItem = new StrategyItem("TestStrategyItem", "description1");
+    strategyItem.setStrategy(strategy);
+    sir.save(strategyItem);
+
+    // When
+    List<StrategyItem> strItems = sir.findByStrategy(strategy);
+
+    // Then
+    assertEquals(strategyItem.getId(), strItems.get(0).getId());
+    assertEquals(strategyItem.getStrategy().getId(), strItems.get(0).getStrategy().getId());
+  }
+
+  @Test
+  void givenStrategyItemName_whenFindByName_returnsStrategyItemFound() {
+
+    // Given
+    Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR",
+        "?");
+    companyRepository.save(company);
+    String name = "Siemens";
+    Environment env = new Environment(name, company);
+    environmentRespository.save(env);
+
+    Strategy strategy = new Strategy("TestStrategy", "2020-03-04", "2020-10-05", env);
+    strategyRepository.save(strategy);
+
+    String strategyItemName = "Jan";
+    StrategyItem strategyItem = new StrategyItem(strategyItemName, "description1");
+    strategyItem.setStrategy(strategy);
+    sir.save(strategyItem);
+
+    // When
+    StrategyItem strItemFound = sir.findByName(strategyItemName);
+
+    // Then
+    assertEquals(strategyItem.getId(), strItemFound.getId());
+    assertEquals(strategyItem.getStrategy().getId(), strItemFound.getStrategy().getId());
+  }
 }

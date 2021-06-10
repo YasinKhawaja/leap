@@ -2,6 +2,7 @@ package edu.ap.group10.leapwebapp.itapplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -157,7 +158,7 @@ class ITApplicationServiceUnitTests {
     }
 
     @Test
-    void givenITApplicationId_whenDeleteITApplication__doesNotReturnITApplicationDeleted() {
+    void givenITApplicationId_whenDeleteITApplication__throwsResourceNotFoundException() {
 
         // Given
         Long itApplicationId = 5L;
@@ -167,5 +168,51 @@ class ITApplicationServiceUnitTests {
 
         // Then
         assertThrows(ResourceNotFoundException.class, () -> sut.deleteITApplication(itApplicationId));
+    }
+
+    @Test
+    void givenITApplicaitonid_whenDeleteITApplication_returnsITApplicationNotDeleted() {
+        // Given
+        Long itapplicationid = 5L;
+        ITApplication itApplication = new ITApplication("test", "test", environment);
+        ITApplication itApplication2 = new ITApplication("test", "test", environment);
+        itApplication.setId(itapplicationid);
+
+        // When
+        when(itApplicationRepository.existsById(itapplicationid)).thenReturn(true);
+        when(itApplicationRepository.findById(itapplicationid)).thenReturn(Optional.of(itApplication2));
+        Boolean deleted = sut.deleteITApplication(itapplicationid);
+
+        // Then
+        assertTrue(deleted);
+
+    }
+
+    @Test
+    void givenITApplicationId_whenGetITApplication_returnsITApplication() {
+
+        // Given
+        Long itapplicationid = 5L;
+        ITApplication itApplication = new ITApplication("test", "test", environment);
+
+        // When
+        when(itApplicationRepository.findById(itapplicationid)).thenReturn(Optional.of(itApplication));
+
+        // Given
+        ITApplication actualApplication = sut.getITApplication(itapplicationid);
+
+        assertEquals(itApplication, actualApplication);
+    }
+
+    @Test
+    void givenITApplicaitonid_whenGetITApplication_throwsResourceNotFoundException() {
+        // Given
+        Long itapplicationid = 5L;
+
+        // When
+        when(itApplicationRepository.findById(5L)).thenThrow(new ResourceNotFoundException());
+
+        // Then
+        assertThrows(ResourceNotFoundException.class, () -> sut.getITApplication(itapplicationid));
     }
 }

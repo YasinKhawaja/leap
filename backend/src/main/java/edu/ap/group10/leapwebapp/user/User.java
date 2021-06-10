@@ -61,9 +61,13 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        password = bCryptPasswordEncoder.encode(password);
-        this.password = password;
+        if (password.equals("")) {
+            this.password = password;
+        } else {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            password = bCryptPasswordEncoder.encode(password);
+            this.password = password;
+        }
     }
 
     @Override

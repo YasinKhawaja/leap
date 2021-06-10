@@ -73,6 +73,22 @@ public class ITApplication implements Serializable {
         this.setName(name);
         this.setTechnology(technology);
         this.setEnvironment(environment);
+        this.setVersion("version");
+        this.setAcquisitionDate("acquisitionDate");
+        this.setEndOfLife("endOfLife");
+        this.setCurrentScalability(0);
+        this.setExpectedScalability(0);
+        this.setCurrentPerformance(0);
+        this.setExpectedPerformance(0);
+        this.setCurrentSecurityLevel(0);
+        this.setExpectedSecurityLevel(0);
+        this.setCurrentStability(0);
+        this.setExpectedStability(0);
+        this.setCostCurrency("Eur");
+        this.setCurrentValueForMoney(0);
+        this.setCurrentTotalCostPerYear(0.0);
+        this.setToleratedTotalCostPerYear(0.0);
+        this.setTimeValue("timeValue");
     }
 
     public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife,
