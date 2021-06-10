@@ -9,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import edu.ap.group10.leapwebapp.program.Program;
 import lombok.Data;
@@ -31,8 +34,9 @@ public class Project implements Serializable {
     @Column(nullable = true, unique = false, name = "project_description")
     private String description;
 
-    @OneToOne(targetEntity = Program.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Program.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id", nullable = false)
+    @JsonBackReference(value = "program_reference")
     private Program program;
 
     public Project() {
