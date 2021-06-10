@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
+import { jsPDF } from "jspdf";
 import { NgxPrintModule } from "ngx-print";
 import pptxgen from "pptxgenjs";
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
@@ -179,7 +180,6 @@ export class ExportComponent implements OnInit {
   }
 
   generatePowerPoint() {
-    window.scrollTo(0, 0);
     // create new powerpoint
     let powerpoint = new pptxgen();
 
@@ -189,14 +189,37 @@ export class ExportComponent implements OnInit {
 
     // add the capability map image
 
-    let data = document.getElementById('pdf');
-    html2canvas(data).then(canvas => {
+    let data = document.getElementById('divLeftHalf');
+    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4)
       // w/h ratio 4/1 , w:20 h:5 was goed
-      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
+      slide.addImage({ data: contentDataURL, x: 2, y: 0, w: '60%', h: '100%' });
 
       // save powerpoint
       powerpoint.writeFile({ fileName: "CapabilityMap" });
+    });
+  }
+
+  generatePDF() {
+    // add the capability map image
+    let doc = new jsPDF();
+    
+    let data = document.getElementById('divLeftHalf');
+    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png', 4);
+      
+      if(canvas.width > canvas.height){
+        doc = new jsPDF('l', 'mm', [canvas.width, canvas.height]);
+        }
+        else{
+        doc = new jsPDF('p', 'mm', [canvas.height, canvas.width]);
+        }
+      
+      // let pdf = new jsPDF('p', 'mm', [canvas.height *2, canvas.width]);
+       doc.addImage(contentDataURL, 'png', 0, 0, canvas.width, canvas.height);
+
+      // save powerpoint
+      doc.save( "CapabilityMap");
     });
   }
 
