@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.itapplication;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +17,9 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="ITApplication")
-public class ITApplication{
-    
+@Table(name = "ITApplication")
+public class ITApplication implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false, name = "application_id")
@@ -61,20 +63,24 @@ public class ITApplication{
     private String timeValue;
 
     @ManyToOne(targetEntity = Environment.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="environment_id", nullable = false)
+    @JoinColumn(name = "environment_id", nullable = false)
     private Environment environment;
 
-    public ITApplication(){}
-    
+    public ITApplication() {
+    }
+
     public ITApplication(String name, String technology, Environment environment) {
         this.setName(name);
         this.setTechnology(technology);
         this.setEnvironment(environment);
     }
 
-    public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife, Integer currentScalability, Integer expectedScalability,
-    Integer currentPerformance, Integer expectedPerformance, Integer currentSecurityLevel, Integer expectedSecurityLevel, Integer currentStability,
-    Integer expectedStability, String costCurrency, Integer currentValueForMoney, Double currentTotalCostPerYear, Double toleratedTotalCostPerYear, String timeValue, Environment environment){
+    public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife,
+            Integer currentScalability, Integer expectedScalability, Integer currentPerformance,
+            Integer expectedPerformance, Integer currentSecurityLevel, Integer expectedSecurityLevel,
+            Integer currentStability, Integer expectedStability, String costCurrency, Integer currentValueForMoney,
+            Double currentTotalCostPerYear, Double toleratedTotalCostPerYear, String timeValue,
+            Environment environment) {
         this.setName(name);
         this.setTechnology(technology);
         this.setVersion(version);

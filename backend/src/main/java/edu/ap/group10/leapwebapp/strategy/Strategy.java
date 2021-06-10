@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.strategy;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,10 +18,9 @@ import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.strategy_item.StrategyItem;
 import lombok.Data;
 
-
 @Entity
 @Data
-public class Strategy {
+public class Strategy implements Serializable {
 
 	@Id
 	@GeneratedValue

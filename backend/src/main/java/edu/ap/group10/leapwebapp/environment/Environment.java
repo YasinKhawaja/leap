@@ -1,6 +1,7 @@
 
 package edu.ap.group10.leapwebapp.environment;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,7 +22,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Environment {
+public class Environment implements Serializable {
 
 	@Id
 	@GeneratedValue

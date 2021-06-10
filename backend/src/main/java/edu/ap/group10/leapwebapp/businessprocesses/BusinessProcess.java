@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.businessprocesses;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +18,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Business_Process")
-public class BusinessProcess {
+public class BusinessProcess implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

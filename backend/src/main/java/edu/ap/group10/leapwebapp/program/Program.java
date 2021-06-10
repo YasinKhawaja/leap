@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.program;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +17,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name =  "Program")
-public class Program {
+@Table(name = "Program")
+public class Program implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,12 +35,13 @@ public class Program {
     @JoinColumn(name = "environment_id", nullable = false)
     private Environment environment;
 
-    public Program() {}
+    public Program() {
+    }
 
     public Program(String name, String description, Environment environment) {
         this.setName(name);
         this.setDescription(description);
         this.setEnvironment(environment);
     }
-    
+
 }
