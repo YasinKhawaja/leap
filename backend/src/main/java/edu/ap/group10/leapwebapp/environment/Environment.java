@@ -14,10 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import edu.ap.group10.leapwebapp.businessprocesses.BusinessProcess;
 import edu.ap.group10.leapwebapp.capability.Capability;
 import edu.ap.group10.leapwebapp.company.Company;
+import edu.ap.group10.leapwebapp.itapplication.ITApplication;
+import edu.ap.group10.leapwebapp.program.Program;
+import edu.ap.group10.leapwebapp.resource.Resource;
+import edu.ap.group10.leapwebapp.strategy.Strategy;
 import lombok.Data;
 
 @Data
@@ -36,8 +42,29 @@ public class Environment implements Serializable {
 	@JsonManagedReference(value = "environment_reference")
 	private List<Capability> capabilities;
 
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "environment_reference")
+	private List<Strategy> strategies;
+
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "environment_reference")
+	private List<Resource> resources;
+
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "environment_reference")
+	private List<ITApplication> itApplications;
+
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "environment_reference")
+	private List<Program> programs;
+
+	@OneToMany(mappedBy = "environment", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "environment_reference")
+	private List<BusinessProcess> businessProcesses;
+
 	@ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", nullable = false)
+	@JsonBackReference(value = "company_reference")
 	private Company company;
 
 	public Environment() {

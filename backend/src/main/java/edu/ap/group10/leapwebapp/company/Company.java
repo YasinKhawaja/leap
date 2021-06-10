@@ -1,13 +1,19 @@
 package edu.ap.group10.leapwebapp.company;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
 @Data
@@ -39,6 +45,10 @@ public class Company implements Serializable {
     private String businessActivity;
     @Column(nullable = true, name = "company_tax_office")
     private String taxOffice;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+	@JsonManagedReference(value = "company_reference")
+	private List<Environment> environments;
 
     public Company() {
     }

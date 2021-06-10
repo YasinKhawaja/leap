@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
@@ -64,6 +66,7 @@ public class ITApplication implements Serializable {
 
     @ManyToOne(targetEntity = Environment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "environment_id", nullable = false)
+    @JsonBackReference(value = "environment_reference")
     private Environment environment;
 
     public ITApplication() {
