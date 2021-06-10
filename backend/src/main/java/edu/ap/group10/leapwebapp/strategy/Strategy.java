@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
@@ -38,6 +39,7 @@ public class Strategy implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "environment_id")
+	@JsonBackReference(value = "environment_reference")
 	private Environment environment;
 
 	@OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)

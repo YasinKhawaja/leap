@@ -34,6 +34,8 @@ public class StrategyRepositoryUnitTests {
     @BeforeEach
     void setUp() {
         srt.deleteAll();
+        environmentRespository.deleteAll();
+        companyRepository.deleteAll();
     }
 
 
