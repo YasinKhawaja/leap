@@ -1,5 +1,4 @@
 package edu.ap.group10.leapwebapp.capability;
-/*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,8 +18,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+
+import edu.ap.group10.leapwebapp.company.Company;
+import edu.ap.group10.leapwebapp.company.CompanyRepository;
+import edu.ap.group10.leapwebapp.company.CompanyService;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 import edu.ap.group10.leapwebapp.environment.EnvironmentService;
@@ -32,6 +37,12 @@ public class CapabilityControllerIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private CompanyService companyService;
+
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @Autowired
     private CapabilityRepository capabilityRepository;
@@ -49,24 +60,26 @@ public class CapabilityControllerIntegrationTest {
     void tearDown(){
         capabilityRepository.deleteAll();
         environmentRepository.deleteAll();
+        companyRepository.deleteAll();
     }
 
     @Test
+    @WithMockUser
     public void givenCapabilities_whenGetAllCapabilities_returnsAllCapabilities() throws Exception {
-        Environment environment1 = environmentService.createEnvironment("Siemens");
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        companyService.addCompany(company);
+        
+        Environment environment1 = environmentService.createEnvironment("Siemens", company.getId().toString());
         Long environment1Id = environment1.getId();
 
-        Environment environment2 = environmentService.createEnvironment("Philips");
+        Environment environment2 = environmentService.createEnvironment("Philips", company.getId().toString());
         Long environment2Id = environment2.getId();
 
-        Capability capability1 = new Capability("Youth");
-        capability1.setEnvironment(environment1);
+        Capability capability1 = new Capability("Youth", environment1);
 
-        Capability capability2 = new Capability("Management");
-        capability2.setEnvironment(environment1);
+        Capability capability2 = new Capability("Management", environment2);
 
-        Capability capability3 = new Capability("Transfers");
-        capability3.setEnvironment(environment2);
+        Capability capability3 = new Capability("Transfers", environment2);
         
         capabilityService.createCapability(environment1Id, null, capability1);
         capabilityService.createCapability(environment1Id, capability1.getId(), capability2);
@@ -79,39 +92,42 @@ public class CapabilityControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     public void givenEnvironmentId_whenGetAllCapabilitiesInEnvironment_returnsAllCapabilities() throws Exception {
-        Environment environment = environmentService.createEnvironment("Siemens");
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        companyService.addCompany(company);
+
+        Environment environment = environmentService.createEnvironment("Siemens", company.getId().toString());
         Long environmentId = environment.getId();
 
-        Capability capability1 = new Capability("Youth");
-        capability1.setEnvironment(environment);
+        Capability capability1 = new Capability("Youth", environment);
 
-        Capability capability2 = new Capability("Management");
-        capability2.setEnvironment(environment);
+        Capability capability2 = new Capability("Management", environment);
 
-        Capability capability3 = new Capability("Transfers");
-        capability3.setEnvironment(environment);
+        Capability capability3 = new Capability("Transfers", environment);
         
-        
+        capabilityService.createCapability(environmentId, null, capability1);
         capabilityService.createCapability(environmentId, capability1.getId(), capability2);
         capabilityService.createCapability(environmentId, capability1.getId(), capability3);
 
         mvc.perform(get("/capabilities").param("envId", environmentId.toString()))
             .andExpect(status().isOk())
             .andDo(print())
-            .andExpect(content().json("[{'name':'Transfers'}, {'name':'Management'}]"));
+            .andExpect(content().json("[{'name':'Youth'},{'name':'Transfers'}, {'name':'Management'}]"));
     }
 
     @Test
+    @WithMockUser
     public void givenEnvironmentIdCapabilityId_whenGetCapabilityInEnvironment_returnsCapabilityFound() throws Exception {
-        Environment environment = environmentService.createEnvironment("Siemens");
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        companyService.addCompany(company);
+
+        Environment environment = environmentService.createEnvironment("Siemens", company.getId().toString());
         Long environmentId = environment.getId();
 
-        Capability capability1 = new Capability("Youth");
-        capability1.setEnvironment(environment);
+        Capability capability1 = new Capability("Youth", environment);
 
-        Capability capability2 = new Capability("Management");
-        capability2.setEnvironment(environment);
+        Capability capability2 = new Capability("Management", environment);
 
         Capability capabilityCreated = capabilityService.createCapability(environmentId, capability1.getId(), capability2);
         Long capabilityCreatedId = capabilityCreated.getId();
@@ -123,16 +139,20 @@ public class CapabilityControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     public void givenEnvironmentIdParentCapabilityIdCapabilityToCreate_whenCreateCapability_returnsCapabilityCreated() throws Exception {
-        Environment environment = environmentService.createEnvironment("Siemens");
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        companyService.addCompany(company);
+
+        Environment environment = environmentService.createEnvironment("Siemens", company.getId().toString());
         Long environmentId = environment.getId();
 
-        Capability capability = new Capability("Youth");
-        capability.setEnvironment(environment);
+        Capability capability = new Capability("Youth", environment);
+
         Capability capabilityParent = capabilityService.createCapability(environmentId, null, capability);
         Long capabilityParentId = capabilityParent.getId();
 
-        Capability capabilityToCreate = new Capability("Management");
+        Capability capabilityToCreate = new Capability("Management", environment);
         
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -141,7 +161,7 @@ public class CapabilityControllerIntegrationTest {
 
         
 
-        mvc.perform(post("/capabilities").param("envId", environmentId.toString()).param("parentCapId", capabilityParentId.toString())
+        mvc.perform(post("/capabilities").with(csrf()).param("envId", environmentId.toString()).param("parentCapId", capabilityParentId.toString())
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .content(requestJson))
@@ -151,12 +171,16 @@ public class CapabilityControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     public void givenEnvironmentIdCapabilityIdUpdatedCapability_whenUpdateCapability_returnsUpdatedCapability() throws Exception {
-        Environment environment = environmentService.createEnvironment("Siemens");
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        companyService.addCompany(company);
+
+        Environment environment = environmentService.createEnvironment("Siemens", company.getId().toString());
         Long environmentId = environment.getId();
 
-        Capability capability = new Capability("Youth");
-        capability.setEnvironment(environment);
+        Capability capability = new Capability("Youth", environment);
+
         Capability capabilityToUpdate = capabilityService.createCapability(environmentId, null, capability);
         Long capabilityToUpdateId = capabilityToUpdate.getId();
 
@@ -169,7 +193,7 @@ public class CapabilityControllerIntegrationTest {
 
         
 
-        mvc.perform(put("/capabilities/{capId}", capabilityToUpdateId).param("envId", environmentId.toString())
+        mvc.perform(put("/capabilities/{capId}", capabilityToUpdateId).with(csrf()).param("envId", environmentId.toString())
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .content(requestJson))
@@ -179,20 +203,23 @@ public class CapabilityControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     public void givenEnvironmentIdCapabilityId_whenDeleteCapability_returnsCapabilityDeleted() throws Exception {
-        Environment environment = environmentService.createEnvironment("Siemens");
+        Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
+        companyService.addCompany(company);
+
+        Environment environment = environmentService.createEnvironment("Siemens", company.getId().toString());
         Long environmentId = environment.getId();
 
-        Capability capability = new Capability("Youth");
-        capability.setEnvironment(environment);
+        Capability capability = new Capability("Youth", environment);
+
         Capability capabilityToDelete = capabilityService.createCapability(environmentId, null, capability);
         Long capabilityToDeleteId = capabilityToDelete.getId();
 
-        mvc.perform(delete("/capabilities/{id}", capabilityToDeleteId).param("envId", environmentId.toString()))
+        mvc.perform(delete("/capabilities/{id}", capabilityToDeleteId).with(csrf()).param("envId", environmentId.toString()))
             .andExpect(status().isOk())
             .andDo(print())
             .andExpect(content().string(""));
     }
     
 }
-*/
