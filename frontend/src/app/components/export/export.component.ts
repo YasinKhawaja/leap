@@ -180,7 +180,6 @@ export class ExportComponent implements OnInit {
   }
 
   generatePowerPoint() {
-    window.scrollTo(0, 0);
     // create new powerpoint
     let powerpoint = new pptxgen();
 
@@ -191,7 +190,7 @@ export class ExportComponent implements OnInit {
     // add the capability map image
 
     let data = document.getElementById('divLeftHalf');
-    html2canvas(data).then(canvas => {
+    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4)
       // w/h ratio 4/1 , w:20 h:5 was goed
       slide.addImage({ data: contentDataURL, x: 2, y: 0, w: '60%', h: '100%' });
@@ -202,13 +201,11 @@ export class ExportComponent implements OnInit {
   }
 
   generatePDF() {
-    window.scrollTo(0, 0);
-     
     // add the capability map image
     let doc = new jsPDF();
     
     let data = document.getElementById('divLeftHalf');
-    html2canvas(data).then(canvas => {
+    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4);
       
       if(canvas.width > canvas.height){
