@@ -55,7 +55,7 @@ public class CompanyController {
     Mail mail = new Mail();
     // change setReceiver to get a list of email adresses from the application
     // admins
-    mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be");
+    mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be, janelguera@gmail.com");
     mail.setSubject("New application from: " + company.getCompanyName());
     mail.setContent(
         "Click on this link to view the request from: " + company.getCompanyName() + ".\n" + confirmationTokenString);
