@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.itapplication;
+package edu.ap.group10.leapwebapp.businessprocess;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,37 +13,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import edu.ap.group10.leapwebapp.businessprocesses.BusinessProcess;
+import edu.ap.group10.leapwebapp.businessprocesses.BusinessProcessRepository;
 import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.company.CompanyRepository;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
-import edu.ap.group10.leapwebapp.user.UserRepository;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
 @ExtendWith(MockitoExtension.class)
 @TestInstance(Lifecycle.PER_CLASS)
-class ITApplicationRepositoryUnitTests {
+public class BusinessProcessRepositoryUnitTests {
 
     @Autowired
-    private ITApplicationRepository sut;
+    private BusinessProcessRepository sut;
 
     @Autowired
     private CompanyRepository companyRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private EnvironmentRepository environmentRepository;
 
-    private static final Company company = new Company("1", "Testing Company", "sv@gmail.com", "kerkstraat", 3, 5,
+    private static final Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5,
             "Mortsel", "België", "", "");
     private Environment environment = new Environment("Test environment", company);
 
     @BeforeAll
     void setup() {
-        userRepository.deleteAll();
         companyRepository.deleteAll();
         environmentRepository.deleteAll();
         companyRepository.save(company);
@@ -56,28 +53,31 @@ class ITApplicationRepositoryUnitTests {
     }
 
     @Test
-    void givenITApplication_whenExistsByName_returnsITApplication() {
-        // Given
-        ITApplication itapplication = new ITApplication("Test Application", "Mockito", environment);
-        sut.save(itapplication);
+    void givenBusinessProcess_whenFindByName_returnsBusinessProcess() {
+        
+        //given 
+        BusinessProcess businessProcess = new BusinessProcess("Sales", "Income of the year 2021", environment);
+        sut.save(businessProcess);
 
-        // When
-        ITApplication actualApplication = sut.findByName(itapplication.getName());
+        //when
+        BusinessProcess actualBusinessProcess = sut.findByName(businessProcess.getName());
 
-        // Then
-        assertEquals(itapplication.getId(), actualApplication.getId());
+        //then 
+        assertEquals(businessProcess.getId(), actualBusinessProcess.getId());
     }
 
     @Test
-    void givenITApplication_whenExistsByName_returnsNULL() {
-        // Given
-        ITApplication itapplication = new ITApplication("Test Application", "Mockito", environment);
-        sut.save(itapplication);
+    void givenBusinessProcess_whenFindByName_returnsNULL() {
 
-        // When
-        ITApplication actualApplication = sut.findByName("bob");
+        //given 
+        BusinessProcess businessProcess = new BusinessProcess("Sales", "Income of the year 2021", environment);
+        sut.save(businessProcess);
 
-        // Then
-        assertEquals(null, actualApplication);
+        //when
+        BusinessProcess actualBusinessProcess = sut.findByName("Marketing");
+
+        //then
+        assertEquals(null, actualBusinessProcess);
     }
+    
 }
