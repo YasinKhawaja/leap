@@ -124,11 +124,6 @@ import edu.ap.group10.leapwebapp.environment.Environment;
       assertEquals(newStr.getName(), argCap.getValue().getName());
     }
 
-   //werkt niet => nog fixen
-    @Test
-   void givenStrategyId_whenDeleteStrategy_returnsStrategyDeleted(){
-   
-  
-     }
+   //delete
     
  }
