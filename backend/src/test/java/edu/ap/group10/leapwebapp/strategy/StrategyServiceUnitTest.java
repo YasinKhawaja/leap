@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
  import org.springframework.boot.test.context.SpringBootTest;
  import static org.junit.jupiter.api.Assertions.assertEquals;
- import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verify;
  import static org.mockito.Mockito.when;
 
 import edu.ap.group10.leapwebapp.company.Company;
@@ -107,7 +107,8 @@ import edu.ap.group10.leapwebapp.environment.Environment;
         Long strId = 5L;
         Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
        Strategy oldStrategy = new Strategy("test", "2020-02-01","2021-02-01", new Environment("test",company));
-        oldStrategy.setId(strId);         when(strategyRepository.findById(strId)).thenReturn(Optional.of(oldStrategy));
+        oldStrategy.setId(strId);        
+         when(strategyRepository.findById(strId)).thenReturn(Optional.of(oldStrategy));
 
         Strategy newStr = new Strategy("name", "2020-02-20","2021-02-01",new Environment("hallo",company));
 
@@ -121,11 +122,11 @@ import edu.ap.group10.leapwebapp.environment.Environment;
       assertEquals(newStr.getName(), argCap.getValue().getName());
     }
 
-    //werkt niet meer
+   //werkt niet
     @Test
    void givenStrategyId_whenDeleteStrategy_returnsStrategyDeleted(){
 
-     
+  
      }
     
  }

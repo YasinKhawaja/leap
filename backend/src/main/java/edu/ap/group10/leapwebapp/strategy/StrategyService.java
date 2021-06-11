@@ -40,10 +40,12 @@ public class StrategyService {
     Strategy oldStrategy = strategyRepository.findById(strId)
     .orElseThrow(ResourceNotFoundException::new);
 
-    oldStrategy.setEnvironment(strategy.getEnvironment());
     oldStrategy.setName(strategy.getName());
+    oldStrategy.setTimeframeFrom(strategy.getTimeframeFrom());
+    oldStrategy.setTimeframeTo(strategy.getTimeframeTo());
+
     
-    return strategyRepository.save(strategy);
+    return strategyRepository.save(oldStrategy);
 }
 
 public Boolean deleteStrategy(Long strId){
