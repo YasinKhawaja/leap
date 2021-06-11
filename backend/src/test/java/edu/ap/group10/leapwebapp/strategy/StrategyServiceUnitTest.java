@@ -24,6 +24,8 @@ import edu.ap.group10.leapwebapp.environment.Environment;
  @ExtendWith(MockitoExtension.class)
  public class StrategyServiceUnitTest {
 
+  //nog niet klaar
+
      @Mock
      private StrategyRepository strategyRepository;
 
@@ -122,10 +124,10 @@ import edu.ap.group10.leapwebapp.environment.Environment;
       assertEquals(newStr.getName(), argCap.getValue().getName());
     }
 
-   //werkt niet
+   //werkt niet => nog fixen
     @Test
    void givenStrategyId_whenDeleteStrategy_returnsStrategyDeleted(){
-
+   
   
      }
     
