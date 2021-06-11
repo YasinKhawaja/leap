@@ -2,9 +2,12 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
+import { jsPDF } from "jspdf";
 import { NgxPrintModule } from "ngx-print";
 import pptxgen from "pptxgenjs";
+import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { CapabilityStrategyitemService } from 'src/app/services/capability-strategyitem/capability-strategyitem.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
@@ -25,8 +28,10 @@ export class ExportComponent implements OnInit {
   capabilitiesLevel3: Capability[]
 
   capabilitiesLinkedToItApplication: Capability[]
+  capabilityStrategyItemsLinkedToStrategyItem: CapabilityStrategyItems[]
 
   style: { 'border-color': string };
+  filter: string;
 
 
   itApplications: string[]
@@ -49,12 +54,13 @@ export class ExportComponent implements OnInit {
 
   constructor(private cs: CapabilityService, private ns: NavbarService, private print: NgxPrintModule, private fb: FormBuilder,
     private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef, private csis: CapabilityStrategyitemService) {
     this.capabilities = [];
     this.itApplications = [];
     this.strategies = [];
     this.strategyItems = [];
     this.capabilitiesLinkedToItApplication = [];
+    this.capabilityStrategyItemsLinkedToStrategyItem = [];
   }
 
   ngOnInit(): void {
@@ -64,12 +70,10 @@ export class ExportComponent implements OnInit {
       .subscribe(result => {
         this.capabilities = result;
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
-        console.log(this.capabilitiesLevel1)
+
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
-        console.log(this.capabilitiesLevel2)
+
         this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3')
-        console.log(this.capabilitiesLevel3)
-        console.log(result);
       },
         error => console.log(error));
 
@@ -79,7 +83,6 @@ export class ExportComponent implements OnInit {
         result.forEach(e => {
           this.itApplications.push(e.name);
         })
-        console.log(result);
       },
         error => console.log(error));
 
@@ -88,24 +91,23 @@ export class ExportComponent implements OnInit {
         result.forEach(e => {
           this.strategies.push(e.name);
         })
-        console.log(result);
       },
         error => console.log(error));
   }
 
   changeITApplication() {
-    console.log(this.itApplication.value.itApplicationName);
+    this.filter = "ITApplication";
     this.cis.getCapabilitiesLinkedToITApplication(this.itApplication.value.itApplicationName)
       .subscribe(result => {
         this.capabilitiesLinkedToItApplication = result;
-        console.log(this.capabilitiesLinkedToItApplication);
+        this.strategyItem.get("strategyItemName").reset();
       },
         error => console.log(error))
   }
 
   applySelectedITApplication(capability) {
     for (var i = 0; i < this.capabilitiesLinkedToItApplication.length; i++) {
-      if (this.capabilitiesLinkedToItApplication[i].name == capability.name) {
+      if (this.capabilitiesLinkedToItApplication[i].id == capability.id) {
         if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
           this.style = { 'border-color': 'green' }
           break;
@@ -115,9 +117,9 @@ export class ExportComponent implements OnInit {
         }
         this.style = { 'border-color': 'red' }
         break;
-      } else this.style = { 'border-color': 'black' };
+      } else this.style = { 'border-color': 'black' }
     } return this.style;
-   
+
   }
 
   changeStrategy() {
@@ -129,13 +131,40 @@ export class ExportComponent implements OnInit {
 
           this.strategyItems.push(e.name);
         })
-        console.log(result);
       },
         error => console.log(error));
   }
 
   changeStrategyItem() {
-    this.strategyItem.value.strategyItemName;
+    this.filter = "StrategyItem";
+    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName)
+      .subscribe(result => {
+        this.capabilityStrategyItemsLinkedToStrategyItem = result;
+
+        this.itApplication.get("itApplicationName").reset();
+      },
+        error => console.log(error))
+
+  }
+
+  applySelectedStrategyItem(capability) {
+    for (var i = 0; i < this.capabilityStrategyItemsLinkedToStrategyItem.length; i++) {
+      if (this.capabilityStrategyItemsLinkedToStrategyItem[i].capability.id == capability.id) {
+
+        if (this.capabilityStrategyItemsLinkedToStrategyItem[i].strategicEmphasis == "HIGH") {
+          this.style = { 'border-color': 'green' }
+          break;
+        } if (this.capabilityStrategyItemsLinkedToStrategyItem[i].strategicEmphasis == "MEDIUM") {
+          this.style = { 'border-color': 'orange' }
+          break;
+        } if (this.capabilityStrategyItemsLinkedToStrategyItem[i].strategicEmphasis == "LOW") {
+          this.style = { 'border-color': 'red' }
+          break;
+        } this.style = { 'border-color': 'black' }
+        break;
+      } else this.style = { 'border-color': 'black' };
+    }
+    return this.style;
   }
 
   generateCSV() {
@@ -151,7 +180,6 @@ export class ExportComponent implements OnInit {
   }
 
   generatePowerPoint() {
-    window.scrollTo(0, 0);
     // create new powerpoint
     let powerpoint = new pptxgen();
 
@@ -161,10 +189,9 @@ export class ExportComponent implements OnInit {
 
     // add the capability map image
 
-    let data = document.getElementById('pdf');
-    html2canvas(data).then(canvas => {
+    let data = document.getElementById('divLeftHalf');
+    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4)
-      // w/h ratio 4/1 , w:20 h:5 was goed
       slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
 
       // save powerpoint
@@ -172,23 +199,41 @@ export class ExportComponent implements OnInit {
     });
   }
 
-  generateLevel1Layer() {
-    let capabilitiesLevel1: Capability[]
-    capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
-    this.capabilities = capabilitiesLevel1;
-    console.log(this.capabilities);
-    console.log("button called");
-  }
+  generatePDF() {
+    let doc = new jsPDF();
+    
+    let data = document.getElementById('divLeftHalf');
+    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png', 4);
+      
+      if(canvas.width > canvas.height){
+        doc = new jsPDF('l', 'mm', [canvas.width, canvas.height]);
+        }
+        else{
+        doc = new jsPDF('p', 'mm', [canvas.height, canvas.width]);
+        }
+      
+      // let pdf = new jsPDF('p', 'mm', [canvas.height *2, canvas.width]);
+       doc.addImage(contentDataURL, 'png', 0, 0, canvas.width, canvas.height);
 
-  generateLevel1and2Layer() {
-    let capabilitiesLevel2: Capability[]
-    capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
-    this.capabilities = capabilitiesLevel2;
-    console.log(this.capabilities);
-    console.log("button called");
-  }
+      // save powerpoint
+      doc.save( "CapabilityMap");
+    });
+    }
 
-  generateEntireMap() {
-    window.location.reload();
+    generateLevel1Layer() {
+      let capabilitiesLevel1: Capability[]
+      capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
+      this.capabilities = capabilitiesLevel1;
+    }
+
+    generateLevel1and2Layer() {
+      let capabilitiesLevel2: Capability[]
+      capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
+      this.capabilities = capabilitiesLevel2;
+    }
+
+    generateEntireMap() {
+      window.location.reload();
+    }
   }
-}

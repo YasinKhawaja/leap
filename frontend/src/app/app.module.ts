@@ -66,6 +66,17 @@ import { AuthInterceptor } from './services/authinterceptor/auth-interceptor';
 import { CapabilityService } from './services/capability/capability.service';
 import { RouterGuard } from './services/guard/router.guard';
 import { CapabilityResourceEditComponent } from './components/capability-resource-edit/capability-resource-edit.component';
+import { ProjectComponent } from './components/project/project.component';
+import { ProjectAddComponent } from './components/project-add/project-add.component';
+import { ProjectEditComponent } from './components/project-edit/project-edit.component';
+import { ProjectDeleteComponent } from './components/project-delete/project-delete.component';
+import { ProgramComponent } from './components/program/program.component';
+import { ProgramAddComponent } from './components/program-add/program-add.component';
+import { ProgramEditComponent } from './components/program-edit/program-edit.component';
+import { ProgramDeleteComponent } from './components/program-delete/program-delete.component';
+import { CapabilityProjectComponent } from './components/capability-project/capability-project.component';
+import { CapabilityProjectAddComponent } from './components/capability-project-add/capability-project-add.component';
+import { CapabilityProjectDeleteComponent } from './components/capability-project-delete/capability-project-delete.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -136,7 +147,18 @@ const appRoutes: Routes = [
     CapabilityStrategyitemsAddComponent,
     CapabilityStrategyitemsEditComponent,
     CapabilityStrategyitemsDeleteComponent,
-    CapabilityResourceEditComponent
+    CapabilityResourceEditComponent,
+    ProjectComponent,
+    ProjectAddComponent,
+    ProjectEditComponent,
+    ProjectDeleteComponent,
+    ProgramComponent,
+    ProgramAddComponent,
+    ProgramEditComponent,
+    ProgramDeleteComponent,
+    CapabilityProjectComponent,
+    CapabilityProjectAddComponent,
+    CapabilityProjectDeleteComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,5 @@
 * {
     margin: 0px;
-    padding: 0px;
 }
 
 .middle-page {
@@ -13,6 +12,10 @@
 .middle-div {
     text-align: center;
     vertical-align: middle;
+}
+
+h5 {
+    margin: 0px;
 }
 
 .form-control.ng-touched.ng-invalid {

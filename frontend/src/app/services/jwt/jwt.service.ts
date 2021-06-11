@@ -10,7 +10,7 @@ import { NavbarService } from '../navbar/navbar.service';
   providedIn: 'root'
 })
 export class JwtService {
-  private jwtUrl: string = 'http://localhost:8080/api/user/jwt';
+  private jwtUrl: string = '//localhost:8080/api/user/jwt';
   userstatus: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
@@ -28,7 +28,7 @@ export class JwtService {
 
   tokenRefresh() {
     this.interval = setInterval(() => {
-          this.getNewJwt()
+      this.getNewJwt()
     }, 600000);
   }
 
@@ -47,7 +47,7 @@ export class JwtService {
     var jwtIsExp = helper.isTokenExpired(token);
     if (jwtIsExp) {
       this.logout()
-      Swal.fire('Error', 'Your session has expired', 'error')
+      Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')
     } else {
       return company;
     }
@@ -66,7 +66,7 @@ export class JwtService {
 
     if (jwtIsExp) {
       this.logout()
-      Swal.fire('Error', 'Your session has expired', 'error')
+      Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')
     } else {
       return role;
     }
@@ -96,7 +96,7 @@ export class JwtService {
         },
         () => {
           this.logout();
-          Swal.fire('Error', 'Your session has expired', 'error')
+          Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')
           return null;
         }
       );
@@ -137,7 +137,7 @@ export class JwtService {
 
     if (jwtIsExp) {
       this.logout()
-      Swal.fire('Error', 'Your session has expired', 'error')
+      Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')
     } else {
       return true;
     }
@@ -169,7 +169,7 @@ export class JwtService {
     }
     else if (jwtIsExp) {
       this.logout()
-      Swal.fire('Error', 'Your session has expired', 'error')
+      Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')
     }
   }
 

@@ -6,7 +6,7 @@ import { User } from 'src/app/classes/user/user';
 import { UserService } from 'src/app/services/user/user.service';
 import Swal from 'sweetalert2';
 
-enum Role{
+enum Role {
   ADMIN = "User-admin",
   BEWERKER = "Bewerker",
   LEZER = "Lezer"
@@ -26,23 +26,23 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser()
-    .subscribe(
-      result => {
-        this.user = this.fb.group({
-          firstName: [result.firstName, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-          surname: [result.surname,  [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-          email: [result.email, [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
-          username: [result.username,  Validators.required],
-          role: [Object.values(Role)[result.role], Validators.required]
-        })
-      },
-      error => {
-        Swal.fire('Error', error.error.message, 'error');
-      }
-    );
+      .subscribe(
+        result => {
+          this.user = this.fb.group({
+            firstName: [result.firstName, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+            surname: [result.surname, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+            email: [result.email, [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
+            username: [result.username, Validators.required],
+            role: [Object.values(Role)[result.role], Validators.required]
+          })
+        },
+        error => {
+          Swal.fire('Error', 'Failed to load user details', 'error');
+        }
+      );
   }
 
-  private getUser(): Observable<User>{
+  private getUser(): Observable<User> {
     var userId = this.router.url.split('/')[2];
     return this.us.getUser(userId);
   }
@@ -53,7 +53,7 @@ export class UserEditComponent implements OnInit {
       this.user.value.surname,
       this.user.value.email,
       this.user.value.username,
-      null
+      ""
     ), (Object.values(Role).indexOf(this.user.value.role)).toString())
   }
 

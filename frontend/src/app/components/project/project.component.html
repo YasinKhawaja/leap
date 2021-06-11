@@ -1,0 +1,33 @@
+<main class="main">
+    <div class="flex-container">
+        <div class="flex-item">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let project of projects">
+                            <td>
+                                <a [routerLink]="['../project/delete/', project.id]">
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-light" role="button" [routerLink]="['../project/edit/', project.id]">
+                                    {{ project.name }}
+                                </a>
+                            </td>
+                            <td>{{ project.description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-danger" [routerLink]="['../project/create']">ADD PROJECT</button>
+</main>

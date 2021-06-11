@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.cabilitybusinessprocess;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "capbusprocess")
-public class CapabilityBusinessProcess {
+public class CapabilityBusinessProcess implements Serializable {
 
     @Id
     @Column(nullable = false, unique = true, updatable = false, name = "capbusprocess_id")
@@ -26,12 +28,13 @@ public class CapabilityBusinessProcess {
     private Capability capability;
 
     @OneToOne(targetEntity = BusinessProcess.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "application_id", nullable = false)
+    @JoinColumn(name = "businessprocess_id", nullable = false)
     private BusinessProcess businessProcess;
 
-    public CapabilityBusinessProcess() {}
+    public CapabilityBusinessProcess() {
+    }
 
-    public CapabilityBusinessProcess(Capability capability, BusinessProcess businessProcess){
+    public CapabilityBusinessProcess(Capability capability, BusinessProcess businessProcess) {
         setId(Long.parseLong(capability.getId().toString() + businessProcess.getId().toString()));
         setCapability(capability);
         setBusinessProcess(businessProcess);

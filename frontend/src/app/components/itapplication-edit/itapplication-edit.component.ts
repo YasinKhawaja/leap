@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 
-enum Currency{
+enum Currency {
   EUR = "EUR",
   GBP = "GBP",
   USD = "USD",
@@ -13,7 +13,7 @@ enum Currency{
 }
 
 //voluit schrijven
-enum TIME{
+enum TIME {
   TOLERATE = "Tolerate",
   INVEST = "Invest",
   ELIMINATE = "Eliminate",
@@ -37,39 +37,39 @@ export class ItapplicationEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentITApplication()
-    .subscribe(
-      result => {
-        this.itapplication = this.fb.group({
-          name: [result.name, Validators.required],
-          technology: [result.technology, Validators.required],
-          version: [result.version, Validators.required],
-          acquisitionDate: [result.acquisitionDate, Validators.required],
-          endOfLife: [result.endOfLife],
-          currentScalability: [result.currentScalability, Validators.pattern('[0-5]')],
-          expectedScalability: [result.expectedScalability, Validators.pattern('[0-5]')],
-          currentPerformance: [result.currentPerformance, Validators.pattern('[0-5]')],
-          expectedPerformance: [result.expectedPerformance, Validators.pattern('[0-5]')],
-          currentSecurityLevel: [result.currentSecurityLevel, Validators.pattern('[0-5]')],
-          expectedSecurityLevel: [result.expectedSecurityLevel, Validators.pattern('[0-5]')],
-          currentStability: [result.currentStability, Validators.pattern('[0-5]')],
-          expectedStability: [result.expectedStability, Validators.pattern('[0-5]')],
-          costCurrency:[result.costCurrency],
-          currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[0-5]')],
-          currentTotalCostPerYear: [result.currentTotalCostPerYear],
-          toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
-          timeValue: [result.timeValue]
-        });
-      }
-    );
+      .subscribe(
+        result => {
+          this.itapplication = this.fb.group({
+            name: [result.name, Validators.required],
+            technology: [result.technology, Validators.required],
+            version: [result.version, Validators.required],
+            acquisitionDate: [result.acquisitionDate, Validators.required],
+            endOfLife: [result.endOfLife],
+            currentScalability: [result.currentScalability, Validators.pattern('[0-5]')],
+            expectedScalability: [result.expectedScalability, Validators.pattern('[0-5]')],
+            currentPerformance: [result.currentPerformance, Validators.pattern('[0-5]')],
+            expectedPerformance: [result.expectedPerformance, Validators.pattern('[0-5]')],
+            currentSecurityLevel: [result.currentSecurityLevel, Validators.pattern('[0-5]')],
+            expectedSecurityLevel: [result.expectedSecurityLevel, Validators.pattern('[0-5]')],
+            currentStability: [result.currentStability, Validators.pattern('[0-5]')],
+            expectedStability: [result.expectedStability, Validators.pattern('[0-5]')],
+            costCurrency: [result.costCurrency],
+            currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[0-5]')],
+            currentTotalCostPerYear: [result.currentTotalCostPerYear],
+            toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
+            timeValue: [result.timeValue]
+          });
+        }
+      );
   }
 
-  private getCurrentITApplication(): Observable<Itapplication>{
+  private getCurrentITApplication(): Observable<Itapplication> {
     var itApplicationId = this.router.url.split('/')[2];
     return this.its.getITApplication(itApplicationId);
   }
 
   onSubmit() {
-    let itApplicationId = this.router.url.split('/')[2];
+    let itApplicationId = "300000";
 
     let updatedITApplication = new Itapplication(
       this.itapplication.value.name,

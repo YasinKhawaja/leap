@@ -1,6 +1,8 @@
 
 package edu.ap.group10.leapwebapp.capabilitystrategyitems;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,7 +17,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class CapStrategyItems {
+public class CapStrategyItems implements Serializable {
 
     @Id
     @Column(name = "capstrategyitems_id")

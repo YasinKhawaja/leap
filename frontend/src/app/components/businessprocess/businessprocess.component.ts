@@ -22,8 +22,8 @@ export class BusinessprocessComponent implements OnInit {
         result => {
           this.businessprocesses = result;
         },
-        error => {
-          Swal.fire('error', error.error.message, 'error')
+        () => {
+          Swal.fire('error', `Failed to load business processes of environment`, 'error')
         }
       )
   }

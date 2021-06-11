@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.itapplication;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,14 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name="ITApplication")
-public class ITApplication{
-    
+@Table(name = "ITApplication")
+public class ITApplication implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false, name = "application_id")
@@ -61,20 +65,41 @@ public class ITApplication{
     private String timeValue;
 
     @ManyToOne(targetEntity = Environment.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="environment_id", nullable = false)
+    @JoinColumn(name = "environment_id", nullable = false)
+    @JsonBackReference(value = "environment_reference")
     private Environment environment;
 
-    public ITApplication(){}
-    
+    public ITApplication() {
+    }
+
     public ITApplication(String name, String technology, Environment environment) {
         this.setName(name);
         this.setTechnology(technology);
         this.setEnvironment(environment);
+        this.setVersion("version");
+        this.setAcquisitionDate("acquisitionDate");
+        this.setEndOfLife("endOfLife");
+        this.setCurrentScalability(0);
+        this.setExpectedScalability(0);
+        this.setCurrentPerformance(0);
+        this.setExpectedPerformance(0);
+        this.setCurrentSecurityLevel(0);
+        this.setExpectedSecurityLevel(0);
+        this.setCurrentStability(0);
+        this.setExpectedStability(0);
+        this.setCostCurrency("Eur");
+        this.setCurrentValueForMoney(0);
+        this.setCurrentTotalCostPerYear(0.0);
+        this.setToleratedTotalCostPerYear(0.0);
+        this.setTimeValue("timeValue");
     }
 
-    public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife, Integer currentScalability, Integer expectedScalability,
-    Integer currentPerformance, Integer expectedPerformance, Integer currentSecurityLevel, Integer expectedSecurityLevel, Integer currentStability,
-    Integer expectedStability, String costCurrency, Integer currentValueForMoney, Double currentTotalCostPerYear, Double toleratedTotalCostPerYear, String timeValue, Environment environment){
+    public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife,
+            Integer currentScalability, Integer expectedScalability, Integer currentPerformance,
+            Integer expectedPerformance, Integer currentSecurityLevel, Integer expectedSecurityLevel,
+            Integer currentStability, Integer expectedStability, String costCurrency, Integer currentValueForMoney,
+            Double currentTotalCostPerYear, Double toleratedTotalCostPerYear, String timeValue,
+            Environment environment) {
         this.setName(name);
         this.setTechnology(technology);
         this.setVersion(version);

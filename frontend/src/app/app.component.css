@@ -96,3 +96,12 @@ input[type="submit"]:hover {
 .navbar-navright {
     margin-left: 490%;
 }
+
+.navbar-nav {
+    margin-right: 20px;
+}
+
+a.nav-link {
+    margin-left: 30px;
+    font-size: large;
+}

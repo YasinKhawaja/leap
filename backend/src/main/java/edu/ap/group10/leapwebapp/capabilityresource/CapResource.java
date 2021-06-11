@@ -1,6 +1,8 @@
 
 package edu.ap.group10.leapwebapp.capabilityresource;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class CapResource {
+public class CapResource implements Serializable {
 
     @Id
     @GeneratedValue
