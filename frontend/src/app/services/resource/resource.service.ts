@@ -19,11 +19,10 @@ export class ResourceService {
     return this.http.get<Resource[]>(url, { params: environmentIdParam });
   }
 
-  getResource(resourceId: string, environmentId: string): Observable<Resource> {
+  getResource(resourceId: string): Observable<Resource> {
     var url = `${this.resourceServiceURI}/${resourceId}`;
-    var environmentIdParam = new HttpParams().set('environmentId', environmentId);
 
-    return this.http.get<Resource>(url, { params: environmentIdParam });
+    return this.http.get<Resource>(url);
   }
 
   createResource(environmentId: string, resource: Resource): Observable<Resource> {

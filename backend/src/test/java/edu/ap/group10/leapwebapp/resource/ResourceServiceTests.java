@@ -3,22 +3,27 @@ package edu.ap.group10.leapwebapp.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import edu.ap.group10.leapwebapp.environment.Environment;
+import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -26,119 +31,72 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ResourceServiceTests {
 
     @Mock
-    private ResourceRepository resRepoMock;
+    private EnvironmentRepository environmentRepoMock;
+
+    @Mock
+    private ResourceRepository resourceRepoMock;
 
     @InjectMocks
     private ResourceService sut; // system under test
 
-    /*@Test
-    void GivenResources_WhenGetAllResources_ThenReturnAllResources() {
-        // Given
-        when(resRepoMock.findAll()).thenReturn(Arrays.asList(new Resource(), new Resource(), new Resource()));
-        // When
-        List<Resource> actual = sut.getAllResourcesInEnvironment();
-        // Then
-        assertEquals(3, actual.size());
+    @Captor
+    private ArgumentCaptor<Resource> argumentCaptor;
+
+    private static Environment environment;
+
+    @BeforeEach
+    void setUp() {
+        environment = new Environment("Env", null);
+        environment.setId(1L);
     }
 
-    @Test // positive
-    void GivenResource_WhenGetResource_ThenReturnResource() {
+    @Test
+    void GivenResources_WhenGetAllResourcesInEnvironment_ThenReturnAllResourcesInEnvironment() {
         // Given
-        Resource resource = new Resource();
-        resource.setId(1L);
-
-        when(resRepoMock.findById(1L)).thenReturn(Optional.of(resource));
+        when(resourceRepoMock.findAll())
+                .thenReturn(Arrays.asList(new Resource("", "", 1, environment), new Resource("", "", 1, environment)));
         // When
-        Resource actual = sut.getResource(1L);
+        List<Resource> actual = sut.getAllResourcesInEnvironment(1L);
         // Then
-        assertEquals(1L, actual.getId());
+        assertEquals(2, actual.size());
     }
 
-    @Test // negative
-    void GivenNULL_WhenGetResource_ThenThrowException() {
+    @Test
+    void GivenResource_WhenCreateResource_ThenCreateResource() {
         // Given
-        when(resRepoMock.findById(null)).thenThrow(NoSuchElementException.class);
+        Resource resource = new Resource("Res", "", 1, null);
+        when(environmentRepoMock.findById(1L)).thenReturn(Optional.of(environment));
+        // When
+        sut.createResource(1L, resource);
         // Then
-        assertThrows(NoSuchElementException.class, () -> sut.getResource(null)); // When
+        verify(resourceRepoMock).save(argumentCaptor.capture());
+        Resource resourceCaptured = argumentCaptor.getValue();
+        assertEquals(1L, resourceCaptured.getEnvironment().getId());
     }
 
-    @Test // positive
-    void GivenResource_WhenCreateResource_ReturnsCreatedResource() {
+    @Test
+    void GivenResourceIdAndNewValues_WhenUpdateResource_ThenUpdateResource() {
         // Given
-        Resource expRes = new Resource();
-
-        when(resRepoMock.save(expRes)).thenReturn(expRes);
+        Resource resourceToUpdate = new Resource("Test", "Desc", 1, environment);
+        Resource resourceNewValues = new Resource("UpdatedTest", "UpdatedDesc", 10, null);
+        when(resourceRepoMock.findById(1L)).thenReturn(Optional.of(resourceToUpdate));
         // When
-        Resource actRes = sut.createResource(expRes);
+        sut.updateResource(1L, resourceNewValues);
         // Then
-        assertEquals(expRes, actRes);
+        verify(resourceRepoMock).save(argumentCaptor.capture());
+        Resource resourceCaptured = argumentCaptor.getValue();
+        assertEquals("UpdatedTest", resourceCaptured.getName());
+        assertEquals(1L, resourceCaptured.getEnvironment().getId());
     }
 
-    @Test // negative
-    void GivenNull_WhenCreateResource_ThrowException() {
+    @Test
+    void GivenResourceId_WhenDeleteResource_ThenDeleteResource() {
         // Given
-        Exception expExc = new IllegalArgumentException();
-
+        Long resourceId = 1L;
         // When
-        when(resRepoMock.save(null)).thenThrow(IllegalArgumentException.class);
-
+        sut.deleteResource(resourceId);
         // Then
-        assertThrows(expExc.getClass(), () -> sut.createResource(null));
+        verify(resourceRepoMock).deleteById(resourceId);
     }
-
-    @Test // positive
-    void GivenResourceIdAndNewValues_WhenUpdateResource_ReturnsUpdatedResource() {
-        // Given
-        Long id = 1L;
-        Resource res = new Resource("Name", "Desc", 1);
-
-        Resource expRes = new Resource("NewName", "NewDesc", 10);
-
-        when(resRepoMock.findById(id)).thenReturn(Optional.of(res));
-        when(resRepoMock.save(expRes)).thenReturn(expRes);
-
-        // When
-        Resource actRes = sut.updateResource(id, expRes);
-
-        // Then
-        verify(resRepoMock).save(expRes);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test // negative
-    void GivenNull_WhenUpdateResource_ThrowsException() {
-        // Given
-        Exception expExc = new NoSuchElementException();
-
-        // When
-        when(resRepoMock.findById(null)).thenThrow(NoSuchElementException.class);
-
-        // Then
-        assertThrows(expExc.getClass(), () -> sut.updateResource(null, null));
-    }
-
-    @Test // positive
-    void GivenResourceId_WhenDeleteResource_VerifyDeletedById() {
-        // Given
-        Long expResId = 1L;
-
-        // When
-        sut.deleteResource(expResId);
-
-        // Then
-        verify(resRepoMock).deleteById(expResId);
-    }
-
-    @Test // negative
-    void GivenNull_WhenDeleteResource_ThrowsException() {
-        // Given
-        Exception expExc = new IllegalArgumentException();
-
-        // When
-        doThrow(IllegalArgumentException.class).when(resRepoMock).deleteById(null);
-
-        // Then
-        assertThrows(expExc.getClass(), () -> sut.deleteResource(null));
-    }*/
 
 }

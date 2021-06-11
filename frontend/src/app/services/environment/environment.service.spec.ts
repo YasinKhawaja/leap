@@ -24,7 +24,7 @@ describe('EnvironmentService', () => {
     httpClientSpy.get.and.returnValue(of(expEnvs));
 
     // When
-    environmentService.getAllEnvironments()
+    environmentService.getAllEnvironments("1")
       .subscribe(
         envs => {
           // Then

@@ -27,20 +27,10 @@ public class ResourceController {
         return resourceService.getAllResourcesInEnvironment(environmentId);
     }
 
-    @GetMapping("/resources/{resourceId}")
-    public Resource getResourceInEnvironment(@PathVariable Long resourceId, @RequestParam Long environmentId) {
-        try {
-            return resourceService.getResourceInEnvironment(resourceId, environmentId);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
-        }
-    }
-
     @PostMapping("/resources")
-    public Resource createResource(@RequestParam Long environmentId, @RequestBody Resource resource) {
+    public void createResource(@RequestParam Long environmentId, @RequestBody Resource resource) {
         try {
-            return resourceService.createResource(environmentId, resource);
+            resourceService.createResource(environmentId, resource);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
@@ -48,9 +38,9 @@ public class ResourceController {
     }
 
     @PutMapping("/resources/{resourceId}")
-    public Resource updateResource(@PathVariable Long resourceId, @RequestBody Resource resource) {
+    public void updateResource(@PathVariable Long resourceId, @RequestBody Resource resource) {
         try {
-            return resourceService.updateResource(resourceId, resource);
+            resourceService.updateResource(resourceId, resource);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
