@@ -39,7 +39,7 @@ public class CapStrategyItems implements Serializable {
     }
 
     public CapStrategyItems(Capability cap, StrategyItem strItem, StrategicEmphasis strategicEmphasis) {
-        setId(Long.parseLong((cap.getId().toString() + strItem.getId().toString())));
+        //setId(Long.parseLong((cap.getId().toString() + strItem.getId().toString())));
         setCapability(cap);
         setStrategyItem(strItem);
         setStrategicEmphasis(strategicEmphasis);

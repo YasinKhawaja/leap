@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Strategy } from 'src/app/classes/strategy/strategy';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,8 @@ export class StrategyService {
   private contentHeaders: HttpHeaders;
 
   
-  constructor(private http: HttpClient) {
-    this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+  constructor(private http: HttpClient, private router: Router) {
+    this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/json');
  }
 
 
@@ -25,28 +27,29 @@ public getAllStrategyInEnvironment(environmentId: string): Observable<Strategy[]
 
 public createStrategy(envId: string, str: Strategy) {
   var url = `${this.strategiesServiceURI}/${envId}`
-  return this.http.post<Strategy>(url, str.getParams(),
+  return this.http.post<Strategy>(url, str,
   {headers: this.contentHeaders})
-  .subscribe(data => {
-    console.log(data)
-  },
-  error => {
-    console.log(error)
-  });
+  .subscribe(
+    () => {
+      this.router.navigate([`strategies/`])
+    },
+    () => {
+      Swal.fire('Error', 'Failed to create this strategy', 'error')
+    });
 
 }
 
 updateStrategy_CurrentEnvironment(strId: string, strategy: Strategy){
   let url = `${this.strategiesServiceURI}/${strId}`
 
-  this.http.put<Strategy>(url, strategy.getParams(),
+  this.http.put<Strategy>(url, strategy,
   {headers: this.contentHeaders})
   .subscribe(data => {
-    console.log(data)
+    this.router.navigate([`strategies/`])
   },
-  error => {
-    console.log(error)
-  });
+    error => {
+      Swal.fire('Error', 'Failed to update the strategy', 'error')
+    });
 }
 
 deleteStrategy_CurrentEnvironment(strId: string) {
