@@ -38,7 +38,6 @@ public class UserRepositoryUnitTests {
 
     @BeforeAll
     void setup() {
-        company.setId(1l);
         companyRepository.save(company);
     }
 
@@ -79,9 +78,9 @@ public class UserRepositoryUnitTests {
                 company);
         User user3 = new User("Sander", "Standaert", "standaertsander3@gmail.com", "username3", "password", -1,
                 company);
-        user.setId(10L);
-        user2.setId(11L);
-        user3.setId(12L);
+        sut.save(user);
+        sut.save(user2);
+        sut.save(user3);
         List<User> expectedUsers = Arrays.asList(user, user2, user3);
 
         // When

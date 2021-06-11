@@ -13,7 +13,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,7 +27,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import edu.ap.group10.leapwebapp.company.Company;
@@ -37,9 +37,8 @@ import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
 @SpringBootTest
 @AutoConfigureTestDatabase
 @AutoConfigureMockMvc
-@TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestInstance(Lifecycle.PER_CLASS)
 public class ITApplicationControllerIntegrationTests {
 
     @Autowired
@@ -57,19 +56,15 @@ public class ITApplicationControllerIntegrationTests {
     private static final Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5,
             "Mortsel", "België", "", "");
 
-    @BeforeEach
+    private static final Environment environment = new Environment("Test environment", company);
+
+    private static final ITApplication itapplicationA = new ITApplication("test A", "tech", environment);
+    private static final ITApplication itapplicationB = new ITApplication("test B", "tech", environment);
+
+    @BeforeAll
     void setup() {
-        company.setId(1L);
         companyRepository.save(company);
-
-        final Environment environment = new Environment("Test environment", company);
-        environment.setId(2L);
         environmentRepository.save(environment);
-
-        final ITApplication itapplicationA = new ITApplication("test A", "tech", environment);
-        final ITApplication itapplicationB = new ITApplication("test B", "tech", environment);
-        itapplicationA.setId(3L);
-        itapplicationB.setId(4L);
 
         itApplicationService.createITApplication(itapplicationA);
         itApplicationService.createITApplication(itapplicationB);
@@ -80,7 +75,7 @@ public class ITApplicationControllerIntegrationTests {
     @Order(1)
     void givenEnvironmentID_whenGetAllITApplications_returnsITApplications() throws Exception {
         // Given
-        String environmentid = "2";
+        Long environmentid = environment.getId();
 
         // When
         mvc.perform(get("/itapplications/{environmentId}", environmentid))
@@ -95,9 +90,8 @@ public class ITApplicationControllerIntegrationTests {
     @Order(2)
     void givenEnvironmentID_ITApplication_whenAddITApplication_returnsIsOK() throws Exception {
         // Given
-        String environmentid = "2";
+        Long environmentid = environment.getId();
         ITApplication itapplicationc = new ITApplication("test C", "tech", null);
-        itapplicationc.setId(5L);
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -117,7 +111,7 @@ public class ITApplicationControllerIntegrationTests {
     @Order(3)
     void givenITApplicationID_ITApplication_whenupdateITApplication_returnsIsOK() throws Exception {
         // Given
-        String applicationid = "3";
+        Long applicationid = itapplicationA.getId();
         ITApplication itapplicationc = new ITApplication("test D", "tech", null);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -136,28 +130,28 @@ public class ITApplicationControllerIntegrationTests {
     @Test
     @WithMockUser
     @Order(4)
+    void givenITApplicationID_whenGetITApplication_returnsITApplication() throws Exception {
+        // Given
+        Long applicationid = itapplicationA.getId();
+
+        // When
+        mvc.perform(get("/itapplication/{applicationId}", applicationid))
+
+                // Then
+                .andExpect(status().isOk()).andDo(print()).andExpect(content().json("{'name':'test D'}"));
+    }
+
+    @Test
+    @WithMockUser
+    @Order(5)
     void givenITApplicationID_whenDeleteITApplication_returnsIsOk() throws Exception {
         // Given
-        Long applicationid = 3L;
+        Long applicationid = itapplicationA.getId();
 
         // When
         mvc.perform(delete("/itapplications/{applicationId}", applicationid).with(csrf()))
 
                 // Then
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser
-    @Order(5)
-    void givenITApplicationID_whenGetITApplication_returnsITApplication() throws Exception {
-        // Given
-        String applicationid = "3";
-
-        // When
-        mvc.perform(get("/itapplication/{applicationId}", applicationid))
-
-                // Then
-                .andExpect(status().isOk()).andDo(print()).andExpect(content().json("{'name':'test A'}"));
     }
 }

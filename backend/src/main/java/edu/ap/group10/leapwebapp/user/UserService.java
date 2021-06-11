@@ -86,12 +86,11 @@ public class UserService implements UserDetailsService {
     public void changePassword(Long userId, String password) {
         User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
         user.setPassword(password);
-
         userRepository.save(user);
     }
 
     public boolean checkUser(String email, String username) {
-        if (userRepository.findByEmail(email) != null && userRepository.findByUsername(username) != null) {
+        if (userRepository.findByEmail(email) != null || userRepository.findByUsername(username) != null) {
             throw new EntityExistsException("User already exists");
         }
         return true;
