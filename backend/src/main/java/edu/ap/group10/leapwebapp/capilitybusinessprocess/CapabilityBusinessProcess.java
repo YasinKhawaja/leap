@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.cabilitybusinessprocess;
+package edu.ap.group10.leapwebapp.capilitybusinessprocess;
 
 import java.io.Serializable;
 
