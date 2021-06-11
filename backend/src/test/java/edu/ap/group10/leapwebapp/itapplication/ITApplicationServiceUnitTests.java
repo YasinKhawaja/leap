@@ -198,7 +198,7 @@ class ITApplicationServiceUnitTests {
         // When
         when(itApplicationRepository.findById(itapplicationid)).thenReturn(Optional.of(itApplication));
 
-        // Given
+        // Then
         ITApplication actualApplication = sut.getITApplication(itapplicationid);
 
         assertEquals(itApplication, actualApplication);
