@@ -134,7 +134,7 @@ public class StrategyItemControllerIntegrationTest {
 
   @Test
     @WithMockUser
-    public void findByName() throws Exception {
+    public void givenStrategyName_whenGetAllStrategyItems_returnsStrategyItems() throws Exception {
       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
       companyService.addCompany(company);
   
@@ -224,10 +224,10 @@ public class StrategyItemControllerIntegrationTest {
     }
 
 
-    //werkt niet => door dat geen params heeft er komt een forbidden error
+    //werkt niet 
     @Test
     @WithMockUser
-    public void givenEnvironmentIdCapabilityIdUpdatedCapability_whenUpdateCapability_returnsUpdatedCapability() throws Exception {
+    public void givenStrategyIdCapabilityIdUpdatedStrategy_whenUpdateStrategy_returnsUpdated() throws Exception {
      // Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     //  companyService.addCompany(company);
   
@@ -256,7 +256,7 @@ public class StrategyItemControllerIntegrationTest {
 
         
 
-    //    mvc.perform(put("/strategyItems/{strItemId}", strategyItemUpdatedId)
+    //    mvc.perform(put("/strategyItems/{strItemId}", strategyItemUpdatedId).with(csrf())
     //        .contentType(MediaType.APPLICATION_JSON)
     //        .accept(MediaType.APPLICATION_JSON)
     //        .content(requestJson))
@@ -264,7 +264,6 @@ public class StrategyItemControllerIntegrationTest {
     //        .andDo(print())
     //        .andExpect(content().json("{'name':'testB'}"));
     }
-
 
     @Test
     @WithMockUser
@@ -291,6 +290,5 @@ public class StrategyItemControllerIntegrationTest {
             .andDo(print())
             .andExpect(content().string(""));
     }
-
 
 }
