@@ -1,6 +1,7 @@
 
 package edu.ap.group10.leapwebapp.capability;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Capability {
+public class Capability implements Serializable {
 
 	@Id
 	@GeneratedValue

@@ -1,6 +1,8 @@
 
 package edu.ap.group10.leapwebapp.resource;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
 @Entity
 @Data
-public class Resource {
+public class Resource implements Serializable {
 
     @Id
     @GeneratedValue
@@ -31,6 +35,7 @@ public class Resource {
 
     @ManyToOne(targetEntity = Environment.class)
     @JoinColumn(name = "environment_id", nullable = false)
+    @JsonBackReference(value = "environment_reference")
     private Environment environment;
 
     public Resource() {

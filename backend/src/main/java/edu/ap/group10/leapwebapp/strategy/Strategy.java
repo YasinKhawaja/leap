@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.strategy;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,16 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.strategy_item.StrategyItem;
 import lombok.Data;
 
-
 @Entity
 @Data
-public class Strategy {
+public class Strategy implements Serializable {
 
 	@Id
 	@GeneratedValue
@@ -38,6 +39,7 @@ public class Strategy {
 
 	@ManyToOne
 	@JoinColumn(name = "environment_id")
+	@JsonBackReference(value = "environment_reference")
 	private Environment environment;
 
 	@OneToMany(mappedBy = "strategy", cascade = CascadeType.ALL)

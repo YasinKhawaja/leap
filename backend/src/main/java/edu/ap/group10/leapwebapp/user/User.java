@@ -24,7 +24,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "user")
-public class User implements UserDetails{
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false, name = "user_id")
@@ -46,34 +46,38 @@ public class User implements UserDetails{
     @JoinColumn(nullable = true, name = "company_id")
     private Company company;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String firstName, String surname, String email, String username, String password, Integer role, Company company)
-    {
+    public User(String firstName, String surname, String email, String username, String password, Integer role,
+            Company company) {
         this.setRole(role);
-      this.setFirstName(firstName);
-      this.setSurname(surname);
-      this.setEmail(email);
-      this.setUsername(username);
-      this.setPassword(password);
-      this.setCompany(company);
+        this.setFirstName(firstName);
+        this.setSurname(surname);
+        this.setEmail(email);
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setCompany(company);
     }
 
     public void setPassword(String password) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        password = bCryptPasswordEncoder.encode(password);
-        this.password = password;
+        if (password.equals("")) {
+            this.password = password;
+        } else {
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            password = bCryptPasswordEncoder.encode(password);
+            this.password = password;
+        }
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String userRole = "LEZER";
-        if (getRole() == 0){
+        if (getRole() == 0) {
             userRole = "ADMIN";
-        }
-        else if (getRole() == 1){
+        } else if (getRole() == 1) {
             userRole = "Bewerker";
-        } else if(getRole() == -1) {
+        } else if (getRole() == -1) {
             userRole = "Application admin";
         }
         return Collections.<GrantedAuthority>singleton(new SimpleGrantedAuthority(userRole));

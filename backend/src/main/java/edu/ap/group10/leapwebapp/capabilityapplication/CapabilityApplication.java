@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.capabilityapplication;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,10 +17,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "CapItApp")
-public class CapabilityApplication {
-    
+public class CapabilityApplication implements Serializable {
+
     @Id
-    @Column(nullable = false, unique = true, updatable =false, name="capitapp_id")
+    @Column(nullable = false, unique = true, updatable = false, name = "capitapp_id")
     private Long id;
 
     @Column(nullable = false, name = "capitapp_importance")
@@ -37,7 +39,7 @@ public class CapabilityApplication {
     private Integer informationCorrectness;
     @Column(nullable = false, name = "capitapp_information_quality_availability")
     private Integer informationAvailability;
-    
+
     @OneToOne(targetEntity = Capability.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "capability_id", nullable = false)
     private Capability capability;
@@ -46,11 +48,13 @@ public class CapabilityApplication {
     @JoinColumn(name = "application_id", nullable = false)
     private ITApplication itApplication;
 
-    public CapabilityApplication(){}
+    public CapabilityApplication() {
+    }
 
-    public CapabilityApplication(Double importance, Integer businessEfficiencySupport, Integer businessFunctionalCoverage, Integer businessCorrectness,
-    Integer businessFuturePotential, Integer informationCompleteness, Integer informationCorrectness, Integer informationAvailability, Capability capability,
-    ITApplication itApplication){
+    public CapabilityApplication(Double importance, Integer businessEfficiencySupport,
+            Integer businessFunctionalCoverage, Integer businessCorrectness, Integer businessFuturePotential,
+            Integer informationCompleteness, Integer informationCorrectness, Integer informationAvailability,
+            Capability capability, ITApplication itApplication) {
         setId(Long.parseLong(itApplication.getId().toString() + capability.getId().toString()));
         setImportance(importance);
         setBusinessEfficiencySupport(businessEfficiencySupport);

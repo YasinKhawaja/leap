@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.strategy_item;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class StrategyItem {
+public class StrategyItem implements Serializable {
 
 	@Id
 	@GeneratedValue

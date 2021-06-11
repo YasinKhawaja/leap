@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.businessprocesses;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,13 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "Business_Process")
-public class BusinessProcess {
+public class BusinessProcess implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +35,7 @@ public class BusinessProcess {
 
     @ManyToOne(targetEntity = Environment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "environment_id", nullable = false)
+    @JsonBackReference(value = "environment_reference")
     private Environment environment;
 
     public BusinessProcess() {

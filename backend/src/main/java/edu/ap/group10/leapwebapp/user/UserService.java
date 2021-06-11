@@ -22,7 +22,7 @@ import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
 
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -48,29 +48,32 @@ public class UserService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final User user = userRepository.findByUsername(username);
-        if(user != null){
+        if (user != null) {
             return user;
-        }
-        else {
+        } else {
             throw new UsernameNotFoundException(username);
         }
     }
 
-    public Company validateToken(String token){
+    public Company validateToken(String token) {
         return confirmationTokenRepository.findByToken(token).getCompany();
     }
 
-    public User addUser(User user){
+    public User addUser(User user) {
         return userRepository.save(user);
     }
 
-    public void delUser(Long userid){
+    public boolean delUser(Long userid) {
+        Boolean validator = false;
         userRepository.deleteById(userid);
+        if (!userRepository.findById(userid).isPresent()) {
+            validator = true;
+        }
+        return validator;
     }
 
-    public User updateUser(String userid, User user){
-        User oUser = userRepository.findById(Long.parseLong(userid))
-        .orElseThrow(ResourceNotFoundException::new);
+    public User updateUser(String userid, User user) {
+        User oUser = userRepository.findById(Long.parseLong(userid)).orElseThrow(ResourceNotFoundException::new);
         oUser.setEmail(user.getEmail());
         oUser.setFirstName(user.getFirstName());
         oUser.setSurname(user.getSurname());
@@ -80,36 +83,33 @@ public class UserService implements UserDetailsService{
         return userRepository.save(oUser);
     }
 
-    public void changePassword(Long userId, String password){
-        User user = userRepository.findById(userId)
-        .orElseThrow(ResourceNotFoundException::new);
+    public void changePassword(Long userId, String password) {
+        User user = userRepository.findById(userId).orElseThrow(ResourceNotFoundException::new);
         user.setPassword(password);
-
         userRepository.save(user);
     }
 
-    public boolean checkUser(String email, String username){
-        if (userRepository.findByEmail(email) != null && userRepository.findByUsername(username) != null){
+    public boolean checkUser(String email, String username) {
+        if (userRepository.findByEmail(email) != null || userRepository.findByUsername(username) != null) {
             throw new EntityExistsException("User already exists");
         }
         return true;
     }
 
-    public Company findCompany(Long id){
+    public Company findCompany(Long id) {
         return companyRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public List<User> findUserByCompany(Long id){
+    public List<User> findUserByCompany(Long id) {
         return userRepository.findByCompany(companyService.findCompany(id));
     }
 
-    public User findUserByUsername(String username){
+    public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public User findUserById(String userid){
-        return userRepository.findById(Long.parseLong(userid))
-        .orElseThrow(ResourceNotFoundException::new);
+    public User findUserById(String userid) {
+        return userRepository.findById(Long.parseLong(userid)).orElseThrow(ResourceNotFoundException::new);
     }
 
     public String authenticateUser(UsernamePasswordAuthenticationToken token) {
@@ -127,24 +127,25 @@ public class UserService implements UserDetailsService{
         Mail mail = new Mail();
         mail.setReceiver(email);
         mail.setSubject("Your first login credentials.");
-        mail.setContent("Your username is: " + username + "\nTo active your account, set a password using this link: " + newPasswordLink + 
-        "\nThis link is only valid for 1h, after 1h please reset your password using the password reset option on the site.");
+        mail.setContent("Your username is: " + username + "\nTo active your account, set a password using this link: "
+                + newPasswordLink
+                + "\nThis link is only valid for 1h, after 1h please reset your password using the password reset option on the site.");
         mailService.sendMail(mail);
     }
 
-    public String encodeId(String id){
+    public String encodeId(String id) {
         return customAuthenticationProvider.newUserIdJwt(id);
     }
 
-    public String getUserIDJwt(String token){
+    public String getUserIDJwt(String token) {
         return customAuthenticationProvider.checkUserID(token);
     }
 
-    public String refreshJwt(String token){
+    public String refreshJwt(String token) {
         return customAuthenticationProvider.newJwt(token);
     }
 
-    public User findUserByMail(String email){
+    public User findUserByMail(String email) {
         return userRepository.findByEmail(email);
     }
 }

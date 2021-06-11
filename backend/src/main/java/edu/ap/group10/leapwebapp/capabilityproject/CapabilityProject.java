@@ -1,5 +1,7 @@
 package edu.ap.group10.leapwebapp.capabilityproject;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "capability_project")
-public class CapabilityProject {
+public class CapabilityProject implements Serializable {
 
     @Id
     @Column(nullable = false, unique = true, updatable = false, name = "capability_project_id")
@@ -28,10 +30,11 @@ public class CapabilityProject {
     @OneToOne(targetEntity = Project.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    
-    public CapabilityProject() {}
 
-    public CapabilityProject(Capability capability, Project project){
+    public CapabilityProject() {
+    }
+
+    public CapabilityProject(Capability capability, Project project) {
         setId(Long.parseLong(capability.getId().toString() + project.getId().toString()));
         setCapability(capability);
         setProject(project);
