@@ -96,7 +96,7 @@ import edu.ap.group10.leapwebapp.environment.Environment;
  
      }
 
-// //werkt niet
+// //werkt niet => weg doen
 //     @Test
    void getAllStrategiesInStrategyByName() {
 
