@@ -41,6 +41,8 @@ public class BusinessProcessRepositoryUnitTests {
 
     @BeforeAll
     void setup() {
+        companyRepository.deleteAll();
+        environmentRepository.deleteAll();
         companyRepository.save(company);
         environmentRepository.save(environment);
     }

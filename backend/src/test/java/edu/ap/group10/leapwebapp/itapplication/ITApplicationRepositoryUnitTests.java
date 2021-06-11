@@ -17,6 +17,7 @@ import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.company.CompanyRepository;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
+import edu.ap.group10.leapwebapp.user.UserRepository;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -29,6 +30,9 @@ class ITApplicationRepositoryUnitTests {
 
     @Autowired
     private CompanyRepository companyRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private EnvironmentRepository environmentRepository;
@@ -39,6 +43,9 @@ class ITApplicationRepositoryUnitTests {
 
     @BeforeAll
     void setup() {
+        userRepository.deleteAll();
+        companyRepository.deleteAll();
+        environmentRepository.deleteAll();
         companyRepository.save(company);
         environmentRepository.save(environment);
     }
