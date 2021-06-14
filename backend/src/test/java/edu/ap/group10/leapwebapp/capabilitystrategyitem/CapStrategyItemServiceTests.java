@@ -48,14 +48,6 @@ public class CapStrategyItemServiceTests {
     @InjectMocks
     private CapStrategyItemsService capStrategyItemsService; 
 
-  //  @Autowired
- //   private CapabilityRepository capabilityRepository;
-
- //   @Autowired
-   // private StrategyItemService strategyItemService;
-
-  //  @Autowired
-  //  private StrategyItemRepository strategyItemRepository;
 
     @Test
     void givenCapStrategyItems_WhenGetAllCapStrategyItems_ThenReturnAllCapStrategyItems() {
@@ -134,47 +126,8 @@ public class CapStrategyItemServiceTests {
 
  }
 
- //werkt niet 
+ //create
 
- @Test
- void createCapStrategyItems() {
-
-            //Given
-          //  Long environmentId = 1L;
-        //     String strategyItemName = "TestName";
-        //     Long capability_id = 2L;
-       //      Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
-       //      Environment environment = new Environment("Test environment",company);
-       //      environment.setId(environmentId);
-       //      Capability capability = new Capability("testCapbility",environment);
-       //     capability.setId(capability_id);
-       //     Strategy strategy = new Strategy ( "testStrategy","2020-02-03", "2020-01-04", environment);
-       //     StrategyItem strategyItem = new StrategyItem(strategyItemName,"description1");
-       //     strategyItem.setStrategy(strategy);
-
-            //Mockito.when(capabilityRepository.findById(capability_id)).thenReturn(Optional.of(capability));
-         
-      //      CapStrategyItems capStrategyItem = new CapStrategyItems(capability, strategyItem, StrategicEmphasis.LOW);
-
-            
-       //     capStrategyItemsService.createCapStrategyItems(capability.getId(), strategy.getName(),capStrategyItem.getStrategicEmphasis());
-
-      //      List<StrategyItem> strategyItems = strategyItemService.getAllStrategiesInStrategy(strategy.getId());
-      //      List<StrategyItem> stratItemFound = strategyItems.stream()
-      //      .filter(strItem -> strItem.getName().equals(strategyItemName)).collect(Collectors.toList());
-
-      //      capStrategyItem.setCapability(capability);
-      //      capStrategyItem.setStrategyItem(stratItemFound.get(0));
-
-      //      ArgumentCaptor<CapStrategyItems> capabilityStrategyItemArgumentCaptor = ArgumentCaptor.forClass(CapStrategyItems.class);
-      //      verify(capStrategyItemsRepository).save(capabilityStrategyItemArgumentCaptor.capture());
-
-       
-   //     assertEquals(capabilityStrategyItemArgumentCaptor.getValue().getCapability().getId(), capability.getId());
-  //      assertEquals(capabilityStrategyItemArgumentCaptor.getValue().getStrategyItem().getName(), strategyItem.getName());
- //     assertEquals(capabilityStrategyItemArgumentCaptor.getValue().getStrategicEmphasis(), capStrategyItem.getStrategicEmphasis());
-
-    }
 
 
     @Test
@@ -241,46 +194,8 @@ public class CapStrategyItemServiceTests {
     }
 
 
-    //werkt niet 
-    @Test
-    void getAllCapabilityStrategyItemsLinkedToStrategyItem(){
-        //name 
+    // getAllCapabilityStrategyItemsLinkedToStrategyItem()
 
-          //Given
-     //     Long environmentId = 1L;
-     //     Long capabilityId = 5L;
-  
-    //      String environmentName = "Test environment";
-    //      Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
-     //     Environment environment = new Environment(environmentName,company);
-     //     environment.setId(environmentId);
-
-     //    Capability capability = new Capability("testCapbility",environment);
-     //     capability.setId(capabilityId);
-
-       //   Capability capability2 = new Capability("test22",environment);
-       //   capability.setId(50L);
-
-
-      //    Strategy strategy = new Strategy ( "testStrategy","2020-02-03", "2020-01-04", environment);
-         
-      //    String name = "TestName";
-      //     StrategyItem strategyItem = new StrategyItem(name,"description1");
-       //    strategyItem.setStrategy(strategy);
-
-       //    when(strategyItemRepository.findByName(strategyItem.getName())).thenReturn(strategyItem);
-
-
-          //When
-      //    when(capStrategyItemsService.getAllCapabilityStrategyItemsLinkedToStrategyItem(strategyItem.getName())).thenReturn(Arrays.asList(new CapStrategyItems(capability, strategyItem, StrategicEmphasis.LOW),
-      //    new CapStrategyItems(capability2, strategyItem, StrategicEmphasis.HIGH)));
-      //    List<CapStrategyItems> capStrategyItems = capStrategyItemsService.getAllCapabilityStrategyItemsLinkedToStrategyItem(strategyItem.getName());
-  
-          //Then
-      // assertEquals(2, capStrategyItems.size());
-
-
-    }
 
 
 }
