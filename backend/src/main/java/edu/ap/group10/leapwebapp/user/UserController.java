@@ -12,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,7 +79,6 @@ public class UserController {
         }
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/user")
     public List<UserDTO> getUsers(@RequestParam("companyId") String companyId) {
         List<User> users = userService.findUserByCompany(Long.parseLong(companyId));
@@ -91,13 +89,11 @@ public class UserController {
         return userDTOs;
     }
 
-    @ExceptionHandler(Exception.class)
     @DeleteMapping("/user")
     public void delUser(@RequestParam("userid") String userid) {
         userService.delUser(Long.parseLong(userid));
     }
 
-    @ExceptionHandler(Exception.class)
     @PutMapping("/user")
     public void updateUser(@RequestParam String userid, @RequestBody UserDTO userDTO, @RequestParam Integer role) {
         User user = modelMapper.map(userDTO, User.class);
@@ -106,14 +102,12 @@ public class UserController {
         userService.updateUser(userid, user);
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/user/{userid}")
     public UserDTO getUser(@PathVariable String userid) {
         User user = userService.findUserById(userid);
         return modelMapper.map(user, UserDTO.class);
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/user/login")
     public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password,
             HttpServletResponse response) {
@@ -126,7 +120,6 @@ public class UserController {
         response.addCookie(cookie);
     }
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/user/jwt")
     public void jwt(@RequestParam String token, HttpServletResponse response) {
         String newToken = userService.refreshJwt(token);
@@ -135,7 +128,6 @@ public class UserController {
         response.setHeader("Authorization", newToken);
     }
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/user/resetpassword")
     public void requestResetPassword(@RequestParam String email) {
         User user = userService.findUserByMail(email);
@@ -151,7 +143,6 @@ public class UserController {
         mailService.sendMail(mail);
     }
 
-    @ExceptionHandler(Exception.class)
     @PutMapping("/user/resetpassword")
     public void resetPassword(@RequestParam String token, @RequestParam String password) {
 
