@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,10 +117,9 @@ public class UserController {
         String value = Base64.getEncoder().withoutPadding().encodeToString(
                 userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)).getBytes());
         String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        cookie.setMaxAge(900);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from(name, value).httpOnly(false).secure(false).domain("localhost")
+                .path("/").maxAge(Duration.ofMinutes(15)).sameSite("Strict").build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
     @PostMapping("/user/jwt")
