@@ -16,6 +16,7 @@ import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationToken;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenService;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
+import edu.ap.group10.leapwebapp.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,6 +31,9 @@ public class CompanyController {
 
   @Autowired
   private MailService mailService;
+
+  @Autowired
+  private UserService userService;
 
   @GetMapping("/companies")
   public List<Company> getAllCompanies(@RequestParam String role) {
@@ -55,7 +59,8 @@ public class CompanyController {
     Mail mail = new Mail();
     // change setReceiver to get a list of email adresses from the application
     // admins
-    mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be, janelguera@gmail.com");
+    String emails = userService.getApplicationAdmins();
+    mail.setReceiver(emails);
     mail.setSubject("New application from: " + company.getCompanyName());
     mail.setContent(
         "Click on this link to view the request from: " + company.getCompanyName() + ".\n" + confirmationTokenString);
@@ -94,6 +99,7 @@ public class CompanyController {
         if (accepted.booleanValue()) {
           String tokenAdmin = confirmationTokenService.addConfirmationToken(company);
           confirmationTokenString = "http://localhost:4200/register-useradmin?token=" + tokenAdmin;
+          companyService.updateCompany(company.getId(), true);
         } else {
           companyService.deleteCompany(companyID);
         }

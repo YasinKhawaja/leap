@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 
@@ -13,7 +14,7 @@ export class StrategyItemsComponent implements OnInit {
 
   strategyItems: StrategyItem[]
 
-  constructor(private cs: StrategyItemService , private router: Router,private ns: NavbarService) { 
+  constructor(private cs: StrategyItemService, private router: Router, private ns: NavbarService, public jwt: JwtService) {
     this.strategyItems = [];
   }
 
@@ -22,8 +23,8 @@ export class StrategyItemsComponent implements OnInit {
     var strId = this.router.url.split('/')[2];
 
     this.cs.getAllStrategyItemInStrategy(strId)
-               .subscribe(res => { this.strategyItems = res;  console.log(res); }, 
-                         error => { console.error(error) })
-}
+      .subscribe(res => { this.strategyItems = res; console.log(res); },
+        error => { console.error(error) })
+  }
 
 }

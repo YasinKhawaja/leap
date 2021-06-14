@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EnvironmentService } from 'src/app/services/environment/environment.service';
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './environment-edit.component.html',
   styleUrls: ['./environment-edit.component.css']
 })
-export class EnvironmentEditComponent implements OnInit {
+export class EnvironmentEditComponent {
 
   token: string;
 
@@ -19,9 +19,6 @@ export class EnvironmentEditComponent implements OnInit {
   });
 
   constructor(private es: EnvironmentService, private fb: FormBuilder, private router: Router, private ls: LoginService) {
-  }
-
-  ngOnInit(): void {
   }
 
   // To be able to use all form controls (name) above in html

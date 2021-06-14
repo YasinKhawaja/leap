@@ -5,22 +5,23 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th *ngIf="(jwt.checkRole() != 'lezer')" scope="col"></th>
                             <th scope="col">NAME</th>
                             <th scope="col">DESCRIPTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let process of businessprocesses">
-                            <td>
+                            <td *ngIf="(jwt.checkRole() != 'lezer')">
                                 <a [routerLink]="['../businessprocess/delete/', process.id]">
                                     <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-light" role="button" [routerLink]="['../businessprocess/edit/', process.id]">
+                                <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" [routerLink]="['../businessprocess/edit/', process.id]">
                                     {{ process.name }}
                                 </a>
+                                <div>{{process.name}}</div>
                             </td>
                             <td>{{ process.description }}</td>
                         </tr>
@@ -29,5 +30,5 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-danger" [routerLink]="['../businessprocess/add']">ADD BUSINESS PROCESS</button>
+    <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" [routerLink]="['../businessprocess/add']">ADD BUSINESS PROCESS</button>
 </main>

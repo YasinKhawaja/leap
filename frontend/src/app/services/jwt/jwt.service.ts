@@ -178,6 +178,7 @@ export class JwtService {
     this.ns.eraseCookie("Capability");
     this.ns.eraseCookie("Environment");
     this.ns.eraseCookie("EnvironmentName");
+    this.ns.eraseCookie("Program");
     this.ns.environmentDeselect();
     this.userstatus.next(false);
     this.setUserIdle(false);

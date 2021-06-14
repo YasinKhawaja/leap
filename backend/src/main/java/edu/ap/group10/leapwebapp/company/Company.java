@@ -46,9 +46,12 @@ public class Company implements Serializable {
     @Column(nullable = true, name = "company_tax_office")
     private String taxOffice;
 
+    @Column(nullable = false, name = "company_approved")
+    private Boolean approved;
+
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-	@JsonManagedReference(value = "company_reference")
-	private List<Environment> environments;
+    @JsonManagedReference(value = "company_reference")
+    private List<Environment> environments;
 
     public Company() {
     }
@@ -65,6 +68,7 @@ public class Company implements Serializable {
         this.setCountry(country);
         this.setTaxOffice(taxOffice);
         this.setBusinessActivity(businessActivity);
+        this.setApproved(false);
     }
 
     public void setTaxOffice(String taxOffice) {

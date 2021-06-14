@@ -1,6 +1,6 @@
 <main class="main">
     <div class="flex-container-hor">
-        <div class="flex-item">
+        <div *ngIf="(jwt.checkRole() != 'lezer')" class="flex-item">
             <div class="card">
                 <div class="card-header center" *ngIf="capCurrentValues != null">
                     <h5><strong>EDIT {{ capCurrentValues.name }}</strong></h5>
@@ -88,11 +88,11 @@
                             <tr>
                                 <td>
 
-                                    <a class="btn btn-success" [routerLink]="['/capstrategyitems/']" role="button">EDIT</a>
+                                    <a class="btn btn-success" [routerLink]="['/capstrategyitems/']" role="button">VIEW</a>
                                 </td>
                                 <td>
                                     <a class="btn btn-success" [routerLink]="['/capability-application']" role="button">
-                                        EDIT
+                                        VIEW
                                     </a>
                                 </td>
                             </tr>
@@ -111,15 +111,15 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <a class="btn btn-success" [routerLink]="['/capability-project']" role="button">EDIT</a>
+                                    <a class="btn btn-success" [routerLink]="['/capability-project']" role="button">VIEW</a>
                                 </td>
                                 <td>
                                     <a class="btn btn-success" [routerLink]="['/capability-resource']" role="button">
-                                        EDIT
+                                        VIEW
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success" [routerLink]="['/capability-businessprocess']" role="button">EDIT</a>
+                                    <a class="btn btn-success" [routerLink]="['/capability-businessprocess']" role="button">VIEW</a>
                                 </td>
                             </tr>
                         </tbody>

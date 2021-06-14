@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 
@@ -13,7 +14,7 @@ export class CapabilityApplicationComponent implements OnInit {
 
   capabilityApplications: CapabilityApplication[];
 
-  constructor(private cas: CapabilityApplicationService, private ns: NavbarService) { }
+  constructor(private cas: CapabilityApplicationService, private ns: NavbarService, public jwt: JwtService) { }
 
   ngOnInit(): void {
     let capabilityId = this.ns.getCapabilityCookie();

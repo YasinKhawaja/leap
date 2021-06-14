@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/classes/project/project';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { ProjectService } from 'src/app/services/project/project.service';
 import Swal from 'sweetalert2';
@@ -13,7 +14,7 @@ export class ProjectComponent implements OnInit {
 
   projects: Project[];
 
-  constructor(private ps: ProjectService, private ns: NavbarService) { }
+  constructor(private ps: ProjectService, private ns: NavbarService, public jwt: JwtService) { }
 
   ngOnInit(): void {
     var program = this.ns.getProgramCookie()

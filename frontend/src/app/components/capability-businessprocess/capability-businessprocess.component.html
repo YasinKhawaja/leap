@@ -5,20 +5,23 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
                             <th scope="col">NAME</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let capabilitybusinessprocess of capabilityBusinessProcesses">
-                            <td>
+                            <td *ngIf="(jwt.checkRole() != 'lezer')">
                                 <a [routerLink]="['../capability-businessprocess/delete/', capabilitybusinessprocess.id]">
                                     <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-light" role="button" [routerLink]="['/businessprocess/edit/', capabilitybusinessprocess.businessProcess.id]">
-                                {{ capabilitybusinessprocess.businessProcess.name }}
+                                <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" [routerLink]="['/businessprocess/edit/', capabilitybusinessprocess.businessProcess.id]">
+                                    {{ capabilitybusinessprocess.businessProcess.name }}
+                                </a>
+                                <a class="btn btn-light" role="button" [routerLink]="['/businessprocess']">
+                                    {{capabilitybusinessprocess.businessProcess.name}}
                                 </a>
                             </td>
                         </tr>
@@ -27,5 +30,6 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-danger" [routerLink]="['../capability-businessprocess/add']">ADD BUSINESS PROCESS</button>
+    <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" [routerLink]="['../capability-businessprocess/add']">ADD BUSINESS
+        PROCESS</button>
 </main>

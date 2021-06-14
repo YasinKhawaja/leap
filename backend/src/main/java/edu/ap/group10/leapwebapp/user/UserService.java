@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -53,6 +54,18 @@ public class UserService implements UserDetailsService {
         } else {
             throw new UsernameNotFoundException(username);
         }
+    }
+
+    public String getApplicationAdmins() {
+        List<String> emails = new ArrayList<>();
+        for (User user : userRepository.findAll()) {
+            if (user.getRole().equals(-1)) {
+                emails.add(user.getEmail());
+            }
+        }
+        String emailsToString = emails.toString();
+        emailsToString = emailsToString.substring(1, emailsToString.length() - 1);
+        return emailsToString;
     }
 
     public Company validateToken(String token) {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
@@ -36,7 +37,7 @@ export class CapabilityEditComponent implements OnInit {
   capEditForm: FormGroup;
   capCurrentValues: Capability;
 
-  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder, private router: Router) { }
+  constructor(private cs: CapabilityService, private ns: NavbarService, private fb: FormBuilder, private router: Router, public jwt: JwtService) { }
 
   ngOnInit(): void {
     this.getCapabilityCurrentValues()

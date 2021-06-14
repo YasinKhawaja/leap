@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
 import { Strategy } from 'src/app/classes/strategy/strategy';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 
 @Component({
   selector: 'app-strategy',
@@ -16,7 +17,7 @@ export class StrategyComponent implements OnInit {
 
   strategies: Strategy[]
 
-  constructor(private cs: StrategyService , private router: Router,private ns: NavbarService) { 
+  constructor(private cs: StrategyService, private router: Router, private ns: NavbarService, public jwt: JwtService) {
     this.strategies = [];
   }
 
@@ -27,8 +28,8 @@ export class StrategyComponent implements OnInit {
     var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllStrategyInEnvironment(envId)
-               .subscribe(res => { this.strategies = res;  console.log(res); }, 
-                          error => { console.error(error) })
-}
+      .subscribe(res => { this.strategies = res; console.log(res); },
+        error => { console.error(error) })
+  }
 
 }

@@ -24,16 +24,15 @@ public class CompanyService {
         return validator;
     }
 
-    public void deleteCompany(Long companyId){
+    public void deleteCompany(Long companyId) {
         companyRepository.deleteById(companyId);
     }
 
-    public Company findCompany(Long companyId){
-        return companyRepository.findById(companyId)
-        .orElseThrow(ResourceNotFoundException::new);
+    public Company findCompany(Long companyId) {
+        return companyRepository.findById(companyId).orElseThrow(ResourceNotFoundException::new);
     }
-    
-    public Company addCompany(Company company){
+
+    public Company addCompany(Company company) {
         return companyRepository.save(company);
     }
 
@@ -43,5 +42,11 @@ public class CompanyService {
             companies.add(company);
         }
         return companies;
+    }
+
+    public void updateCompany(Long companyid, boolean value) {
+        Company oldCompany = companyRepository.findById(companyid).orElseThrow(ResourceNotFoundException::new);
+        oldCompany.setApproved(value);
+        companyRepository.save(oldCompany);
     }
 }

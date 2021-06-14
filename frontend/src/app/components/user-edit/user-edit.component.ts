@@ -29,7 +29,7 @@ export class UserEditComponent implements OnInit {
       .subscribe(
         result => {
           this.user = this.fb.group({
-            firstName: [result.firstName, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+            firstName: [result.firstname, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
             surname: [result.surname, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
             email: [result.email, [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
             username: [result.username, Validators.required],
@@ -49,7 +49,7 @@ export class UserEditComponent implements OnInit {
 
   onSubmit() {
     this.us.updateUser(this.router.url.split('/')[2], new User(
-      this.user.value.firstName,
+      this.user.value.firstname,
       this.user.value.surname,
       this.user.value.email,
       this.user.value.username,

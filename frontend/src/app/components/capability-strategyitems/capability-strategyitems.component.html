@@ -1,35 +1,37 @@
 <h1 class='display-4'>Strategy Item</h1>
 <br /><br />
-<a [routerLink]="['../capstrategyitems/create']">Add Strategy Item to capability</a>
+<a *ngIf="(jwt.checkRole() != 'lezer')" [routerLink]="['../capstrategyitems/create']">Add Strategy Item to
+    capability</a>
 
 <table class='table table-striped'>
     <thead>
         <tr>
-            <th scope="col"></th>
-            <th scope="col">edit</th>
+            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')">edit</th>
             <th scope='col'>Strategy Item</th>
             <th scope='col'>Capability</th>
             <th scope='col'>Strategic Emphasis</th>
-          
+
         </tr>
     </thead>
     <tbody *ngFor='let capabilityStrategyItem of capabilityStrategyItems'>
         <tr>
-            <td>
+            <td *ngIf="(jwt.checkRole() != 'lezer')">
                 <a [routerLink]="['../capstrategyitems/delete/', capabilityStrategyItem.id]"><img src="assets/delete-icon.png" alt="Delete" height="20" width="20"></a>
             </td>
-            <td>
+            <td *ngIf="(jwt.checkRole() != 'lezer')">
                 <a [routerLink]="['../capstrategyitems/update/', capabilityStrategyItem.id]">edit</a>
             </td>
             <td>
-               {{ capabilityStrategyItem.strategyItem.name }}
+                {{ capabilityStrategyItem.strategyItem.name }}
             </td>
             <td>
                 <!--Change to new capability link-->
-                <a [routerLink]="['../capabilities/','update']"> {{ capabilityStrategyItem.capability.name }}</a>
+                <a [routerLink]="['../capabilities/','update']"> {{
+                    capabilityStrategyItem.capability.name }}</a>
             </td>
             <td class="numbers"> {{ capabilityStrategyItem.strategicEmphasis }} </td>
-           
+
         </tr>
     </tbody>
 </table>

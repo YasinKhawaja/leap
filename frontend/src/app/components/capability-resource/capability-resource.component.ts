@@ -5,6 +5,7 @@ import { CapResource } from 'src/app/classes/capabillity-resource/capresource';
 import { Resource } from 'src/app/classes/resource/resource';
 import { CapabilityResourceService } from 'src/app/services/capability-resource/capability-resource.service';
 import { CapabilityService } from 'src/app/services/capability/capability.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { ResourceComponent } from '../resource/resource.component';
 
@@ -22,7 +23,8 @@ export class CapabilityResourceComponent implements OnInit {
     private crs: CapabilityResourceService,
     private cs: CapabilityService,
     private ns: NavbarService,
-    private rc: ResourceComponent
+    private rc: ResourceComponent,
+    public jwt: JwtService
   ) { }
 
   ngOnInit(): void {

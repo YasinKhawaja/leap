@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Capability } from 'src/app/classes/capability/capability';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { CapabilityService } from '../../services/capability/capability.service';
 
@@ -19,7 +20,7 @@ export class CapabilityComponent implements OnInit {
   _display2: boolean = false;
   _display3: boolean = false;
 
-  constructor(private cs: CapabilityService, private ns: NavbarService) {
+  constructor(private cs: CapabilityService, private ns: NavbarService, public jwt: JwtService) {
     this._cap = null;
   }
 

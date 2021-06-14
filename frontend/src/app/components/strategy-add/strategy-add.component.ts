@@ -21,18 +21,18 @@ export class StrategyAddComponent implements OnInit {
   }
 
   private initializeForm() {
-    this.strAddForm =  this.fb.group({
-    name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-    timeframeFrom: ['', [Validators.required]],
-    timeframeTo: ['', [Validators.required]]
-  });
-}
+    this.strAddForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      timeframeFrom: ['', [Validators.required]],
+      timeframeTo: ['', [Validators.required]]
+    });
+  }
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private ss: StrategyService, private ns : NavbarService){}
+    private ss: StrategyService, private ns: NavbarService) { }
 
-    // Form GETTERS
+  // Form GETTERS
   get name() {
     return this.strAddForm.get('name');
   }
@@ -45,8 +45,8 @@ export class StrategyAddComponent implements OnInit {
     return this.strAddForm.get('timeframeTo');
   }
 
-  
-  
+
+
   onSubmit() {
     //var envId = this.router.url.split('/')[2];
     let envId = this.ns.getEnvironmentCookie();
@@ -60,11 +60,9 @@ export class StrategyAddComponent implements OnInit {
 
     this.ss.createStrategy(envId, straToCreate)
     //.subscribe(
-   //   response => console.log(response),
+    //   response => console.log(response),
     //  error => Swal.fire('Error', error.error.message, 'error')
-   // );
-
-    this.router.navigate([`strategies/`])
+    // );
   }
 
 }
