@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 
 @Injectable({
@@ -19,6 +20,11 @@ export class CapabilityService {
   getAllCapabilities(): Observable<Capability[]> {
     let url = `${this.capabilitiesServiceURI}`;
     return this.http.get<Capability[]>(url);
+  }
+
+  getCapabilitiesWithParents(envid: string): Observable<string[]> {
+    let url = `//localhost:8080/api/capabilityparents`;
+    return this.http.get<string[]>(url, { params: { envid: envid } });
   }
 
   // To GET all caps in an env
@@ -40,6 +46,16 @@ export class CapabilityService {
     var url = `${this.capabilitiesServiceURI}`;
 
     return this.http.post<Capability>(url, cap, { params: { envId: envId, parentCapId: parentCapId } });
+  }
+
+  createCapabilityFromCsv(envid: string, capability: Capability, parent: string) {
+    var url = `//localhost:8080/api/capabilityparents`
+    var parentname = ""
+    if (parent != undefined) {
+      parentname = parent
+    }
+
+    return this.http.post<any>(url, capability, { params: { envid: envid, parent: parentname } })
   }
 
   // To UPDATE a capability in its environment

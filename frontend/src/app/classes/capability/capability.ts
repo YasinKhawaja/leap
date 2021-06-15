@@ -1,7 +1,7 @@
 export class Capability {
 
     public id: string;
-    public parentId: string;
+    public parent: string;
     public level: string;
     public informationQuality: string;
     public applicationFit: string;

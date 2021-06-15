@@ -12,6 +12,7 @@ import { ItapplicationService } from 'src/app/services/itapplication/itapplicati
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 import { CapabilityService } from '../../services/capability/capability.service';
 
@@ -35,6 +36,8 @@ export class ExportComponent implements OnInit {
 
   strategies: string[]
 
+  parents: string[]
+
   strategy = this.fb.group({
     strategyName: ['']
   })
@@ -53,14 +56,27 @@ export class ExportComponent implements OnInit {
     this.strategyItems = [];
     this.capabilitiesLinkedToItApplication = [];
     this.capabilityStrategyItemsLinkedToStrategyItem = [];
+    this.parents = [];
   }
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironmentCookie();
 
+    this.cs.getCapabilitiesWithParents(environmentId)
+      .subscribe(
+        (res) => {
+          this.parents = res
+          console.log(this.parents)
+        },
+        () => {
+          Swal.fire('Error', 'failed to load parents of capabilities', 'error')
+        }
+      )
+
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {
         this.capabilities = result;
+        console.log(this.capabilities);
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
 
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
@@ -86,12 +102,12 @@ export class ExportComponent implements OnInit {
 
   applyITApplicationFilter(capability) {
     if ((Number(capability.informationQuality) + Number(capability.applicationFit)) != 0) {
-      
-    if ((Number(capability.informationQuality) + Number(capability.applicationFit)) < 5) {
-      this.style = { 'border-color': 'red' }
-    } else if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
-      this.style = { 'border-color': 'green' }
-    } else this.style = { 'border-color': 'orange' }
+
+      if ((Number(capability.informationQuality) + Number(capability.applicationFit)) < 5) {
+        this.style = { 'border-color': 'red' }
+      } else if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
+        this.style = { 'border-color': 'green' }
+      } else this.style = { 'border-color': 'orange' }
     }
     else this.style = { 'border-color': 'black' }
     return this.style;
@@ -144,11 +160,42 @@ export class ExportComponent implements OnInit {
 
   generateCSV() {
     let cap = this.capabilities;
+    var children: string[];
+    var parents: string[];
+    var count: number;
+
+    children = [];
+    parents = [];
+    count = 0;
+
+    for (var i = 0; i < this.parents.length; i++) {
+      children.push(this.parents[i].split(':')[0])
+      parents.push(this.parents[i].split(':')[1])
+    }
+    console.log(children)
+    console.log(parents)
+
+    for (var i = 0; i < this.capabilities.length; i++) {
+      if (children.includes(cap[i].name)) {
+        console.log(i + ": " + cap[i].name)
+        cap[i].parent = parents[count];
+        count++;
+      }
+    }
+    console.log(cap);
+
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-    const header = Object.keys(cap[0]);
-    let csv = cap.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
-    csv.unshift(header.join(';'));
-    let csvArray = csv.join('\r\n');
+
+    const header = Object.keys(cap[0]); //gets all keys of capability to later be added
+    header.push("parent"); //adds the parent header to the csv
+
+    let csv = cap.map(row => header.map(
+      fieldName =>
+        JSON.stringify(row[fieldName], replacer)).join(';')) //adds values to row
+
+    csv.unshift(header.join(';')) // adds headers to csv
+
+    let csvArray = csv.join('\r\n'); // makes csv
 
     var blob = new Blob([csvArray], { type: 'text/csv' })
     saveAs(blob, "CapabilityMap.csv");
