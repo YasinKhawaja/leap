@@ -33,6 +33,22 @@ public class CapabilityController {
 		return capabilityService.getCapability(envId, capId);
 	}
 
+	@GetMapping("/capabilityparents")
+	public List<String> getParents(@RequestParam Long envid) {
+		return capabilityService.getParentLink(envid);
+	}
+
+	@PostMapping("/capabilityparents")
+	public void addCapabilitiesCSV(@RequestParam Long envid, @RequestBody Capability capability,
+			@RequestParam String parent) {
+		Long parentid = null;
+		if (!parent.equals("")) {
+			parentid = capabilityService.getCapabilityByNameInEnvironment(parent, envid).getId();
+		}
+
+		capabilityService.createCapability(envid, parentid, capability);
+	}
+
 	@PostMapping("/capabilities")
 	public Capability createCapability(@RequestParam Long envId, @RequestParam Long parentCapId,
 			@RequestBody Capability cap) {

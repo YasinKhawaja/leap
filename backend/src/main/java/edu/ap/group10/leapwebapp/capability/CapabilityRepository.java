@@ -13,4 +13,5 @@ public interface CapabilityRepository extends JpaRepository<Capability, Long> {
 
     public List<Capability> findByEnvironment(Environment environment);
 
+    public Capability findByName(String name);
 }

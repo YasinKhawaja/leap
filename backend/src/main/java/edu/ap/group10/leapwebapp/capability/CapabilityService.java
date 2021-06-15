@@ -1,6 +1,7 @@
 
 package edu.ap.group10.leapwebapp.capability;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,15 +31,33 @@ public class CapabilityService {
         return capabilityRepository.findByEnvironment(environmentToFindBy);
     }
 
+    public List<String> getParentLink(Long envid) {
+        Environment environmentToFindBy = environmentRepository.findById(envid).orElseThrow();
+
+        List<String> parents = new ArrayList<>();
+        for (Capability capability : capabilityRepository.findByEnvironment(environmentToFindBy)) {
+            if (capability.getParent() != null) {
+                parents.add(capability.getName() + ":" + capability.getParent().getName());
+            }
+        }
+        return parents;
+    }
+
     public Capability getCapability(Long envId, Long capId) {
         List<Capability> capsFound = this.getAllCapabilitiesInEnvironment(envId).stream()
                 .filter(cap -> cap.getId().equals(capId)).collect(Collectors.toList());
         return capsFound.get(0);
     }
 
+    public Capability getCapabilityByNameInEnvironment(String name, Long envid) {
+        Environment envToLinkWith = environmentRepository.findById(envid).orElseThrow();
+        List<Capability> capsFound = this.getAllCapabilitiesInEnvironment(envToLinkWith.getId()).stream()
+                .filter(c -> c.getName().equals(name)).collect(Collectors.toList());
+        return capsFound.get(capsFound.size() - 1);
+    }
+
     public Capability getCapabilityById(Long capId) {
-        return capabilityRepository.findById(capId)
-        .orElseThrow(ResourceNotFoundException::new);
+        return capabilityRepository.findById(capId).orElseThrow(ResourceNotFoundException::new);
     }
 
     public Capability createCapability(Long envId, Long parentCapId, Capability cap) {
