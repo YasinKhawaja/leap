@@ -40,17 +40,17 @@ public class CapabilityApplicationController {
 
                 for (CapabilityApplication capabilityApplication : capabilityApplicationsList) {
 
-                        Integer[] importanceCalc = { capabilityApplication.getBusinessEfficiencySupport(),
-                                        capabilityApplication.getBusinessFunctionalCoverage(),
-                                        capabilityApplication.getBusinessCorrectness(),
-                                        capabilityApplication.getBusinessFuturePotential(),
-                                        capabilityApplication.getInformationCompleteness(),
-                                        capabilityApplication.getInformationCorrectness(),
-                                        capabilityApplication.getInformationAvailability() };
+                        // Integer[] importanceCalc = { capabilityApplication.getBusinessEfficiencySupport(),
+                        //                 capabilityApplication.getBusinessFunctionalCoverage(),
+                        //                 capabilityApplication.getBusinessCorrectness(),
+                        //                 capabilityApplication.getBusinessFuturePotential(),
+                        //                 capabilityApplication.getInformationCompleteness(),
+                        //                 capabilityApplication.getInformationCorrectness(),
+                        //                 capabilityApplication.getInformationAvailability() };
 
-                        Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
-                                        / (importanceCalc.length * 5);
-                        capabilityApplication.setImportance(importance);
+                        // Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
+                        //                 / (importanceCalc.length * 5);
+                        // capabilityApplication.setImportance(importance);
 
                         capability.setCalculatedInformationQuality(capabilityApplication.getInformationCompleteness(),
                                         capabilityApplication.getInformationCorrectness(),
@@ -82,14 +82,16 @@ public class CapabilityApplicationController {
                         @RequestParam Integer informationCorrectness, @RequestParam Integer informationAvailability,
                         @PathVariable String capabilityId, @RequestParam String application) {
 
-                Integer[] importanceCalc = { businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
-                                businessFuturePotential, informationCompleteness, informationCorrectness,
-                                informationAvailability };
-                Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
-                                / (importanceCalc.length * 5);
+                // Integer[] importanceCalc = { businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
+                //                 businessFuturePotential, informationCompleteness, informationCorrectness,
+                //                 informationAvailability };
+                // Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
+                //                 / (importanceCalc.length * 5);
 
                 Capability capability = capabilityService.getCapabilityById(Long.parseLong(capabilityId));
                 ITApplication itApplication = itApplicationService.findITApplicationByName(application);
+                Double importance = itApplication.getImportanceFactor()/100;
+
 
                 CapabilityApplication capabilityApplication = new CapabilityApplication(importance,
                                 businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
@@ -105,14 +107,18 @@ public class CapabilityApplicationController {
                         @RequestParam Integer businessFuturePotential, @RequestParam Integer informationCompleteness,
                         @RequestParam Integer informationCorrectness, @RequestParam Integer informationAvailability,
                         @PathVariable String capitappId) {
-                Integer[] importanceCalc = { businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
-                                businessFuturePotential, informationCompleteness, informationCorrectness,
-                                informationAvailability };
-                Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
-                                / (importanceCalc.length * 5);
+                // Integer[] importanceCalc = { businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
+                //                 businessFuturePotential, informationCompleteness, informationCorrectness,
+                //                 informationAvailability };
+                // Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
+                //                 / (importanceCalc.length * 5);
+
+                
 
                 CapabilityApplication capabilityApplication = capabilityApplicationService
                                 .findCapabilityApplication(Long.parseLong(capitappId));
+                
+                Double importance = capabilityApplication.getImportance();
 
                 CapabilityApplication newCapabilityApplication = new CapabilityApplication(importance,
                                 businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,

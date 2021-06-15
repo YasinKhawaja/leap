@@ -57,7 +57,8 @@ export class ItapplicationEditComponent implements OnInit {
             currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[0-5]')],
             currentTotalCostPerYear: [result.currentTotalCostPerYear],
             toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
-            timeValue: [result.timeValue]
+            timeValue: [result.timeValue],
+            importanceFactor: [result.importanceFactor, Validators.required]
           });
         }
       );
@@ -69,7 +70,7 @@ export class ItapplicationEditComponent implements OnInit {
   }
 
   onSubmit() {
-    let itApplicationId = "300000";
+    let itApplicationId = this.router.url.split('/')[2];
 
     let updatedITApplication = new Itapplication(
       this.itapplication.value.name,
@@ -89,7 +90,8 @@ export class ItapplicationEditComponent implements OnInit {
       this.itapplication.value.currentValueForMoney,
       this.itapplication.value.currentTotalCostPerYear,
       this.itapplication.value.toleratedTotalCostPerYear,
-      this.itapplication.value.timeValue.toUpperCase()
+      this.itapplication.value.timeValue.toUpperCase(),
+      this.itapplication.value.importanceFactor
     );
 
     this.its.updateITApplication_CurrentEnvironment(itApplicationId, updatedITApplication);

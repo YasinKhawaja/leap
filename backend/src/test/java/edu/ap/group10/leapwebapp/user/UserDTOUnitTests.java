@@ -37,7 +37,7 @@ public class UserDTOUnitTests {
         user.setCompany(company);
 
         // When
-        String toString = "UserDTO(id=null, username=Sander, firstname=Sander, surname=Standaert, email=Standaertsander@gmail.com, password=17818532d7efeeeb76cd4e8a05bc89964b7f50e75ced67c9c8bf16047451188c, role=-1, company=Company(id=null, vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, environments=null))";
+        String toString = "UserDTO(id=null, username=Sander, firstname=Sander, surname=Standaert, email=Standaertsander@gmail.com, password=17818532d7efeeeb76cd4e8a05bc89964b7f50e75ced67c9c8bf16047451188c, role=-1, company=Company(id=null, vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, approved=false, environments=null))";
 
         String actualString = user.toString();
 

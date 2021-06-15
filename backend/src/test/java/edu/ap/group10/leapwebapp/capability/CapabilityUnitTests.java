@@ -25,12 +25,7 @@ public class CapabilityUnitTests {
         Capability capability = new Capability("Test", environment);
 
         //when
-        String toString = "Capability(id=null, level=1, name=Test, paceOfChange=NONE, "
-        + "targetOperationModel=NONE, resourcesQuality=0, informationQuality=0.0, "
-        + "applicationFit=0.0, subcapabilities=null, parent=null, environment=Environment(id=null, "
-        + "name=Test environment, capabilities=null, strategies=null, resources=null, itApplications=null, "
-        + "programs=null, businessProcesses=null, company=Company(id=null, vatNumber=1, companyName=Test Company, "
-        + "email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, environments=null)))";
+        String toString = "Capability(id=null, level=1, name=Test, paceOfChange=NONE, targetOperationModel=NONE, resourcesQuality=0, informationQuality=0.0, applicationFit=0.0, subcapabilities=null, parent=null, environment=Environment(id=null, name=Test environment, capabilities=null, strategies=null, resources=null, itApplications=null, programs=null, businessProcesses=null, company=Company(id=null, vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, approved=false, environments=null)))";
 
         //then
         assertEquals(toString, capability.toString());

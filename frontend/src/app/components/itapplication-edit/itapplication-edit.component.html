@@ -120,6 +120,11 @@
                 </select> <label>TIME Value</label>
             </div>
         </div>
+        <div class='form-group w-50'>
+            <div class="custom"> <input type='text' formControlName='importanceFactor' placeholder="60" />
+                <label>Importance Factor in %. (e.g 60)</label>
+            </div>
+        </div>
         <button type="submit" class="btn btn-danger form-control" [disabled]="!itapplication.valid">Edit</button>
     </form>
 </div>

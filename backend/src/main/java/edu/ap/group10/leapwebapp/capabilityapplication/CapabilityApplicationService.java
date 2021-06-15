@@ -37,7 +37,7 @@ public class CapabilityApplicationService {
         List<Capability> capabilities = new ArrayList<>();
         for (CapabilityApplication capabilityApplication : capabilityApplicationRepository.findAll()) {
             if(capabilityApplication.getItApplication().getId().equals(itApplication.getId())){
-                capabilities.add(capabilityApplication.getCapability());
+                capabilities.add(capabilityApplication.getCapability()); 
             }
         }
         return capabilities;
