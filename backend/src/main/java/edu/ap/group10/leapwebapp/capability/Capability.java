@@ -86,10 +86,10 @@ public class Capability implements Serializable {
 			Double importanceFactor) {
 		double calculatedInformationQuality;
 		if (getInformationQuality() == null) {
-			calculatedInformationQuality = (double) (completeness + correctness + availability) / 3 * importanceFactor;
+			calculatedInformationQuality = (double) (completeness + correctness + availability) / 3 * (importanceFactor/100);
 		} else {
 			calculatedInformationQuality = getInformationQuality()
-					+ (double) (completeness + correctness + availability) / 3 * importanceFactor;
+					+ (double) (completeness + correctness + availability) / 3 * (importanceFactor/100);
 		}
 
 		setInformationQuality(round(calculatedInformationQuality, 1));
@@ -101,11 +101,11 @@ public class Capability implements Serializable {
 		double calculatedApplicationFit;
 		if (getApplicationFit() == null) {
 			calculatedApplicationFit = (double) (efficiencySupport + functionalCoverage + correctness + futurePotential)
-					/ 4 * importanceFactor;
+					/ 4 * (importanceFactor/100);
 		} else {
 			calculatedApplicationFit = getApplicationFit()
 					+ (double) (efficiencySupport + functionalCoverage + correctness + futurePotential) / 4
-							* importanceFactor;
+							* (importanceFactor/100);
 		}
 
 		setApplicationFit(round(calculatedApplicationFit, 1));

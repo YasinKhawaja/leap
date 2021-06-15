@@ -25,6 +25,7 @@ export class CapabilityApplicationAddComponent implements OnInit {
     informationCompleteness: ['', [Validators.required, Validators.pattern('[0-5]')]],
     informationCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
     informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    importanceFactor: ['', Validators.required]
   })
 
   constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService,
@@ -57,7 +58,8 @@ export class CapabilityApplicationAddComponent implements OnInit {
       this.capabilityApplication.value.businessFuturePotential,
       this.capabilityApplication.value.informationCompleteness,
       this.capabilityApplication.value.informationCorrectness,
-      this.capabilityApplication.value.informationAvailability
+      this.capabilityApplication.value.informationAvailability,
+      this.capabilityApplication.value.importanceFactor
     );
 
     this.cas.createCapabilityApplication(capabilityId, newCapabilityApplication);

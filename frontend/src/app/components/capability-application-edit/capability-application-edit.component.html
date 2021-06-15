@@ -1,6 +1,11 @@
 <div class="container">
-    <h1>Add IT Application to capability</h1><br>
+    <h1>Edit IT Application to capability</h1><br>
     <form [formGroup]="capabilityApplication" (ngSubmit)="onSubmit()">
+        <div class='form-group w-50'>
+            <div class="custom"> <input type='text' formControlName='importanceFactor' placeholder="60" />
+                <label>Importance Factor in %. (e.g 60)</label>
+            </div>
+        </div>
         <div class='form-group w-50'>
             <div class="custom">
                 <input type='number' formControlName='businessEfficiencySupport' required />

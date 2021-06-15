@@ -17,6 +17,7 @@
             <th scope='col'>Information Quality: Completeness</th>
             <th scope='col'>Information Quality: Correctness</th>
             <th scope='col'>Information Quality: Availability</th>
+            <th scope='col'>Importance Factor: Sum of all linked IT Applications should be 100</th>
         </tr>
     </thead>
     <tbody *ngFor='let capabilityApplication of capabilityApplications'>
@@ -46,6 +47,7 @@
             <td class="numbers"> {{ capabilityApplication.informationCompleteness }} </td>
             <td class="numbers"> {{ capabilityApplication.informationCorrectness }}</td>
             <td class="numbers"> {{ capabilityApplication.informationAvailability }}</td>
+            <td class="numbers"> {{ capabilityApplication.importance }}</td>
         </tr>
     </tbody>
 </table>

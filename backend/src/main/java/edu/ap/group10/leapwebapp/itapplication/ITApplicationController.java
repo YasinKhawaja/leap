@@ -24,6 +24,7 @@ public class ITApplicationController {
 
     @GetMapping("/itapplications/{environmentId}")
     public List<ITApplication> getAllITApplications(@PathVariable String environmentId) {
+        
         return itApplicationService.getITApplications(environmentId);
     }
 
@@ -42,6 +43,8 @@ public class ITApplicationController {
 
         itapplication.setEnvironment(oldITApplication.getEnvironment());
 
+        
+        
         itApplicationService.updateITApplication(oldITApplication.getId(), itapplication);
     }
 

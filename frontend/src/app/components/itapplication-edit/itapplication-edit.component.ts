@@ -69,7 +69,7 @@ export class ItapplicationEditComponent implements OnInit {
   }
 
   onSubmit() {
-    let itApplicationId = "300000";
+    let itApplicationId = this.router.url.split('/')[2];
 
     let updatedITApplication = new Itapplication(
       this.itapplication.value.name,

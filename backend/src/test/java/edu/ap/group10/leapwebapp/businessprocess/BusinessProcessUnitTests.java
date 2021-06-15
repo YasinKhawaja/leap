@@ -26,11 +26,7 @@ public class BusinessProcessUnitTests {
         BusinessProcess businessProcess = new BusinessProcess("Sales", "Income of the year 2021", environment);
 
         //when
-        String toString = "BusinessProcess(id=null, name=Sales, description=Income of the year 2021, "
-        + "environment=Environment(id=null, name=Test environment, capabilities=null, strategies=null, "
-        + "resources=null, itApplications=null, programs=null, businessProcesses=null, company=Company(id=null, "
-        + "vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, "
-        + "city=Mortsel, country=België, businessActivity=null, taxOffice=null, environments=null)))";
+        String toString = "BusinessProcess(id=null, name=Sales, description=Income of the year 2021, environment=Environment(id=null, name=Test environment, capabilities=null, strategies=null, resources=null, itApplications=null, programs=null, businessProcesses=null, company=Company(id=null, vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, approved=false, environments=null)))";
 
         //then
         assertEquals(toString, businessProcess.toString());
