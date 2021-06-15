@@ -74,11 +74,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
         if (user.getCompany() != null) {
-            return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
-                    .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
-                    .withSubject(auth.getPrincipal().toString())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                    .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+            if (user.getCompany().getApproved().booleanValue()) {
+                return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
+                        .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
+                        .withSubject(auth.getPrincipal().toString())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                        .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+            } else {
+                return null;
+            }
         } else {
             return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
                     .withSubject(auth.getPrincipal().toString())

@@ -49,6 +49,7 @@ public class CompanyController {
 
   @PostMapping("/companies")
   public void addNewCompany(@RequestBody Company company) {
+    company.setApproved(false);
     companyService.addCompany(company);
 
     String token = confirmationTokenService.addConfirmationToken(company);
