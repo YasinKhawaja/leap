@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.ap.group10.leapwebapp.capability.Capability;
-import edu.ap.group10.leapwebapp.capability.CapabilityService;
-import edu.ap.group10.leapwebapp.capabilityapplication.CapabilityApplication;
-import edu.ap.group10.leapwebapp.capabilityapplication.CapabilityApplicationRepository;
-import edu.ap.group10.leapwebapp.capabilityapplication.CapabilityApplicationService;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentService;
 
@@ -26,21 +21,10 @@ public class ITApplicationController {
     private ITApplicationService itApplicationService;
     @Autowired
     private EnvironmentService environmentService;
-    @Autowired
-    private CapabilityApplicationRepository capabilityApplicationRepository;
-    @Autowired
-    private CapabilityService capabilityService;
-    @Autowired
-    private CapabilityApplicationService capabilityApplicationService;
 
     @GetMapping("/itapplications/{environmentId}")
     public List<ITApplication> getAllITApplications(@PathVariable String environmentId) {
-        List<Capability> capabilities = capabilityService.getAllCapabilitiesInEnvironment(Long.parseLong(environmentId));
-
-        for (Capability capability : capabilities) {
-            capabilityApplicationService.calculateCapabilityAppFitAndInfoQuality(capability.getId().toString());
-        }
-
+        
         return itApplicationService.getITApplications(environmentId);
     }
 
@@ -59,11 +43,7 @@ public class ITApplicationController {
 
         itapplication.setEnvironment(oldITApplication.getEnvironment());
 
-        for (CapabilityApplication capabilityApplication : capabilityApplicationRepository.findAll()) {
-            if(capabilityApplication.getItApplication().getId().equals(oldITApplication.getId())){
-                capabilityApplication.setImportance(itapplication.getImportanceFactor()/100);
-            }
-        }
+        
         
         itApplicationService.updateITApplication(oldITApplication.getId(), itapplication);
     }

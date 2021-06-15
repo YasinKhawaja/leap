@@ -40,6 +40,11 @@ export class CapabilityApplicationService {
                     );
   }
 
+  public getCapabilityApplication(capabilityId: string): Observable<CapabilityApplication> {
+    var url = `${this.capabilityApplicationURL}/searchOne/${capabilityId}`
+    return this.http.get<CapabilityApplication>(url);
+  }
+
 
   public createCapabilityApplication(capabilityId: string, capabilityApplication: CapabilityApplication){
     let url = `${this.capabilityApplicationURL}/${capabilityId}`;

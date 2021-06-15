@@ -9,7 +9,7 @@ export class CapabilityApplication {
     public id: number
     public capability: Capability
     public itApplication: Itapplication
-    public importance: number //percentage -> number?
+    // public importance: number //percentage -> number?
 
     constructor(
         public application: string,
@@ -19,7 +19,8 @@ export class CapabilityApplication {
         public businessFuturePotential: string,
         public informationCompleteness: string,
         public informationCorrectness: string, 
-        public informationAvailability: string
+        public informationAvailability: string,
+        public importance: string
     ){}
 
     getParams(): HttpParams{
@@ -32,5 +33,6 @@ export class CapabilityApplication {
         .set('informationCompleteness', this.informationCompleteness)
         .set('informationCorrectness', this.informationCorrectness)
         .set('informationAvailability', this.informationAvailability)
+        .set('importanceFactor', this.importance)
     }
 }

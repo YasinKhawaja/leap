@@ -48,8 +48,7 @@ export class ItapplicationAddComponent {
     currentValueForMoney: ['0', Validators.pattern('[0-5]')],
     currentTotalCostPerYear: ['0', Validators.nullValidator],
     toleratedTotalCostPerYear: ['0', Validators.nullValidator],
-    timeValue: [' ', Validators.nullValidator],
-    importanceFactor: ['0', Validators.required]
+    timeValue: [' ', Validators.nullValidator]
   });
 
   constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService) { }
@@ -75,8 +74,7 @@ export class ItapplicationAddComponent {
       this.itapplication.value.currentValueForMoney,
       this.itapplication.value.currentTotalCostPerYear,
       this.itapplication.value.toleratedTotalCostPerYear,
-      this.itapplication.value.timeValue.toUpperCase(),
-      this.itapplication.value.importanceFactor
+      this.itapplication.value.timeValue.toUpperCase()
     );
 
     this.its.createITApplication_CurrentEnvironment(environmentId, newITApplication);

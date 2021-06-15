@@ -21,8 +21,7 @@ export class Itapplication {
         public currentValueForMoney: string,
         public currentTotalCostPerYear: string,
         public toleratedTotalCostPerYear: string,
-        public timeValue: string,
-        public importanceFactor: string
+        public timeValue: string
     ) { }
 
     /*getParams(): HttpParams{

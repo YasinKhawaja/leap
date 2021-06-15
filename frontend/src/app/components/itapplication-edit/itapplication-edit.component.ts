@@ -57,8 +57,7 @@ export class ItapplicationEditComponent implements OnInit {
             currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[0-5]')],
             currentTotalCostPerYear: [result.currentTotalCostPerYear],
             toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
-            timeValue: [result.timeValue],
-            importanceFactor: [result.importanceFactor, Validators.required]
+            timeValue: [result.timeValue]
           });
         }
       );
@@ -90,8 +89,7 @@ export class ItapplicationEditComponent implements OnInit {
       this.itapplication.value.currentValueForMoney,
       this.itapplication.value.currentTotalCostPerYear,
       this.itapplication.value.toleratedTotalCostPerYear,
-      this.itapplication.value.timeValue.toUpperCase(),
-      this.itapplication.value.importanceFactor
+      this.itapplication.value.timeValue.toUpperCase()
     );
 
     this.its.updateITApplication_CurrentEnvironment(itApplicationId, updatedITApplication);
