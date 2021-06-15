@@ -33,13 +33,6 @@ export class ExportComponent implements OnInit {
   style: { 'border-color': string };
   filter: string;
 
-
-  itApplications: string[]
-
-  itApplication = this.fb.group({
-    itApplicationName: ['']
-  })
-
   strategies: string[]
 
   strategy = this.fb.group({
@@ -56,7 +49,6 @@ export class ExportComponent implements OnInit {
     private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService,
     private cd: ChangeDetectorRef, private csis: CapabilityStrategyitemService) {
     this.capabilities = [];
-    this.itApplications = [];
     this.strategies = [];
     this.strategyItems = [];
     this.capabilitiesLinkedToItApplication = [];
@@ -77,14 +69,6 @@ export class ExportComponent implements OnInit {
       },
         error => console.log(error));
 
-    this.itApplications = [];
-    this.its.getITApplications_CurrentEnvironment(environmentId)
-      .subscribe(result => {
-        result.forEach(e => {
-          this.itApplications.push(e.name);
-        })
-      },
-        error => console.log(error));
 
     this.strats.getAllStrategyInEnvironment(environmentId)
       .subscribe(result => {
@@ -95,30 +79,22 @@ export class ExportComponent implements OnInit {
         error => console.log(error));
   }
 
-  changeITApplication() {
+  setITApplicationFilter() {
     this.filter = "ITApplication";
-    this.cis.getCapabilitiesLinkedToITApplication(this.itApplication.value.itApplicationName)
-      .subscribe(result => {
-        this.capabilitiesLinkedToItApplication = result;
-        this.strategyItem.get("strategyItemName").reset();
-      },
-        error => console.log(error))
+    this.strategyItem.get("strategyItemName").reset();
   }
 
-  applySelectedITApplication(capability) {
-    for (var i = 0; i < this.capabilitiesLinkedToItApplication.length; i++) {
-      if (this.capabilitiesLinkedToItApplication[i].id == capability.id) {
-        if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
-          this.style = { 'border-color': 'green' }
-          break;
-        } if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 5) {
-          this.style = { 'border-color': 'orange' }
-          break;
-        }
-        this.style = { 'border-color': 'red' }
-        break;
-      } else this.style = { 'border-color': 'black' }
-    } return this.style;
+  applyITApplicationFilter(capability) {
+    if ((Number(capability.informationQuality) + Number(capability.applicationFit)) != 0) {
+      
+    if ((Number(capability.informationQuality) + Number(capability.applicationFit)) < 5) {
+      this.style = { 'border-color': 'red' }
+    } else if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
+      this.style = { 'border-color': 'green' }
+    } else this.style = { 'border-color': 'orange' }
+    }
+    else this.style = { 'border-color': 'black' }
+    return this.style;
 
   }
 
@@ -141,7 +117,6 @@ export class ExportComponent implements OnInit {
       .subscribe(result => {
         this.capabilityStrategyItemsLinkedToStrategyItem = result;
 
-        this.itApplication.get("itApplicationName").reset();
       },
         error => console.log(error))
 
@@ -201,39 +176,39 @@ export class ExportComponent implements OnInit {
 
   generatePDF() {
     let doc = new jsPDF();
-    
+
     let data = document.getElementById('divLeftHalf');
-    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
+    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4);
-      
-      if(canvas.width > canvas.height){
+
+      if (canvas.width > canvas.height) {
         doc = new jsPDF('l', 'mm', [canvas.width, canvas.height]);
-        }
-        else{
+      }
+      else {
         doc = new jsPDF('p', 'mm', [canvas.height, canvas.width]);
-        }
-      
+      }
+
       // let pdf = new jsPDF('p', 'mm', [canvas.height *2, canvas.width]);
-       doc.addImage(contentDataURL, 'png', 0, 0, canvas.width, canvas.height);
+      doc.addImage(contentDataURL, 'png', 0, 0, canvas.width, canvas.height);
 
       // save powerpoint
-      doc.save( "CapabilityMap");
+      doc.save("CapabilityMap");
     });
-    }
-
-    generateLevel1Layer() {
-      let capabilitiesLevel1: Capability[]
-      capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
-      this.capabilities = capabilitiesLevel1;
-    }
-
-    generateLevel1and2Layer() {
-      let capabilitiesLevel2: Capability[]
-      capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
-      this.capabilities = capabilitiesLevel2;
-    }
-
-    generateEntireMap() {
-      window.location.reload();
-    }
   }
+
+  generateLevel1Layer() {
+    let capabilitiesLevel1: Capability[]
+    capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
+    this.capabilities = capabilitiesLevel1;
+  }
+
+  generateLevel1and2Layer() {
+    let capabilitiesLevel2: Capability[]
+    capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
+    this.capabilities = capabilitiesLevel2;
+  }
+
+  generateEntireMap() {
+    window.location.reload();
+  }
+}
