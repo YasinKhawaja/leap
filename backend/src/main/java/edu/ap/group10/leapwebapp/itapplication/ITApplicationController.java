@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.ap.group10.leapwebapp.capability.Capability;
+import edu.ap.group10.leapwebapp.capability.CapabilityService;
 import edu.ap.group10.leapwebapp.capabilityapplication.CapabilityApplication;
 import edu.ap.group10.leapwebapp.capabilityapplication.CapabilityApplicationRepository;
+import edu.ap.group10.leapwebapp.capabilityapplication.CapabilityApplicationService;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentService;
 
@@ -25,9 +28,19 @@ public class ITApplicationController {
     private EnvironmentService environmentService;
     @Autowired
     private CapabilityApplicationRepository capabilityApplicationRepository;
+    @Autowired
+    private CapabilityService capabilityService;
+    @Autowired
+    private CapabilityApplicationService capabilityApplicationService;
 
     @GetMapping("/itapplications/{environmentId}")
     public List<ITApplication> getAllITApplications(@PathVariable String environmentId) {
+        List<Capability> capabilities = capabilityService.getAllCapabilitiesInEnvironment(Long.parseLong(environmentId));
+
+        for (Capability capability : capabilities) {
+            capabilityApplicationService.calculateCapabilityAppFitAndInfoQuality(capability.getId().toString());
+        }
+
         return itApplicationService.getITApplications(environmentId);
     }
 
