@@ -60,7 +60,6 @@ import { CapabilityProjectComponent } from './components/capability-project/capa
 import { CapabilityProjectAddComponent } from './components/capability-project-add/capability-project-add.component';
 import { CapabilityProjectDeleteComponent } from './components/capability-project-delete/capability-project-delete.component';
 import { InformationComponent } from './components/information/information.component';
-import { CapabilityInformation } from './classes/capability-information/capability-information';
 import { CapabilityInformationComponent } from './components/capability-information/capability-information.component';
 
 const routes: Routes = [

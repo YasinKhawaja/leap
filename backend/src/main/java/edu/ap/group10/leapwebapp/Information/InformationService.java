@@ -28,8 +28,10 @@ public class InformationService {
     }
 
     public void updateInformation(Long informationid, Information newObject) {
-        newObject.setId(informationid);
-        informationRepository.save(newObject);
+        Information oInfo = informationRepository.findById(informationid).orElseThrow(ResourceNotFoundException::new);
+        oInfo.setDescription(newObject.getDescription());
+        oInfo.setName(newObject.getName());
+        informationRepository.save(oInfo);
     }
 
     public void deleteInformation(Long informationid) {

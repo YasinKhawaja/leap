@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CapabilityInformation } from 'src/app/classes/capability-information/capability-information';
 import { Information } from 'src/app/classes/information/information';
+import { CapabilityInformationService } from 'src/app/services/capability-information/capability-information.service';
 import { InformationService } from 'src/app/services/information/information.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
@@ -13,9 +15,9 @@ import Swal from 'sweetalert2';
 export class InformationComponent implements OnInit {
 
   informationList: Information[] = []
+  capinformation: CapabilityInformation[] = []
 
-
-  constructor(private ns: NavbarService, public jwt: JwtService, private is: InformationService) { }
+  constructor(private ns: NavbarService, public jwt: JwtService, private is: InformationService, private cis: CapabilityInformationService) { }
 
   ngOnInit() {
     this.getInformationList();
@@ -35,7 +37,12 @@ export class InformationComponent implements OnInit {
   }
 
   showLinkedCapabilities(informationid: string) {
-    //not implemented yet
+    this.cis.getCapInfoListInformation(informationid)
+      .subscribe(
+        (data) => {
+          this.capinformation = data;
+          this.show('linked-caps');
+        });
   }
 
 
@@ -47,7 +54,7 @@ export class InformationComponent implements OnInit {
   showInformationAdd: boolean = false;
   showInformationEdit: boolean = false;
   showInformationDelete: boolean = false;
-  //showInformationCapabilities: boolean = false;
+  showLinkedCaps: boolean = false;
 
   show(component: string, information?: Information) {
     switch (component) {
@@ -58,7 +65,7 @@ export class InformationComponent implements OnInit {
       case 'information-edit':
         this.showInformationAdd = false
         this.showInformationDelete = false
-        //this.showInformationCapabilities = false
+        this.showLinkedCaps = false
 
         this.informationCurrentValues = information
         this.showInformationEdit = true
@@ -66,18 +73,24 @@ export class InformationComponent implements OnInit {
       case 'information-delete':
         this.showInformationAdd = false
         this.showInformationEdit = false
-        //this.showInformationCapabilities = false
+        this.showLinkedCaps = false
 
         this.informationCurrentValues = information
         this.showInformationDelete = !this.showInformationDelete
         break;
-      //implement capinfo
+      case 'linked-caps':
+        this.hideAll();
+
+        this.showLinkedCaps = true;
+        break;
+      default:
+        break;
     }
   }
   hideAll() {
     this.showInformationAdd = false
     this.showInformationDelete = false
     this.showInformationEdit = false
-    //this.showInformationCapabilities = false
+    this.showLinkedCaps = false
   }
 }

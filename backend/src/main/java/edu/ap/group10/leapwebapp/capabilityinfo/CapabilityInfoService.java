@@ -58,7 +58,7 @@ public class CapabilityInfoService {
     public List<CapabilityInfo> getAllCapabilityInfoInformation(Long informationid) {
         List<CapabilityInfo> capabilityInfoList = new ArrayList<>();
         for (CapabilityInfo capinfo : capabilityInfoRepository.findAll()) {
-            if (capinfo.getCapability().getId().equals(informationid)) {
+            if (capinfo.getInformation().getId().equals(informationid)) {
                 capabilityInfoList.add(capinfo);
             }
         }
