@@ -8,8 +8,8 @@ import Swal from 'sweetalert2';
 
 enum Role {
   ADMIN = "User-admin",
-  BEWERKER = "Bewerker",
-  LEZER = "Lezer"
+  EDITOR = "Editor",
+  READER = "Reader"
 }
 
 @Component({

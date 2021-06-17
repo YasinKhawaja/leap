@@ -5,19 +5,19 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                            <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
                             <th scope="col">NAME</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let capabilitybusinessprocess of capabilityBusinessProcesses">
-                            <td *ngIf="(jwt.checkRole() != 'lezer')">
+                            <td *ngIf="(jwt.checkRole() != 'reader')">
                                 <a [routerLink]="['../capability-businessprocess/delete/', capabilitybusinessprocess.id]">
                                     <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                                 </a>
                             </td>
                             <td>
-                                <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" [routerLink]="['/businessprocess/edit/', capabilitybusinessprocess.businessProcess.id]">
+                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" [routerLink]="['/businessprocess/edit/', capabilitybusinessprocess.businessProcess.id]">
                                     {{ capabilitybusinessprocess.businessProcess.name }}
                                 </a>
                                 <a class="btn btn-light" role="button" [routerLink]="['/businessprocess']">
@@ -30,6 +30,6 @@
             </div>
         </div>
     </div>
-    <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" [routerLink]="['../capability-businessprocess/add']">ADD BUSINESS
+    <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" [routerLink]="['../capability-businessprocess/add']">ADD BUSINESS
         PROCESS</button>
 </main>

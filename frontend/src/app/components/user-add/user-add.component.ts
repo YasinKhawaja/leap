@@ -6,8 +6,8 @@ import { UserService } from 'src/app/services/user/user.service';
 
 enum Role {
   ADMIN = "User-admin",
-  BEWERKER = "Bewerker",
-  LEZER = "Lezer"
+  EDITOR = "Editor",
+  READER = "Reader"
 }
 
 @Component({

@@ -90,8 +90,7 @@ export class JwtService {
         return jwt;
       })
       .subscribe(
-        () => {
-        },
+        () => null,
         () => {
           this.logout();
           Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')

@@ -5,22 +5,22 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th *ngIf="(jwt.checkRole() != 'lezer')" scope="col"></th>
+                            <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
                             <th scope="col">NAME</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let capabilityproject of capabilityprojects">
-                            <td *ngIf="(jwt.checkRole() != 'lezer')">
+                            <td *ngIf="(jwt.checkRole() != 'reader')">
                                 <a [routerLink]="['../capability-project/delete/', capabilityproject.id]">
                                     <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                                 </a>
                             </td>
                             <td>
-                                <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" [routerLink]="['/project/edit/', capabilityproject.project.id]">
+                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" [routerLink]="['/project/edit/', capabilityproject.project.id]">
                                     {{ capabilityproject.project.name }}
                                 </a>
-                                <a *ngIf="(jwt.checkRole() == 'lezer')" class="btn btn-light" role="button" [routerLink]="['/program/']">
+                                <a *ngIf="(jwt.checkRole() == 'reader')" class="btn btn-light" role="button" [routerLink]="['/program/']">
                                     {{ capabilityproject.project.name }}
                                 </a>
                             </td>
@@ -30,5 +30,5 @@
             </div>
         </div>
     </div>
-    <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" [routerLink]="['../capability-project/create']">ADD PROJECT</button>
+    <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" [routerLink]="['../capability-project/create']">ADD PROJECT</button>
 </main>

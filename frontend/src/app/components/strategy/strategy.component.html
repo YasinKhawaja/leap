@@ -4,61 +4,61 @@
     <div class="flex-container">
         <div class="flex-item">
             <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th *ngIf="(jwt.checkRole() != 'lezer')" scope="col"></th>
-                    <!-- DELETE icon -->
-                    <th scope="col">NAME</th>
-                    <th scope='col'>TIMEFRAME FROM</th>
-                    <th scope='col'>TIMEFRAME TO</th>
+                <thead>
+                    <tr>
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <!-- DELETE icon -->
+                        <th scope="col">NAME</th>
+                        <th scope='col'>TIMEFRAME FROM</th>
+                        <th scope='col'>TIMEFRAME TO</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let strategy of strategies">
-                    <td *ngIf="(jwt.checkRole() != 'lezer')">
-                        <a >
-                            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('strategy-delete', strategy)">
-                        </a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a  >
-                            <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('strategy-edit', strategy)">
-                        </a>
-                    </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let strategy of strategies">
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <a>
+                                <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('strategy-delete', strategy)">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a>
+                                <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('strategy-edit', strategy)">
+                            </a>
+                        </td>
 
-                    <td>
-                        <a class="btn btn-light" [routerLink]="['../strategies/' + strategy.id + '/strategyItems']" role="button">{{
-              strategy.name }} </a>
-                    </td>
-                    <td> {{ strategy.timeframeFrom }} </td>
-                    <td> {{ strategy.timeframeTo }} </td>
-                </tr>
-            </tbody>
-        </table>
+                        <td>
+                            <a class="btn btn-light" [routerLink]="['../strategies/' + strategy.id + '/strategyItems']" role="button">{{
+                                strategy.name }} </a>
+                        </td>
+                        <td> {{ strategy.timeframeFrom }} </td>
+                        <td> {{ strategy.timeframeTo }} </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <div>
-            <br>
-            <div class="flex-container" style="margin-bottom: 0px;">
-              <div class="flex-item" *ngIf="!showStrAdd">
-    
-              <!-- <button type="button" class="btn btn-danger" >
-                 ADD STRATEGY</button>--> 
-                  <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="show('strategy-add')">ADD STRATEGY</button>
-                
-              </div>
-          </div>
-       
+            <div>
+                <br>
+                <div class="flex-container" style="margin-bottom: 0px;">
+                    <div class="flex-item" *ngIf="!showStrAdd">
+
+                        <!-- <button type="button" class="btn btn-danger" >
+                 ADD STRATEGY</button>-->
+                        <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('strategy-add')">ADD STRATEGY</button>
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-    
+
+        <div class="flex-item">
+            <app-strategy-add *ngIf="showStrAdd"></app-strategy-add>
+
+            <app-strategy-edit *ngIf="showStrEdit" [strCurrentValues]="strCurrentValues"></app-strategy-edit>
+            <app-strategy-delete *ngIf="showStrDelete" [strCurrentValues]="strCurrentValues"></app-strategy-delete>
+
+        </div>
+
     </div>
-
-    <div class="flex-item">
-      <app-strategy-add *ngIf="showStrAdd"></app-strategy-add>
-      
-      <app-strategy-edit *ngIf="showStrEdit" [strCurrentValues]="strCurrentValues"></app-strategy-edit> 
-      <app-strategy-delete *ngIf="showStrDelete" [strCurrentValues]="strCurrentValues"></app-strategy-delete>
-      
-  </div>
-
-  </div>
 </main>

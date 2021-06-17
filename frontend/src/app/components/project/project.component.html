@@ -5,23 +5,23 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                            <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
                             <th scope="col">NAME</th>
                             <th scope="col">DESCRIPTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let project of projects">
-                            <td *ngIf="(jwt.checkRole() != 'lezer')">
+                            <td *ngIf="(jwt.checkRole() != 'reader')">
                                 <a [routerLink]="['../project/delete/', project.id]">
                                     <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                                 </a>
                             </td>
                             <td>
-                                <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" [routerLink]="['../project/edit/', project.id]">
+                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" [routerLink]="['../project/edit/', project.id]">
                                     {{ project.name }}
                                 </a>
-                                <a *ngIf="(jwt.checkRole() == 'lezer')">
+                                <a *ngIf="(jwt.checkRole() == 'reader')">
                                     {{ project.name }}
                                 </a>
                             </td>
@@ -32,5 +32,5 @@
             </div>
         </div>
     </div>
-    <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" [routerLink]="['../project/create']">ADD PROJECT</button>
+    <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" [routerLink]="['../project/create']">ADD PROJECT</button>
 </main>

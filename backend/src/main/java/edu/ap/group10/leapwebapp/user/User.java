@@ -72,11 +72,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String userRole = "LEZER";
+        String userRole = "Reader";
         if (getRole() == 0) {
-            userRole = "ADMIN";
+            userRole = "Admin";
         } else if (getRole() == 1) {
-            userRole = "Bewerker";
+            userRole = "Editor";
         } else if (getRole() == -1) {
             userRole = "Application admin";
         }

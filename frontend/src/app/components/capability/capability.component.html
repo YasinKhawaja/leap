@@ -6,7 +6,7 @@
                     <h1>Capabilities</h1>
                 </div>
             </div>
-            <div *ngIf="(jwt.checkRole() != 'lezer')" class="flex-item">
+            <div *ngIf="(jwt.checkRole() != 'reader')" class="flex-item">
                 <div *ngIf="(this.capabilities.length == 0)" class="align-right">
                     <h1>
                         <input hidden id="txtFileUpload" type="file" #csvReader (change)="uploadFile($event)" accept=".xlsx, .xls, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
@@ -22,7 +22,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                    <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
                     <!-- DELETE icon -->
                     <th scope="col">NAME</th>
                     <th scope="col">LEVEL</th>
@@ -31,13 +31,13 @@
                     <th scope="col">RESOURCES QUALITY</th>
                     <th scope="col">INFO QUALITY</th>
                     <th scope="col">APP FIT</th>
-                    <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                    <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
                     <!-- ADD sub cap -->
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let cap of capabilities">
-                    <td *ngIf="(jwt.checkRole() != 'lezer')">
+                    <td *ngIf="(jwt.checkRole() != 'reader')">
                         <a class="btn btn-light" [routerLink]="[cap.id, 'delete']" role="button" (click)="selectCapability(cap.id)">
                             <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                         </a>
@@ -53,7 +53,7 @@
                     <td>{{ cap.resourcesQuality }}</td>
                     <td>{{ cap.informationQuality }}</td>
                     <td>{{ cap.applicationFit }}</td>
-                    <td *ngIf="(jwt.checkRole() != 'lezer')">
+                    <td *ngIf="(jwt.checkRole() != 'reader')">
                         <button type="button" class="btn btn-danger" (click)="callAll(cap, '2')" *ngIf="cap.level == '1'">
                             ADD CAP Lv2
                         </button>
@@ -66,7 +66,7 @@
         </table>
         <div>
             <br>
-            <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="callAll(null, '1')">ADD
+            <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="callAll(null, '1')">ADD
                 CAPABILITY Lv1</button>
         </div>
         <br>

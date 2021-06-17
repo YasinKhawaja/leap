@@ -74,7 +74,7 @@ export class CompanyService {
       { headers: this.contentHeaders })
       .toPromise()
       .then(
-        () => { },
+        () => null,
         () => {
           Swal.fire('Error', `Failed to change company approval to ${status}`, 'error')
         }

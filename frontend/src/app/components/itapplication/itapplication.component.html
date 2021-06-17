@@ -3,7 +3,7 @@
     <table class='table table-striped'>
         <thead>
             <tr>
-                <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
                 <th scope='col'>Name</th>
                 <th scope='col'>Technology</th>
                 <th scope='col'>Acquisition Date</th>
@@ -20,13 +20,13 @@
         </thead>
         <tbody>
             <tr *ngFor='let itapplication of itApplications'>
-                <td *ngIf="(jwt.checkRole() != 'lezer')">
+                <td *ngIf="(jwt.checkRole() != 'reader')">
                     <a><img src="assets/delete-icon.png" alt="Delete" height="20" width="20" (click)="show('itapplication-delete', itapplication)"></a>&nbsp;&nbsp;
                 </td>
                 <td>
-                    <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" (click)="show('itapplication-edit', itapplication)">{{
+                    <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" (click)="show('itapplication-edit', itapplication)">{{
                         itapplication.name }}</a>
-                    <div *ngIf="(jwt.checkRole() == 'lezer')">
+                    <div *ngIf="(jwt.checkRole() == 'reader')">
                         {{itapplication.name}}
                     </div>
                 </td>
@@ -43,7 +43,7 @@
                 <td class="numbers"> {{ itapplication.currentValueForMoney }}</td>
                 <td class="numbers"> {{ itapplication.currentTotalCostPerYear }}{{ itapplication.costCurrency }}/{{ itapplication.toleratedTotalCostPerYear }}{{ itapplication.costCurrency }}</td>
                 <td class="numbers"> {{ itapplication.timeValue }}</td>
-               
+
             </tr>
         </tbody>
     </table>
@@ -51,21 +51,22 @@
     <br>
     <div class="flex-container" style="margin-bottom: 0px;">
         <div class="flex-item" *ngIf="!showItAdd">
-          
-            <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="show('itapplication-add')">ADD ITAPPLICATION</button>
+
+            <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('itapplication-add')">ADD ITAPPLICATION</button>
         </div>
     </div>
-    
+
     <br>
     <div class="flex-container">
         <div class="flex-item">
-      <!-- resource-add.component -->
-      <app-itapplication-add *ngIf="showItAdd"></app-itapplication-add>
-      <!-- resource-edit.component -->
-      <app-itapplication-edit *ngIf="showItEdit" [itCurrentValues] = "itCurrentValues"></app-itapplication-edit>
+            <!-- resource-add.component -->
+            <app-itapplication-add *ngIf="showItAdd"></app-itapplication-add>
+            <!-- resource-edit.component -->
+            <app-itapplication-edit *ngIf="showItEdit" [itCurrentValues]="itCurrentValues"></app-itapplication-edit>
 
-      <app-itapplication-delete *ngIf="showItDelete" [itCurrentValues] = "itCurrentValues"></app-itapplication-delete>
+            <app-itapplication-delete *ngIf="showItDelete" [itCurrentValues]="itCurrentValues">
+            </app-itapplication-delete>
 
         </div>
-      </div>
+    </div>
 </main>
