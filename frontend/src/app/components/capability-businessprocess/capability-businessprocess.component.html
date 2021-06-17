@@ -1,7 +1,9 @@
 <main class="main">
+    <h1>Business Process of the Capability</h1>
+    <br>
     <div class="flex-container">
         <div class="flex-item">
-            <div>
+         
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -12,12 +14,12 @@
                     <tbody>
                         <tr *ngFor="let capabilitybusinessprocess of capabilityBusinessProcesses">
                             <td *ngIf="(jwt.checkRole() != 'reader')">
-                                <a [routerLink]="['../capability-businessprocess/delete/', capabilitybusinessprocess.id]">
-                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                <a >
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('capbsprocess-delete',capabilitybusinessprocess )" >
                                 </a>
                             </td>
                             <td>
-                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" [routerLink]="['/businessprocess/edit/', capabilitybusinessprocess.businessProcess.id]">
+                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" >
                                     {{ capabilitybusinessprocess.businessProcess.name }}
                                 </a>
                                 <a class="btn btn-light" role="button" [routerLink]="['/businessprocess']">
@@ -27,9 +29,28 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div>
+                    <br>
+                    <div class="flex-container" style="margin-bottom: 0px;">
+                        <div class="flex-item" *ngIf="!showcapabilityBusinessProcessesAdd">
+    
+                                <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('capbsprocess-add')"  >ADD BUSINESS
+                                    PROCESS</button>
+                        </div>
+                    </div>
+    
+                </div>
+    
             </div>
+            <div class="flex-item">
+                <app-capability-businessprocess-add *ngIf="showcapabilityBusinessProcessesAdd"></app-capability-businessprocess-add>
+    
+        
+                <app-capability-businessprocess-delete *ngIf="showcapabilityBusinessProcessesDelete" [capabilityBusinessProcessesCurrentValues]="capabilityBusinessProcessesCurrentValues"></app-capability-businessprocess-delete>
+
+    
+            </div>
+    
         </div>
-    </div>
-    <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" [routerLink]="['../capability-businessprocess/add']">ADD BUSINESS
-        PROCESS</button>
 </main>

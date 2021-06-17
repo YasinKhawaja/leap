@@ -29,4 +29,36 @@ export class CapabilityBusinessprocessComponent implements OnInit {
       )
   }
 
+  showcapabilityBusinessProcessesAdd: boolean = false;
+
+
+  showcapabilityBusinessProcessesDelete: boolean = false;
+  capabilityBusinessProcessesCurrentValues: CapabilityBusinessprocess;
+  show(component: string, capabilityBusinessProcesses?: CapabilityBusinessprocess): void {
+    switch (component) {
+      case 'capbsprocess-add':
+        this.hideAll();
+        // Show
+        this.showcapabilityBusinessProcessesAdd = true;
+        break;
+     
+        case 'capbsprocess-delete':
+          // Hide
+          this.showcapabilityBusinessProcessesAdd = false;
+          
+          // Show
+          this.capabilityBusinessProcessesCurrentValues = capabilityBusinessProcesses;
+          this.showcapabilityBusinessProcessesDelete = !this.showcapabilityBusinessProcessesDelete;
+          break;
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showcapabilityBusinessProcessesAdd = false;
+   
+    this.showcapabilityBusinessProcessesDelete= false;
+  }
+
 }

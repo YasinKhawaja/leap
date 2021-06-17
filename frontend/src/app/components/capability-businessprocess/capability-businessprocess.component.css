@@ -12,7 +12,7 @@
 }
 
 .flex-item:first-child {
-    margin-right: 20px;
+    margin-right: 25px;
 }
 
 .table {
@@ -28,4 +28,13 @@ td {
     text-align: center;
     vertical-align: middle !important;
     word-wrap: break-word;
+}
+
+input {
+    margin-top: 7px;
+}
+
+.hide-btn {
+    text-align: right;
+    margin-right: 0px !important;
 }

@@ -1,16 +1,27 @@
 <form [formGroup]="capabilityBusinessprocess" (ngSubmit)="onSubmit()">
-    <div class="card">
-        <div class="card-header center">
-            <h5><strong>ADD BUSINESS PROCESS LINK</strong></h5>
+<div class="card">
+            <div class="flex-container card-header">
+              <div class="flex-item">
+                <div class="title">
+              <h5><strong>ADD BUSINESS PROCESS LINK</strong></h5>
+            </div>
+          </div>
+            <div class="flex-item">
+              <div class="hide">
+                  <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+              </div>
+          </div>
         </div>
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Process<span class="red">*</span></label>
-                <select id="businessprocess" class="form-controle" formControlName="businessprocess" required>
+                <div>
+                <select id="businessprocess" class="custom-select" formControlName="businessprocess" required>
                     <option *ngFor="let businessprocess of businessprocesses | keyvalue" [ngValue]="businessprocess.value">
                         {{ businessprocess.value }}
                     </option>
                 </select>
+            </div>
                 <div class="alert alert-danger center" *ngIf="(capabilityBusinessprocess.get('businessprocess')!.dirty || capabilityBusinessprocess.get('businessprocess')!.touched) && capabilityBusinessprocess.get('businessprocess')!.invalid">
                     <div *ngIf="capabilityBusinessprocess.get('businessprocess')!.errors!.required">
                         Process is required.
@@ -21,5 +32,5 @@
                 <button type="submit" class="btn btn-success" [disabled]="capabilityBusinessprocess.invalid">ADD</button>
             </div>
         </div>
-    </div>
-</form>
+      </div>
+    </form>
