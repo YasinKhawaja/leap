@@ -30,4 +30,37 @@ export class CapabilityProjectComponent implements OnInit {
       )
   }
 
+
+  showcapabilityProjectAdd: boolean = false;
+
+
+  showcapabilityProjectDelete: boolean = false;
+  capabilityProjectCurrentValues: CapabilityProject;
+  show(component: string, capabilityProject?: CapabilityProject): void {
+    switch (component) {
+      case 'capbsprocess-add':
+        this.hideAll();
+        // Show
+        this.showcapabilityProjectAdd = true;
+        break;
+     
+        case 'capbsprocess-delete':
+          // Hide
+          this.showcapabilityProjectAdd = false;
+          
+          // Show
+          this.capabilityProjectCurrentValues = capabilityProject;
+          this.showcapabilityProjectDelete = !this.showcapabilityProjectDelete;
+          break;
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showcapabilityProjectAdd = false;
+   
+    this.showcapabilityProjectDelete= false;
+  }
+
 }

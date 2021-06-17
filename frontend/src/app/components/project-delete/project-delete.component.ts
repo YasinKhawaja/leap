@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { ProjectService } from 'src/app/services/project/project.service';
-import { Location } from '@angular/common';
+import { ProjectComponent } from '../project/project.component';
+import { Project } from 'src/app/classes/project/project';
 
 @Component({
   selector: 'app-project-delete',
@@ -10,14 +10,16 @@ import { Location } from '@angular/common';
 })
 export class ProjectDeleteComponent {
 
-  constructor(private ps: ProjectService, private router: Router, private location: Location) { }
+  @Input() projectCurrentValues: Project;
+  constructor(private ps: ProjectService,private pc: ProjectComponent) { }
 
   deleteProject() {
-    var projectid = this.router.url.split('/')[3];
+    var projectid = this.projectCurrentValues.id;
+    //var projectid = this.router.url.split('/')[3];
     this.ps.deleteProject(projectid)
   }
 
-  navigateBack(){
-    this.location.back();
+  hide(): void {
+    this.pc.hideAll();
   }
 }

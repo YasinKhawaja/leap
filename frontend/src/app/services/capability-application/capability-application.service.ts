@@ -52,8 +52,9 @@ export class CapabilityApplicationService {
     {headers: this.contentHeaders})
     .subscribe(
       () => {
-      Swal.fire('Success', 'You have succesfully linked the IT-Application', 'success')
-      this.router.navigate([`capability-application/`])
+      //Swal.fire('Success', 'You have succesfully linked the IT-Application', 'success')
+      //this.router.navigate([`capability-application/`])
+      window.location.reload();
     },
     error => {
       Swal.fire('Error', error.error.message, 'error')
@@ -67,8 +68,9 @@ export class CapabilityApplicationService {
     {headers: this.contentHeaders})
     .subscribe(
       () => {
-      Swal.fire('Success', 'You have succesfully updated the Capability-Application link', 'success')
-      this.router.navigate([`capability-application/`])
+     // Swal.fire('Success', 'You have succesfully updated the Capability-Application link', 'success')
+     // this.router.navigate([`capability-application/`])
+     window.location.reload();
     },
     error => {
       Swal.fire('Error', error.error.message, 'error')
@@ -80,8 +82,9 @@ export class CapabilityApplicationService {
 
     this.http.delete(url).subscribe(
       () => {
-        Swal.fire('Success', 'You have succesfully deleted the Capability-Application link', 'success')
-        this.router.navigate([`capability-application/`])
+        //Swal.fire('Success', 'You have succesfully deleted the Capability-Application link', 'success')
+       // this.router.navigate([`capability-application/`])
+       window.location.reload();
       });
   }
 }

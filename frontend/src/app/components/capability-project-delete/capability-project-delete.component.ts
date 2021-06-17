@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CapabilityProjectService } from 'src/app/services/capability-project/capability-project.service';
 import { Location } from '@angular/common';
+import { CapabilityProject } from 'src/app/classes/capability-project/capability-project';
+import { CapabilityProjectComponent } from '../capability-project/capability-project.component';
 
 @Component({
   selector: 'app-capability-project-delete',
@@ -10,15 +12,19 @@ import { Location } from '@angular/common';
 })
 export class CapabilityProjectDeleteComponent {
 
-  constructor(private cp: CapabilityProjectService, private router: Router, private location: Location) { }
+  @Input() capabilityProjectCurrentValues: CapabilityProject;
+  constructor(private cp: CapabilityProjectService,private cpc : CapabilityProjectComponent) { }
 
   deleteCapabilityProject() {
-    let capabilityprojectid = this.router.url.split('/')[3];
 
-    this.cp.deleteCapabilityProject(capabilityprojectid);
+    //let capabilityprojectid = this.router.url.split('/')[3];
+    let capabilityprojectid = this.capabilityProjectCurrentValues.id;
+
+    this.cp.deleteCapabilityProject(capabilityprojectid.toString());
   }
 
-  navigateBack() {
-    this.location.back();
+
+  hide(): void {
+    this.cpc.hideAll();
   }
 }

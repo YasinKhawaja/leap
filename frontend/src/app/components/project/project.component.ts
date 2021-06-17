@@ -29,4 +29,45 @@ export class ProjectComponent implements OnInit {
       )
   }
 
+  showProjectAdd: boolean = false;
+
+  showProjectEdit: boolean = false;
+
+  showProjectDelete: boolean = false;
+  projectCurrentValues: Project;
+  show(component: string, project?: Project): void {
+    switch (component) {
+      case 'project-add':
+        this.hideAll();
+        // Show
+        this.showProjectAdd = true;
+        break;
+      case 'project-edit':
+        // Hide
+        this.showProjectAdd = false;
+        this.showProjectDelete = false;
+        // Show
+        this.projectCurrentValues = project;
+        this.showProjectEdit = !this.showProjectEdit;
+        break;
+        case 'project-delete':
+          // Hide
+          this.showProjectAdd = false;
+          this.showProjectEdit = false;
+          // Show
+          this.projectCurrentValues = project;
+          this.showProjectDelete = !this.showProjectDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showProjectAdd = false;
+    this.showProjectEdit = false;
+    this.showProjectDelete= false;
+  }
+
 }

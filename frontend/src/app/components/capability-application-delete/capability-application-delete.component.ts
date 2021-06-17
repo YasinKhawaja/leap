@@ -1,7 +1,7 @@
-import { Location } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { CapabilityApplicationComponent } from '../capability-application/capability-application.component';
 
 @Component({
   selector: 'app-capability-application-delete',
@@ -10,16 +10,20 @@ import { CapabilityApplicationService } from 'src/app/services/capability-applic
 })
 export class CapabilityApplicationDeleteComponent {
 
-  constructor(private cas: CapabilityApplicationService, private router: Router, private location: Location) { }
+  @Input() capAppCurrentValues: CapabilityApplication;
+
+  constructor(private cas: CapabilityApplicationService,  private cac : CapabilityApplicationComponent) { }
 
 
   deleteCapability_ITApplication() {
-    let capabilityITApplicationId = this.router.url.split('/')[3];
+    //let capabilityITApplicationId = this.router.url.split('/')[3];
+    let capabilityITApplicationId = this.capAppCurrentValues.id;
 
-    this.cas.deleteCapabilityApplication(capabilityITApplicationId);
+    this.cas.deleteCapabilityApplication(capabilityITApplicationId.toString());
   }
 
-  navigateBack() {
-    this.location.back();
+  hide(): void {
+    this.cac.hideAll();
   }
+
 }
