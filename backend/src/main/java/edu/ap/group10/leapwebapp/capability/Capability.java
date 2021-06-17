@@ -21,6 +21,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import lombok.Data;
 
+/**
+ * 
+ * Represents the different building blocks of an environment..
+ * 
+ */
 @Entity
 @Data
 public class Capability implements Serializable {
@@ -82,6 +87,20 @@ public class Capability implements Serializable {
 		this.setApplicationFit(0.0);
 	}
 
+	
+	
+	
+	/** 
+	 *
+	 * The property informationQuality of the capability gets calculated. This calculation takes place when an IT application
+	 * gets linked to the capability. It takes the average of the 3 information quality properties (completeness, correctness, availability) of the linked IT application and than multiplies it with the importanceFactor of that IT application.
+	 * 
+	 *
+	 * @param completeness Information quality property of CapabilityApplication
+	 * @param correctness Information quality property of CapabilityApplication
+	 * @param availability Information quality property of CapabilityApplication
+	 * @param importanceFactor Importance property of CapabilityApplication
+	 */
 	public void setCalculatedInformationQuality(Integer completeness, Integer correctness, Integer availability,
 			Double importanceFactor) {
 		double calculatedInformationQuality;
@@ -96,6 +115,24 @@ public class Capability implements Serializable {
 
 	}
 
+	
+	
+	
+	/** 
+	 * 
+	 * 
+	 * The property applicationFit of the capability gets calculated. This calculation takes place when an IT application
+	 * gets linked to the capability. It takes the average of the 4 business fit properties (efficiencySupport, functionalCoverage
+	 * correctness, futurePotential) of the linked IT application and than multiplies it with the importanceFactor of that IT application.
+	 * 
+	 *
+	 * 
+	 * @param efficiencySupport Business fit property of CapabilityApplication 
+	 * @param functionalCoverage Business fit property of CapabilityApplication
+	 * @param correctness Business fit property of CapabilityApplication
+	 * @param futurePotential Business fit property of CapabilityApplication
+	 * @param importanceFactor Importance property of CapabilityApplication
+	 */
 	public void setCalculatedApplicationFit(Integer efficiencySupport, Integer functionalCoverage, Integer correctness,
 			Integer futurePotential, Double importanceFactor) {
 		double calculatedApplicationFit;
@@ -111,6 +148,12 @@ public class Capability implements Serializable {
 		setApplicationFit(round(calculatedApplicationFit, 1));
 	}
 
+	
+	/** 
+	 * @param value The number that you want to round.
+	 * @param precision The number of digits to the right of the decimal point of the value param.
+	 * @return double The rounded number.
+	 */
 	private static double round(double value, int precision) {
 		int scale = (int) Math.pow(10, precision);
 		return (double) Math.round(value * scale) / scale;
