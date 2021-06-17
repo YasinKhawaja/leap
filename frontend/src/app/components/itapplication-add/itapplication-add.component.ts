@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import { ItapplicationComponent } from '../itapplication/itapplication.component';
 
 enum Currency{
   EUR = "EUR",
@@ -51,7 +52,7 @@ export class ItapplicationAddComponent {
     timeValue: [' ', Validators.nullValidator]
   });
 
-  constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService,private ic : ItapplicationComponent) { }
 
   onSubmit(){
     let environmentId = this.ns.getEnvironmentCookie();
@@ -80,4 +81,7 @@ export class ItapplicationAddComponent {
     this.its.createITApplication_CurrentEnvironment(environmentId, newITApplication);
   }
 
+  hide(): void {
+    this.ic.hideAll();
+  }
 }

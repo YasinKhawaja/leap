@@ -5,6 +5,7 @@ import { Strategy } from 'src/app/classes/strategy/strategy';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
 import Swal from 'sweetalert2';
+import { StrategyComponent } from '../strategy/strategy.component';
 
 @Component({
   selector: 'app-strategy-add',
@@ -30,7 +31,7 @@ export class StrategyAddComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private ss: StrategyService, private ns: NavbarService) { }
+    private ss: StrategyService, private ns: NavbarService, private sc: StrategyComponent) { }
 
   // Form GETTERS
   get name() {
@@ -59,10 +60,14 @@ export class StrategyAddComponent implements OnInit {
 
 
     this.ss.createStrategy(envId, straToCreate)
-    //.subscribe(
-    //   response => console.log(response),
-    //  error => Swal.fire('Error', error.error.message, 'error')
-    // );
+    this.strAddForm.reset();
+    
+   
+  }
+
+  // To hide the form
+  hide(): void {
+    this.sc.hideAll();
   }
 
 }

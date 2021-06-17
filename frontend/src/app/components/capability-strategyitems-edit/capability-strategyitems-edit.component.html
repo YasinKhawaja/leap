@@ -1,7 +1,22 @@
-<div class="container">
-    <h1>Edit Strategy Item to capability</h1><br>
-    <form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">
-        <div class="form-group">
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>EDIT</strong></h5>
+            </div>
+        </div>
+          <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+          </div>
+
+  <div class="card-body">
+            <form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">
+            
+            <div class="form-group">
+
             <label> Strategic Emphasis</label>
             <select class="select1" formControlName='strategicEmphasis' required>
             <option *ngFor="let type of eSe | keyvalue" [ngValue]="type.value">{{type.value}}</option>
@@ -14,8 +29,10 @@
             </div>
 
         </div>
-        <button type="submit" class="btn btn-danger form-control" [disabled]="!capabilityStrategyItem.valid">Edit</button>
-        <br><br><br><br><br>
+        <div class="center">
+        <button type="submit" class="btn btn-success" [disabled]="!capabilityStrategyItem.valid">Edit</button>
+    </div>
 
-    </form>
+</form>
+</div>
 </div>

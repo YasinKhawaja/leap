@@ -1,5 +1,6 @@
-.app {
+.main {
     margin: 25px;
+    margin-bottom: 82px !important;
 }
 
 .flex-container {
@@ -22,4 +23,5 @@ th {
 td {
     text-align: center;
     vertical-align: middle !important;
+    word-wrap: break-word;
 }

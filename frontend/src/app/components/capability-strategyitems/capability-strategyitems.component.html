@@ -1,42 +1,66 @@
-<h1 class='display-4'>Strategy Item</h1>
-<br /><br />
-<a *ngIf="(jwt.checkRole() != 'lezer')" [routerLink]="['../capstrategyitems/create']">Add Strategy Item to
-    capability</a>
-
-<table class='table table-striped'>
-    <thead>
+<main class="main">
+    <h1>Strategy Item of the Capability</h1>
+    <br>
+    <div class="flex-container">
+        <div class="flex-item">
+        <table class="table table-striped">
+        <thead>
         <tr>
             <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
-            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')">edit</th>
+            <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
             <th scope='col'>Strategy Item</th>
             <th scope='col'>Capability</th>
             <th scope='col'>Strategic Emphasis</th>
 
         </tr>
-    </thead>
-    <tbody *ngFor='let capabilityStrategyItem of capabilityStrategyItems'>
-        <tr>
+        </thead>
+        <tbody >
+        <tr *ngFor='let capabilityStrategyItem of capabilityStrategyItems'>
             <td *ngIf="(jwt.checkRole() != 'lezer')">
-                <a [routerLink]="['../capstrategyitems/delete/', capabilityStrategyItem.id]"><img src="assets/delete-icon.png" alt="Delete" height="20" width="20"></a>
+                <a>
+                    <img src="assets/delete-icon.png" alt="Delete" height="20" width="20" (click)="show('capstritem-delete', capabilityStrategyItem)"></a>
             </td>
             <td *ngIf="(jwt.checkRole() != 'lezer')">
-                <a [routerLink]="['../capstrategyitems/update/', capabilityStrategyItem.id]">edit</a>
+                <a >
+                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('capstritem-edit', capabilityStrategyItem)" >
+                </a>
             </td>
             <td>
                 {{ capabilityStrategyItem.strategyItem.name }}
             </td>
             <td>
                 <!--Change to new capability link-->
-                <a [routerLink]="['../capabilities/','update']"> {{
+                <a class="btn btn-light" [routerLink]="['../capabilities/','update']"> {{
                     capabilityStrategyItem.capability.name }}</a>
             </td>
             <td class="numbers"> {{ capabilityStrategyItem.strategicEmphasis }} </td>
-
         </tr>
-    </tbody>
-</table>
+        </tbody>
+         </table>
+        <div>
+         <br>
+        <div class="flex-container" style="margin-bottom: 0px;">
+        <div class="flex-item" *ngIf="!showCapStrategyItemAdd">
 
-<br>
-<br>
-<br>
-<br>
+          <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="show('capstritem-add')" >
+            ADD STRATEGY ITEM TO CAPABILITY</button>
+        </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="flex-item">
+  <app-capability-strategyitems-add *ngIf="showCapStrategyItemAdd"></app-capability-strategyitems-add>
+  
+ <app-capability-strategyitems-edit *ngIf="showCapStrategyItemEdit" [capStrategyItemCurrentValues]="capStrategyItemCurrentValues"></app-capability-strategyitems-edit> 
+  <app-capability-strategyitems-delete *ngIf="showCapStrategyItemDelete" [capStrategyItemCurrentValues]="capStrategyItemCurrentValues"></app-capability-strategyitems-delete>
+  
+
+</div>
+
+</div>
+</main>
+
+
+

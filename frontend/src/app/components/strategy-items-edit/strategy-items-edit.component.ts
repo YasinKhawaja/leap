@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 import Swal from 'sweetalert2';
+import { StrategyItemsComponent } from '../strategy-items/strategy-items.component';
 
 @Component({
   selector: 'app-strategy-items-edit',
@@ -13,17 +14,13 @@ import Swal from 'sweetalert2';
 export class StrategyItemsEditComponent implements OnInit {
 
  strItemEditForm: FormGroup;
+ @Input() strItemCurrentValues: StrategyItem;
 
- strForm = this.fb.group({
-   name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-   paceOfChange: ['', Validators.required],
-   tom: ['', Validators.required],
-   resourcesQuality: ['', [Validators.required, Validators.pattern('[1-5]')]]
- });
+ 
 
  constructor(private fb: FormBuilder,
    private router: Router,
-   private si: StrategyItemService){}
+   private si: StrategyItemService, private stc : StrategyItemsComponent){}
 
    ngOnInit(): void {
      this.initializeForm();
@@ -31,8 +28,8 @@ export class StrategyItemsEditComponent implements OnInit {
 
    private initializeForm() {
     this.strItemEditForm = this.fb.group({
-     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-     description: ['', [Validators.required]]
+     name: [this.strItemCurrentValues.name, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+     description: [this.strItemCurrentValues.description, [Validators.nullValidator]]
    });
    }
 
@@ -44,11 +41,15 @@ export class StrategyItemsEditComponent implements OnInit {
    return this.strItemEditForm.get('description');
  }
 
- 
+ hide(): void {
+  this.stc.hideAll();
+}
  
  onSubmit() {
+
+  var strItemIdToUpdate = this.strItemCurrentValues.id;
    var strId = this.router.url.split('/')[2];
-   var strItemIdToUpdate = this.router.url.split('/')[4];
+  // var strItemIdToUpdate = this.router.url.split('/')[4];
 
    console.log(strId);
    var newStrategyItemValues = new StrategyItem(
@@ -61,9 +62,8 @@ export class StrategyItemsEditComponent implements OnInit {
    .subscribe(
      res => {
      console.log(res);
-       Swal.fire('Updated', `Strategy item updated.`, 'success');
-       this.strItemEditForm.reset();
-       this.router.navigate([`strategies/${strId}/strategyItems`])
+     this.stc.ngOnInit();
+          this.stc.hideAll();
      },
      err => console.error(err)
    );

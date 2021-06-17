@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Strategy } from 'src/app/classes/strategy/strategy';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import { StrategyComponent } from '../strategy/strategy.component';
 
 @Component({
   selector: 'app-strategy-edit',
@@ -11,7 +11,9 @@ import { StrategyService } from 'src/app/services/strategy/strategy.service';
 })
 export class StrategyEditComponent implements OnInit {
 
+  strEditForm : FormGroup;
   strategyName: string
+  @Input() strCurrentValues: Strategy;
 
   strategyForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
@@ -20,28 +22,33 @@ export class StrategyEditComponent implements OnInit {
   })
 
   constructor(private cs: StrategyService,
-    private fb: FormBuilder,
-    private router: Router,
-    private activeroute: ActivatedRoute) {
+    private fb: FormBuilder,private sc: StrategyComponent) {
   }
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  hide(): void {
+    this.sc.hideAll();
+  }
+  initializeForm() {
+  
+  this.strEditForm = this.fb.group({
+    name: [this.strCurrentValues.name, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+    timeframeFrom: [this.strCurrentValues.timeframeFrom, [Validators.required]],
+    timeframeTo: [this.strCurrentValues.timeframeTo, [Validators.required]]
+  })
   }
 
   onSubmit() {
-  //  var envId = this.router.url.split('/')[2];
-   // var straIdToUpdate = this.router.url.split('/')[4];
-   let strId = this.router.url.split('/')[2];
-
-
     var newStraValues = new Strategy(
-      this.strategyForm.value.name,
-      this.strategyForm.value.timeframeFrom,
-      this.strategyForm.value.timeframeTo
+      this.strEditForm.value.name,
+      this.strEditForm.value.timeframeFrom,
+      this.strEditForm.value.timeframeTo
     );
 
-    this.cs.updateStrategy_CurrentEnvironment(strId, newStraValues);
+    this.cs.updateStrategy_CurrentEnvironment(this.strCurrentValues.id, newStraValues);
 
-    this.router.navigate([`strategies/`])
     }
   }

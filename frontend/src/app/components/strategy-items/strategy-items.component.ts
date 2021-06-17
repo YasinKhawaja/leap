@@ -27,4 +27,47 @@ export class StrategyItemsComponent implements OnInit {
         error => { console.error(error) })
   }
 
+
+  showStrItemAdd: boolean = false;
+
+  showStrItemEdit: boolean = false;
+  showStrItemDelete: boolean = false;
+  strItemCurrentValues: StrategyItem;
+
+ 
+
+  show(component: string, strategyItem?: StrategyItem): void {
+    switch (component) {
+      case 'strategyItem-add':
+        this.hideAll();
+        // Show
+        this.showStrItemAdd = true;
+        break;
+      case 'strategyItem-edit':
+        // Hide
+        this.showStrItemAdd = false;
+        // Show
+        this.strItemCurrentValues = strategyItem;
+        this.showStrItemEdit = !this.showStrItemEdit;
+        break;
+
+        case 'strategyItem-delete':
+          // Hide
+          this.showStrItemAdd = false;
+          this.showStrItemEdit = false;
+          // Show
+          this.strItemCurrentValues = strategyItem;
+          this.showStrItemDelete = !this.showStrItemDelete;
+          break;
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showStrItemAdd = false;
+    this.showStrItemEdit = false;
+    this.showStrItemDelete = false;
+  }
+
 }

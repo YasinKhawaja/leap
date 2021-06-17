@@ -1,125 +1,209 @@
-<div class="container">
-    <h1>Add IT Application</h1>
-    <form [formGroup]="itapplication" (ngSubmit)="onSubmit()">
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='text' formControlName='name' required placeholder="Name" />
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>EDIT {{ itCurrentValues.name }}</strong></h5>
+            </div>
+        </div>
+          <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+          </div>
+    <div class="card-body">
+
+        <form [formGroup]="itapplication" (ngSubmit)="onSubmit()">
+            <div class="container">
+                <div class="row">
+                <div class="col">
+            <div class='form-group'>
                 <label>Name</label>
-            </div>
-            <div *ngIf="itapplication.get('name')!.invalid && (itapplication.get('name')!.dirty || itapplication.get('name')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('name')!.errors!.required"> Name is required. </div>
-            </div> <small class="text-muted"> </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='text' formControlName='technology' required placeholder="Technology Name" /> <label>Technology</label>
-            </div>
-            <div *ngIf="itapplication.get('technology')!.invalid && (itapplication.get('technology')!.dirty || itapplication.get('technology')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('technology')!.errors!.required"> Technology is required. </div>
+               <input type='text' class="form-control" formControlName='name' required placeholder="Name" />
+                    
+                <div *ngIf="itapplication.get('name')!.invalid && (itapplication.get('name')!.dirty || itapplication.get('name')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="itapplication.get('name')!.errors!.required"> Name is required. </div>
+                </div> <small class="text-muted"> </small>
             </div>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='text' formControlName='version' required placeholder="1.1.x" />
-                <label>Version</label>
-            </div>
-            <div *ngIf="itapplication.get('version')!.invalid && (itapplication.get('version')!.dirty || itapplication.get('version')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('version')!.errors!.required"> Version is required. </div>
-            </div>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='date' formControlName='acquisitionDate' required /> <label>Acquisition
-                    Date</label> </div>
-            <div *ngIf="itapplication.get('acquisitionDate')!.invalid && (itapplication.get('acquisitionDate')!.dirty || itapplication.get('acquisitionDate')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="itapplication.get('acquisitionDate')!.errors!.required"> Acquisition date is required.
+        <div class="col">
+            <div class='form-group'>
+                <label>Technology</label>
+               <input type='text' class="form-control" formControlName='technology' required placeholder="Technology Name" /> 
+               
+                <div *ngIf="itapplication.get('technology')!.invalid && (itapplication.get('technology')!.dirty || itapplication.get('technology')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="itapplication.get('technology')!.errors!.required"> Technology is required. </div>
                 </div>
             </div>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='date' formControlName='endOfLife' /> <label>End of Life</label>
+        </div>
+    
+        <div class="row">
+        <div class="col">
+            <div class='form-group'>
+                <label>Version</label>
+                 <input type='text' class="form-control" formControlName='version' required placeholder="1.1.x" />
+                <div *ngIf="itapplication.get('version')!.invalid && (itapplication.get('version')!.dirty || itapplication.get('version')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="itapplication.get('version')!.errors!.required"> Version is required. </div>
+                </div>
             </div>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='currentScalability' placeholder="0 to 5" />
+        <div class="col">
+            <div class='form-group'>
+                <label>Acquisition Date</label>
+                <input type='date' class="form-control" formControlName='acquisitionDate' required /> 
+                <div *ngIf="itapplication.get('acquisitionDate')!.invalid && (itapplication.get('acquisitionDate')!.dirty || itapplication.get('acquisitionDate')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="itapplication.get('acquisitionDate')!.errors!.required"> Acquisition date is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            <div class='form-group'>
+                <label>End of Life</label>
+               <input type='date' class="form-control" formControlName='endOfLife' /> 
+              
+            </div>
+        </div>
+            <div class="col">
+            <div class='form-group'>
                 <label>Current
                     Scalability</label>
+             <input type='number'class="form-control" formControlName='currentScalability' placeholder="0 to 5" />
+                  
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='expectedScalability' placeholder="0 to 5" />
+        </div>
+    
+        <div class="row">
+            <div class="col">
+            <div class='form-group'>
                 <label>Expected
                     Scalability</label>
+               <input type='number' class="form-control" formControlName='expectedScalability' placeholder="0 to 5" />
+                 
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='currentPerformance' placeholder="0 to 5" />
+            <div class="col">
+            <div class='form-group'>
                 <label>Current
                     Performance</label>
+                <input type='number' class="form-control" formControlName='currentPerformance' placeholder="0 to 5" />
+                  
+             
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='expectedPerformance' placeholder="0 to 5" />
+        </div>
+        <div class="row">
+            <div class="col">
+            <div class='form-group'>
                 <label>Expected
                     Performance</label>
+                <input type='number' class="form-control" formControlName='expectedPerformance' placeholder="0 to 5" />
+                  
+               
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='currentSecurityLevel' placeholder="0 to 5" />
+        <div class="col">
+            <div class='form-group'>
                 <label>Current
                     Security Level</label>
+               <input type='number' class="form-control" formControlName='currentSecurityLevel' placeholder="0 to 5" />
+                
+               
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='expectedSecurityLevel' placeholder="0 to 5" />
+        </div>
+        <div class="row">
+            <div class="col">
+            <div class='form-group'>
                 <label>Expected Security Level</label>
+                <input type='number' class="form-control" formControlName='expectedSecurityLevel' placeholder="0 to 5" />
+                  
+             
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='currentStability' placeholder="0 to 5" />
-                <label>Current
-                    Stability</label>
+        <div class="col">
+            <div class='form-group'>
+                <label>Current Stability</label>
+             <input type='number' class="form-control" formControlName='currentStability' placeholder="0 to 5" />
+                  
+               
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='expectedStability' placeholder="0 to 5" />
-                <label>Expected
-                    Stability</label>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class='form-group'>
+                <label>Expected Stability</label>
+                <input type='number' class="form-control" formControlName='expectedStability' placeholder="0 to 5" />
+                 
+               
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <select class="select1" formControlName='costCurrency'>
-                    <option *ngFor="let type of ecostCurrency | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-                </select> <label>Cost Currency</label> </div>
+        <div class="col">
+            <div class='form-group'>
+                <label>Cost Currency</label> 
+                <select class="select1" class="form-control" formControlName='costCurrency'>
+                        <option *ngFor="let type of ecostCurrency | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+                    </select> 
+            </div>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='number' formControlName='currentValueForMoney' placeholder="0 to 5" />
+        </div>
+    
+        <div class="row">
+            <div class="col">
+            <div class='form-group'>
                 <label>Current
                     Value for Money</label>
-            </div>
-            <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='text' formControlName='currentTotalCostPerYear' placeholder="1234.56" />
-                <label>Current
-                    Total Cost per Year</label>
+               <input type='number' class="form-control" formControlName='currentValueForMoney' placeholder="0 to 5" />
+                  
+                <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
             </div>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <input type='text' formControlName='toleratedTotalCostPerYear' placeholder="12345.67" />
+            <div class="col">
+            <div class='form-group'>
+                 <label>Current
+                        Total Cost per Year</label>
+                <input type='text' class="form-control" formControlName='currentTotalCostPerYear' placeholder="1234.56" />
+                    
+            </div>
+        </div>
+        </div>
+    
+        <div class="row">
+            <div class="col">
+            <div class='form-group'>
                 <label>Tolerated Total Cost per Year</label>
+               <input type='text' class="form-control" formControlName='toleratedTotalCostPerYear' placeholder="12345.67" />
+                   
             </div>
         </div>
-        <div class='form-group w-50'>
-            <div class="custom"> <select class="select2" formControlName='timeValue'>
-                    <option *ngFor="let type of etimeValue | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-                </select> <label>TIME Value</label>
+            <div class="col">
+            <div class='form-group'>
+                 <label>TIME Value</label>
+                <select class="select2" class="form-control" formControlName='timeValue'>
+                        <option *ngFor="let type of etimeValue | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+                    </select>
             </div>
+    
         </div>
-        <button type="submit" class="btn btn-danger form-control" [disabled]="!itapplication.valid">Edit</button>
+    </div>
+    
+        </div>
+        <div class="center"> 
+        <button type="submit" class="btn btn-success " [disabled]="!itapplication.valid">Edit</button>
+    </div>
     </form>
+</div>
 </div>

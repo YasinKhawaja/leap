@@ -1,42 +1,49 @@
-<div class="middle-page">
-    <!-- Form -->
-    <form [formGroup]="strategyForm" (ngSubmit)="onSubmit()">
-        <div class="card">
-            <div class="card-header center">
-                <h5><strong>EDIT STRATEGY</strong></h5>
-            </div>
-            <div class="card-body">
-                <!-- Name -->
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input id="name" type="text" class="form-control" formControlName="name" required>
-                    <!-- Name field validation errors -->
-                    <div class="alert alert-danger center" *ngIf="strategyForm.get('name')!.invalid && (strategyForm.get('name')!.dirty || strategyForm.get('name')!.touched)">
-                        <div *ngIf="strategyForm.get('name')!.errors!.required">
-                            Name is required.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="timeframeFrom">Timeframe from</label>
-                    <input id="timeframeFrom" type="date" class="form-control" formControlName="timeframeFrom" required>
-                    <!-- description field validation errors -->
-
-                </div>
-
-
-                <div class="form-group">
-                    <label for="timeframeTo">Timeframe to</label>
-                    <input id="timeframeTo" type="date" class="form-control" formControlName="timeframeTo" required>
-
-                </div>
-                <!-- Submit button -->
-                <div class="center">
-                    <button type="submit" class="btn btn-success" [disabled]="strategyForm.invalid">EDIT</button>
-                </div>
-            </div>
+<div class="card">
+  <div class="flex-container card-header">
+      <div class="flex-item">
+          <div class="title">
+              <h5><strong>EDIT {{ strCurrentValues.name }}</strong></h5>
+          </div>
+      </div>
+        <div class="flex-item">
+          <div class="hide">
+              <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+          </div>
+      </div>
         </div>
-    </form>
-
+        <div class="card-body">
+          <form [formGroup]="strEditForm" (ngSubmit)="onSubmit()">
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" class="form-control" formControlName="name" required>
+            <!-- Name field validation errors -->
+            <div class="alert alert-danger center" *ngIf="strEditForm.get('name')!.invalid && (strEditForm.get('name')!.dirty || strEditForm.get('name')!.touched)">
+              <div *ngIf="strEditForm.get('name')!.errors!.required">
+                  Name is required.
+              </div>
+          </div>
+          </div>
+    
+          <div class="form-group">
+            <label for="timeframeFrom">Timeframe from</label>
+            <input id="timeframeFrom" type="date" class="form-control" formControlName="timeframeFrom" required>
+            <!-- description field validation errors -->
+            
+          </div>
+  
+  
+          <div class="form-group">
+            <label for="timeframeTo">Timeframe to</label>
+            <input id="timeframeTo" type="date" class="form-control" formControlName="timeframeTo" required>
+          
+          </div>
+          <!-- Submit button -->
+          <div class="center">
+            <button type="submit" class="btn btn-success" [disabled]="strEditForm.invalid">EDIT</button>
+          </div>
+        </form>
+    </div>
 </div>
+
+  
