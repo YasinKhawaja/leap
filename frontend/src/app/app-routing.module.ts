@@ -61,7 +61,7 @@ import { CapabilityProjectAddComponent } from './components/capability-project-a
 import { CapabilityProjectDeleteComponent } from './components/capability-project-delete/capability-project-delete.component';
 
 const routes: Routes = [
-  { path: 'company/register', component: CompanyRequestComponent, canActivate: [RouterGuard] },
+  { path: 'company/register/:companyid', component: CompanyRequestComponent, canActivate: [RouterGuard] },
   { path: 'register-useradmin', component: RegisterFormUseradminComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'login', component: LoginComponent },

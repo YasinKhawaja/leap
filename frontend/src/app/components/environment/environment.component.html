@@ -77,24 +77,22 @@
                 <table class="table">
                     <thead>
                         <tr class="middle-div">
-                            <th scope="col" colspan="2">COMPANIES</th>
+                            <th scope="col" colspan="1">COMPANIES</th>
                             <th scope="col" colspan="1">Approved?</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let company of companies">
                             <td class="middle-div">
-                                <a [routerLink]="[company.id + '/update']">
-                                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
-                                </a>
-                            </td>
-                            <td class="middle-div">
-                                <a class="btn btn-light" [routerLink]="['../capabilities']" role="button">
+                                <a class="btn btn-light" [routerLink]="['/company/register/' + company.id]" role="button">
                                     {{ company.companyName }}
                                 </a>
                             </td>
                             <td class="middle-div">
-                                {{ company.approved }}
+                                <button type=button class="btn btn-light" (click)="approve(company.companyName, company.approved, company.id)">{{
+                                    company.approved
+                                    }}</button>
+
                             </td>
                         </tr>
                     </tbody>

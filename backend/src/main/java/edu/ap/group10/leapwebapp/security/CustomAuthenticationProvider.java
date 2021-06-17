@@ -110,6 +110,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
+    public String getRole(String token) {
+        DecodedJWT jwt = verifyJWTUser(token);
+        return jwt.getClaim(CLAIM_ROLE).toString();
+    }
+
     public String newUserIdJwt(String id) {
         return JWT.create().withClaim("id", id)
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME_PASSWORDRESET))

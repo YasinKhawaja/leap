@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 })
 export class EnvironmentComponent implements OnInit {
 
-  role : string;
+  role: string;
   environments: Environment[];
   users: User[];
   companies: Company[];
@@ -31,13 +31,13 @@ export class EnvironmentComponent implements OnInit {
   ngOnInit(): void {
     this.role = this.jwt.checkRole();
 
-    if(this.role == "application admin"){
+    if (this.role == "application admin") {
       this.getCompanies();
     } else {
       this.companyid = this.jwt.checkCompany();
       this.getAllEnvironments();
     }
-    if(this.role == "admin"){
+    if (this.role == "admin") {
       this.getUsers();
     }
   }
@@ -50,8 +50,8 @@ export class EnvironmentComponent implements OnInit {
       );
   }
 
-  getCompanies(): void{
-    this.cs.getAllCompanies(this.role)
+  getCompanies(): void {
+    this.cs.getAllCompanies()
       .subscribe(
         result => {
           this.companies = result;
@@ -62,20 +62,35 @@ export class EnvironmentComponent implements OnInit {
       )
   }
 
-  getUsers(): void{
+  getUsers(): void {
     this.us.getUsers(this.companyid)
-    .subscribe(
-      result => {
-        this.users = result
-      },
-      error => {
-        Swal.fire('Error', error.error.message, 'error');
-      }
-    )
+      .subscribe(
+        result => {
+          this.users = result
+        },
+        error => {
+          Swal.fire('Error', error.error.message, 'error');
+        }
+      )
   }
 
   environmentId(environmentId, environmentName): void {
     this.ns.setEnvironmentCookie(environmentId);
     this.ns.setEnvironmentName(environmentName);
+  }
+
+  approve(name: string, approved: any, companyid: any) {
+    var status: boolean = true;
+    if (approved) {
+      status = false;
+    }
+    if (confirm(`Are you sure you want to ${status ? "accept" : "lock"} ${name}?`)) {
+      this.cs.changeCompanyStatus(status.toString(), companyid)
+        .then(
+          (data) => {
+            this.companies = data
+          }
+        )
+    }
   }
 }

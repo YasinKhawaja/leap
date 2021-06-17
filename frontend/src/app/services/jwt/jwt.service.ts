@@ -90,9 +90,7 @@ export class JwtService {
         return jwt;
       })
       .subscribe(
-        (data: HttpResponse<any>) => {
-          var newToken = data.headers.get("authorization").replace('Bearer ', '');
-          this.storeJWT(newToken);
+        () => {
         },
         () => {
           this.logout();

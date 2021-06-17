@@ -9,27 +9,27 @@ import { Router } from '@angular/router';
 export class CompanyService {
 
   private companiesUrl: string = '//localhost:8080/api/companies';
+  private companyURI: string = '//localhost:8080/api/company'
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   }
 
-  public getCompany(role: string): Observable<Company> {
-    let token = new URL(window.location.href).searchParams.get("token");
-    let url = `${this.companiesUrl}/${token}?role=${role}`;
+  public getCompany(companyid: string): Observable<Company> {
+    let url = `${this.companyURI}/application/${companyid}`;
 
     return this.http.get<Company>(url)
   }
 
-  public getAllCompanies(role: string): Observable<Company[]> {
-    var url = `${this.companiesUrl}?role=${role}`;
+  public getAllCompanies(): Observable<Company[]> {
+    var url = `${this.companiesUrl}`;
     return this.http.get<Company[]>(url);
   }
 
 
   public register(company: Company) {
-    let url = this.companiesUrl;
+    let url = this.companyURI;
 
     this.http.post(url, company)
       .subscribe(
@@ -43,9 +43,8 @@ export class CompanyService {
   }
 
 
-  public accept(accepted: boolean, role: string) {
-    let token = new URL(window.location.href).searchParams.get("token");
-    let url = `${this.companiesUrl}/${token}/applicationStatus?role=${role}`;
+  public accept(accepted: boolean, companyid: string) {
+    let url = `${this.companyURI}/application/${companyid}`;
 
     let params = new URLSearchParams();
     params.set("accepted", accepted.toString());
@@ -57,8 +56,39 @@ export class CompanyService {
           Swal.fire('Accepted', `You have ${accepted ? " approved " : " denied "} the application.`, 'success')
           this.router.navigate(['environments'])
         },
-        error => {
+        () => {
           Swal.fire('Error', `Failed to ${accepted ? " approve " : " deny "} the application.`, 'error')
         });
+  }
+
+  public async changeCompanyStatus(status: string, companyid: string): Promise<Company[]> {
+    let url = `${this.companyURI}/status`
+
+    let companies: Company[] = []
+
+    var params = new URLSearchParams()
+    params.set("status", status)
+    params.set("companyid", companyid)
+
+    await this.http.post(url, params.toString(),
+      { headers: this.contentHeaders })
+      .toPromise()
+      .then(
+        () => { },
+        () => {
+          Swal.fire('Error', `Failed to change company approval to ${status}`, 'error')
+        }
+      )
+    await this.getAllCompanies()
+      .toPromise()
+      .then(
+        (data) => {
+          companies = data
+          return companies
+        },
+        () => {
+          Swal.fire('Error', `Failed to reload companies`, 'error')
+        })
+    return companies
   }
 }
