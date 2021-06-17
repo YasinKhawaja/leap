@@ -27,3 +27,9 @@
 h5 {
     margin: 0px;
 }
+
+.card{
+    max-width: 50%;
+    margin:350px;
+    margin-top: 15px;
+}

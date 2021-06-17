@@ -47,3 +47,9 @@ h5, label {
 .form-control.ng-touched.ng-valid {
     border: 2px solid green;
 }
+
+.card{
+    max-width: 50%;
+    margin:350px;
+    margin-top: 15px;
+}
