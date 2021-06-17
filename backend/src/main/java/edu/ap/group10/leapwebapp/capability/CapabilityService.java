@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -61,27 +63,32 @@ public class CapabilityService {
     }
 
     public Capability createCapability(Long envId, Long parentCapId, Capability cap) {
-        Environment envToLinkWith = environmentRepository.findById(envId).orElseThrow();
-        List<Capability> capsFound = this.getAllCapabilitiesInEnvironment(envToLinkWith.getId()).stream()
-                .filter(c -> c.getId().equals(parentCapId)).collect(Collectors.toList());
-        Capability parentCapToLinkWith;
-        if (!capsFound.isEmpty()) {
-            parentCapToLinkWith = capsFound.get(0);
+        Capability check = capabilityRepository.findByName(cap.getName());
+        if (check != null) {
+            throw new EntityExistsException("Capability already exists within this environment");
         } else {
-            parentCapToLinkWith = null;
+            Environment envToLinkWith = environmentRepository.findById(envId).orElseThrow();
+            List<Capability> capsFound = this.getAllCapabilitiesInEnvironment(envToLinkWith.getId()).stream()
+                    .filter(c -> c.getId().equals(parentCapId)).collect(Collectors.toList());
+            Capability parentCapToLinkWith;
+            if (!capsFound.isEmpty()) {
+                parentCapToLinkWith = capsFound.get(0);
+            } else {
+                parentCapToLinkWith = null;
+            }
+            if (parentCapToLinkWith == null) {
+                cap.setLevel(1);
+            } else if (parentCapToLinkWith.getLevel() == 1) {
+                cap.setLevel(2);
+            } else if (parentCapToLinkWith.getLevel() == 2) {
+                cap.setLevel(3);
+            } else {
+                throw new ArithmeticException("Cannot make sub capability, max niveau 3.");
+            }
+            cap.setEnvironment(envToLinkWith);
+            cap.setParent(parentCapToLinkWith);
+            return capabilityRepository.save(cap);
         }
-        if (parentCapToLinkWith == null) {
-            cap.setLevel(1);
-        } else if (parentCapToLinkWith.getLevel() == 1) {
-            cap.setLevel(2);
-        } else if (parentCapToLinkWith.getLevel() == 2) {
-            cap.setLevel(3);
-        } else {
-            throw new ArithmeticException("Cannot make sub capability, max niveau 3.");
-        }
-        cap.setEnvironment(envToLinkWith);
-        cap.setParent(parentCapToLinkWith);
-        return capabilityRepository.save(cap);
     }
 
     public Capability updateCapability(Long envId, Long capId, Capability cap) {
