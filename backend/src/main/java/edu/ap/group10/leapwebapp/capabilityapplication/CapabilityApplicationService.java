@@ -51,6 +51,13 @@ public class CapabilityApplicationService {
         return capabilities;
     }
     
+    /**
+     * 
+     * Go through all the CapabilityApplications of the capability to calculate the properties Information Quality
+     * and Application Fit of the capability. 
+     * 
+     * @param capabilityId Id of the capability that you want to link with
+     */
     public void calculateCapabilityAppFitAndInfoQuality(String capabilityId) {
         List<CapabilityApplication> capabilityApplicationsList = capabilityApplicationService
                                 .getCapabilityApplications(capabilityId);

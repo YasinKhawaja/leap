@@ -23,7 +23,7 @@ import lombok.Data;
 
 /**
  * 
- * Represents the different building blocks of an environment..
+ * Represents the different building blocks of an environment.
  * 
  */
 @Entity
@@ -87,9 +87,6 @@ public class Capability implements Serializable {
 		this.setApplicationFit(0.0);
 	}
 
-	
-	
-	
 	/** 
 	 *
 	 * The property informationQuality of the capability gets calculated. This calculation takes place when an IT application
@@ -114,9 +111,6 @@ public class Capability implements Serializable {
 		setInformationQuality(round(calculatedInformationQuality, 1));
 
 	}
-
-	
-	
 	
 	/** 
 	 * 
