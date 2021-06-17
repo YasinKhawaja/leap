@@ -3,7 +3,6 @@
   <br>
     <div class="flex-container-1" id="div">
       <ng-container class='container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
-        <!-- <div id="div1" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}} -->
           <div attr.id="{{capabilityLevel1.id}}" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applyITApplicationFilter(capabilityLevel1) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}}
           <ng-container class='container' *ngFor='let capabilityLevel2 of capabilityLevel1.subcapabilities'>
             <div attr.id="{{capabilityLevel2.id}}" class="flex-container-3" [ngStyle]="filter === 'ITApplication' ? applyITApplicationFilter(capabilityLevel2) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel2) : { 'border-color': 'black' }">
