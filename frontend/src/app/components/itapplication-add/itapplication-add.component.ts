@@ -47,8 +47,8 @@ export class ItapplicationAddComponent {
     expectedStability: ['0', Validators.pattern('[0-5]')],
     costCurrency:[' ', Validators.nullValidator],
     currentValueForMoney: ['0', Validators.pattern('[0-5]')],
-    currentTotalCostPerYear: ['0', Validators.nullValidator],
-    toleratedTotalCostPerYear: ['0', Validators.nullValidator],
+    currentTotalCostPerYear: ['', Validators.nullValidator],
+    toleratedTotalCostPerYear: ['', Validators.nullValidator],
     timeValue: [' ', Validators.nullValidator]
   });
 

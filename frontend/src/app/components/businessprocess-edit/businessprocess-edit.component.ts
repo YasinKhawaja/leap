@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
 import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import Swal from 'sweetalert2';
+import { BusinessprocessComponent } from '../businessprocess/businessprocess.component';
 
 @Component({
   selector: 'app-businessprocess-edit',
@@ -14,8 +14,9 @@ import Swal from 'sweetalert2';
 export class BusinessprocessEditComponent implements OnInit {
 
   businessprocess: FormGroup;
+  @Input() processCurrentValues: Businessprocess;
 
-  constructor(private router: Router, private bps: BusinessprocessService, private fb: FormBuilder) { }
+  constructor( private bps: BusinessprocessService, private fb: FormBuilder, private bpc : BusinessprocessComponent) { }
 
   ngOnInit(): void {
     this.getBusinessProcess()
@@ -33,15 +34,23 @@ export class BusinessprocessEditComponent implements OnInit {
   }
 
   private getBusinessProcess(): Observable<Businessprocess>{
-    var businessprocessid = this.router.url.split('/')[3];
+
+    //var businessprocessid = this.router.url.split('/')[3];
+    var businessprocessid = this.processCurrentValues.id;
     return this.bps.getBusinessProcess(businessprocessid);
   }
 
   onSubmit() {
-    this.bps.updateBusinessProcess(this.router.url.split('/')[3], new Businessprocess(
+    var businessprocessid = this.processCurrentValues.id;
+    this.bps.updateBusinessProcess(businessprocessid, new Businessprocess(
       this.businessprocess.value.name,
       this.businessprocess.value.description
     ))
   }
+
+  hide(): void {
+    this.bpc.hideAll();
+  }
+
 
 }

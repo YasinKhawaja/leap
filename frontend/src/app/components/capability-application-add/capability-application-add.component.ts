@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
-import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
+import { CapabilityApplicationComponent } from '../capability-application/capability-application.component';
 
 @Component({
   selector: 'app-capability-application-add',
@@ -29,7 +29,7 @@ export class CapabilityApplicationAddComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService,
-    private cs: CapabilityService) {
+    private cac : CapabilityApplicationComponent) {
     this.itApplications = [];
   }
 
@@ -63,6 +63,10 @@ export class CapabilityApplicationAddComponent implements OnInit {
     );
 
     this.cas.createCapabilityApplication(capabilityId, newCapabilityApplication);
+  }
+
+  hide(): void {
+    this.cac.hideAll();
   }
 
 }

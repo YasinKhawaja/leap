@@ -1,7 +1,16 @@
 <form [formGroup]="program" (ngSubmit)="onSubmit()">
     <div class="card">
-        <div class="card-header center">
+        <div class="flex-container card-header">
+            <div class="flex-item">
+              <div class="title">
             <h5><strong>ADD PROGRAM</strong></h5>
+          </div>
+        </div>
+          <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
         </div>
         <div class="card-body">
             <div class="form-group">

@@ -30,4 +30,44 @@ export class CapabilityApplicationComponent implements OnInit {
         });
   }
 
+  showCapAppAdd: boolean = false;
+
+  showCapAppEdit: boolean = false;
+
+  showCapAppDelete: boolean = false;
+  capAppCurrentValues: CapabilityApplication;
+  show(component: string, capapp?: CapabilityApplication): void {
+    switch (component) {
+      case 'capapp-add':
+        this.hideAll();
+        // Show
+        this.showCapAppAdd = true;
+        break;
+      case 'capapp-edit':
+        // Hide
+        this.showCapAppAdd = false;
+        this.showCapAppDelete = false;
+        // Show
+        this.capAppCurrentValues = capapp;
+        this.showCapAppEdit = !this.showCapAppEdit;
+        break;
+        case 'capapp-delete':
+          // Hide
+          this.showCapAppAdd = false;
+          this.showCapAppEdit = false;
+          // Show
+          this.capAppCurrentValues = capapp;
+          this.showCapAppDelete = !this.showCapAppDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showCapAppAdd = false;
+    this.showCapAppEdit = false;
+    this.showCapAppDelete= false;
+  }
 }

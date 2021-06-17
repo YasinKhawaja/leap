@@ -1,13 +1,12 @@
-<h1 class='display-4'>IT Applications of the Capability</h1>
-<br /><br />
-<a *ngIf="(jwt.checkRole() != 'reader')" [routerLink]="['../capability-application/create']">Add IT Application to
-    capability</a>
+<main class="main">
+    <h1>IT Applications of the Capability</h1>
+    <br>
 
-<table class='table table-striped'>
+    <table class='table table-striped'>
     <thead>
         <tr>
             <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
-            <th scope="col" *ngIf="(jwt.checkRole() != 'reader')">edit</th>
+            <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
             <th scope='col'>Application</th>
             <th scope='col'>Capability</th>
             <th scope='col'>Business fit: Productivity</th>
@@ -23,22 +22,22 @@
     <tbody *ngFor='let capabilityApplication of capabilityApplications'>
         <tr>
             <td *ngIf="(jwt.checkRole() != 'reader')">
-                <a [routerLink]="['../capability-application/delete/', capabilityApplication.id]"><img src="assets/delete-icon.png" alt="Delete" height="20" width="20"></a>
+                <a><img src="assets/delete-icon.png" alt="Delete" height="20" width="20" (click)="show('capapp-delete', capabilityApplication)"></a>
             </td>
             <td *ngIf="(jwt.checkRole() != 'reader')">
-                <a [routerLink]="['../capability-application/update/', capabilityApplication.id]">edit</a>
+                <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('capapp-edit', capabilityApplication)">
             </td>
             <td *ngIf="(jwt.checkRole() != 'reader')">
-                <a [routerLink]="['../itapplication/', capabilityApplication.itApplication.id, 'update']">{{
+                <a class="btn btn-light" [routerLink]="['../itapplication/', capabilityApplication.itApplication.id, 'update']">{{
                     capabilityApplication.itApplication.name }}</a>
             </td>
             <td *ngIf="(jwt.checkRole() == 'reader')">
-                <a [routerLink]="['/itapplication']">{{
+                <a class="btn btn-light" [routerLink]="['/itapplication']">{{
                     capabilityApplication.itApplication.name }}</a>
             </td>
             <td>
                 <!--Change to new capability link-->
-                <a [routerLink]="['../capabilities/update']"> {{ capabilityApplication.capability.name }}</a>
+                <a class="btn btn-light" [routerLink]="['../capabilities/update']"> {{ capabilityApplication.capability.name }}</a>
             </td>
             <td class="numbers"> {{ capabilityApplication.businessEfficiencySupport }} </td>
             <td class="numbers"> {{ capabilityApplication.businessFunctionalCoverage }} </td>
@@ -52,7 +51,30 @@
     </tbody>
 </table>
 
+
+<div>
+    <br>
+    <div class="flex-container" style="margin-bottom: 0px;">
+        <div class="flex-item" *ngIf="!showCapAppAdd">
+            <button class="btn btn-danger" *ngIf="(jwt.checkRole() != 'reader')" (click)="show('capapp-add')">ADD IT APPLICATION TO CAPABILITY</button>
+        </div>
+    </div>
+
+</div>
 <br>
-<br>
-<br>
-<br>
+
+<div class="flex-container">
+<div class="flex-item">
+<app-capability-application-add *ngIf="showCapAppAdd"></app-capability-application-add>
+
+
+<app-capability-application-edit *ngIf="showCapAppEdit" [capAppCurrentValues]="capAppCurrentValues"></app-capability-application-edit>
+<app-capability-application-delete *ngIf="showCapAppDelete" [capAppCurrentValues]="capAppCurrentValues"></app-capability-application-delete>
+
+
+</div>
+
+</div>
+</main>
+
+

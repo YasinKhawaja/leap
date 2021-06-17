@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { CapabilityApplicationComponent } from '../capability-application/capability-application.component';
 
 @Component({
   selector: 'app-capability-application-edit',
@@ -11,6 +12,10 @@ import { CapabilityApplicationService } from 'src/app/services/capability-applic
   styleUrls: ['./capability-application-edit.component.css']
 })
 export class CapabilityApplicationEditComponent implements OnInit{
+
+  
+
+  @Input() capAppCurrentValues: CapabilityApplication;
 
   capabilityApplication = this.fb.group({
     businessEfficiencySupport: ['', Validators.required],
@@ -23,7 +28,8 @@ export class CapabilityApplicationEditComponent implements OnInit{
     importanceFactor: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService) {}
+  constructor(private fb: FormBuilder,  private cas: CapabilityApplicationService,
+    private cac : CapabilityApplicationComponent) {}
   ngOnInit(): void {
     this.getCurrentCapabilityApplication()
       .subscribe( result => {
@@ -41,13 +47,16 @@ export class CapabilityApplicationEditComponent implements OnInit{
   }
 
   private getCurrentCapabilityApplication(): Observable<CapabilityApplication> {
-    let capabilityApplicationId = this.router.url.split('/')[3];
-    return this.cas.getCapabilityApplication(capabilityApplicationId);
+    //let capabilityApplicationId = this.router.url.split('/')[3];
+    let capabilityApplicationId = this.capAppCurrentValues.id;
+
+    return this.cas.getCapabilityApplication(capabilityApplicationId.toString());
   }
 
   onSubmit(){
   
-    let capabilityApplicationId = this.router.url.split('/')[3];
+   // let capabilityApplicationId = this.router.url.split('/')[3];
+    let capabilityApplicationId = this.capAppCurrentValues.id;
     
     var newCapabilityApplication = new CapabilityApplication(
       "",
@@ -61,8 +70,12 @@ export class CapabilityApplicationEditComponent implements OnInit{
       this.capabilityApplication.value.importanceFactor
     );
 
-    this.cas.updateCapabilityApplication(capabilityApplicationId, newCapabilityApplication);
+    this.cas.updateCapabilityApplication(capabilityApplicationId.toString(), newCapabilityApplication);
 
+  }
+
+  hide(): void {
+    this.cac.hideAll();
   }
 
 }

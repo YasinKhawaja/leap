@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { ProgramService } from 'src/app/services/program/program.service';
-import { Location } from '@angular/common';
+import { Program } from 'src/app/classes/program/program';
+import { ProgramComponent } from '../program/program.component';
 
 @Component({
   selector: 'app-program-delete',
@@ -10,14 +10,17 @@ import { Location } from '@angular/common';
 })
 export class ProgramDeleteComponent {
 
-  constructor(private ps: ProgramService, private router: Router, private location: Location) { }
+  @Input() programCurrentValues: Program;
+
+  constructor(private ps: ProgramService, private pc: ProgramComponent) { }
 
   deleteProgram() {
-    var programid = this.router.url.split('/')[3];
+  //  var programid = this.router.url.split('/')[3];
+  var programid = this.programCurrentValues.id;
     this.ps.deleteProgram(programid)
   }
 
-  navigateBack(){
-    this.location.back();
+  hide(): void {
+    this.pc.hideAll();
   }
 }

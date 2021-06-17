@@ -1,7 +1,9 @@
 <main class="main">
+    <h1>Projects</h1>
+    <br>
     <div class="flex-container">
         <div class="flex-item">
-            <div>
+            
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -13,12 +15,12 @@
                     <tbody>
                         <tr *ngFor="let project of projects">
                             <td *ngIf="(jwt.checkRole() != 'reader')">
-                                <a [routerLink]="['../project/delete/', project.id]">
-                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                <a >
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('project-delete',project)" >
                                 </a>
                             </td>
                             <td>
-                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" [routerLink]="['../project/edit/', project.id]">
+                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" (click)="show('project-edit',project)">
                                     {{ project.name }}
                                 </a>
                                 <a *ngIf="(jwt.checkRole() == 'reader')">
@@ -29,8 +31,30 @@
                         </tr>
                     </tbody>
                 </table>
+
+
+                <div>
+                    <br>
+                    <div class="flex-container" style="margin-bottom: 0px;">
+                      <div class="flex-item" *ngIf="!showProjectAdd">
+                        <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('project-add')">ADD PROJECT</button>
+                     
+                      </div>
+                  </div>
+               
+                </div>
+            
             </div>
-        </div>
-    </div>
-    <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" [routerLink]="['../project/create']">ADD PROJECT</button>
+        
+            <div class="flex-item">
+              <app-project-add *ngIf="showProjectAdd"></app-project-add>
+              
+    <app-project-edit *ngIf="showProjectEdit" [projectCurrentValues]="projectCurrentValues"></app-project-edit> 
+             <app-project-delete *ngIf="showProjectDelete" [projectCurrentValues]="projectCurrentValues"></app-project-delete>
+                 
+          </div>
+        
+          </div>
 </main>
+        
+    

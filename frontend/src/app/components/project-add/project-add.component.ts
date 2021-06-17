@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Project } from 'src/app/classes/project/project';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { ProjectService } from 'src/app/services/project/project.service';
+import { ProjectComponent } from '../project/project.component';
 
 @Component({
   selector: 'app-project-add',
@@ -16,7 +17,7 @@ export class ProjectAddComponent {
     description: ['', Validators.nullValidator]
   })
 
-  constructor(private fb: FormBuilder, private ps: ProjectService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private ps: ProjectService, private ns: NavbarService, private pc: ProjectComponent) { }
 
   onSubmit() {
     var programid = this.ns.getProgramCookie()
@@ -27,5 +28,9 @@ export class ProjectAddComponent {
     )
 
     this.ps.addProject(programid, newProject)
+  }
+
+  hide(): void {
+    this.pc.hideAll();
   }
 }

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { CapabilityBusinessprocessService } from 'src/app/services/capability-businessprocess/capability-businessprocess.service';
+import { CapabilityBusinessprocess } from 'src/app/classes/capability-businessprocess/capability-businessprocess';
+import { CapabilityBusinessprocessComponent } from '../capability-businessprocess/capability-businessprocess.component';
 
 @Component({
   selector: 'app-capability-businessprocess-delete',
@@ -10,15 +12,16 @@ import { CapabilityBusinessprocessService } from 'src/app/services/capability-bu
 })
 export class CapabilityBusinessprocessDeleteComponent {
 
-  constructor(private cbs: CapabilityBusinessprocessService, private router: Router, private location: Location) { }
+  @Input() capabilityBusinessProcessesCurrentValues: CapabilityBusinessprocess;
+  constructor(private cbs: CapabilityBusinessprocessService, private cpc : CapabilityBusinessprocessComponent) { }
 
   deleteCapabilityBusinessprocess() {
-    var capabilityBusinessprocessid = this.router.url.split('/')[3];
-
-    this.cbs.deleteCapabilityBusienssProcess(capabilityBusinessprocessid);
+    //var capabilityBusinessprocessid = this.router.url.split('/')[3];
+    var capabilityBusinessprocessid = this.capabilityBusinessProcessesCurrentValues.id;
+    this.cbs.deleteCapabilityBusienssProcess(capabilityBusinessprocessid.toString());
   }
 
-  navigateBack() {
-    this.location.back();
+   hide(): void {
+    this.cpc.hideAll();
   }
 }

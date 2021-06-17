@@ -5,6 +5,7 @@ import { BusinessprocessService } from 'src/app/services/businessprocess/busines
 import { CapabilityBusinessprocessService } from 'src/app/services/capability-businessprocess/capability-businessprocess.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
+import { CapabilityBusinessprocessComponent } from '../capability-businessprocess/capability-businessprocess.component';
 
 @Component({
   selector: 'app-capability-businessprocess-add',
@@ -19,7 +20,8 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
     businessprocess: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private cbs: CapabilityBusinessprocessService, private ns: NavbarService, private bps: BusinessprocessService) {
+  constructor(private fb: FormBuilder, private cbs: CapabilityBusinessprocessService, private ns: NavbarService, private bps: BusinessprocessService,
+    private cpc : CapabilityBusinessprocessComponent) {
     this.businessprocesses = [];
   }
 
@@ -39,6 +41,11 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
         }
       )
   }
+
+  hide(): void {
+    this.cpc.hideAll();
+  }
+
 
   onSubmit() {
     var capabilityid = this.ns.getCapabilityCookie();

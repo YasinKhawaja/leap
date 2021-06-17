@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Project } from 'src/app/classes/project/project';
 import { ProjectService } from 'src/app/services/project/project.service';
 import Swal from 'sweetalert2';
+import { ProjectComponent } from '../project/project.component';
 
 @Component({
   selector: 'app-project-edit',
@@ -15,8 +15,9 @@ export class ProjectEditComponent implements OnInit {
 
   projectid: string
   project: FormGroup
+  @Input() projectCurrentValues: Project;
 
-  constructor(private router: Router, private ps: ProjectService, private fb: FormBuilder) { }
+  constructor(private ps: ProjectService, private fb: FormBuilder, private pc: ProjectComponent) { }
 
   ngOnInit(): void {
     this.getProject()
@@ -24,7 +25,7 @@ export class ProjectEditComponent implements OnInit {
         result => {
           this.project = this.fb.group({
             name: [result.name, [Validators.required]],
-            description: [result.description, [Validators.required]]
+            description: [result.description, [Validators.nullValidator]]
           })
         },
         () => {
@@ -34,7 +35,8 @@ export class ProjectEditComponent implements OnInit {
   }
 
   private getProject(): Observable<Project>{
-    this.projectid = this.router.url.split('/')[3]
+    //this.projectid = this.router.url.split('/')[3]
+    this.projectid = this.projectCurrentValues.id;
     return this.ps.getProject(this.projectid)
   }
 
@@ -43,6 +45,10 @@ export class ProjectEditComponent implements OnInit {
       this.project.value.name,
       this.project.value.description
     ))
+  }
+
+  hide(): void {
+    this.pc.hideAll();
   }
 
 }

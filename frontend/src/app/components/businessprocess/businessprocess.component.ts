@@ -29,4 +29,45 @@ export class BusinessprocessComponent implements OnInit {
       )
   }
 
+  showProcessAdd: boolean = false;
+
+  showProcessEdit: boolean = false;
+
+  showProcessDelete: boolean = false;
+  processCurrentValues: Businessprocess;
+  show(component: string, process?: Businessprocess): void {
+    switch (component) {
+      case 'process-add':
+        this.hideAll();
+        // Show
+        this.showProcessAdd = true;
+        break;
+      case 'process-edit':
+        // Hide
+        this.showProcessAdd = false;
+        this.showProcessDelete = false;
+        // Show
+        this.processCurrentValues = process;
+        this.showProcessEdit = !this.showProcessEdit;
+        break;
+        case 'process-delete':
+          // Hide
+          this.showProcessAdd = false;
+          this.showProcessEdit = false;
+          // Show
+          this.processCurrentValues = process;
+          this.showProcessDelete = !this.showProcessDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showProcessAdd = false;
+    this.showProcessEdit = false;
+    this.showProcessDelete= false;
+  }
+
 }

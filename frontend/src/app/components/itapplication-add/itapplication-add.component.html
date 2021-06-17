@@ -1,12 +1,16 @@
 <div class="card">
-    <div class="card-header">
-    <div class="title">
-        <h5><strong>Add IT Application</strong></h5>
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>Add IT Application</strong></h5>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
     </div>
-    <div class="hide">
-        <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
-    </div>
-</div>
     <div class="card-body">
 
     <form [formGroup]="itapplication" (ngSubmit)="onSubmit()">
@@ -14,7 +18,7 @@
             <div class="row">
             <div class="col">
         <div class='form-group'>
-            <label>Name</label>
+            <label>Name <span class="red">*</span></label>
            <input type='text' class="form-control" formControlName='name' required placeholder="Name" />
                 
             <div *ngIf="itapplication.get('name')!.invalid && (itapplication.get('name')!.dirty || itapplication.get('name')!.touched)" class="alert alert-danger alertdiv">
@@ -24,7 +28,7 @@
     </div>
     <div class="col">
         <div class='form-group'>
-            <label>Technology</label>
+            <label>Technology <span class="red">*</span></label>
            <input type='text' class="form-control" formControlName='technology' required placeholder="Technology Name" /> 
            
             <div *ngIf="itapplication.get('technology')!.invalid && (itapplication.get('technology')!.dirty || itapplication.get('technology')!.touched)" class="alert alert-danger alertdiv">
@@ -37,7 +41,7 @@
     <div class="row">
     <div class="col">
         <div class='form-group'>
-            <label>Version</label>
+            <label>Version <span class="red">*</span></label>
              <input type='text' class="form-control" formControlName='version' required placeholder="1.1.x" />
             <div *ngIf="itapplication.get('version')!.invalid && (itapplication.get('version')!.dirty || itapplication.get('version')!.touched)" class="alert alert-danger alertdiv">
                 <div *ngIf="itapplication.get('version')!.errors!.required"> Version is required. </div>
@@ -46,7 +50,7 @@
     </div>
     <div class="col">
         <div class='form-group'>
-            <label>Acquisition Date</label>
+            <label>Acquisition Date <span class="red">*</span></label>
             <input type='date' class="form-control" formControlName='acquisitionDate' required /> 
             <div *ngIf="itapplication.get('acquisitionDate')!.invalid && (itapplication.get('acquisitionDate')!.dirty || itapplication.get('acquisitionDate')!.touched)" class="alert alert-danger alertdiv">
                 <div *ngIf="itapplication.get('acquisitionDate')!.errors!.required"> Acquisition date is required.
@@ -67,8 +71,11 @@
         <div class='form-group'>
             <label>Current
                 Scalability</label>
-         <input type='number'class="form-control" formControlName='currentScalability' placeholder="0 to 5" />
-              
+         <input class="form-control" formControlName='currentScalability' placeholder="0 to 5" />
+         <div *ngIf="itapplication.get('currentScalability')!.invalid && (itapplication.get('currentScalability')!.dirty || itapplication.get('currentScalability')!.touched)" class="alert alert-danger alertdiv">
+            <div *ngIf="itapplication.get('currentScalability')!.errors!.pattern"> Only a number between 0 and 5. 
+            </div>
+        </div>    
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
     </div>
@@ -79,8 +86,11 @@
         <div class='form-group'>
             <label>Expected
                 Scalability</label>
-           <input type='number' class="form-control" formControlName='expectedScalability' placeholder="0 to 5" />
-             
+           <input  class="form-control" formControlName='expectedScalability' placeholder="0 to 5" />
+           <div *ngIf="itapplication.get('expectedScalability')!.invalid && (itapplication.get('expectedScalability')!.dirty || itapplication.get('expectedScalability')!.touched)" class="alert alert-danger alertdiv">
+            <div *ngIf="itapplication.get('expectedScalability')!.errors!.pattern"> Only a number between 0 and 5. 
+            </div>
+        </div>
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
     </div>
@@ -88,9 +98,11 @@
         <div class='form-group'>
             <label>Current
                 Performance</label>
-            <input type='number' class="form-control" formControlName='currentPerformance' placeholder="0 to 5" />
-              
-         
+            <input class="form-control" formControlName='currentPerformance' placeholder="0 to 5" />
+            <div *ngIf="itapplication.get('currentPerformance')!.invalid && (itapplication.get('currentPerformance')!.dirty || itapplication.get('currentPerformance')!.touched)" class="alert alert-danger alertdiv">
+                <div *ngIf="itapplication.get('currentPerformance')!.errors!.pattern"> Only a number between 0 and 5. 
+                </div>
+            </div>
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
     </div>
@@ -100,8 +112,11 @@
         <div class='form-group'>
             <label>Expected
                 Performance</label>
-            <input type='number' class="form-control" formControlName='expectedPerformance' placeholder="0 to 5" />
-              
+            <input class="form-control" formControlName='expectedPerformance' placeholder="0 to 5" />
+            <div *ngIf="itapplication.get('expectedPerformance')!.invalid && (itapplication.get('expectedPerformance')!.dirty || itapplication.get('expectedPerformance')!.touched)" class="alert alert-danger alertdiv">
+                <div *ngIf="itapplication.get('expectedPerformance')!.errors!.pattern"> Only a number between 0 and 5. 
+                </div>
+            </div>  
            
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
@@ -110,8 +125,11 @@
         <div class='form-group'>
             <label>Current
                 Security Level</label>
-           <input type='number' class="form-control" formControlName='currentSecurityLevel' placeholder="0 to 5" />
-            
+           <input class="form-control" formControlName='currentSecurityLevel' placeholder="0 to 5" />
+           <div *ngIf="itapplication.get('currentSecurityLevel')!.invalid && (itapplication.get('currentSecurityLevel')!.dirty || itapplication.get('currentSecurityLevel')!.touched)" class="alert alert-danger alertdiv">
+            <div *ngIf="itapplication.get('currentSecurityLevel')!.errors!.pattern"> Only a number between 0 and 5. 
+            </div>
+        </div> 
            
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
@@ -121,8 +139,11 @@
         <div class="col">
         <div class='form-group'>
             <label>Expected Security Level</label>
-            <input type='number' class="form-control" formControlName='expectedSecurityLevel' placeholder="0 to 5" />
-              
+            <input class="form-control" formControlName='expectedSecurityLevel' placeholder="0 to 5" />
+            <div *ngIf="itapplication.get('expectedSecurityLevel')!.invalid && (itapplication.get('expectedSecurityLevel')!.dirty || itapplication.get('expectedSecurityLevel')!.touched)" class="alert alert-danger alertdiv">
+                <div *ngIf="itapplication.get('expectedSecurityLevel')!.errors!.pattern"> Only a number between 0 and 5. 
+                </div>
+            </div>  
          
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
@@ -130,8 +151,11 @@
     <div class="col">
         <div class='form-group'>
             <label>Current Stability</label>
-         <input type='number' class="form-control" formControlName='currentStability' placeholder="0 to 5" />
-              
+         <input class="form-control" formControlName='currentStability' placeholder="0 to 5" />
+         <div *ngIf="itapplication.get('currentStability')!.invalid && (itapplication.get('currentStability')!.dirty || itapplication.get('currentStability')!.touched)" class="alert alert-danger alertdiv">
+            <div *ngIf="itapplication.get('currentStability')!.errors!.pattern"> Only a number between 0 and 5. 
+            </div>
+        </div>     
            
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
@@ -141,8 +165,11 @@
     <div class="col">
         <div class='form-group'>
             <label>Expected Stability</label>
-            <input type='number' class="form-control" formControlName='expectedStability' placeholder="0 to 5" />
-             
+            <input class="form-control" formControlName='expectedStability' placeholder="0 to 5" />
+            <div *ngIf="itapplication.get('expectedStability')!.invalid && (itapplication.get('expectedStability')!.dirty || itapplication.get('expectedStability')!.touched)" class="alert alert-danger alertdiv">
+                <div *ngIf="itapplication.get('expectedStability')!.errors!.pattern"> Only a number between 0 and 5. 
+                </div>
+            </div> 
            
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
@@ -162,8 +189,11 @@
         <div class='form-group'>
             <label>Current
                 Value for Money</label>
-           <input type='number' class="form-control" formControlName='currentValueForMoney' placeholder="0 to 5" />
-              
+           <input class="form-control" formControlName='currentValueForMoney' placeholder="0 to 5" />
+           <div *ngIf="itapplication.get('currentValueForMoney')!.invalid && (itapplication.get('currentValueForMoney')!.dirty || itapplication.get('currentValueForMoney')!.touched)" class="alert alert-danger alertdiv">
+            <div *ngIf="itapplication.get('currentValueForMoney')!.errors!.pattern"> Only a number between 0 and 5. 
+            </div>
+        </div>   
             <small class="text-muted"> Number between 0 to 5 (1 = poor, 5 = good) </small>
         </div>
     </div>
@@ -171,8 +201,7 @@
         <div class='form-group'>
              <label>Current
                     Total Cost per Year</label>
-            <input type='text' class="form-control" formControlName='currentTotalCostPerYear' placeholder="1234.56" />
-                
+            <input type='text' class="form-control" formControlName='currentTotalCostPerYear' placeholder="1234.56" />      
         </div>
     </div>
     </div>

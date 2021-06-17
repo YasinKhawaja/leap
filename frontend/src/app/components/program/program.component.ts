@@ -33,4 +33,46 @@ export class ProgramComponent implements OnInit {
     this.ns.setProgramCookie(programid)
   }
 
+
+  showProgramAdd: boolean = false;
+
+  showProgramEdit: boolean = false;
+
+  showProgramDelete: boolean = false;
+  programCurrentValues: Program;
+  show(component: string, program?: Program): void {
+    switch (component) {
+      case 'program-add':
+        this.hideAll();
+        // Show
+        this.showProgramAdd = true;
+        break;
+      case 'program-edit':
+        // Hide
+        this.showProgramAdd = false;
+        this.showProgramDelete = false;
+        // Show
+        this.programCurrentValues = program;
+        this.showProgramEdit = !this.showProgramEdit;
+        break;
+        case 'program-delete':
+          // Hide
+          this.showProgramAdd = false;
+          this.showProgramEdit = false;
+          // Show
+          this.programCurrentValues = program;
+          this.showProgramDelete = !this.showProgramDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showProgramAdd = false;
+    this.showProgramEdit = false;
+    this.showProgramDelete= false;
+  }
+
 }

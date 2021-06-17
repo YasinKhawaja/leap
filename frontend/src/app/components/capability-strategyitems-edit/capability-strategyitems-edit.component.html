@@ -13,14 +13,14 @@
           </div>
 
   <div class="card-body">
-            <form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">
-            
+            <form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">         
             <div class="form-group">
-
-            <label> Strategic Emphasis</label>
-            <select class="select1" formControlName='strategicEmphasis' required>
+            <label> Strategic Emphasis <span class="red">*</span></label>
+            <div>
+            <select class="custom-select" formControlName='strategicEmphasis' required>
             <option *ngFor="let type of eSe | keyvalue" [ngValue]="type.value">{{type.value}}</option>
           </select>
+        </div>
         </div>
         <br>
         <div *ngIf="capabilityStrategyItem.get('strategicEmphasis')!.invalid && (capabilityStrategyItem.get('strategicEmphasis')!.dirty || capabilityStrategyItem.get('strategicEmphasis')!.touched)" class="alert alert-danger alertdiv">

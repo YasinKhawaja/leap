@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Program } from 'src/app/classes/program/program';
 import { ProgramService } from 'src/app/services/program/program.service';
 import Swal from 'sweetalert2';
+import { ProgramComponent } from '../program/program.component';
 
 @Component({
   selector: 'app-program-edit',
@@ -16,7 +16,9 @@ export class ProgramEditComponent implements OnInit {
   programid: string
   program: FormGroup;
 
-  constructor(private router: Router, private ps: ProgramService, private fb: FormBuilder) { }
+  @Input() programCurrentValues: Program;
+
+  constructor( private ps: ProgramService, private fb: FormBuilder, private pc: ProgramComponent) { }
 
   ngOnInit(): void {
     this.getProgram()
@@ -34,12 +36,17 @@ export class ProgramEditComponent implements OnInit {
   }
 
   private getProgram(): Observable<Program>{
-    this.programid = this.router.url.split('/')[3];
-    return this.ps.getProgram(this.programid)
+    //this.programid = this.router.url.split('/')[3];
+
+    return this.ps.getProgram(this.programCurrentValues.id)
+  }
+
+  hide(): void {
+    this.pc.hideAll();
   }
 
   onSubmit(){
-    this.ps.updateProgram(this.programid, new Program(
+    this.ps.updateProgram(this.programCurrentValues.id, new Program(
       this.program.value.name,
       this.program.value.description
     ))

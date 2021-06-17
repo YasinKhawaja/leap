@@ -35,7 +35,8 @@ export class ProjectService {
     return this.http.post<Project>(url, project)
       .subscribe(
         () => {
-          this.router.navigate(['project'])
+          //this.router.navigate(['project'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', "Failed to create the project", 'error')
@@ -48,7 +49,8 @@ export class ProjectService {
     this.http.put<Project>(url, project)
       .subscribe(
         () => {
-          this.router.navigate(['project'])
+          //this.router.navigate(['project'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', `Failed to update the project with id: ${projectid}`, 'error');
@@ -60,7 +62,8 @@ export class ProjectService {
     var url = `${this.projectURL}/${projectid}`
     this.http.delete(url).subscribe(
       () => {
-        this.router.navigate(['project'])
+        //this.router.navigate(['project'])
+        window.location.reload();
       },
       () => {
         Swal.fire('Error', `Failed to delete the project with id: ${projectid}`, 'error')
