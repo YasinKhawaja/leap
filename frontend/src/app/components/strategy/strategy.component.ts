@@ -32,4 +32,44 @@ export class StrategyComponent implements OnInit {
         error => { console.error(error) })
   }
 
+  showStrAdd: boolean = false;
+
+  showStrEdit: boolean = false;
+
+  showStrDelete: boolean = false;
+  strCurrentValues: Strategy;
+  show(component: string, strategy?: Strategy): void {
+    switch (component) {
+      case 'strategy-add':
+        this.hideAll();
+        // Show
+        this.showStrAdd = true;
+        break;
+      case 'strategy-edit':
+        // Hide
+        this.showStrAdd = false;
+        // Show
+        this.strCurrentValues = strategy;
+        this.showStrEdit = !this.showStrEdit;
+        break;
+        case 'strategy-delete':
+          // Hide
+          this.showStrAdd = false;
+          this.showStrEdit = false;
+          // Show
+          this.strCurrentValues = strategy;
+          this.showStrDelete = !this.showStrDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showStrAdd = false;
+    this.showStrEdit = false;
+    this.showStrDelete= false;
+  }
+
 }

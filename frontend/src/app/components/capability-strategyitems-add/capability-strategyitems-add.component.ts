@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
 import { CapabilityStrategyitemService } from 'src/app/services/capability-strategyitem/capability-strategyitem.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import { CapabilityStrategyitemsComponent } from '../capability-strategyitems/capability-strategyitems.component';
 
 
 enum StrategicEmphasis {
@@ -26,7 +26,6 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
 
   eSe = StrategicEmphasis;
 
-  //strategyItems: string[]
 
   strategies: string[]
 
@@ -41,16 +40,14 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
     strategicEmphasis: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private css: CapabilityStrategyitemService, private ns: NavbarService, private sis: StrategyService,private sos : StrategyItemService) {
-   // this.strategyItems = [];
+  constructor(private fb: FormBuilder, private css: CapabilityStrategyitemService, 
+    private ns: NavbarService, private sis: StrategyService,private sos : StrategyItemService , private csic : CapabilityStrategyitemsComponent) {
 
     this.strategies = [];
     this.strategyItems = [];
    }
 
    ngOnInit(): void {
-   // let environmentId = this.ns.getEnvironment();
-   //haalt niet alle omdat ik van de strId pak en niet van envid
     let environmentId = this.ns.getEnvironmentCookie();
     this.sis.getAllStrategyInEnvironment(environmentId)
     .subscribe(result => {
@@ -63,7 +60,9 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
     
   }
 
-
+  hide(): void {
+    this.csic.hideAll();
+  }
 
   changeStrategy() {
     this.strategyItems = [];
@@ -83,7 +82,6 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
     this.capabilityStrategyItem.value.strategyItemName;
   }
 
-
   onSubmit(){
     let capabilityId = this.ns.getCapabilityCookie();
     
@@ -94,6 +92,4 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
 
     this.css.createCapabilityStrategyItem(capabilityId, newCapabilityStrategyItem);
   }
-
-
 }

@@ -1,13 +1,19 @@
-
-<div class="center-page">
-  <div class="card">
-    <div class="card-header center">
-      <h4>Are you sure you want to delete strategy <strong *ngIf="str != null">{{ str.name }}</strong>?</h4>
-    </div>
-    <div class="card-body center">
-      <button type="button" class="btn btn-light" (click)="navigateBack()">CANCEL</button>
+<div class="card">
+  <div class="flex-container card-header">
+      <div class="flex-item">
+          <div class="title">
+              <h5><strong>DELETE {{ strCurrentValues.name }}</strong>?</h5>
+          </div>
+      </div>
+      <div class="flex-item">
+          <div class="hide">
+              <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+          </div>
+      </div>
+  </div>
+  <div class="card-body center">
+      <button type="button" class="btn btn-primary" (click)="hide()">CANCEL</button>
       &nbsp;
       <button type="button" class="btn btn-danger" (click)="deleteStrategyFromEnvironment()">DELETE</button>
-    </div>
   </div>
 </div>

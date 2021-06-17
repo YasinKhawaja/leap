@@ -1,6 +1,8 @@
-<div class="strItem">
-    <div>
-        <form action="" id="strItemAddForm"></form>
+<main class="main">
+    <h1>Strategy Items</h1>
+    <br>
+    <div class="flex-container">
+        <div class="flex-item">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -14,12 +16,12 @@
             <tbody>
                 <tr *ngFor="let strategyItem of strategyItems">
                     <td *ngIf="(jwt.checkRole() != 'lezer')">
-                        <a [routerLink]="['../strategyItems/', strategyItem.id, 'delete']">
-                            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                        <a>
+                            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('strategyItem-delete', strategyItem)" >
                         </a>
                         &nbsp;&nbsp;&nbsp;
-                        <a [routerLink]="['../strategyItems/',strategyItem.id, 'update']">
-                            <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
+                        <a >
+                            <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('strategyItem-edit', strategyItem)">
                         </a>
                     </td>
 
@@ -31,9 +33,23 @@
         </table>
         <div>
             <br>
-            <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" [routerLink]="['../strategyItems/create']">ADD STRATEGY ITEM</button>
-        </div>
-        <br>
-    </div>
+            <div class="flex-container" style="margin-bottom: 0px;">
+                <div class="flex-item" *ngIf="!showStrItemAdd">
+                
+                  <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="show('strategyItem-add')">ADD STRATEGY ITEM</button>
+            
+                </div>
+            </div>
 
-</div>
+        </div>
+    </div>
+            <div class="flex-item">
+                <app-strategy-items-add *ngIf="showStrItemAdd"></app-strategy-items-add>
+              
+                <app-strategy-items-edit *ngIf="showStrItemEdit" [strItemCurrentValues]="strItemCurrentValues" ></app-strategy-items-edit> 
+               
+                <app-strategy-items-delete *ngIf="showStrItemDelete" [strItemCurrentValues]="strItemCurrentValues" ></app-strategy-items-delete> 
+            </div>
+              
+            </div>
+</main>

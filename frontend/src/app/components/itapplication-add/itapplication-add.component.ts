@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import { ItapplicationComponent } from '../itapplication/itapplication.component';
 
 enum Currency{
   EUR = "EUR",
@@ -48,11 +49,10 @@ export class ItapplicationAddComponent {
     currentValueForMoney: ['0', Validators.pattern('[0-5]')],
     currentTotalCostPerYear: ['0', Validators.nullValidator],
     toleratedTotalCostPerYear: ['0', Validators.nullValidator],
-    timeValue: [' ', Validators.nullValidator],
-    importanceFactor: ['0', Validators.required]
+    timeValue: [' ', Validators.nullValidator]
   });
 
-  constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private its: ItapplicationService, private ns: NavbarService,private ic : ItapplicationComponent) { }
 
   onSubmit(){
     let environmentId = this.ns.getEnvironmentCookie();
@@ -75,11 +75,13 @@ export class ItapplicationAddComponent {
       this.itapplication.value.currentValueForMoney,
       this.itapplication.value.currentTotalCostPerYear,
       this.itapplication.value.toleratedTotalCostPerYear,
-      this.itapplication.value.timeValue.toUpperCase(),
-      this.itapplication.value.importanceFactor
+      this.itapplication.value.timeValue.toUpperCase()
     );
 
     this.its.createITApplication_CurrentEnvironment(environmentId, newITApplication);
   }
 
+  hide(): void {
+    this.ic.hideAll();
+  }
 }

@@ -34,7 +34,8 @@ export class ItapplicationService {
       { headers: this.contentHeaders })
       .subscribe(
         () => {
-          this.router.navigate([`itapplication/`])
+         // this.router.navigate([`itapplication/`])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', 'Failed to create this application', 'error')
@@ -47,7 +48,8 @@ export class ItapplicationService {
     this.http.put<Itapplication>(url, itApplication,
       { headers: this.contentHeaders })
       .subscribe(data => {
-        this.router.navigate([`itapplication/`])
+        //this.router.navigate([`itapplication/`])
+        window.location.reload();
       },
         error => {
           Swal.fire('Error', 'Failed to update the application', 'error')
@@ -59,7 +61,8 @@ export class ItapplicationService {
 
     this.http.delete(url).subscribe(
       () => {
-        this.router.navigate([`itapplication/`])
+        window.location.reload();
+        //this.router.navigate([`itapplication/`])
       },
       () => {
         Swal.fire('Error', 'Failed to delete the application', 'error')

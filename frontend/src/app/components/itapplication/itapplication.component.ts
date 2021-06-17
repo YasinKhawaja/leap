@@ -25,4 +25,45 @@ export class ItapplicationComponent implements OnInit {
         error => console.log(error));
   }
 
+  showItAdd: boolean = false;
+
+  showItEdit: boolean = false;
+
+  showItDelete : boolean = false;
+  itCurrentValues: Itapplication;
+  show(component: string, itapplication?: Itapplication): void {
+    switch (component) {
+      case 'itapplication-add':
+        this.hideAll();
+        // Show
+        this.showItAdd = true;
+        break;
+      case 'itapplication-edit':
+        // Hide
+        this.showItAdd = false;
+        // Show
+        this.itCurrentValues = itapplication;
+        this.showItEdit = !this.showItEdit;
+        break;
+
+        case 'itapplication-delete':
+          // Hide
+          this.showItAdd = false;
+          this.showItEdit = false;
+          // Show
+          this.itCurrentValues = itapplication;
+          this.showItDelete = !this.showItDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showItAdd = false;
+    this.showItEdit = false;
+    this.showItDelete = false;
+  }
+
 }

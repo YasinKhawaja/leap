@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
 import { CapabilityStrategyitemService } from 'src/app/services/capability-strategyitem/capability-strategyitem.service';
+import { CapabilityStrategyitemsComponent } from '../capability-strategyitems/capability-strategyitems.component';
 
 enum StrategicEmphasis {
 
@@ -11,8 +12,6 @@ enum StrategicEmphasis {
   MEDIUM = 'MEDIUM',
   HIGH = 'HIGH'
 }
-
-
 
 @Component({
   selector: 'app-capability-strategyitems-edit',
@@ -23,22 +22,28 @@ export class CapabilityStrategyitemsEditComponent {
 
   eSe = StrategicEmphasis;
 
+  @Input() capStrategyItemCurrentValues: CapabilityStrategyItems;
+
   capabilityStrategyItem = this.fb.group({
     strategicEmphasis: ['', Validators.required]
   })
-  constructor(private fb: FormBuilder, private router: Router, private csi: CapabilityStrategyitemService) { }
+  constructor(private fb: FormBuilder, private router: Router, private csi: CapabilityStrategyitemService , private csic : CapabilityStrategyitemsComponent) { }
 
   onSubmit(){
   
-    let capabilityStrategyItemID = this.router.url.split('/')[3];
+    //let capabilityStrategyItemID = this.router.url.split('/')[3];
     
     var newCapabilityStrategyItem = new CapabilityStrategyItems(
       "",
       this.capabilityStrategyItem.value.strategicEmphasis
     );
 
-    this.csi.updateCapabilityStrategyItem(capabilityStrategyItemID, newCapabilityStrategyItem);
+    this.csi.updateCapabilityStrategyItem(this.capStrategyItemCurrentValues.id.toString(), newCapabilityStrategyItem);
 
+  }
+
+  hide(): void {
+    this.csic.hideAll();
   }
 
 }

@@ -28,4 +28,44 @@ export class CapabilityStrategyitemsComponent implements OnInit {
         },
         error => console.log(error));
   }
+
+  showCapStrategyItemAdd: boolean = false;
+
+  showCapStrategyItemEdit: boolean = false;
+
+  showCapStrategyItemDelete: boolean = false;
+  capStrategyItemCurrentValues: CapabilityStrategyItems;
+  show(component: string, capstrategyItem?: CapabilityStrategyItems): void {
+    switch (component) {
+      case 'capstritem-add':
+        this.hideAll();
+        // Show
+        this.showCapStrategyItemAdd = true;
+        break;
+      case 'capstritem-edit':
+        // Hide
+        this.showCapStrategyItemAdd = false;
+        // Show
+        this.capStrategyItemCurrentValues = capstrategyItem;
+        this.showCapStrategyItemEdit = !this.showCapStrategyItemEdit;
+        break;
+        case 'capstritem-delete':
+          // Hide
+          this.showCapStrategyItemAdd = false;
+          this.showCapStrategyItemEdit = false;
+          // Show
+          this.capStrategyItemCurrentValues = capstrategyItem;
+          this.showCapStrategyItemDelete = !this.showCapStrategyItemDelete;
+          break;
+ 
+      default:
+        break;
+    }
+  }
+
+  hideAll(): void {
+    this.showCapStrategyItemAdd = false;
+    this.showCapStrategyItemEdit = false;
+    this.showCapStrategyItemDelete= false;
+  }
 }

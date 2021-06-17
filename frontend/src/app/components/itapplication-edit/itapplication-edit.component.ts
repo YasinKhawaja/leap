@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
+import { ItapplicationComponent } from '../itapplication/itapplication.component';
 
 enum Currency {
   EUR = "EUR",
@@ -27,13 +28,14 @@ enum TIME {
   styleUrls: ['./itapplication-edit.component.css']
 })
 export class ItapplicationEditComponent implements OnInit {
+  @Input() itCurrentValues: Itapplication;
 
   currentITApplication: Itapplication;
   itapplication: FormGroup;
   ecostCurrency = Currency
   etimeValue = TIME;
 
-  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService) { }
+  constructor(private fb: FormBuilder, private router: Router, private its: ItapplicationService,private ic : ItapplicationComponent) { }
 
   ngOnInit(): void {
     this.getCurrentITApplication()
@@ -58,19 +60,20 @@ export class ItapplicationEditComponent implements OnInit {
             currentTotalCostPerYear: [result.currentTotalCostPerYear],
             toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
             timeValue: [result.timeValue],
-            importanceFactor: [result.importanceFactor, Validators.required]
+           
           });
         }
       );
   }
 
   private getCurrentITApplication(): Observable<Itapplication> {
-    var itApplicationId = this.router.url.split('/')[2];
-    return this.its.getITApplication(itApplicationId);
+   // var itApplicationId = this.router.url.split('/')[2];
+
+    return this.its.getITApplication(this.itCurrentValues.id.toString());
   }
 
   onSubmit() {
-    let itApplicationId = this.router.url.split('/')[2];
+    //let itApplicationId = this.router.url.split('/')[2];
 
     let updatedITApplication = new Itapplication(
       this.itapplication.value.name,
@@ -90,11 +93,13 @@ export class ItapplicationEditComponent implements OnInit {
       this.itapplication.value.currentValueForMoney,
       this.itapplication.value.currentTotalCostPerYear,
       this.itapplication.value.toleratedTotalCostPerYear,
-      this.itapplication.value.timeValue.toUpperCase(),
-      this.itapplication.value.importanceFactor
+      this.itapplication.value.timeValue.toUpperCase()
     );
 
-    this.its.updateITApplication_CurrentEnvironment(itApplicationId, updatedITApplication);
+    this.its.updateITApplication_CurrentEnvironment(this.itCurrentValues.id.toString(), updatedITApplication);
   }
 
+  hide(): void {
+    this.ic.hideAll();
+  }
 }
