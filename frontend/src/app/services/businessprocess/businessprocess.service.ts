@@ -36,7 +36,8 @@ export class BusinessprocessService {
       { headers: this.contentheaders })
       .subscribe(
         () => {
-          this.router.navigate(['businessprocess'])
+          //this.router.navigate(['businessprocess'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', `Failed to create the business process: ${businessprocess.name}`, 'error')
@@ -51,7 +52,8 @@ export class BusinessprocessService {
       { headers: this.contentheaders })
       .subscribe(
         () => {
-          this.router.navigate(['businessprocess'])
+          //this.router.navigate(['businessprocess'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', `Failed to update business process with id: ${businessprocess.id}`, 'error')
@@ -64,7 +66,8 @@ export class BusinessprocessService {
 
     this.http.delete(url).subscribe(
       () => {
-        this.router.navigate(['businessprocess'])
+       // this.router.navigate(['businessprocess'])
+       window.location.reload();
       },
       () => {
         Swal.fire('Error', 'Failed to create the business process', 'error')

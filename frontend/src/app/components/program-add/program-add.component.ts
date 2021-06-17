@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Program } from 'src/app/classes/program/program';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { ProgramService } from 'src/app/services/program/program.service';
+import { ProgramComponent } from '../program/program.component';
 
 @Component({
   selector: 'app-program-add',
@@ -16,7 +17,7 @@ export class ProgramAddComponent{
     description: ['', Validators.nullValidator]
   })
 
-  constructor(private fb: FormBuilder, private ps: ProgramService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private ps: ProgramService, private ns: NavbarService, private pc: ProgramComponent) { }
 
   onSubmit(){
     var environmentid = this.ns.getEnvironmentCookie();
@@ -27,5 +28,9 @@ export class ProgramAddComponent{
     )
 
     this.ps.addProgram(environmentid, newProgram)
+  }
+
+  hide(): void {
+    this.pc.hideAll();
   }
 }

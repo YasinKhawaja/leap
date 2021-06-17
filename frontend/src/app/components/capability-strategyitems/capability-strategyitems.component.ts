@@ -45,6 +45,7 @@ export class CapabilityStrategyitemsComponent implements OnInit {
       case 'capstritem-edit':
         // Hide
         this.showCapStrategyItemAdd = false;
+        this.showCapStrategyItemDelete = false;
         // Show
         this.capStrategyItemCurrentValues = capstrategyItem;
         this.showCapStrategyItemEdit = !this.showCapStrategyItemEdit;

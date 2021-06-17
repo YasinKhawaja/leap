@@ -1,10 +1,10 @@
 .flex-container {
     display: flex;
-    margin-bottom: 25px;
 }
 
 .flex-item {
     flex: 1;
+    
 }
 
 .title {

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
-import { Location } from '@angular/common';
+import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
+import { BusinessprocessComponent } from '../businessprocess/businessprocess.component';
 
 @Component({
   selector: 'app-businessprocess-delete',
@@ -10,15 +10,20 @@ import { Location } from '@angular/common';
 })
 export class BusinessprocessDeleteComponent  {
 
-  constructor(private bps: BusinessprocessService, private router: Router, private location: Location) { }
+  @Input() processCurrentValues: Businessprocess;
+  
+  constructor(private bps: BusinessprocessService, private bpc : BusinessprocessComponent) { }
 
+ 
   deleteBusinessProcess() {
-    var businessprocessid = this.router.url.split('/')[3];
+   // var businessprocessid = this.router.url.split('/')[3];
+    var businessprocessid = this.processCurrentValues.id;
 
     this.bps.deleteBusinessProcess(businessprocessid);
   }
 
-  navigateBack(){
-    this.location.back();
+  hide(): void {
+    this.bpc.hideAll();
   }
+
 }

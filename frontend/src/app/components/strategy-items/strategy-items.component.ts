@@ -46,6 +46,7 @@ export class StrategyItemsComponent implements OnInit {
       case 'strategyItem-edit':
         // Hide
         this.showStrItemAdd = false;
+        this.showStrItemDelete = false;
         // Show
         this.strItemCurrentValues = strategyItem;
         this.showStrItemEdit = !this.showStrItemEdit;

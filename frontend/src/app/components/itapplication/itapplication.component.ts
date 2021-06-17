@@ -41,6 +41,7 @@ export class ItapplicationComponent implements OnInit {
       case 'itapplication-edit':
         // Hide
         this.showItAdd = false;
+        this.showItDelete = false;
         // Show
         this.itCurrentValues = itapplication;
         this.showItEdit = !this.showItEdit;

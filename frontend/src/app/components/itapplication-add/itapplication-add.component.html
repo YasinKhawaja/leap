@@ -14,7 +14,7 @@
             <div class="row">
             <div class="col">
         <div class='form-group'>
-            <label>Name</label>
+            <label>Name <span class="red">*</span></label>
            <input type='text' class="form-control" formControlName='name' required placeholder="Name" />
                 
             <div *ngIf="itapplication.get('name')!.invalid && (itapplication.get('name')!.dirty || itapplication.get('name')!.touched)" class="alert alert-danger alertdiv">
@@ -24,7 +24,7 @@
     </div>
     <div class="col">
         <div class='form-group'>
-            <label>Technology</label>
+            <label>Technology <span class="red">*</span></label>
            <input type='text' class="form-control" formControlName='technology' required placeholder="Technology Name" /> 
            
             <div *ngIf="itapplication.get('technology')!.invalid && (itapplication.get('technology')!.dirty || itapplication.get('technology')!.touched)" class="alert alert-danger alertdiv">
@@ -37,7 +37,7 @@
     <div class="row">
     <div class="col">
         <div class='form-group'>
-            <label>Version</label>
+            <label>Version <span class="red">*</span></label>
              <input type='text' class="form-control" formControlName='version' required placeholder="1.1.x" />
             <div *ngIf="itapplication.get('version')!.invalid && (itapplication.get('version')!.dirty || itapplication.get('version')!.touched)" class="alert alert-danger alertdiv">
                 <div *ngIf="itapplication.get('version')!.errors!.required"> Version is required. </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="col">
         <div class='form-group'>
-            <label>Acquisition Date</label>
+            <label>Acquisition Date <span class="red">*</span></label>
             <input type='date' class="form-control" formControlName='acquisitionDate' required /> 
             <div *ngIf="itapplication.get('acquisitionDate')!.invalid && (itapplication.get('acquisitionDate')!.dirty || itapplication.get('acquisitionDate')!.touched)" class="alert alert-danger alertdiv">
                 <div *ngIf="itapplication.get('acquisitionDate')!.errors!.required"> Acquisition date is required.

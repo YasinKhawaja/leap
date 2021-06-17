@@ -1,5 +1,4 @@
-  
-<form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">
+  <form [formGroup]="capabilityStrategyItem" (ngSubmit)="onSubmit()">
   <div class="card">
     <div class="flex-container card-header">
       <div class="flex-item">
@@ -14,15 +13,18 @@
   </div>
   </div>
       <div class="card-body">
-        <!-- Name -->
-        <h6>Choose Strategy, then select Strategy Item.</h6>
+      
+        <div class="form-group">
+        <label>Choose Strategy, then select Strategy Item <span class="red">*</span></label>
         <div [formGroup]="strategy">
           <select class="custom-select" (change)="changeStrategy()" formControlName="strategyName">
             <option value="" disabled>Choose your Strategy</option>
             <option *ngFor="let strategy of strategies  | keyvalue" [ngValue]="strategy.value">{{strategy.value}}</option>
           </select>
         </div>
-        <h6>Choose Strategy Item to see which capability uses it the best.</h6>
+      </div>
+      <div class="form-group"> 
+        <label>Choose Strategy Item to see which capability uses it the best <span class="red">*</span></label>
         <div>
           <select class="custom-select" (change)="changeStrategyItem()" formControlName="strategyItemName" required>
             <option value="" disabled>Choose your Strategy Item</option>
@@ -30,11 +32,14 @@
               {{strategyItem.value}}</option>
           </select>
         </div>
+      </div>
         <div class="form-group">
-            <label> Strategic Emphasis</label>
-          <select class="select1" formControlName='strategicEmphasis' required>
+            <label> Strategic Emphasis <span class="red">*</span></label>
+            <div>
+          <select class="custom-select" formControlName='strategicEmphasis' required>
             <option *ngFor="let type of eSe | keyvalue" [ngValue]="type.value">{{type.value}}</option>
           </select>
+        </div>
         </div>
         <br>
           <div *ngIf="capabilityStrategyItem.get('strategicEmphasis')!.invalid && (capabilityStrategyItem.get('strategicEmphasis')!.dirty || capabilityStrategyItem.get('strategicEmphasis')!.touched)" class="alert alert-danger alertdiv">
