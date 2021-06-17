@@ -59,8 +59,7 @@ export class ItapplicationEditComponent implements OnInit {
             currentValueForMoney: [result.currentValueForMoney, Validators.pattern('[0-5]')],
             currentTotalCostPerYear: [result.currentTotalCostPerYear],
             toleratedTotalCostPerYear: [result.toleratedTotalCostPerYear],
-            timeValue: [result.timeValue],
-           
+            timeValue: [result.timeValue]
           });
         }
       );

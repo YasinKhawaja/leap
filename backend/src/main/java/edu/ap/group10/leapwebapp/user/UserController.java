@@ -126,7 +126,11 @@ public class UserController {
         String newToken = userService.refreshJwt(token);
         response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
         response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
-        response.setHeader("Authorization", newToken);
+        String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
+        newToken = Base64.getEncoder().withoutPadding().encodeToString(newToken.getBytes());
+        ResponseCookie cookie = ResponseCookie.from(name, newToken).httpOnly(false).secure(false).domain("localhost")
+                .path("/").maxAge(Duration.ofMinutes(15)).sameSite("Strict").build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
     @PostMapping("/user/resetpassword")

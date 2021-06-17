@@ -21,7 +21,7 @@
                                 <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" [routerLink]="['../businessprocess/edit/', process.id]">
                                     {{ process.name }}
                                 </a>
-                                <div>{{process.name}}</div>
+                                <div *ngIf="(jwt.checkRole() == 'lezer')">{{process.name}}</div>
                             </td>
                             <td>{{ process.description }}</td>
                         </tr>

@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.capilitybusinessprocess;
+package edu.ap.group10.leapwebapp.capabilitybusinessprocess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +22,14 @@ public class CapabilityBusinessProcessService {
 
     @Autowired
     private CapabilityRepository capabilityRepository;
-    
+
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
 
     public List<CapabilityBusinessProcess> getCapabilityBusinessProcesses(String capabilityid) {
         List<CapabilityBusinessProcess> capabilityBusinessProcesses = new ArrayList<>();
-        for (CapabilityBusinessProcess capabilityBusinessProcess : capabilityBusinessProcessRepository.findAll()){
-            if(capabilityBusinessProcess.getCapability().getId().equals(Long.parseLong(capabilityid))){
+        for (CapabilityBusinessProcess capabilityBusinessProcess : capabilityBusinessProcessRepository.findAll()) {
+            if (capabilityBusinessProcess.getCapability().getId().equals(Long.parseLong(capabilityid))) {
                 capabilityBusinessProcesses.add(capabilityBusinessProcess);
             }
         }
@@ -38,11 +38,12 @@ public class CapabilityBusinessProcessService {
 
     public CapabilityBusinessProcess addCapabilityBusinessProcess(String capabilityid, String businessprocess) {
         Capability capability = capabilityRepository.findById(Long.parseLong(capabilityid))
-        .orElseThrow(ResourceNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException::new);
         BusinessProcess businessProcess = businessProcessRepository.findByName(businessprocess);
-        
-        CapabilityBusinessProcess capabilityBusinessProcess = new CapabilityBusinessProcess(capability,businessProcess);
-        if(capabilityBusinessProcessRepository.findById(capabilityBusinessProcess.getId()).isPresent()){
+
+        CapabilityBusinessProcess capabilityBusinessProcess = new CapabilityBusinessProcess(capability,
+                businessProcess);
+        if (capabilityBusinessProcessRepository.findById(capabilityBusinessProcess.getId()).isPresent()) {
             throw new EntityExistsException("Link already exists");
         } else {
             return capabilityBusinessProcessRepository.save(capabilityBusinessProcess);
@@ -50,10 +51,10 @@ public class CapabilityBusinessProcessService {
     }
 
     public void deleteCapabilityBusinessProcess(String businessprocessid) {
-        CapabilityBusinessProcess oldCapBusProcess = capabilityBusinessProcessRepository.findById(Long.parseLong(businessprocessid))
-        .orElseThrow(ResourceNotFoundException::new);
+        CapabilityBusinessProcess oldCapBusProcess = capabilityBusinessProcessRepository
+                .findById(Long.parseLong(businessprocessid)).orElseThrow(ResourceNotFoundException::new);
 
         capabilityBusinessProcessRepository.delete(oldCapBusProcess);
     }
-    
+
 }

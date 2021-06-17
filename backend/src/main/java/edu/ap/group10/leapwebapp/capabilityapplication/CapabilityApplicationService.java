@@ -10,6 +10,8 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
+import edu.ap.group10.leapwebapp.capability.CapabilityService;
+import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.itapplication.ITApplication;
 import edu.ap.group10.leapwebapp.itapplication.ITApplicationRepository;
 
@@ -21,6 +23,12 @@ public class CapabilityApplicationService {
 
     @Autowired
     private ITApplicationRepository itApplicationRepository;
+
+    @Autowired
+    private CapabilityApplicationService capabilityApplicationService;
+
+    @Autowired
+    private CapabilityService capabilityService;
 
     public List<CapabilityApplication> getCapabilityApplications(String capabilityId){
         List<CapabilityApplication> capabilityApplications = new ArrayList<>();
@@ -43,6 +51,33 @@ public class CapabilityApplicationService {
         return capabilities;
     }
     
+    public void calculateCapabilityAppFitAndInfoQuality(String capabilityId) {
+        List<CapabilityApplication> capabilityApplicationsList = capabilityApplicationService
+                                .getCapabilityApplications(capabilityId);
+                Capability capability = capabilityService.getCapabilityById(Long.parseLong(capabilityId));
+                capability.setInformationQuality(0.0);
+                capability.setApplicationFit(0.0);
+                Environment environment = capability.getEnvironment();
+                Long environmentId = environment.getId();
+
+                for (CapabilityApplication capabilityApplication : capabilityApplicationsList) {
+
+                        capability.setCalculatedInformationQuality(capabilityApplication.getInformationCompleteness(),
+                                        capabilityApplication.getInformationCorrectness(),
+                                        capabilityApplication.getInformationAvailability(),
+                                        capabilityApplication.getImportance());
+
+                        capability.setCalculatedApplicationFit(capabilityApplication.getBusinessEfficiencySupport(),
+                                        capabilityApplication.getBusinessFunctionalCoverage(),
+                                        capabilityApplication.getBusinessCorrectness(),
+                                        capabilityApplication.getBusinessFuturePotential(),
+                                        capabilityApplication.getImportance());
+
+                        capabilityService.updateCapability(environmentId, capability.getId(), capability);
+
+                }
+
+    }
 
     public CapabilityApplication findCapabilityApplication(Long id){
         return capabilityApplicationRepository.findById(id)

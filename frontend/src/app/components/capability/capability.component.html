@@ -1,72 +1,91 @@
 <main class="main">
-  <h1>Capabilities</h1>
-  <br>
-  <div>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th> <!-- DELETE icon -->
-          <th scope="col">NAME</th>
-          <th scope="col">LEVEL</th>
-          <th scope="col">PACE OF CHANGE</th>
-          <th scope="col">TARGET OPERATION MODEL</th>
-          <th scope="col">RESOURCES QUALITY</th>
-          <th scope="col">INFO QUALITY</th>
-          <th scope="col">APP FIT</th>
-          <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th> <!-- ADD sub cap -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cap of capabilities">
-          <td *ngIf="(jwt.checkRole() != 'lezer')">
-            <a class="btn btn-light" [routerLink]="[cap.id, 'delete']" role="button" (click)="selectCapability(cap.id)">
-              <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
-            </a>
-          </td>
-          <td>
-            <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap.id)">
-              {{ cap.name }}
-            </a>
-          </td>
-          <td>{{ cap.level }}</td>
-          <td>{{ cap.paceOfChange }}</td>
-          <td>{{ cap.targetOperationModel }}</td>
-          <td>{{ cap.resourcesQuality }}</td>
-          <td>{{ cap.informationQuality }}</td>
-          <td>{{ cap.applicationFit }}</td>
-          <td *ngIf="(jwt.checkRole() != 'lezer')">
-            <button type="button" class="btn btn-danger" (click)="callAll(cap, '2')" *ngIf="cap.level == '1'">
-              ADD CAP Lv2
-            </button>
-            <button type="button" class="btn btn-danger" (click)="callAll(cap, '3')" *ngIf="cap.level == '2'">
-              ADD CAP Lv3
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
     <div>
-      <br>
-      <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="callAll(null, '1')">ADD
-        CAPABILITY Lv1</button>
+        <div class="flex-container">
+            <div class="flex-item">
+                <div>
+                    <h1>Capabilities</h1>
+                </div>
+            </div>
+            <div *ngIf="(jwt.checkRole() != 'lezer')" class="flex-item">
+                <div *ngIf="(this.capabilities.length == 0)" class="align-right">
+                    <h1>
+                        <input hidden id="txtFileUpload" type="file" #csvReader (change)="uploadFile($event)" accept=".xlsx, .xls, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                        <button class="btn btn-danger" (click)="csvReader.click()">
+                            Import
+                        </button>
+
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                    <!-- DELETE icon -->
+                    <th scope="col">NAME</th>
+                    <th scope="col">LEVEL</th>
+                    <th scope="col">PACE OF CHANGE</th>
+                    <th scope="col">TARGET OPERATION MODEL</th>
+                    <th scope="col">RESOURCES QUALITY</th>
+                    <th scope="col">INFO QUALITY</th>
+                    <th scope="col">APP FIT</th>
+                    <th scope="col" *ngIf="(jwt.checkRole() != 'lezer')"></th>
+                    <!-- ADD sub cap -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cap of capabilities">
+                    <td *ngIf="(jwt.checkRole() != 'lezer')">
+                        <a class="btn btn-light" [routerLink]="[cap.id, 'delete']" role="button" (click)="selectCapability(cap.id)">
+                            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap.id)">
+                            {{ cap.name }}
+                        </a>
+                    </td>
+                    <td>{{ cap.level }}</td>
+                    <td>{{ cap.paceOfChange }}</td>
+                    <td>{{ cap.targetOperationModel }}</td>
+                    <td>{{ cap.resourcesQuality }}</td>
+                    <td>{{ cap.informationQuality }}</td>
+                    <td>{{ cap.applicationFit }}</td>
+                    <td *ngIf="(jwt.checkRole() != 'lezer')">
+                        <button type="button" class="btn btn-danger" (click)="callAll(cap, '2')" *ngIf="cap.level == '1'">
+                            ADD CAP Lv2
+                        </button>
+                        <button type="button" class="btn btn-danger" (click)="callAll(cap, '3')" *ngIf="cap.level == '2'">
+                            ADD CAP Lv3
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <br>
+            <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="callAll(null, '1')">ADD
+                CAPABILITY Lv1</button>
+        </div>
+        <br>
     </div>
-    <br>
-  </div>
-  <div class="flex-container">
-    <div class="flex-item">
-      <div *ngIf="_display1">
-        <app-capability-add [cap]="_cap"></app-capability-add>
-      </div>
+    <div class="flex-container">
+        <div class="flex-item">
+            <div *ngIf="_display1">
+                <app-capability-add [cap]="_cap"></app-capability-add>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div *ngIf="_display2">
+                <app-capability-add [cap]="_cap"></app-capability-add>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div *ngIf="_display3">
+                <app-capability-add [cap]="_cap"></app-capability-add>
+            </div>
+        </div>
     </div>
-    <div class="flex-item">
-      <div *ngIf="_display2">
-        <app-capability-add [cap]="_cap"></app-capability-add>
-      </div>
-    </div>
-    <div class="flex-item">
-      <div *ngIf="_display3">
-        <app-capability-add [cap]="_cap"></app-capability-add>
-      </div>
-    </div>
-  </div>
 </main>
