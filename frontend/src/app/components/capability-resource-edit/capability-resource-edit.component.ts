@@ -27,7 +27,7 @@ export class CapabilityResourceEditComponent implements OnInit {
 
   private initializeForm() {
     this.capresEditForm = this.fb.group({
-      numberOfResources: ['', Validators.pattern('[0-9]+')]
+      criticality: ['']
     });
   }
 

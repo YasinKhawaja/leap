@@ -1,0 +1,71 @@
+<main class="main">
+    <h1>Information</h1>
+    <br>
+    <div class="flex-container">
+        <div class="flex-item">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">DESCRIPTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let information of informationList">
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20' (click)="show('information-delete', information)" />
+                        </td>
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input id="edit" type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20' (click)="show('information-edit', information)" />
+                        </td>
+                        <td>
+                            <a class="btn btn-light" role="button" (click)="showLinkedCapabilities(information.id)">
+                                {{ information.name }}
+                            </a>
+                        </td>
+                        <td>{{ information.description }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <br>
+                <div *ngIf="(jwt.checkRole() != 'reader')" class="flex-container" style="margin-bottom: 0px;">
+                    <div class="flex-item" *ngIf="!showInformationAdd">
+                        <button type="button" class="btn btn-danger" (click)="show('information-add')">
+                            ADD INFORMATION
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-item">
+            <app-information-add *ngIf="showInformationAdd"></app-information-add>
+            <app-information-edit *ngIf="showInformationEdit" [informationCurrentValues]="informationCurrentValues">
+            </app-information-edit>
+            <app-information-delete *ngIf="showInformationDelete" [informationCurrentValues]="informationCurrentValues">
+            </app-information-delete>
+            <!--<div id="linkedCaps" *ngIf="showLinkedCaps">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="3">LINKED CAPABILITIES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let capres of capresources">
+                            <td>
+                                <a class="btn btn-light" role="button"
+                                    (click)="setCapabilityCookie(capres.capability.id)"
+                                    [routerLink]="['../capabilities/update']">
+                                    {{ capres.capability.name }}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>-->
+        </div>
+    </div>
+</main>

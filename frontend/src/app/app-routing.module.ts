@@ -59,6 +59,9 @@ import { ProjectDeleteComponent } from './components/project-delete/project-dele
 import { CapabilityProjectComponent } from './components/capability-project/capability-project.component';
 import { CapabilityProjectAddComponent } from './components/capability-project-add/capability-project-add.component';
 import { CapabilityProjectDeleteComponent } from './components/capability-project-delete/capability-project-delete.component';
+import { InformationComponent } from './components/information/information.component';
+import { CapabilityInformation } from './classes/capability-information/capability-information';
+import { CapabilityInformationComponent } from './components/capability-information/capability-information.component';
 
 const routes: Routes = [
   { path: 'company/register/:companyid', component: CompanyRequestComponent, canActivate: [RouterGuard] },
@@ -119,7 +122,9 @@ const routes: Routes = [
   { path: 'project/delete/:projectid', component: ProjectDeleteComponent, canActivate: [RouterGuard] },
   { path: 'capability-project', component: CapabilityProjectComponent, canActivate: [RouterGuard] },
   { path: 'capability-project/create', component: CapabilityProjectAddComponent, canActivate: [RouterGuard] },
-  { path: 'capability-project/delete/:capabilityprojectid', component: CapabilityProjectDeleteComponent, canActivate: [RouterGuard] }
+  { path: 'capability-project/delete/:capabilityprojectid', component: CapabilityProjectDeleteComponent, canActivate: [RouterGuard] },
+  { path: 'information', component: InformationComponent, canActivate: [RouterGuard] },
+  { path: 'capability-information', component: CapabilityInformationComponent, canActivate: [RouterGuard] }
 ];
 
 @NgModule({

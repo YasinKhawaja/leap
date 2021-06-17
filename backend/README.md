@@ -3,9 +3,6 @@ The backend of this project is made with Java Spring Boot.
 
 ## To-Do
 
-### Information
-* Add inforamtion and capability information
-
 ### Regexx validation
 * Add user input validation in backend
 

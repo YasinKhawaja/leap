@@ -38,7 +38,7 @@
             <tbody>
                 <tr *ngFor="let cap of capabilities">
                     <td *ngIf="(jwt.checkRole() != 'reader')">
-                        <a class="btn btn-light" [routerLink]="[cap.id, 'delete']" role="button" (click)="selectCapability(cap.id)">
+                        <a [routerLink]="[cap.id, 'delete']" role="button" (click)="selectCapability(cap.id)">
                             <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                         </a>
                     </td>

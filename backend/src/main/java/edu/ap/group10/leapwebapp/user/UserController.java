@@ -66,18 +66,20 @@ public class UserController {
 
     @PostMapping("/user")
     public void addUser(@RequestBody UserDTO userDTO, @RequestParam String company, @RequestParam Integer role) {
-        User user = modelMapper.map(userDTO, User.class);
-        if (userService.checkUser(user.getEmail(), user.getUsername())) {
-            byte[] bytes = new byte[10];
-            new Random().nextBytes(bytes);
-            String password = Base64.getEncoder().encodeToString(bytes);
-            user.setRole(role);
-            user.setPassword(password);
-            user.setCompany(userService.findCompany(Long.parseLong(company)));
+        if (!role.equals(-1) && !role.equals(0)) {
+            User user = modelMapper.map(userDTO, User.class);
+            if (userService.checkUser(user.getEmail(), user.getUsername())) {
+                byte[] bytes = new byte[10];
+                new Random().nextBytes(bytes);
+                String password = Base64.getEncoder().encodeToString(bytes);
+                user.setRole(role);
+                user.setPassword(password);
+                user.setCompany(userService.findCompany(Long.parseLong(company)));
 
-            userService.addUser(user);
+                userService.addUser(user);
 
-            userService.sendMail(user.getEmail(), user.getUsername(), user.getId().toString());
+                userService.sendMail(user.getEmail(), user.getUsername(), user.getId().toString());
+            }
         }
     }
 

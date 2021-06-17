@@ -77,6 +77,14 @@ import { ProgramDeleteComponent } from './components/program-delete/program-dele
 import { CapabilityProjectComponent } from './components/capability-project/capability-project.component';
 import { CapabilityProjectAddComponent } from './components/capability-project-add/capability-project-add.component';
 import { CapabilityProjectDeleteComponent } from './components/capability-project-delete/capability-project-delete.component';
+import { InformationComponent } from './components/information/information.component';
+import { InformationAddComponent } from './components/information-add/information-add.component';
+import { InformationDeleteComponent } from './components/information-delete/information-delete.component';
+import { InformationEditComponent } from './components/information-edit/information-edit.component';
+import { CapabilityInformationComponent } from './components/capability-information/capability-information.component';
+import { CapabilityInformationAddComponent } from './components/capability-information-add/capability-information-add.component';
+import { CapabilityInformationEditComponent } from './components/capability-information-edit/capability-information-edit.component';
+import { CapabilityInformationDeleteComponent } from './components/capability-information-delete/capability-information-delete.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -158,7 +166,15 @@ const appRoutes: Routes = [
     ProgramDeleteComponent,
     CapabilityProjectComponent,
     CapabilityProjectAddComponent,
-    CapabilityProjectDeleteComponent
+    CapabilityProjectDeleteComponent,
+    InformationComponent,
+    InformationAddComponent,
+    InformationDeleteComponent,
+    InformationEditComponent,
+    CapabilityInformationComponent,
+    CapabilityInformationAddComponent,
+    CapabilityInformationEditComponent,
+    CapabilityInformationDeleteComponent
   ],
   imports: [
     BrowserModule,
