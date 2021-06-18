@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.informationfix;
+package edu.ap.group10.leapwebapp.information;
 
 import java.util.List;
 
