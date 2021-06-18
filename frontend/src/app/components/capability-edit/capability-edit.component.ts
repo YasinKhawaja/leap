@@ -61,8 +61,7 @@ export class CapabilityEditComponent implements OnInit {
   private initializeForm() {
     this.capEditForm = this.fb.group({
       name: [this.capCurrentValues.name, [
-        Validators.required,
-        Validators.pattern('[a-zA-Z]+')]
+        Validators.required]
       ],
       paceOfChange: [this.capCurrentValues.paceOfChange, Validators.required],
       targetOperationModel: [this.capCurrentValues.targetOperationModel, Validators.required],
