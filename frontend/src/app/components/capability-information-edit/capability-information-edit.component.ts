@@ -22,29 +22,17 @@ enum Criticality {
 })
 export class CapabilityInformationEditComponent implements OnInit {
 
-  informationList: Information[]
   capinfoEditForm: FormGroup
   @Input() capinfoCurrentValues: CapabilityInformation
   eCrit = Criticality
 
-  constructor(private cis: CapabilityInformationService, private fb: FormBuilder, private cic: CapabilityInformationComponent, private ns: NavbarService, private is: InformationService) {
-    this.getInformationList()
-      .subscribe(
-        (data) => {
-          this.informationList = data
-        }
-      )
+  constructor(private cis: CapabilityInformationService, private fb: FormBuilder, private cic: CapabilityInformationComponent) {
   }
 
   ngOnInit(): void {
     this.capinfoEditForm = this.fb.group({
-      information: ['', Validators.required],
       criticality: ['']
     });
-  }
-
-  get info() {
-    return this.capinfoEditForm.get('information')
   }
 
   get crit() {
@@ -54,12 +42,6 @@ export class CapabilityInformationEditComponent implements OnInit {
   information: Information
   getInformationFromDropdown(information: Information) {
     this.information = information
-  }
-
-  private getInformationList(): Observable<Information[]> {
-    var environmentId = this.ns.getEnvironmentCookie();
-
-    return this.is.getInformationList(environmentId);
   }
 
   onSubmit() {

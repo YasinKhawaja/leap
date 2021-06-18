@@ -14,20 +14,6 @@
     <div class="card-body">
         <form *ngIf="capinfoEditForm != null" [formGroup]="capinfoEditForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <label for="information">Information <span class="red">*</span></label>
-                <select id="information" class="form-control" formControlName="information">
-                    <option></option>
-                    <option *ngFor="let info of informationList" (click)="getInformationFromDropdown(info)">{{ info.name
-                        }}
-                    </option>
-                </select>
-                <div class="alert alert-danger center" *ngIf="(info!.dirty || info!.touched) && info!.invalid">
-                    <div *ngIf="info!.errors!.required">
-                        Information is required.
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
                 <label for="criticality">Criticality</label>
                 <select id="criticality" class="form-control" formControlName='criticality' required>
                     <option *ngFor="let type of eCrit | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
@@ -39,7 +25,7 @@
                 </div>
             </div>
             <div class="center">
-                <button type="submit" class="btn btn-success" [disabled]="capinfoEditForm.invalid">ADD</button>
+                <button type="submit" class="btn btn-success" [disabled]="capinfoEditForm.invalid">EDIT</button>
             </div>
         </form>
     </div>
