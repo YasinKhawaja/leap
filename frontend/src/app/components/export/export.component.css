@@ -46,8 +46,8 @@
 
 .flex-container-2 {
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: flex-start;
     position: relative;
@@ -56,13 +56,13 @@
     padding: 10px;
     margin: 3px; 
     height: auto;
-    width: 400px;
+    width: auto;
     overflow-wrap: break-word;
 }
 
 .flex-container-3 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
     align-items: flex-start;
@@ -72,7 +72,7 @@
     padding: 10px;
     margin: 3px; 
     height: auto;
-    width: 350px;
+    width: auto;
     overflow-wrap: break-word;
 }
 
@@ -88,7 +88,7 @@
     padding: 5px; 
     margin: 3px;
     height: auto;
-    width: 300px;
+    width: auto;
     overflow-wrap: break-word;
 }
 
