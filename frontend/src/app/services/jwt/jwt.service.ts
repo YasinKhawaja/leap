@@ -16,6 +16,7 @@ export class JwtService {
   private userIdleCheck = new Subject<boolean>();
   interval;
   username: string
+  role: string
 
   constructor(private ns: NavbarService, private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -75,12 +76,18 @@ export class JwtService {
     return null;
   }
 
-  getNewJwt() {
+  getNewJwt(username?: string) {
+    if (username != undefined) {
+      this.username = username
+    } else {
+      username = this.username
+    }
     var token = this.ns.readCookie("jwt")
     var url = this.jwtUrl;
 
     var param = new URLSearchParams();
     param.set('token', token);
+    param.set('username', username)
 
     return this.http.post<any>(url, param.toString(),
       {
@@ -90,8 +97,11 @@ export class JwtService {
       .pipe(jwt => {
         return jwt;
       })
-      .subscribe(
-        () => null,
+      .toPromise()
+      .then(
+        (result) => {
+          this.role = result.role
+        },
         () => {
           this.logout();
           Swal.fire('Warning', 'Your session has expired, please log in again', 'warning')
@@ -142,6 +152,20 @@ export class JwtService {
     return false;
   }
 
+  getRole() {
+    return this.role
+  }
+
+  setRole() {
+    var cookie = this.ns.readCookie("jwt")
+    if (cookie != "") {
+      var helper = new JwtHelperService();
+      var jwtBody = helper.decodeToken(cookie)
+      var role: string = jwtBody.role
+      this.role = role.substring(1, role.length - 1).toLowerCase()
+    }
+  }
+
   setUsername() {
     var cookie = this.ns.readCookie("jwt");
     if (cookie != "") {
@@ -153,10 +177,6 @@ export class JwtService {
 
   getUsername(): string {
     return this.username
-  }
-
-  updateUsername(username: string) {
-    this.username = username
   }
 
   loggedin(username: string) {

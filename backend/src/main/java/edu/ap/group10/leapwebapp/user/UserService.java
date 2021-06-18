@@ -154,8 +154,8 @@ public class UserService implements UserDetailsService {
         return customAuthenticationProvider.checkUserID(token);
     }
 
-    public String refreshJwt(String token) {
-        return customAuthenticationProvider.newJwt(token);
+    public String refreshJwt(String token, String username) {
+        return customAuthenticationProvider.newJwt(token, username);
     }
 
     public User findUserByMail(String email) {

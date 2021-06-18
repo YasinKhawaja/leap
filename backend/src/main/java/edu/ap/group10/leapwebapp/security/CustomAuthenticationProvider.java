@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import edu.ap.group10.leapwebapp.user.User;
+import edu.ap.group10.leapwebapp.user.UserRepository;
 import edu.ap.group10.leapwebapp.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +29,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -92,17 +96,23 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     }
 
-    public String newJwt(String token) {
+    public String newJwt(String token, String username) {
         DecodedJWT jwt = verifyJWTUser(token);
+        String usernameToken;
+
+        if (!username.equals("")) {
+            usernameToken = username;
+        } else {
+            usernameToken = jwt.getSubject();
+        }
 
         if (jwt != null) {
-            String role = jwt.getClaim(CLAIM_ROLE).toString();
-            role = role.substring(1, role.length() - 1);
+            String role = userRepository.findByUsername(usernameToken).getAuthorities().toString();
             String company = jwt.getClaim(CLAIM_COMPANY).toString();
             company = company.substring(1, company.length() - 1);
 
-            return JWT.create().withClaim(CLAIM_ROLE, role).withClaim(CLAIM_COMPANY, company)
-                    .withSubject(jwt.getSubject()).withIssuer(jwt.getIssuer())
+            return JWT.create().withClaim(CLAIM_ROLE, role).withClaim(CLAIM_COMPANY, company).withSubject(usernameToken)
+                    .withIssuer(jwt.getIssuer())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {

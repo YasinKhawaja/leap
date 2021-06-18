@@ -124,8 +124,8 @@ public class UserController {
     }
 
     @PostMapping("/user/jwt")
-    public void jwt(@RequestParam String token, HttpServletResponse response) {
-        String newToken = userService.refreshJwt(token);
+    public void jwt(@RequestParam String token, @RequestParam String username, HttpServletResponse response) {
+        String newToken = userService.refreshJwt(token, username);
         response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
         response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
         String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());

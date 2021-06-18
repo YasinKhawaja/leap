@@ -48,7 +48,6 @@ export class UserService {
     this.http.delete(url).subscribe(
       () => {
         this.router.navigate(['environments'])
-        Swal.fire('Succes', 'User has been deleted', 'success')
       },
       error => {
         Swal.fire('error', error.error.message, 'error')
@@ -56,7 +55,7 @@ export class UserService {
     )
   }
 
-  public updateUser(userId: string, user: User, role: string) {
+  public updateUser(userId: string, user: User, role: string, sameuser: boolean) {
     var url = `${this.userURL}user`;
 
     this.http.put<User>(url, user, {
@@ -65,12 +64,14 @@ export class UserService {
         role: role
       }
     }).subscribe(
-      () => {
-        this.jwt.updateUsername(user.username)
+      async () => {
+        if (sameuser) {
+          await this.jwt.getNewJwt(user.username)
+          this.jwt.setRole()
+        }
         this.router.navigate(['environments'])
-        Swal.fire('Success', 'User has been updated', 'success')
       },
-      error => {
+      () => {
         Swal.fire('Error', 'Failed to update user, new email or username might be in use', 'error')
       }
     )

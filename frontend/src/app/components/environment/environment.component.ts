@@ -29,23 +29,15 @@ export class EnvironmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.role = this.jwt.checkRole();
-
-    if (this.role == "application admin") {
-      this.getCompanies();
-    } else {
-      this.companyid = this.jwt.checkCompany();
-      this.getAllEnvironments();
-    }
-    if (this.role == "admin") {
-      this.getUsers();
-    }
+    this.getRole()
   }
 
   getAllEnvironments(): void {
     this.es.getAllEnvironments(this.companyid)
       .subscribe(
-        res => { this.environments = res; },
+        res => {
+          this.environments = res;
+        },
         err => console.error(err)
       );
   }
@@ -72,6 +64,20 @@ export class EnvironmentComponent implements OnInit {
           Swal.fire('Error', error.error.message, 'error');
         }
       )
+  }
+
+  getRole() {
+    this.jwt.setRole()
+    this.role = this.jwt.getRole()
+    if (this.role == "application admin") {
+      this.getCompanies();
+    } else {
+      this.companyid = this.jwt.checkCompany();
+      this.getAllEnvironments();
+    }
+    if (this.role == "admin") {
+      this.getUsers();
+    }
   }
 
   environmentId(environmentId, environmentName): void {
