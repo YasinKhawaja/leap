@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class CapabilityBusinessprocessService {
 
-  private cbpURL: string = '//localhost:8080/api/capabilitybusinessprocess' 
+  private cbpURL: string = '//localhost:8080/api/capabilitybusinessprocess'
   private contentHeaders: HttpHeaders;
 
   constructor(private http: HttpClient, private router: Router) {
@@ -22,29 +22,14 @@ export class CapabilityBusinessprocessService {
     return this.http.get<CapabilityBusinessprocess[]>(url);
   }
 
-  public addCapabilityBusinessProcess(capabilityid: string, capabilitybusinessprocess: CapabilityBusinessprocess){
+  public addCapabilityBusinessProcess(capabilityid: string, capabilitybusinessprocess: CapabilityBusinessprocess) {
     var url = `${this.cbpURL}/${capabilityid}`;
     return this.http.post<CapabilityBusinessprocess>(url, capabilitybusinessprocess.getParams(),
-    {headers: this.contentHeaders})
-      .subscribe(
-        () => {
-         // this.router.navigate(['capability-businessprocess'])
-         window.location.reload();
-
-        },
-        () => {
-          Swal.fire('Error', 'Failed to add capability-business process link', 'error')
-        }
-      );
+      { headers: this.contentHeaders })
   }
 
-  public deleteCapabilityBusienssProcess(capabilitybusinessprocessid: string){
+  public deleteCapabilityBusienssProcess(capabilitybusinessprocessid: string): Observable<any> {
     var url = `${this.cbpURL}/${capabilitybusinessprocessid}`;
-    this.http.delete(url).subscribe(
-      () => {
-       // this.router.navigate(['capability-businessprocess'])
-       window.location.reload();
-      }
-    )
+    return this.http.delete(url)
   }
 }

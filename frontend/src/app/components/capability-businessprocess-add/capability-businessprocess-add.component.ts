@@ -21,7 +21,7 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder, private cbs: CapabilityBusinessprocessService, private ns: NavbarService, private bps: BusinessprocessService,
-    private cpc : CapabilityBusinessprocessComponent) {
+    private cpc: CapabilityBusinessprocessComponent) {
     this.businessprocesses = [];
   }
 
@@ -34,7 +34,7 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
           result.forEach(
             e => {
               this.businessprocesses.push(e.name);
-          })
+            })
         },
         error => {
           Swal.fire('Error', `Failed to load projects of environment (${environmentid})`, 'error')
@@ -53,8 +53,17 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
     var newCapabilityBusinessprocess = new CapabilityBusinessprocess(
       this.capabilityBusinessprocess.value.businessprocess
     );
-    
-    this.cbs.addCapabilityBusinessProcess(capabilityid, newCapabilityBusinessprocess);
+
+    this.cbs.addCapabilityBusinessProcess(capabilityid, newCapabilityBusinessprocess)
+      .subscribe(
+        () => {
+          this.cpc.ngOnInit()
+          this.hide()
+        },
+        () => {
+          Swal.fire('Error', 'Failed to add capability-business process link', 'error')
+        }
+      );;
   }
 
 }

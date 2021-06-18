@@ -17,33 +17,19 @@ export class CapabilityProjectService {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   }
 
-  public getCapabilityProject(capabilityid: string): Observable<CapabilityProject[]>{
+  public getCapabilityProject(capabilityid: string): Observable<CapabilityProject[]> {
     var url = `${this.cpURL}/${capabilityid}`
     return this.http.get<CapabilityProject[]>(url);
   }
 
-  public addCapabilityProject(capabilityid: string, capabilityproject: CapabilityProject){
+  public addCapabilityProject(capabilityid: string, capabilityproject: CapabilityProject) {
     var url = `${this.cpURL}/${capabilityid}`;
     return this.http.post<CapabilityProject>(url, capabilityproject.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(
-      () => {
-       // this.router.navigate(['capability-project'])
-       window.location.reload();
-      },
-      () => {
-        Swal.fire('Error', 'Failed to add capability-project link', 'error')
-      }
-    )
+      { headers: this.contentHeaders })
   }
 
-  public deleteCapabilityProject(capabilityprojectid: string){
+  public deleteCapabilityProject(capabilityprojectid: string): Observable<any> {
     var url = `${this.cpURL}/${capabilityprojectid}`
-    this.http.delete(url).subscribe(
-      () => {
-        //this.router.navigate(['capability-project'])
-        window.location.reload();
-      }
-    )
+    return this.http.delete(url)
   }
 }

@@ -30,7 +30,7 @@
 
                                 {{ strategyItem.name }}
                             </a>
-                          </td>
+                        </td>
 
                         <td> {{ strategyItem.description }} </td>
                     </tr>
@@ -57,8 +57,8 @@
             <app-strategy-items-delete *ngIf="showStrItemDelete" [strItemCurrentValues]="strItemCurrentValues">
             </app-strategy-items-delete>
 
-              <!-- Linked caps right panel -->
-              <div id="linkedCaps" *ngIf="showLinkedCaps">
+            <!-- Linked caps right panel -->
+            <div id="linkedCaps" *ngIf="showLinkedCaps">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -68,7 +68,7 @@
                     <tbody>
                         <tr *ngFor="let capstrItem of capStrItems">
                             <td>
-                                <a class="btn btn-light" role="button" (click)="setCapabilityCookie(capstrItem.capability.id)" [routerLink]="['../capabilities/update']">
+                                <a class="btn btn-light" role="button" (click)="setCapabilityCookie(capstrItem.capability.id)" [routerLink]="['/capabilities/update']">
                                     {{ capstrItem.capability.name }}
                                 </a>
                             </td>
@@ -76,7 +76,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
 
     </div>

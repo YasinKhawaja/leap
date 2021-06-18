@@ -87,6 +87,7 @@ export class UserService {
       }
     }).subscribe(
       () => {
+        this.router.navigate(['environments'])
         Swal.fire('Success', 'User has been created, an email will be sent to this user', 'success')
       },
       () => {
