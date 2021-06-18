@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.informationtemp;
+package edu.ap.group10.leapwebapp.information;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
