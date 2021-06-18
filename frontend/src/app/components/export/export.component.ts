@@ -223,7 +223,7 @@ export class ExportComponent implements OnInit {
       slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' }); // add image to slide
 
       // save powerpoint
-      powerpoint.writeFile({ fileName: "CapabilityMap" });
+      powerpoint.writeFile({ fileName: "CapabilityMap" }).then( () => console.log(powerpoint));
     });
   }
 
