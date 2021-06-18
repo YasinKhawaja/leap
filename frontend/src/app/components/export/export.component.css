@@ -39,7 +39,7 @@
 .flex-container-1 {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     position: relative;
 }

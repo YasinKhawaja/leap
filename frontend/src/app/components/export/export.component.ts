@@ -175,8 +175,8 @@ export class ExportComponent implements OnInit {
     count = 0;
 
     for (var i = 0; i < this.parents.length; i++) {
-      children.push(this.parents[i].split(':')[0])
-      parents.push(this.parents[i].split(':')[1])
+      children.push(this.parents[i].split(';')[0])
+      parents.push(this.parents[i].split(';')[1])
     }
     console.log(children)
     console.log(parents)

@@ -51,10 +51,14 @@ export class CapabilityService {
   createCapabilityFromCsv(envid: string, capability: Capability, parent: string) {
     var url = `//localhost:8080/api/capabilityparents`
     var parentname = ""
+    var resourceQuality = ""
     if (parent != undefined) {
       parentname = parent
     }
-
+    if (capability.resourcesQuality != '\"\"') {
+      resourceQuality = capability.resourcesQuality
+    } else { resourceQuality = null}
+    capability.resourcesQuality = resourceQuality;
     return this.http.post<any>(url, capability, { params: { envid: envid, parent: parentname } })
   }
 

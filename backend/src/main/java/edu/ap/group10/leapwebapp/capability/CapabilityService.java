@@ -39,7 +39,7 @@ public class CapabilityService {
         List<String> parents = new ArrayList<>();
         for (Capability capability : capabilityRepository.findByEnvironment(environmentToFindBy)) {
             if (capability.getParent() != null) {
-                parents.add(capability.getName() + ":" + capability.getParent().getName());
+                parents.add(capability.getName() + ";" + capability.getParent().getName());
             }
         }
         return parents;
@@ -63,11 +63,12 @@ public class CapabilityService {
     }
 
     public Capability createCapability(Long envId, Long parentCapId, Capability cap) {
-        Capability check = capabilityRepository.findByName(cap.getName());
-        if (check != null) {
+        Environment envToLinkWith = environmentRepository.findById(envId).orElseThrow();
+            List<Capability> capsNameCheck = this.getAllCapabilitiesInEnvironment(envToLinkWith.getId()).stream()
+                    .filter(c -> c.getName().equals(cap.getName())).collect(Collectors.toList());
+        if (!capsNameCheck.isEmpty()) {
             throw new EntityExistsException("Capability already exists within this environment");
         } else {
-            Environment envToLinkWith = environmentRepository.findById(envId).orElseThrow();
             List<Capability> capsFound = this.getAllCapabilitiesInEnvironment(envToLinkWith.getId()).stream()
                     .filter(c -> c.getId().equals(parentCapId)).collect(Collectors.toList());
             Capability parentCapToLinkWith;
