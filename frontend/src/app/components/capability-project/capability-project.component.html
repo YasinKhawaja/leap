@@ -3,51 +3,45 @@
     <br>
     <div class="flex-container">
         <div class="flex-item">
-            
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
-                            <th scope="col">NAME</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let capabilityproject of capabilityprojects">
-                            <td *ngIf="(jwt.checkRole() != 'reader')">
-                                <a >
-                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('capbsprocess-delete',capabilityproject)">
-                                </a>
-                            </td>
-                            <td>
-                           <!--deze links werken niet?-->
-                                <a *ngIf="(jwt.checkRole() != 'reader')" class="btn btn-light" role="button" 
-                              [routerLink]="['/project/edit/', capabilityproject.project.id]"
-                                 >
-                                    {{ capabilityproject.project.name }}
-                                </a>
-                                <a *ngIf="(jwt.checkRole() == 'reader')" class="btn btn-light" role="button" [routerLink]="['/program/']">
-                                    {{ capabilityproject.project.name }}
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <br>
-                    <div class="flex-container" style="margin-bottom: 0px;">
-                        <div class="flex-item" *ngIf="!showcapabilityProjectAdd">
-                            <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('capbsprocess-add')">ADD PROJECT TO CAPABILITY</button>
-                           
-                        </div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <th scope="col">NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let capabilityproject of capabilityprojects">
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <a>
+                                <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('capbsprocess-delete',capabilityproject)">
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-light" role="button" [routerLink]="['/program/']">
+                                {{ capabilityproject.project.name }}
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <br>
+                <div class="flex-container" style="margin-bottom: 0px;">
+                    <div class="flex-item" *ngIf="!showcapabilityProjectAdd">
+                        <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('capbsprocess-add')">ADD PROJECT TO CAPABILITY</button>
+
                     </div>
-    
                 </div>
-    
+
             </div>
-            <div class="flex-item">
-                <app-capability-project-add *ngIf="showcapabilityProjectAdd"></app-capability-project-add>
-                <app-capability-project-delete *ngIf="showcapabilityProjectDelete" [capabilityProjectCurrentValues]="capabilityProjectCurrentValues"></app-capability-project-delete>
-            </div>
-    
+
         </div>
-    </main>
+        <div class="flex-item">
+            <app-capability-project-add *ngIf="showcapabilityProjectAdd"></app-capability-project-add>
+            <app-capability-project-delete *ngIf="showcapabilityProjectDelete" [capabilityProjectCurrentValues]="capabilityProjectCurrentValues"></app-capability-project-delete>
+        </div>
+
+    </div>
+</main>

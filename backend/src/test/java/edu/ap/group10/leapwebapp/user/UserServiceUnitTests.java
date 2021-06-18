@@ -432,10 +432,11 @@ public class UserServiceUnitTests {
         // Given
         String jwt = "OK";
         String newJWT = "NEW";
+        String username = "test";
 
         // When
-        when(customAuthenticationProvider.newJwt(jwt)).thenReturn(newJWT);
-        String actualNewJWT = sut.refreshJwt(jwt);
+        when(customAuthenticationProvider.newJwt(jwt, username)).thenReturn(newJWT);
+        String actualNewJWT = sut.refreshJwt(jwt, username);
 
         // Then
         assertEquals(newJWT, actualNewJWT);
