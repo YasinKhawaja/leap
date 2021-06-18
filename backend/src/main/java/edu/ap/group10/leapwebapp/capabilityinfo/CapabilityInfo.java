@@ -8,8 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
 
-import edu.ap.group10.leapwebapp.information.Information;
 import edu.ap.group10.leapwebapp.capability.Capability;
+import edu.ap.group10.leapwebapp.informationfix.Information;
 import lombok.Data;
 
 @Data
