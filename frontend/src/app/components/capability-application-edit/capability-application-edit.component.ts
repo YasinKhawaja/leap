@@ -18,14 +18,14 @@ export class CapabilityApplicationEditComponent implements OnInit{
   @Input() capAppCurrentValues: CapabilityApplication;
 
   capabilityApplication = this.fb.group({
-    businessEfficiencySupport: ['', Validators.required],
-    businessFunctionalCoverage: ['', Validators.required],
-    businessCorrectness: ['', Validators.required],
-    businessFuturePotential: ['', Validators.required],
-    informationCompleteness: ['', Validators.required],
-    informationCorrectness: ['', Validators.required],
-    informationAvailability: ['', Validators.required],
-    importanceFactor: ['', Validators.required]
+    businessEfficiencySupport: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFunctionalCoverage: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFuturePotential: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCompleteness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    importanceFactor: ['', [Validators.required, Validators.pattern('[0-9]?[0-9]?[0]?')]]
   })
 
   constructor(private fb: FormBuilder,  private cas: CapabilityApplicationService,
