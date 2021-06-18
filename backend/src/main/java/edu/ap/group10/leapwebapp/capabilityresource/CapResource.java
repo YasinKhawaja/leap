@@ -3,6 +3,7 @@ package edu.ap.group10.leapwebapp.capabilityresource;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class CapResource implements Serializable {
     @JoinColumn(name = "capability_id")
     private Capability capability;
 
-    @OneToOne(targetEntity = Resource.class)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "resource_id")
     private Resource resource;
 

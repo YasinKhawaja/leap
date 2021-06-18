@@ -98,7 +98,7 @@ class CapResourceRepositoryTests {
     }
 
     @Test
-    void GivenCapResources_WhenFindByCapabilityIdAndResourceId_ThenReturnCapResources() {
+    void GivenCapResources_WhenExistsByCapabilityIdAndResourceId_ThenReturnCapResources() {
         // Given
         Company company = new Company("", "", "", "", 1, 1, "", "", "", "");
         companyRepo.save(company);
