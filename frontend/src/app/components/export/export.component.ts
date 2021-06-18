@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
@@ -30,6 +31,8 @@ export class ExportComponent implements OnInit {
 
   capabilitiesLinkedToItApplication: Capability[]
   capabilityStrategyItemsLinkedToStrategyItem: CapabilityStrategyItems[]
+
+  contentDataURL = null
 
   style: { 'border-color': string };
   filter: string;
@@ -212,21 +215,39 @@ export class ExportComponent implements OnInit {
     let powerpoint = new pptxgen();
 
 
-    // add a slide
-    let slide = powerpoint.addSlide();
+    
+
 
     // add the capability map image
     // capture the capabity map which is located in the div with id 'divLeftHalf'
-    let data = document.getElementById('divLeftHalf');
-    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => { // convert the capability map html to an image
-      const contentDataURL = canvas.toDataURL('image/png', 4)
-      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' }); // add image to slide
+    this.capabilitiesLevel1.forEach(element => {
+      // add a slide
+    let slide = powerpoint.addSlide();
+      let data = document.getElementById(element.id);
+      console.log(data)
+      html2canvas(data, { scrollY: -window.scrollY })
+      .then(
+        async canvas => { // convert the capability map html to an image
+        await this.addSlide(canvas, slide)
 
-      // save powerpoint
-      powerpoint.writeFile({ fileName: "CapabilityMap" });
+        // add image to slide
+        
     });
+   
+
+      
+    });// save powerpoint
+    console.log(powerpoint.writeFile())
+      powerpoint.writeFile({ fileName: "CapabilityMap" }).then(() => console.log(powerpoint));
+      
   }
 
+  addSlide(canvas, slide) {
+    this.contentDataURL = canvas.toDataURL('image/png', 4)
+    console.log(this.contentDataURL)
+    slide.addImage({ data: this.contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
+    console.log(slide);
+  }
   generatePDF() {
     let doc = new jsPDF();
 
