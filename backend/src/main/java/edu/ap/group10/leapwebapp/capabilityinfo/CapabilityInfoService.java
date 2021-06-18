@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
 import edu.ap.group10.leapwebapp.capability.CapabilityRepository;
-import edu.ap.group10.leapwebapp.information.Information;
-import edu.ap.group10.leapwebapp.information.InformationRepository;
+import edu.ap.group10.leapwebapp.informationfqsfqs.Information;
+import edu.ap.group10.leapwebapp.informationfqsfqs.InformationRepository;
 
 @Service
 public class CapabilityInfoService {

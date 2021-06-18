@@ -1,4 +1,4 @@
-package edu.ap.group10.leapwebapp.information;
+package edu.ap.group10.leapwebapp.informationfqsfqs;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
