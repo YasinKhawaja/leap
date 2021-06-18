@@ -133,10 +133,10 @@ export class ExportComponent implements OnInit {
         error => console.log(error));
   }
 
-  
+
   changeStrategyItem() {
     this.filter = "StrategyItem"; // when a strategy item is chosen, set the filter to StrategyItem to apply the colors on the capability map for this filter
-    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName) 
+    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName)
       .subscribe(result => {
         this.capabilityStrategyItemsLinkedToStrategyItem = result;
 
@@ -211,43 +211,23 @@ export class ExportComponent implements OnInit {
   }
 
   generatePowerPoint() {
-    // create new powerpoint
     let powerpoint = new pptxgen();
+    var counter: number = 0
 
-
-    
-
-
-    // add the capability map image
-    // capture the capabity map which is located in the div with id 'divLeftHalf'
     this.capabilitiesLevel1.forEach(element => {
-      // add a slide
-    let slide = powerpoint.addSlide();
+      let slide = powerpoint.addSlide();
       let data = document.getElementById(element.id);
-      console.log(data)
-      html2canvas(data, { scrollY: -window.scrollY })
-      .then(
-        async canvas => { // convert the capability map html to an image
-        await this.addSlide(canvas, slide)
-
-        // add image to slide
-        
-    });
-   
-
-      
-    });// save powerpoint
-    console.log(powerpoint.writeFile())
-      powerpoint.writeFile({ fileName: "CapabilityMap" }).then(() => console.log(powerpoint));
-      
+      html2canvas(data, { scrollY: -window.scrollY }).then(canvas => { // convert the capability map html to an image
+        const contentDataURL = canvas.toDataURL('image/png', 4)
+        slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });// save powerpoint
+        counter++
+        if (counter.valueOf() == this.capabilitiesLevel1.length) {
+          powerpoint.writeFile({ fileName: "CapabilityMap" });
+        }
+      });
+    })
   }
 
-  addSlide(canvas, slide) {
-    this.contentDataURL = canvas.toDataURL('image/png', 4)
-    console.log(this.contentDataURL)
-    slide.addImage({ data: this.contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
-    console.log(slide);
-  }
   generatePDF() {
     let doc = new jsPDF();
 
@@ -270,7 +250,7 @@ export class ExportComponent implements OnInit {
       doc.save("CapabilityMap");
     });
   }
-  
+
   // reload the capability map without any filters
   generateEntireMap() {
     window.location.reload();
