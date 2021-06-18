@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
+import { Capability } from 'src/app/classes/capability/capability';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
@@ -12,11 +14,14 @@ import Swal from 'sweetalert2';
 })
 export class CapabilityApplicationComponent implements OnInit {
 
+  capability: Capability;
+
   capabilityApplications: CapabilityApplication[];
 
-  constructor(private cas: CapabilityApplicationService, private ns: NavbarService, public jwt: JwtService) { }
+  constructor(private cas: CapabilityApplicationService, private ns: NavbarService, public jwt: JwtService, private cs: CapabilityService) { }
 
   ngOnInit(): void {
+    this.getCapability();
     let capabilityId = this.ns.getCapabilityCookie();
 
     this.cas.getCapabilityApplications(capabilityId)
@@ -28,6 +33,11 @@ export class CapabilityApplicationComponent implements OnInit {
         error => {
           Swal.fire('Error', error.error.message, 'error')
         });
+  }
+
+  private getCapability(): void {
+    var envId = this.ns.getEnvironmentCookie(), capId = this.ns.getCapabilityCookie();
+    this.cs.getCapability(envId, capId).subscribe(response => this.capability = response);
   }
 
   showCapAppAdd: boolean = false;

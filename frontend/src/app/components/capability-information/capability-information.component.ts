@@ -17,7 +17,8 @@ export class CapabilityInformationComponent implements OnInit {
   capability: Capability
   capinfolist: CapabilityInformation[]
 
-  constructor(private cis: CapabilityInformationService, private cs: CapabilityService, private ns: NavbarService, public jwt: JwtService) { }
+  constructor(private cis: CapabilityInformationService, private cs: CapabilityService, private ns: NavbarService,
+     public jwt: JwtService) { }
 
   ngOnInit(): void {
     this.getCapability()

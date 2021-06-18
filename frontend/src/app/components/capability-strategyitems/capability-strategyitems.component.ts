@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
+import { Capability } from 'src/app/classes/capability/capability';
 import { CapabilityStrategyitemService } from 'src/app/services/capability-strategyitem/capability-strategyitem.service';
+import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 
@@ -12,11 +14,14 @@ import { NavbarService } from 'src/app/services/navbar/navbar.service';
 })
 export class CapabilityStrategyitemsComponent implements OnInit {
 
+  capability: Capability;
+
   capabilityStrategyItems: CapabilityStrategyItems[];
 
-  constructor(private csis: CapabilityStrategyitemService, private router: Router, private ns: NavbarService, public jwt: JwtService) { }
+  constructor(private csis: CapabilityStrategyitemService, private ns: NavbarService, public jwt: JwtService, private cs: CapabilityService) { }
 
   ngOnInit(): void {
+    this.getCapability();
     let capabilityId = this.ns.getCapabilityCookie();
 
     this.csis.getCapabilityStrategyItems(capabilityId)
@@ -27,6 +32,11 @@ export class CapabilityStrategyitemsComponent implements OnInit {
           //this.router.navigate([])
         },
         error => console.log(error));
+  }
+
+  private getCapability(): void {
+    var envId = this.ns.getEnvironmentCookie(), capId = this.ns.getCapabilityCookie();
+    this.cs.getCapability(envId, capId).subscribe(response => this.capability = response);
   }
 
   showCapStrategyItemAdd: boolean = false;
