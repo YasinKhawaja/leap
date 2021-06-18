@@ -44,7 +44,7 @@
         <div class="col">
             <div class='form-group'>
                 <label>Importance Factor<span class="red">*</span></label>
-                <input type='text' formControlName='importanceFactor' class="form-control" placeholder="60" required/>
+                <input  formControlName='importanceFactor' class="form-control" placeholder="60" required/>
                
                 <small class="text-muted">
                     Enter Importance Factor in % (e.g 60)
@@ -52,12 +52,21 @@
             
                
             </div>
+            <br>
+            <div *ngIf="capabilityApplication.get('importanceFactor')!.invalid && (capabilityApplication.get('importanceFactor')!.dirty || capabilityApplication.get('importanceFactor')!.touched)" class="alert alert-danger alertdiv">
+                <div *ngIf="capabilityApplication.get('importanceFactor')!.errors!.required">
+                    Importance Factor is required.
+                </div>
+                <div *ngIf="capabilityApplication.get('importanceFactor')!.errors!.pattern">
+                    Importance Factor should be a percentage. (0 to 100)
+                </div>
+            </div>
         </div>
             <div class="col">
             <div class='form-group'>
               
                     <label>Business Efficiency Support<span class="red">*</span></label>
-                    <input type='number' formControlName='businessEfficiencySupport' class="form-control" required />
+                    <input  formControlName='businessEfficiencySupport' class="form-control" required />
                    
                 <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.invalid && (capabilityApplication.get('businessEfficiencySupport')!.dirty || capabilityApplication.get('businessEfficiencySupport')!.touched)" class="alert alert-danger alertdiv">
                     <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.errors!.required">
@@ -78,7 +87,7 @@
             <div class='form-group'>
                
                     <label>Business Functional Coverage<span class="red">*</span></label>
-                    <input type='number' formControlName='businessFunctionalCoverage' class="form-control" required />
+                    <input formControlName='businessFunctionalCoverage' class="form-control" required />
     
               
                 <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.invalid && (capabilityApplication.get('businessFunctionalCoverage')!.dirty || capabilityApplication.get('businessFunctionalCoverage')!.touched)" class="alert alert-danger alertdiv">
@@ -100,7 +109,7 @@
             <div class='form-group'>
                 
                     <label>Business Correctness<span class="red">*</span></label>
-                    <input type='number' formControlName='businessCorrectness' class="form-control" required />
+                    <input  formControlName='businessCorrectness' class="form-control" required />
                        
                 <div *ngIf="capabilityApplication.get('businessCorrectness')!.invalid && (capabilityApplication.get('businessCorrectness')!.dirty || capabilityApplication.get('businessCorrectness')!.touched)" class="alert alert-danger alertdiv">
                     <div *ngIf="capabilityApplication.get('businessCorrectness')!.errors!.required">
@@ -121,7 +130,7 @@
             <div class='form-group'>
                
                     <label>Business Future Potential<span class="red">*</span></label>
-                    <input type='number' formControlName='businessFuturePotential' class="form-control" required />
+                    <input  formControlName='businessFuturePotential' class="form-control" required />
                     
                 
                 
@@ -144,7 +153,7 @@
             <div class='form-group'>
                
                     <label>Information Completeness<span class="red">*</span></label>
-                    <input type='number' formControlName='informationCompleteness' class="form-control" required />
+                    <input  formControlName='informationCompleteness' class="form-control" required />
                    
                 
                 <div *ngIf="capabilityApplication.get('informationCompleteness')!.invalid && (capabilityApplication.get('informationCompleteness')!.dirty || capabilityApplication.get('informationCompleteness')!.touched)" class="alert alert-danger alertdiv">
@@ -166,7 +175,7 @@
             <div class='form-group'>
                
                     <label>Information Correctness<span class="red">*</span></label>
-                    <input type='number' formControlName='informationCorrectness'  class="form-control" required />
+                    <input  formControlName='informationCorrectness'  class="form-control" required />
                    
                
                 <div *ngIf="capabilityApplication.get('informationCorrectness')!.invalid && (capabilityApplication.get('informationCorrectness')!.dirty || capabilityApplication.get('informationCorrectness')!.touched)" class="alert alert-danger alertdiv">
@@ -188,7 +197,7 @@
             <div class='form-group'>
                
                     <label>Information Availability<span class="red">*</span></label>
-                    <input type='number' formControlName='informationAvailability' class="form-control" required />
+                    <input formControlName='informationAvailability' class="form-control" required />
                    
                
                 <div *ngIf="capabilityApplication.get('informationAvailability')!.invalid && (capabilityApplication.get('informationAvailability')!.dirty || capabilityApplication.get('informationAvailability')!.touched)" class="alert alert-danger alertdiv">
