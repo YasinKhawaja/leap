@@ -27,7 +27,7 @@ export class EnvironmentAddComponent implements OnInit {
     // Form group
     this.envAddForm = this.fb.group({
       // Form controls
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      name: ['', [Validators.required]],
     });
   }
 

@@ -46,6 +46,7 @@ export class CapabilityComponent implements OnInit {
     var fileExtension = $event.target.files[0].name.split(".").pop().toLowerCase();
 
     if (this.fileExtensions.includes(fileExtension)) {
+      alert('Please wait a few minutes so the capabilities can load in.')
       let input = $event.target
       let reader = new FileReader()
 
@@ -91,7 +92,9 @@ export class CapabilityComponent implements OnInit {
         csvRecord.name = currentRecord[2].trim().slice(1, currentRecord[2].trim().length - 1)
         csvRecord.paceOfChange = currentRecord[3].trim().slice(1, currentRecord[3].trim().length - 1)
         csvRecord.targetOperationModel = currentRecord[4].trim().slice(1, currentRecord[4].trim().length - 1)
-        csvRecord.resourceQuality = currentRecord[5].trim()
+        if (currentRecord[5].trim() != "") {
+          csvRecord.resourceQuality = currentRecord[5].trim()
+        }
         if (currentRecord[9].trim() != "") {
           csvRecord.parent = currentRecord[9].trim().slice(1, currentRecord[9].trim().length - 1)
         }
