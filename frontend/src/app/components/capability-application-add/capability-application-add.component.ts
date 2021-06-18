@@ -25,7 +25,7 @@ export class CapabilityApplicationAddComponent implements OnInit {
     informationCompleteness: ['', [Validators.required, Validators.pattern('[0-5]')]],
     informationCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
     informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
-    importanceFactor: ['', Validators.required]
+    importanceFactor: ['', [Validators.required, Validators.pattern('[0-9]?[0-9]?[0]?')]]
   })
 
   constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService,
