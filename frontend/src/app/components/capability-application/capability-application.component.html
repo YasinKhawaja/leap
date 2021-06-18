@@ -3,78 +3,75 @@
     <br>
 
     <table class='table table-striped'>
-    <thead>
-        <tr>
-            <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
-            <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
-            <th scope='col'>Application</th>
-            <th scope='col'>Capability</th>
-            <th scope='col'>Business fit: Productivity</th>
-            <th scope='col'>Business fit: Functional Coverage</th>
-            <th scope='col'>Business fit: Correctness</th>
-            <th scope='col'>Business fit: Future Potential</th>
-            <th scope='col'>Information Quality: Completeness</th>
-            <th scope='col'>Information Quality: Correctness</th>
-            <th scope='col'>Information Quality: Availability</th>
-            <th scope='col'>Importance Factor: Sum of all linked IT Applications should be 100</th>
-        </tr>
-    </thead>
-    <tbody *ngFor='let capabilityApplication of capabilityApplications'>
-        <tr>
-            <td *ngIf="(jwt.checkRole() != 'reader')">
-                <a><img src="assets/delete-icon.png" alt="Delete" height="20" width="20" (click)="show('capapp-delete', capabilityApplication)"></a>
-            </td>
-            <td *ngIf="(jwt.checkRole() != 'reader')">
-                <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('capapp-edit', capabilityApplication)">
-            </td>
-            <td *ngIf="(jwt.checkRole() != 'reader')">
-                <a class="btn btn-light" [routerLink]="['../itapplication/', capabilityApplication.itApplication.id, 'update']">{{
-                    capabilityApplication.itApplication.name }}</a>
-            </td>
-            <td *ngIf="(jwt.checkRole() == 'reader')">
-                <a class="btn btn-light" [routerLink]="['/itapplication']">{{
-                    capabilityApplication.itApplication.name }}</a>
-            </td>
-            <td>
-                <!--Change to new capability link-->
-                <a class="btn btn-light" [routerLink]="['../capabilities/update']"> {{ capabilityApplication.capability.name }}</a>
-            </td>
-            <td class="numbers"> {{ capabilityApplication.businessEfficiencySupport }} </td>
-            <td class="numbers"> {{ capabilityApplication.businessFunctionalCoverage }} </td>
-            <td class="numbers"> {{ capabilityApplication.businessCorrectness }} </td>
-            <td class="numbers"> {{ capabilityApplication.businessFuturePotential }} </td>
-            <td class="numbers"> {{ capabilityApplication.informationCompleteness }} </td>
-            <td class="numbers"> {{ capabilityApplication.informationCorrectness }}</td>
-            <td class="numbers"> {{ capabilityApplication.informationAvailability }}</td>
-            <td class="numbers"> {{ capabilityApplication.importance }}</td>
-        </tr>
-    </tbody>
-</table>
+        <thead>
+            <tr>
+                <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
+                <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
+                <th scope='col'>Application</th>
+                <th scope='col'>Capability</th>
+                <th scope='col'>Business fit: Productivity</th>
+                <th scope='col'>Business fit: Functional Coverage</th>
+                <th scope='col'>Business fit: Correctness</th>
+                <th scope='col'>Business fit: Future Potential</th>
+                <th scope='col'>Information Quality: Completeness</th>
+                <th scope='col'>Information Quality: Correctness</th>
+                <th scope='col'>Information Quality: Availability</th>
+                <th scope='col'>Importance Factor: Sum of all linked IT Applications should be 100</th>
+            </tr>
+        </thead>
+        <tbody *ngFor='let capabilityApplication of capabilityApplications'>
+            <tr>
+                <td *ngIf="(jwt.checkRole() != 'reader')">
+                    <a><img src="assets/delete-icon.png" alt="Delete" height="20" width="20" (click)="show('capapp-delete', capabilityApplication)"></a>
+                </td>
+                <td *ngIf="(jwt.checkRole() != 'reader')">
+                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('capapp-edit', capabilityApplication)">
+                </td>
+                <td>
+                    <a class="btn btn-light" [routerLink]="['../itapplication/']">{{
+                        capabilityApplication.itApplication.name }}</a>
+                </td>
+                <td>
+                    <a class="btn btn-light" [routerLink]="['../capabilities/update']"> {{
+                        capabilityApplication.capability.name }}</a>
+                </td>
+                <td class="numbers"> {{ capabilityApplication.businessEfficiencySupport }} </td>
+                <td class="numbers"> {{ capabilityApplication.businessFunctionalCoverage }} </td>
+                <td class="numbers"> {{ capabilityApplication.businessCorrectness }} </td>
+                <td class="numbers"> {{ capabilityApplication.businessFuturePotential }} </td>
+                <td class="numbers"> {{ capabilityApplication.informationCompleteness }} </td>
+                <td class="numbers"> {{ capabilityApplication.informationCorrectness }}</td>
+                <td class="numbers"> {{ capabilityApplication.informationAvailability }}</td>
+                <td class="numbers"> {{ capabilityApplication.importance }}</td>
+            </tr>
+        </tbody>
+    </table>
 
 
-<div>
-    <br>
-    <div class="flex-container" style="margin-bottom: 0px;">
-        <div class="flex-item" *ngIf="!showCapAppAdd">
-            <button class="btn btn-danger" *ngIf="(jwt.checkRole() != 'reader')" (click)="show('capapp-add')">ADD IT APPLICATION TO CAPABILITY</button>
+    <div>
+        <br>
+        <div class="flex-container" style="margin-bottom: 0px;">
+            <div class="flex-item" *ngIf="!showCapAppAdd">
+                <button class="btn btn-danger" *ngIf="(jwt.checkRole() != 'reader')" (click)="show('capapp-add')">ADD IT
+                    APPLICATION TO CAPABILITY</button>
+            </div>
         </div>
+
     </div>
+    <br>
 
-</div>
-<br>
-
-<div class="flex-container">
-<div class="flex-item">
-<app-capability-application-add *ngIf="showCapAppAdd"></app-capability-application-add>
+    <div class="flex-container">
+        <div class="flex-item">
+            <app-capability-application-add *ngIf="showCapAppAdd"></app-capability-application-add>
 
 
-<app-capability-application-edit *ngIf="showCapAppEdit" [capAppCurrentValues]="capAppCurrentValues"></app-capability-application-edit>
-<app-capability-application-delete *ngIf="showCapAppDelete" [capAppCurrentValues]="capAppCurrentValues"></app-capability-application-delete>
+            <app-capability-application-edit *ngIf="showCapAppEdit" [capAppCurrentValues]="capAppCurrentValues">
+            </app-capability-application-edit>
+            <app-capability-application-delete *ngIf="showCapAppDelete" [capAppCurrentValues]="capAppCurrentValues">
+            </app-capability-application-delete>
 
 
-</div>
+        </div>
 
-</div>
+    </div>
 </main>
-
-
