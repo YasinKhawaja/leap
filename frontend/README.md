@@ -6,9 +6,6 @@ The frontend of this project is made with Angular.
 ### IT-Application link
 * Validator pattern -> 1 - 5 validator fix
 
-### CSS
-* Add CSS to all components to match resouces 
-
 ### Company
 * Edit company(?)
 

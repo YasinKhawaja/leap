@@ -14,6 +14,3 @@ The backend of this project is made with Java Spring Boot.
 
 ### AP
 * Cookies are always httponly, send company/username/expirydate and role during authorization in seperated parameters to frontend (replacing jwt).
-
-### Capabilities
-* Check capabilities within environment when adding one -> if name already exists within environment return error.
