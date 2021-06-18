@@ -4,12 +4,13 @@ import { User } from "../../classes/user/user"
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
+import { JwtService } from '../jwt/jwt.service';
 
 @Injectable({ providedIn: "root" })
 export class UserService {
   private userURL: string = '//localhost:8080/api/';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private jwt: JwtService) {
   }
 
 
@@ -65,6 +66,7 @@ export class UserService {
       }
     }).subscribe(
       () => {
+        this.jwt.updateUsername(user.username)
         this.router.navigate(['environments'])
         Swal.fire('Success', 'User has been updated', 'success')
       },

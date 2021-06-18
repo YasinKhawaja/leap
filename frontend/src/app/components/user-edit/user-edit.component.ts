@@ -29,14 +29,14 @@ export class UserEditComponent implements OnInit {
       .subscribe(
         result => {
           this.user = this.fb.group({
-            firstName: [result.firstname, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+            firstname: [result.firstname, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
             surname: [result.surname, [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
             email: [result.email, [Validators.required, Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]],
             username: [result.username, Validators.required],
             role: [Object.values(Role)[result.role], Validators.required]
           })
         },
-        error => {
+        () => {
           Swal.fire('Error', 'Failed to load user details', 'error');
         }
       );

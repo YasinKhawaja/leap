@@ -15,6 +15,7 @@ export class JwtService {
   private contentHeaders: HttpHeaders;
   private userIdleCheck = new Subject<boolean>();
   interval;
+  username: string
 
   constructor(private ns: NavbarService, private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -141,14 +142,21 @@ export class JwtService {
     return false;
   }
 
-  getUsername(): string {
+  setUsername() {
     var cookie = this.ns.readCookie("jwt");
     if (cookie != "") {
       var helper = new JwtHelperService();
       var jwtBody = helper.decodeToken(cookie);
-      return jwtBody.sub;
+      this.username = jwtBody.sub;
     }
-    return null;
+  }
+
+  getUsername(): string {
+    return this.username
+  }
+
+  updateUsername(username: string) {
+    this.username = username
   }
 
   loggedin(username: string) {

@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.jwt.setUsername()
     if (this.jwt.getUserBoolean().getValue()) {
       this.idle.watch();
       this.jwt.tokenRefresh();
