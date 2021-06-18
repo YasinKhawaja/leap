@@ -114,7 +114,8 @@ public class UserController {
 
     @GetMapping("/user/login")
     public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws LoginException {
+        userService.checkCompanyLocked(username);
         String value = Base64.getEncoder().withoutPadding().encodeToString(
                 userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)).getBytes());
         String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());

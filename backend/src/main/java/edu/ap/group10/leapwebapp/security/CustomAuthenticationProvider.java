@@ -48,24 +48,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UsernamePasswordAuthenticationToken token = null;
 
-        try {
-            if (user != null) {
-                if (!user.isEnabled()) {
-                    throw new DisabledException("This user has been disabled.");
-                }
-                if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-                    throw new BadCredentialsException("Incorrect username or password");
-                }
-                token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
-                        user.getAuthorities());
-                return token;
-            } else {
-                throw new AuthenticationCredentialsNotFoundException("User credentials not found");
+        if (user != null) {
+            if (!user.isEnabled()) {
+                throw new DisabledException("This user has been disabled.");
             }
-
-        } catch (AuthenticationException e) {
-            log.error("Login error: ", e);
+            if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+                throw new BadCredentialsException("Incorrect username or password");
+            }
+            token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
+                    user.getAuthorities());
             return token;
+        } else {
+            throw new AuthenticationCredentialsNotFoundException("User credentials not found");
         }
     }
 

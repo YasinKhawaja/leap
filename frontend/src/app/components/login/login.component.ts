@@ -1,4 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Login } from 'src/app/classes/login/login';
@@ -47,8 +47,8 @@ export class LoginComponent implements OnInit {
           this.jwt.setUserIdle(true);
           this.jwt.tokenRefresh();
         },
-        () => {
-          Swal.fire('Error', "Wrong username or password.", 'error')
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
         });
   }
 }

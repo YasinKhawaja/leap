@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -160,5 +162,21 @@ public class UserService implements UserDetailsService {
 
     public User findUserByMail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public String checkCompanyLocked(String username) throws LoginException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new LoginException("Incorrect username or password");
+        } else {
+            String authorities = user.getAuthorities().toString();
+            if (authorities.equals("[Application admin]")) {
+                return "";
+            } else if (!user.getCompany().getApproved().booleanValue()) {
+                throw new LoginException("Company is locked");
+            } else {
+                return "";
+            }
+        }
     }
 }
