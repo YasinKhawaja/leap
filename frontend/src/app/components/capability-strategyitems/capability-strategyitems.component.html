@@ -1,5 +1,5 @@
 <main class="main">
-    <h1>Strategy Item of the Capability</h1>
+    <h1>Strategy Items of <strong>{{ capability?.name }}</strong></h1>
     <br>
     <div class="flex-container">
         <div class="flex-item">
@@ -15,6 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr *ngFor='let capabilityStrategyItem of capabilityStrategyItems'>
                         <td *ngIf="(jwt.checkRole() != 'reader')">
                             <a>
@@ -26,7 +27,8 @@
                             </a>
                         </td>
                         <td>
-                            {{ capabilityStrategyItem.strategyItem.name }}
+                            <a class="btn btn-light" [routerLink]="['/strategies/']">
+                            {{ capabilityStrategyItem.strategyItem.name }}</a>
                         </td>
                         <td>
                             <!--Change to new capability link-->

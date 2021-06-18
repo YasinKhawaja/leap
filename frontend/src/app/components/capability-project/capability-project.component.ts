@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CapabilityProject } from 'src/app/classes/capability-project/capability-project';
+import { Capability } from 'src/app/classes/capability/capability';
 import { CapabilityProjectService } from 'src/app/services/capability-project/capability-project.service';
+import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import Swal from 'sweetalert2';
@@ -11,14 +13,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./capability-project.component.css']
 })
 export class CapabilityProjectComponent implements OnInit {
-
+  
+  capability: Capability;
   capabilityprojects: CapabilityProject[];
 
-  constructor(private cp: CapabilityProjectService, private ns: NavbarService, public jwt: JwtService) { }
+  constructor(private cp: CapabilityProjectService, private ns: NavbarService, public jwt: JwtService, private cs: CapabilityService) { }
 
   ngOnInit(): void {
     var capabilityid = this.ns.getCapabilityCookie();
-
+    this.getCapability();
     this.cp.getCapabilityProject(capabilityid)
       .subscribe(
         result => {
@@ -30,6 +33,10 @@ export class CapabilityProjectComponent implements OnInit {
       )
   }
 
+  private getCapability(): void {
+    var envId = this.ns.getEnvironmentCookie(), capId = this.ns.getCapabilityCookie();
+    this.cs.getCapability(envId, capId).subscribe(response => this.capability = response);
+  }
 
   showcapabilityProjectAdd: boolean = false;
 
