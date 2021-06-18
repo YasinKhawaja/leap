@@ -30,7 +30,8 @@ export class ProgramService {
     return this.http.post<Program>(url, program)
       .subscribe(
         () => {
-          this.router.navigate(['program'])
+          //this.router.navigate(['program'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', `Failed to create the program: ${program.name}`, 'error')
@@ -43,7 +44,8 @@ export class ProgramService {
     return this.http.put<Program>(url, program)
       .subscribe(
         () => {
-          this.router.navigate(['program'])
+          //this.router.navigate(['program'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', `Failed to update program with id: ${programid}`, 'error')
@@ -56,7 +58,8 @@ export class ProgramService {
     this.http.delete(url)
       .subscribe(
         () => {
-          this.router.navigate(['program'])
+          //this.router.navigate(['program'])
+          window.location.reload();
         },
         () => {
           Swal.fire('Error', `Failed to delete the program with id: ${programid}`, 'error')

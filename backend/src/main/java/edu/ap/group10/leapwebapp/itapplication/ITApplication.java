@@ -63,6 +63,8 @@ public class ITApplication implements Serializable {
     private Double toleratedTotalCostPerYear;
     @Column(nullable = true, name = "application_time_value")
     private String timeValue;
+    @Column(nullable = true, name = "application_importance_factor")
+    private Double importanceFactor;
 
     @ManyToOne(targetEntity = Environment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "environment_id", nullable = false)
@@ -92,13 +94,14 @@ public class ITApplication implements Serializable {
         this.setCurrentTotalCostPerYear(0.0);
         this.setToleratedTotalCostPerYear(0.0);
         this.setTimeValue("timeValue");
+        this.setImportanceFactor(0.0);
     }
 
     public ITApplication(String name, String technology, String version, String acquisitionDate, String endOfLife,
             Integer currentScalability, Integer expectedScalability, Integer currentPerformance,
             Integer expectedPerformance, Integer currentSecurityLevel, Integer expectedSecurityLevel,
             Integer currentStability, Integer expectedStability, String costCurrency, Integer currentValueForMoney,
-            Double currentTotalCostPerYear, Double toleratedTotalCostPerYear, String timeValue,
+            Double currentTotalCostPerYear, Double toleratedTotalCostPerYear, String timeValue, Double importanceFactor,
             Environment environment) {
         this.setName(name);
         this.setTechnology(technology);
@@ -119,6 +122,7 @@ public class ITApplication implements Serializable {
         this.setToleratedTotalCostPerYear(toleratedTotalCostPerYear);
         this.setTimeValue(timeValue);
         this.setEnvironment(environment);
+        this.setImportanceFactor(importanceFactor);
     }
 
     public void setTimeValue(String timeValue) {

@@ -128,7 +128,7 @@ class ITApplicationServiceUnitTests {
         when(itApplicationRepository.findById(itApplicationId)).thenReturn(Optional.of(oldITApp));
 
         ITApplication newITApp = new ITApplication("app name", "app tech", "app version", "2012.05.30", "2012.05.30", 0,
-                0, 0, 0, 0, 0, 0, 0, "EUR", 0, 0.0, 0.0, "eliminate", environment);
+                0, 0, 0, 0, 0, 0, 0, "EUR", 0, 0.0, 0.0, "eliminate", 60.0, environment);
 
         // When
         sut.updateITApplication(itApplicationId, newITApp);

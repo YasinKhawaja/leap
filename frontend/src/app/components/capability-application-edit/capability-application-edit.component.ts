@@ -1,31 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import { CapabilityApplicationComponent } from '../capability-application/capability-application.component';
 
 @Component({
   selector: 'app-capability-application-edit',
   templateUrl: './capability-application-edit.component.html',
   styleUrls: ['./capability-application-edit.component.css']
 })
-export class CapabilityApplicationEditComponent {
+export class CapabilityApplicationEditComponent implements OnInit{
+
+  
+
+  @Input() capAppCurrentValues: CapabilityApplication;
 
   capabilityApplication = this.fb.group({
-    businessEfficiencySupport: ['', Validators.required],
-    businessFunctionalCoverage: ['', Validators.required],
-    businessCorrectness: ['', Validators.required],
-    businessFuturePotential: ['', Validators.required],
-    informationCompleteness: ['', Validators.required],
-    informationCorrectness: ['', Validators.required],
-    informationAvailability: ['', Validators.required]
+    businessEfficiencySupport: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFunctionalCoverage: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    businessFuturePotential: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCompleteness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationCorrectness: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    informationAvailability: ['', [Validators.required, Validators.pattern('[0-5]')]],
+    importanceFactor: ['', [Validators.required, Validators.pattern('[0-9]?[0-9]?[0]?')]]
   })
 
-  constructor(private fb: FormBuilder, private router: Router, private cas: CapabilityApplicationService) {}
+  constructor(private fb: FormBuilder,  private cas: CapabilityApplicationService,
+    private cac : CapabilityApplicationComponent) {}
+  ngOnInit(): void {
+    this.getCurrentCapabilityApplication()
+      .subscribe( result => {
+        this.capabilityApplication.setValue({
+          businessEfficiencySupport: result.businessEfficiencySupport,
+          businessFunctionalCoverage: result.businessFunctionalCoverage,
+          businessCorrectness: result.businessCorrectness,
+          businessFuturePotential: result.businessFuturePotential,
+          informationCompleteness: result.informationCompleteness,
+          informationCorrectness: result.informationCorrectness,
+          informationAvailability: result.informationAvailability,
+          importanceFactor: result.importance
+        })
+      })
+  }
+
+  private getCurrentCapabilityApplication(): Observable<CapabilityApplication> {
+    //let capabilityApplicationId = this.router.url.split('/')[3];
+    let capabilityApplicationId = this.capAppCurrentValues.id;
+
+    return this.cas.getCapabilityApplication(capabilityApplicationId.toString());
+  }
 
   onSubmit(){
   
-    let capabilityApplicationId = this.router.url.split('/')[3];
+   // let capabilityApplicationId = this.router.url.split('/')[3];
+    let capabilityApplicationId = this.capAppCurrentValues.id;
     
     var newCapabilityApplication = new CapabilityApplication(
       "",
@@ -35,11 +66,16 @@ export class CapabilityApplicationEditComponent {
       this.capabilityApplication.value.businessFuturePotential,
       this.capabilityApplication.value.informationCompleteness,
       this.capabilityApplication.value.informationCorrectness,
-      this.capabilityApplication.value.informationAvailability
+      this.capabilityApplication.value.informationAvailability,
+      this.capabilityApplication.value.importanceFactor
     );
 
-    this.cas.updateCapabilityApplication(capabilityApplicationId, newCapabilityApplication);
+    this.cas.updateCapabilityApplication(capabilityApplicationId.toString(), newCapabilityApplication);
 
+  }
+
+  hide(): void {
+    this.cac.hideAll();
   }
 
 }

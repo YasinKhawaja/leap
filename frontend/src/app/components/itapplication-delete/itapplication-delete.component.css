@@ -1,0 +1,35 @@
+.flex-container {
+    display: flex;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.title {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 35px;
+}
+
+.hide {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 35px;
+}
+
+.center {
+    text-align: center;
+}
+
+h5 {
+    margin: 0px;
+}
+
+.card{
+    max-width: 50%;
+    margin:350px;
+    margin-top: 15px;
+}

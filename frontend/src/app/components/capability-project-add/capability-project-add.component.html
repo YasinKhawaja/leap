@@ -1,16 +1,27 @@
 <form [formGroup]="capabilityproject" (ngSubmit)="onSubmit()">
-    <div class="card">
-        <div class="card-header center">
-            <h5><strong>ADD PROJECT LINK</strong></h5>
+        <div class="card">
+            <div class="flex-container card-header">
+              <div class="flex-item">
+                <div class="title">
+              <h5><strong>ADD PROJECT LINK</strong></h5>
+            </div>
+          </div>
+            <div class="flex-item">
+              <div class="hide">
+                  <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+              </div>
+          </div>
         </div>
         <div class="card-body">
             <div class="form-group">
                 <label for="name">Project<span class="red">*</span></label>
-                <select id="project" class="form-controle" formControlName="project" required>
+                <div>
+                <select id="project" class="custom-select" formControlName="project" required>
                     <option *ngFor="let project of projects | keyvalue" [ngValue]="project.value">
                         {{ project.value }}
                     </option>
                 </select>
+            </div>
                 <div class="alert alert-danger center" *ngIf="(capabilityproject.get('project')!.dirty || capabilityproject.get('project')!.touched) && capabilityproject.get('project')!.invalid">
                     <div *ngIf="capabilityproject.get('project')!.errors!.required">
                         Project is required.

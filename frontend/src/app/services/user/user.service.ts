@@ -4,12 +4,13 @@ import { User } from "../../classes/user/user"
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
+import { JwtService } from '../jwt/jwt.service';
 
 @Injectable({ providedIn: "root" })
 export class UserService {
   private userURL: string = '//localhost:8080/api/';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private jwt: JwtService) {
   }
 
 
@@ -47,7 +48,6 @@ export class UserService {
     this.http.delete(url).subscribe(
       () => {
         this.router.navigate(['environments'])
-        Swal.fire('Succes', 'User has been deleted', 'success')
       },
       error => {
         Swal.fire('error', error.error.message, 'error')
@@ -55,7 +55,7 @@ export class UserService {
     )
   }
 
-  public updateUser(userId: string, user: User, role: string) {
+  public updateUser(userId: string, user: User, role: string, sameuser: boolean) {
     var url = `${this.userURL}user`;
 
     this.http.put<User>(url, user, {
@@ -64,11 +64,14 @@ export class UserService {
         role: role
       }
     }).subscribe(
-      () => {
+      async () => {
+        if (sameuser) {
+          await this.jwt.getNewJwt(user.username)
+          this.jwt.setRole()
+        }
         this.router.navigate(['environments'])
-        Swal.fire('Success', 'User has been updated', 'success')
       },
-      error => {
+      () => {
         Swal.fire('Error', 'Failed to update user, new email or username might be in use', 'error')
       }
     )

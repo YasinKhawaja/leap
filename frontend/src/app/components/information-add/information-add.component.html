@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>ADD INFORMATION</strong></h5>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="informationAddForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="name">Name <span class="red">*</span></label>
+                <input id="name" type="text" class="form-control" formControlName="name" required>
+                <div class="alert alert-danger center" *ngIf="(name!.dirty || name!.touched) && name!.invalid">
+                    <div *ngIf="name!.errors!.required">
+                        Name is required.
+                    </div>
+                    <div *ngIf="name!.errors!.pattern">
+                        Name should only consist out of characters from the alphabet.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="5" class="form-control" formControlName="description"></textarea>
+            </div>
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="informationAddForm.invalid">ADD</button>
+            </div>
+        </form>
+    </div>
+</div>

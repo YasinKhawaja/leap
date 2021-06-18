@@ -7,8 +7,10 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col"></th> <!-- DELETE icon -->
-                        <th scope="col"></th> <!-- EDIT icon -->
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <!-- DELETE icon -->
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <!-- EDIT icon -->
                         <th scope="col">NAME</th>
                         <th scope="col">DESCRIPTION</th>
                         <th scope="col">FULL TIME EQUIVALENT</th>
@@ -17,14 +19,12 @@
                 <tbody>
                     <tr *ngFor="let res of resources">
                         <!-- DELETE icon -->
-                        <td>
-                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20'
-                                (click)="show('resource-delete', res)" />
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20' (click)="show('resource-delete', res)" />
                         </td>
                         <!-- EDIT icon -->
-                        <td>
-                            <input id="edit" type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20'
-                                (click)="show('resource-edit', res)" />
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input id="edit" type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20' (click)="show('resource-edit', res)" />
                         </td>
                         <td>
                             <a class="btn btn-light" role="button" (click)="showLinkedCapabilities(res.id)">
@@ -38,7 +38,7 @@
             </table>
             <div>
                 <br>
-                <div class="flex-container" style="margin-bottom: 0px;">
+                <div *ngIf="(jwt.checkRole() != 'reader')" class="flex-container" style="margin-bottom: 0px;">
                     <div class="flex-item" *ngIf="!showResourceAdd">
                         <button type="button" class="btn btn-danger" (click)="show('resource-add')">
                             ADD RESOURCE
@@ -52,9 +52,11 @@
             <!-- resource-add.component -->
             <app-resource-add *ngIf="showResourceAdd"></app-resource-add>
             <!-- resource-edit.component -->
-            <app-resource-edit *ngIf="showResourceEdit" [resourceCurrentValues]="resourceCurrentValues"></app-resource-edit>
+            <app-resource-edit *ngIf="showResourceEdit" [resourceCurrentValues]="resourceCurrentValues">
+            </app-resource-edit>
             <!-- resource-delete.component -->
-            <app-resource-delete *ngIf="showResourceDelete" [resourceCurrentValues]="resourceCurrentValues"></app-resource-delete>
+            <app-resource-delete *ngIf="showResourceDelete" [resourceCurrentValues]="resourceCurrentValues">
+            </app-resource-delete>
             <!-- Linked caps right panel -->
             <div id="linkedCaps" *ngIf="showLinkedCaps">
                 <table class="table table-striped">
@@ -66,9 +68,7 @@
                     <tbody>
                         <tr *ngFor="let capres of capresources">
                             <td>
-                                <a class="btn btn-light" role="button"
-                                    (click)="setCapabilityCookie(capres.capability.id)"
-                                    [routerLink]="['../capabilities/update']">
+                                <a class="btn btn-light" role="button" (click)="setCapabilityCookie(capres.capability.id)" [routerLink]="['../capabilities/update']">
                                     {{ capres.capability.name }}
                                 </a>
                             </td>

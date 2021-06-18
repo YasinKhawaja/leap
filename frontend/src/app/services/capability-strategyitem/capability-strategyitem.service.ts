@@ -46,10 +46,11 @@ export class CapabilityStrategyitemService {
     return this.http.post<CapabilityStrategyItems>(url, capabilityStrategyItem.getParams(),
     {headers: this.contentHeaders})
     .subscribe(() => {
-      this.router.navigate([`capstrategyitems/`])
+     
+      window.location.reload();
     },
     error => {
-      console.log(error)
+      Swal.fire('Error', error.error.message, 'error')
     });
   }
 
@@ -60,8 +61,8 @@ export class CapabilityStrategyitemService {
     {headers: this.contentHeaders})
     .subscribe(
       () => {
-      Swal.fire('Success', 'You have succesfully updated the Capability-Strategy Item link', 'success')
-      this.router.navigate([`capstrategyitems/`])
+        window.location.reload();
+    
     },
     error => {
       Swal.fire('Error', error.error.message, 'error')
@@ -73,8 +74,8 @@ export class CapabilityStrategyitemService {
 
     this.http.delete(url).subscribe(
       () => {
-        Swal.fire('Success', 'You have succesfully deleted the Capability-Strategy Item link', 'success')
-        this.router.navigate([`capstrategyitems/`])
+        window.location.reload();
+      
       });
   }
 }

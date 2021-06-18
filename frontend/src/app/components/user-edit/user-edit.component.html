@@ -7,13 +7,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input type="text" formControlName="firstName" required class="form-control" placeholder="First name*">
+                <input type="text" formControlName="firstname" required class="form-control" placeholder="First name*">
 
-                <div *ngIf="user.get('firstName')!.invalid && (user.get('firstName')!.dirty || user.get('firstName')!.touched)" class="alert alert-danger alertdiv">
-                    <div *ngIf="user.get('firstName')!.errors!.required">
+                <div *ngIf="user.get('firstname')!.invalid && (user.get('firstname')!.dirty || user.get('firstname')!.touched)" class="alert alert-danger alertdiv">
+                    <div *ngIf="user.get('firstname')!.errors!.required">
                         Firstname is required.
                     </div>
-                    <div *ngIf="user.get('firstName')!.errors!.pattern">
+                    <div *ngIf="user.get('firstname')!.errors!.pattern">
                         Firstname should only consist out of characters from the alphabet.
                     </div>
                 </div>
@@ -64,8 +64,8 @@
                     <span class="input-group-text"> <i class="fa fa-group"></i></span>
                 </div>
                 <select formControlName="role" required class="form-control">
-                <option *ngFor="let type of eRole | keyvalue" [ngValue]="type.value">{{type.value}}</option>
-            </select>
+                    <option *ngFor="let type of eRole | keyvalue" [ngValue]="type.value">{{type.value}}</option>
+                </select>
                 <div *ngIf="user.get('username')!.invalid && (user.get('username')!.dirty || user.get('username')!.touched)" class="alert alert-danger alertdiv">
                     <div *ngIf="user.get('username')!.errors!.required">
                         Role is required.

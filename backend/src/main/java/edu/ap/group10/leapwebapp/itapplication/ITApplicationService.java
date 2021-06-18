@@ -57,6 +57,7 @@ public class ITApplicationService {
         oITApp.setCurrentTotalCostPerYear(itApplication.getCurrentTotalCostPerYear());
         oITApp.setToleratedTotalCostPerYear(itApplication.getToleratedTotalCostPerYear());
         oITApp.setTimeValue(itApplication.getTimeValue());
+        oITApp.setImportanceFactor(itApplication.getImportanceFactor());
 
         return itApplicationRepository.save(oITApp);
     }

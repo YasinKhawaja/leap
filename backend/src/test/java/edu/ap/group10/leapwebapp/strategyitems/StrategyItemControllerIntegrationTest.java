@@ -74,7 +74,7 @@ public class StrategyItemControllerIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenCapabilities_whenGetAllCapabilities_returnsAllCapabilities() throws Exception {
+    public void givenStrategyItems_whenGetAllStrategyItems_returnsAllStrategyItems() throws Exception {
     
     Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
     companyService.addCompany(company);
@@ -106,7 +106,7 @@ public class StrategyItemControllerIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenEnvironmentId_whenGetAllCapabilitiesInEnvironment_returnsAllCapabilities() throws Exception {
+    public void givenStrategyId_whenGetAllStrategyItemInStrategy_returnsAllStrategyItems() throws Exception {
       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
       companyService.addCompany(company);
   
@@ -134,7 +134,7 @@ public class StrategyItemControllerIntegrationTest {
 
   @Test
     @WithMockUser
-    public void findByName() throws Exception {
+    public void givenStrategyName_whenGetAllStrategyItems_returnsStrategyItems() throws Exception {
       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
       companyService.addCompany(company);
   
@@ -163,7 +163,7 @@ public class StrategyItemControllerIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenEnvironmentIdCapabilityId_whenGetCapabilityInEnvironment_returnsCapabilityFound() throws Exception {
+    public void givenStrategyIdStrategyItemId_whenGetStrategyItemInStrategy_returnsStrategyItemFound() throws Exception {
       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
       companyService.addCompany(company);
   
@@ -189,7 +189,7 @@ public class StrategyItemControllerIntegrationTest {
 
     @Test
     @WithMockUser
-    public void givenEnvironmentIdParentCapabilityIdCapabilityToCreate_whenCreateCapability_returnsCapabilityCreated() throws Exception {
+    public void givenStrategyIdStrategyItemToCreate_whenCreateStrategyItem_returnsStrategyItemCreated() throws Exception {
       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
       companyService.addCompany(company);
   
@@ -224,51 +224,12 @@ public class StrategyItemControllerIntegrationTest {
     }
 
 
-    //werkt niet => door dat geen params heeft er komt een forbidden error
-    @Test
-    @WithMockUser
-    public void givenEnvironmentIdCapabilityIdUpdatedCapability_whenUpdateCapability_returnsUpdatedCapability() throws Exception {
-     // Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
-    //  companyService.addCompany(company);
-  
-   //   String name = "Siemens";
-   //   Environment env = new Environment(name, company);
-   //   environmentRepository.save(env);
-  
-   ///   String strategyName = "Jan";
-    //  Strategy strategy = new Strategy(strategyName,"2020-02-01","2021-02-03",env);
-    //  strategyService.createStrategy(strategy);
-    //  Long strId =strategy.getId();
-   //   strategy.setId(strId);
-   //   StrategyItem strategyItem = new StrategyItem("testA","description");
-
-    //  StrategyItem strategyItemupdate = strategyItemService.createStrategyItem(strId,strategyItem);
-   //   Long strategyItemUpdatedId = strategyItemupdate.getId();
-
-    //  strategyItemupdate.setName("testB");
-      //strategyItemupdate.setDescription("description1");
-
-        
-   //     ObjectMapper mapper = new ObjectMapper();
-    //    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-    //    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-    //    String requestJson = ow.writeValueAsString(strategyItemupdate);
-
-        
-
-    //    mvc.perform(put("/strategyItems/{strItemId}", strategyItemUpdatedId)
-    //        .contentType(MediaType.APPLICATION_JSON)
-    //        .accept(MediaType.APPLICATION_JSON)
-    //        .content(requestJson))
-    ////        .andExpect(status().isOk())
-    //        .andDo(print())
-    //        .andExpect(content().json("{'name':'testB'}"));
-    }
-
+    //update
+    
 
     @Test
     @WithMockUser
-    public void givenEnvironmentIdCapabilityId_whenDeleteCapability_returnsCapabilityDeleted() throws Exception {
+    public void givenStrategyIdStrategyItemId_whenDeleteStrategyItem_returnsStrategyItemDeleted() throws Exception {
       Company company = new Company("1", "Test Company", "sv@gmail.com", "kerkstraat", 3, 5, "Mortsel", "België", "HR", "?");
       companyService.addCompany(company);
   
@@ -291,6 +252,5 @@ public class StrategyItemControllerIntegrationTest {
             .andDo(print())
             .andExpect(content().string(""));
     }
-
 
 }

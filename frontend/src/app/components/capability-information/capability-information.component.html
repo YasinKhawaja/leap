@@ -1,0 +1,58 @@
+<main class="main">
+    <h1>Information of <strong>{{ capability?.name }}</strong></h1>
+    <br>
+    <div class="flex-container">
+        <div class="flex-item">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <th scope="col">CAPABILITY</th>
+                        <th scope="col">INFORMATION</th>
+                        <th scope="col">CRITICALITY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let capinfo of capinfolist">
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20' (click)="show('capability-information-delete', capinfo)" />
+                        </td>
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20' (click)="show('capability-information-edit', capinfo)" />
+                        </td>
+                        <td>
+                            <a class="btn btn-light" role="button" [routerLink]="['/capabilities/update']">
+                                {{ capinfo.capability.name }}
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-light" role="button" [routerLink]="['/information']">
+                                {{ capinfo.information.name }}
+                            </a>
+                        </td>
+                        <td>{{ capinfo.criticality }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <br>
+                <div *ngIf="(jwt.checkRole() != 'reader')" class="flex-container" style="margin-bottom: 0px;">
+                    <div class="flex-item" *ngIf="!showCapInfoAdd">
+                        <button type="button" class="btn btn-danger" (click)="show('capability-information-add')">
+                            ADD INFORMATION LINK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-item">
+            <app-capability-information-add *ngIf="showCapInfoAdd" [capability]="capability">
+            </app-capability-information-add>
+            <app-capability-information-edit *ngIf="showCapInfoEdit" [capinfoCurrentValues]="capinfoCurrentValues">
+            </app-capability-information-edit>
+            <app-capability-information-delete *ngIf="showCapInfoDelete" [capinfoCurrentValues]="capinfoCurrentValues">
+            </app-capability-information-delete>
+        </div>
+    </div>
+</main>

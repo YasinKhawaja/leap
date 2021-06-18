@@ -7,8 +7,10 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col"></th> <!-- DELETE icon -->
-                        <th scope="col"></th> <!-- EDIT icon -->
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <!-- DELETE icon -->
+                        <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                        <!-- EDIT icon -->
                         <th scope="col">CAPABILITY</th>
                         <th scope="col">RESOURCE</th>
                         <th scope="col">NUMBER OF RESOURCES</th>
@@ -17,14 +19,12 @@
                 <tbody>
                     <tr *ngFor="let capres of capresources">
                         <!-- DELETE icon -->
-                        <td>
-                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20'
-                                (click)="show('capability-resource-delete', capres)" />
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input type="image" src="assets/delete-icon.png" alt="Delete" width='20' height='20' (click)="show('capability-resource-delete', capres)" />
                         </td>
                         <!-- EDIT icon -->
-                        <td>
-                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20'
-                                (click)="show('capability-resource-edit', capres)" />
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <input type="image" src="assets/edit-icon.png" alt="Edit" width='20' height='20' (click)="show('capability-resource-edit', capres)" />
                         </td>
                         <td>
                             <a class="btn btn-light" role="button" [routerLink]="['/capabilities/update']">
@@ -42,7 +42,7 @@
             </table>
             <div>
                 <br>
-                <div class="flex-container" style="margin-bottom: 0px;">
+                <div *ngIf="(jwt.checkRole() != 'reader')" class="flex-container" style="margin-bottom: 0px;">
                     <div class="flex-item" *ngIf="!showCapResAdd">
                         <button type="button" class="btn btn-danger" (click)="show('capability-resource-add')">
                             ADD RESOURCE LINK

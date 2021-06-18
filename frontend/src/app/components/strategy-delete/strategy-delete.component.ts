@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
 import { Location } from '@angular/common';
 import { Strategy } from 'src/app/classes/strategy/strategy';
+import { StrategyComponent } from '../strategy/strategy.component';
 
 @Component({
   selector: 'app-strategy-delete',
@@ -13,25 +14,26 @@ import { Strategy } from 'src/app/classes/strategy/strategy';
 export class StrategyDeleteComponent implements OnInit {
   
   str: Strategy;
+  @Input() strCurrentValues: Strategy;
 
   constructor(private ss: StrategyService,
-              private router: Router, private location: Location) {
+             private sc: StrategyComponent ) {
 
        
   }
 
+  hide(): void {
+    this.sc.hideAll();
+  } 
   ngOnInit(): void {
   }
 
   deleteStrategyFromEnvironment() {
 
-    let strId = this.router.url.split('/')[2]; 
-    this.ss.deleteStrategy_CurrentEnvironment(strId);
+    this.ss.deleteStrategy_CurrentEnvironment(this.strCurrentValues.id);
+   
 
-    this.navigateBack();
   }
 
-  navigateBack() {
-  this.location.back();
-  }
+ 
 }

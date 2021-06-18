@@ -1,133 +1,198 @@
-<div class="container">
-    <h1>Add IT Application to capability</h1><br>
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>EDIT IT APPLICATION LINK</strong></h5>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
     <form [formGroup]="capabilityApplication" (ngSubmit)="onSubmit()">
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='businessEfficiencySupport' required />
-                <label>Business Efficiency Support</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.invalid && (capabilityApplication.get('businessEfficiencySupport')!.dirty || capabilityApplication.get('businessEfficiencySupport')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.errors!.required">
-                    Business Efficiency Support is required.
+        <div class="container">
+            <div class="row">
+              
+                <div class="col">
+                    <div class='form-group'>
+                        <label>Importance Factor<span class="red">*</span></label>
+                        <input  formControlName='importanceFactor' class="form-control" placeholder="60" required/>
+                       
+                    <div *ngIf="capabilityApplication.get('importanceFactor')!.invalid && (capabilityApplication.get('importanceFactor')!.dirty || capabilityApplication.get('importanceFactor')!.touched)" class="alert alert-danger alertdiv">
+                        <div *ngIf="capabilityApplication.get('importanceFactor')!.errors!.required">
+                            Importance Factor is required.
+                        </div>
+                        <div *ngIf="capabilityApplication.get('importanceFactor')!.errors!.pattern">
+                            Importance Factor should be a percentage. (0 to 100)
+                        </div>
+                    </div>
+
+                    <small class="text-muted">
+                        Enter Importance Factor in % (e.g 60)
+                    </small>
                 </div>
-                <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.errors!.pattern">
-                    Business Efficiency Support should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
                 </div>
-            </div>
-            <small class="text-muted">
-          Enter Business Efficiency Support (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='businessFunctionalCoverage' required />
-                <label>Business Functional Coverage</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.invalid && (capabilityApplication.get('businessFunctionalCoverage')!.dirty || capabilityApplication.get('businessFunctionalCoverage')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.errors!.required">
-                    Business Functional Coverage is required.
-                </div>
-                <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.errors!.pattern">
-                    Business Functional Coverage should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter Business Functional Coverage (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='businessCorrectness' required />
-                <label>Business Correctness</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('businessCorrectness')!.invalid && (capabilityApplication.get('businessCorrectness')!.dirty || capabilityApplication.get('businessCorrectness')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('businessCorrectness')!.errors!.required">
-                    Business Correctness is required.
-                </div>
-                <div *ngIf="capabilityApplication.get('businessCorrectness')!.errors!.pattern">
-                    Business Correctness should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                    <div class="col">
+                    <div class='form-group'>
+                      
+                            <label>Business Efficiency Support<span class="red">*</span></label>
+                            <input  formControlName='businessEfficiencySupport' class="form-control" required />
+                           
+                        <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.invalid && (capabilityApplication.get('businessEfficiencySupport')!.dirty || capabilityApplication.get('businessEfficiencySupport')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.errors!.required">
+                                Business Efficiency Support is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('businessEfficiencySupport')!.errors!.pattern">
+                                Business Efficiency Support should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Business Efficiency Support (e.g. 4)
+                        </small>
+                    </div>
                 </div>
             </div>
-            <small class="text-muted">
-          Enter Business Correctness (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='businessFuturePotential' required />
-                <label>Business Future Potential</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('businessFuturePotential')!.invalid && (capabilityApplication.get('businessFuturePotential')!.dirty || capabilityApplication.get('businessFuturePotential')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('businessFuturePotential')!.errors!.required">
-                    Business Future Potential is required.
+            <div class="row">
+                <div class="col">
+                    <div class='form-group'>
+                       
+                            <label>Business Functional Coverage<span class="red">*</span></label>
+                            <input formControlName='businessFunctionalCoverage' class="form-control" required />
+            
+                      
+                        <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.invalid && (capabilityApplication.get('businessFunctionalCoverage')!.dirty || capabilityApplication.get('businessFunctionalCoverage')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.errors!.required">
+                                Business Functional Coverage is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('businessFunctionalCoverage')!.errors!.pattern">
+                                Business Functional Coverage should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Business Functional Coverage (e.g. 4)
+                        </small>
+                    </div>
                 </div>
-                <div *ngIf="capabilityApplication.get('businessFuturePotential')!.errors!.pattern">
-                    Business Future Potential should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter Business Future Potential (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='informationCompleteness' required />
-                <label>Information Completeness</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('informationCompleteness')!.invalid && (capabilityApplication.get('informationCompleteness')!.dirty || capabilityApplication.get('informationCompleteness')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('informationCompleteness')!.errors!.required">
-                    Information Completeness is required.
-                </div>
-                <div *ngIf="capabilityApplication.get('informationCompleteness')!.errors!.pattern">
-                    Information Completeness should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
-                </div>
-            </div>
-            <small class="text-muted">
-          Enter Information Completeness (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='informationCorrectness' required />
-                <label>Information Correctness</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('informationCorrectness')!.invalid && (capabilityApplication.get('informationCorrectness')!.dirty || capabilityApplication.get('informationCorrectness')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('informationCorrectness')!.errors!.required">
-                    Information Correctness is required.
-                </div>
-                <div *ngIf="capabilityApplication.get('informationCorrectness')!.errors!.pattern">
-                    Information Correctness should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+            
+                
+                    <div class="col">
+                    <div class='form-group'>
+                        
+                            <label>Business Correctness<span class="red">*</span></label>
+                            <input  formControlName='businessCorrectness' class="form-control" required />
+                               
+                        <div *ngIf="capabilityApplication.get('businessCorrectness')!.invalid && (capabilityApplication.get('businessCorrectness')!.dirty || capabilityApplication.get('businessCorrectness')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('businessCorrectness')!.errors!.required">
+                                Business Correctness is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('businessCorrectness')!.errors!.pattern">
+                                Business Correctness should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Business Correctness (e.g. 4)
+                        </small>
+                    </div>
                 </div>
             </div>
-            <small class="text-muted">
-          Enter Information Correctness (e.g. 4)
-        </small>
-        </div>
-        <div class='form-group w-50'>
-            <div class="custom">
-                <input type='number' formControlName='informationAvailability' required />
-                <label>Information Availability</label>
-            </div>
-            <br>
-            <div *ngIf="capabilityApplication.get('informationAvailability')!.invalid && (capabilityApplication.get('informationAvailability')!.dirty || capabilityApplication.get('informationAvailability')!.touched)" class="alert alert-danger alertdiv">
-                <div *ngIf="capabilityApplication.get('informationAvailability')!.errors!.required">
-                    Information Availability is required.
+            <div class="row">
+                <div class="col">
+                    <div class='form-group'>
+                       
+                            <label>Business Future Potential<span class="red">*</span></label>
+                            <input  formControlName='businessFuturePotential' class="form-control" required />
+                            
+                        
+                        
+                        <div *ngIf="capabilityApplication.get('businessFuturePotential')!.invalid && (capabilityApplication.get('businessFuturePotential')!.dirty || capabilityApplication.get('businessFuturePotential')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('businessFuturePotential')!.errors!.required">
+                                Business Future Potential is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('businessFuturePotential')!.errors!.pattern">
+                                Business Future Potential should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Business Future Potential (e.g. 4)
+                        </small>
+                    </div>
                 </div>
-                <div *ngIf="capabilityApplication.get('informationAvailability')!.errors!.pattern">
-                    Information Availability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+            
+            
+                <div class="col">
+                    <div class='form-group'>
+                       
+                            <label>Information Completeness<span class="red">*</span></label>
+                            <input  formControlName='informationCompleteness' class="form-control" required />
+                           
+                        
+                        <div *ngIf="capabilityApplication.get('informationCompleteness')!.invalid && (capabilityApplication.get('informationCompleteness')!.dirty || capabilityApplication.get('informationCompleteness')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('informationCompleteness')!.errors!.required">
+                                Information Completeness is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('informationCompleteness')!.errors!.pattern">
+                                Information Completeness should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Information Completeness (e.g. 4)
+                        </small>
+                    </div>
                 </div>
             </div>
-            <small class="text-muted">
-          Enter Information Availability (e.g. 4)
-        </small>
-        </div>
-        <button type="submit" class="btn btn-danger form-control" [disabled]="!capabilityApplication.valid">Add</button>
-        <br><br><br><br><br>
-    </form>
-</div>
+                <div class="row">
+                    <div class="col">
+                    <div class='form-group'>
+                       
+                            <label>Information Correctness<span class="red">*</span></label>
+                            <input  formControlName='informationCorrectness'  class="form-control" required />
+                           
+                       
+                        <div *ngIf="capabilityApplication.get('informationCorrectness')!.invalid && (capabilityApplication.get('informationCorrectness')!.dirty || capabilityApplication.get('informationCorrectness')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('informationCorrectness')!.errors!.required">
+                                Information Correctness is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('informationCorrectness')!.errors!.pattern">
+                                Information Correctness should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Information Correctness (e.g. 4)
+                        </small>
+                    </div>
+                </div>
+            
+            
+                    <div class="col">
+                    <div class='form-group'>
+                       
+                            <label>Information Availability<span class="red">*</span></label>
+                            <input formControlName='informationAvailability' class="form-control" required />
+                           
+                       
+                        <div *ngIf="capabilityApplication.get('informationAvailability')!.invalid && (capabilityApplication.get('informationAvailability')!.dirty || capabilityApplication.get('informationAvailability')!.touched)" class="alert alert-danger alertdiv">
+                            <div *ngIf="capabilityApplication.get('informationAvailability')!.errors!.required">
+                                Information Availability is required.
+                            </div>
+                            <div *ngIf="capabilityApplication.get('informationAvailability')!.errors!.pattern">
+                                Information Availability should be a number between 1 and 5. (1 = poor, 3 = fair, 5 = good).
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            Enter Information Availability (e.g. 4)
+                        </small>
+                    </div>
+                </div>
+            </div>
+                </div>
+                    <div class="center">
+                    <button type="submit" class="btn btn-success " [disabled]="!capabilityApplication.valid">ADD</button>
+                </div>
+                  
+                </form>
+            </div>
+            </div>

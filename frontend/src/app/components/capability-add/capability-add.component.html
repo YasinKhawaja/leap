@@ -16,6 +16,9 @@
           <div *ngIf="name!.errors!.required">
             Name is required.
           </div>
+          <div *ngIf="name!.errors!.pattern">
+            Name can't contain ; 
+        </div>
         </div>
       </div>
       <!-- Pace of Change -->

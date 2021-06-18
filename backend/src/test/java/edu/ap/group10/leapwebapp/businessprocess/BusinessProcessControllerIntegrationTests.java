@@ -1,16 +1,10 @@
 package edu.ap.group10.leapwebapp.businessprocess;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -24,14 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import edu.ap.group10.leapwebapp.businessprocesses.BusinessProcess;
 import edu.ap.group10.leapwebapp.businessprocesses.BusinessProcessService;
-import edu.ap.group10.leapwebapp.capability.CapabilityRepository;
-import edu.ap.group10.leapwebapp.capability.CapabilityService;
 import edu.ap.group10.leapwebapp.company.Company;
 import edu.ap.group10.leapwebapp.company.CompanyRepository;
-import edu.ap.group10.leapwebapp.company.CompanyService;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
-import edu.ap.group10.leapwebapp.environment.EnvironmentService;
 
 @SpringBootTest
 @AutoConfigureTestDatabase

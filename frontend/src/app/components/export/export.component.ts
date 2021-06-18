@@ -12,6 +12,7 @@ import { ItapplicationService } from 'src/app/services/itapplication/itapplicati
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import Swal from 'sweetalert2';
 import { Capability } from '../../classes/capability/capability';
 import { CapabilityService } from '../../services/capability/capability.service';
 
@@ -33,14 +34,9 @@ export class ExportComponent implements OnInit {
   style: { 'border-color': string };
   filter: string;
 
-
-  itApplications: string[]
-
-  itApplication = this.fb.group({
-    itApplicationName: ['']
-  })
-
   strategies: string[]
+
+  parents: string[]
 
   strategy = this.fb.group({
     strategyName: ['']
@@ -56,19 +52,31 @@ export class ExportComponent implements OnInit {
     private its: ItapplicationService, private sis: StrategyItemService, private strats: StrategyService, private cis: CapabilityApplicationService,
     private cd: ChangeDetectorRef, private csis: CapabilityStrategyitemService) {
     this.capabilities = [];
-    this.itApplications = [];
     this.strategies = [];
     this.strategyItems = [];
     this.capabilitiesLinkedToItApplication = [];
     this.capabilityStrategyItemsLinkedToStrategyItem = [];
+    this.parents = [];
   }
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironmentCookie();
 
+    this.cs.getCapabilitiesWithParents(environmentId)
+      .subscribe(
+        (res) => {
+          this.parents = res
+          console.log(this.parents)
+        },
+        () => {
+          Swal.fire('Error', 'failed to load parents of capabilities', 'error')
+        }
+      )
+
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {
         this.capabilities = result;
+        console.log(this.capabilities);
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
 
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
@@ -77,14 +85,6 @@ export class ExportComponent implements OnInit {
       },
         error => console.log(error));
 
-    this.itApplications = [];
-    this.its.getITApplications_CurrentEnvironment(environmentId)
-      .subscribe(result => {
-        result.forEach(e => {
-          this.itApplications.push(e.name);
-        })
-      },
-        error => console.log(error));
 
     this.strats.getAllStrategyInEnvironment(environmentId)
       .subscribe(result => {
@@ -95,33 +95,28 @@ export class ExportComponent implements OnInit {
         error => console.log(error));
   }
 
-  changeITApplication() {
-    this.filter = "ITApplication";
-    this.cis.getCapabilitiesLinkedToITApplication(this.itApplication.value.itApplicationName)
-      .subscribe(result => {
-        this.capabilitiesLinkedToItApplication = result;
-        this.strategyItem.get("strategyItemName").reset();
-      },
-        error => console.log(error))
+  setITApplicationFilter() {
+    this.filter = "ITApplication"; // set filter to ITApplication to apply the colors on the capability map for the IT application filter
+    this.strategyItem.get("strategyItemName").reset(); // reset strategy item dropdown when IT application filter is clicked.  
   }
 
-  applySelectedITApplication(capability) {
-    for (var i = 0; i < this.capabilitiesLinkedToItApplication.length; i++) {
-      if (this.capabilitiesLinkedToItApplication[i].id == capability.id) {
-        if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
-          this.style = { 'border-color': 'green' }
-          break;
-        } if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 5) {
-          this.style = { 'border-color': 'orange' }
-          break;
-        }
+  // this method gets executed from the html of this component when the filter is ITApplication.
+  // for every capability, the sum of its information quality and application fit is checked to determine which border-color the capability gets.
+  applyITApplicationFilter(capability) {
+    if ((Number(capability.informationQuality) + Number(capability.applicationFit)) != 0) {
+
+      if ((Number(capability.informationQuality) + Number(capability.applicationFit)) < 5) {
         this.style = { 'border-color': 'red' }
-        break;
-      } else this.style = { 'border-color': 'black' }
-    } return this.style;
+      } else if ((Number(capability.informationQuality) + Number(capability.applicationFit)) > 8) {
+        this.style = { 'border-color': 'green' }
+      } else this.style = { 'border-color': 'orange' }
+    }
+    else this.style = { 'border-color': 'black' }
+    return this.style;
 
   }
 
+  // when a strategy is selected, it retrieves all its strategy items
   changeStrategy() {
     this.strategyItems = [];
 
@@ -135,18 +130,20 @@ export class ExportComponent implements OnInit {
         error => console.log(error));
   }
 
+  
   changeStrategyItem() {
-    this.filter = "StrategyItem";
-    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName)
+    this.filter = "StrategyItem"; // when a strategy item is chosen, set the filter to StrategyItem to apply the colors on the capability map for this filter
+    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName) 
       .subscribe(result => {
         this.capabilityStrategyItemsLinkedToStrategyItem = result;
 
-        this.itApplication.get("itApplicationName").reset();
       },
         error => console.log(error))
 
   }
 
+  // this method gets executed from the html of this component when the filter is set to StrategyItem
+  // for every capability linked to the selected strategy item, the border-color of that capability is set based on the strategic emphasis
   applySelectedStrategyItem(capability) {
     for (var i = 0; i < this.capabilityStrategyItemsLinkedToStrategyItem.length; i++) {
       if (this.capabilityStrategyItemsLinkedToStrategyItem[i].capability.id == capability.id) {
@@ -169,11 +166,42 @@ export class ExportComponent implements OnInit {
 
   generateCSV() {
     let cap = this.capabilities;
+    var children: string[];
+    var parents: string[];
+    var count: number;
+
+    children = [];
+    parents = [];
+    count = 0;
+
+    for (var i = 0; i < this.parents.length; i++) {
+      children.push(this.parents[i].split(';')[0])
+      parents.push(this.parents[i].split(';')[1])
+    }
+    console.log(children)
+    console.log(parents)
+
+    for (var i = 0; i < this.capabilities.length; i++) {
+      if (children.includes(cap[i].name)) {
+        console.log(i + ": " + cap[i].name)
+        cap[i].parent = parents[count];
+        count++;
+      }
+    }
+    console.log(cap);
+
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-    const header = Object.keys(cap[0]);
-    let csv = cap.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
-    csv.unshift(header.join(';'));
-    let csvArray = csv.join('\r\n');
+
+    const header = Object.keys(cap[0]); //gets all keys of capability to later be added
+    header.push("parent"); //adds the parent header to the csv
+
+    let csv = cap.map(row => header.map(
+      fieldName =>
+        JSON.stringify(row[fieldName], replacer)).join(';')) //adds values to row
+
+    csv.unshift(header.join(';')) // adds headers to csv
+
+    let csvArray = csv.join('\r\n'); // makes csv
 
     var blob = new Blob([csvArray], { type: 'text/csv' })
     saveAs(blob, "CapabilityMap.csv");
@@ -188,11 +216,11 @@ export class ExportComponent implements OnInit {
     let slide = powerpoint.addSlide();
 
     // add the capability map image
-
+    // capture the capabity map which is located in the div with id 'divLeftHalf'
     let data = document.getElementById('divLeftHalf');
-    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => {
+    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => { // convert the capability map html to an image
       const contentDataURL = canvas.toDataURL('image/png', 4)
-      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });
+      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' }); // add image to slide
 
       // save powerpoint
       powerpoint.writeFile({ fileName: "CapabilityMap" });
@@ -201,39 +229,29 @@ export class ExportComponent implements OnInit {
 
   generatePDF() {
     let doc = new jsPDF();
-    
+
+    // capture the capabity map which is located in the div with id 'divLeftHalf'
     let data = document.getElementById('divLeftHalf');
-    html2canvas(data, {scrollY: -window.scrollY}).then(canvas => {
+    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png', 4);
-      
-      if(canvas.width > canvas.height){
+
+      // determine if the pdf should be landscape or portrait 
+      if (canvas.width > canvas.height) {
         doc = new jsPDF('l', 'mm', [canvas.width, canvas.height]);
-        }
-        else{
+      }
+      else {
         doc = new jsPDF('p', 'mm', [canvas.height, canvas.width]);
-        }
-      
-      // let pdf = new jsPDF('p', 'mm', [canvas.height *2, canvas.width]);
-       doc.addImage(contentDataURL, 'png', 0, 0, canvas.width, canvas.height);
+      }
+
+      doc.addImage(contentDataURL, 'png', 0, 0, canvas.width, canvas.height);
 
       // save powerpoint
-      doc.save( "CapabilityMap");
+      doc.save("CapabilityMap");
     });
-    }
-
-    generateLevel1Layer() {
-      let capabilitiesLevel1: Capability[]
-      capabilitiesLevel1 = this.capabilities.filter(cap => cap.level == '1');
-      this.capabilities = capabilitiesLevel1;
-    }
-
-    generateLevel1and2Layer() {
-      let capabilitiesLevel2: Capability[]
-      capabilitiesLevel2 = this.capabilities.filter(cap => cap.level == '2' || cap.level == '1');
-      this.capabilities = capabilitiesLevel2;
-    }
-
-    generateEntireMap() {
-      window.location.reload();
-    }
   }
+  
+  // reload the capability map without any filters
+  generateEntireMap() {
+    window.location.reload();
+  }
+}

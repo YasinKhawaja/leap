@@ -1,38 +1,83 @@
- <div class="strItem">
-    <div>
-      <form action="" id="strItemAddForm"></form>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col"></th> <!-- DELETE icon -->
-            <th scope='col'>NAME</th>
-           <th scope='col'>DESCRIPTION</th>
-          
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let strategyItem of strategyItems">
-            <td>
-              <a [routerLink]="['../strategyItems/', strategyItem.id, 'delete']">
-                <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
-              </a>
-              &nbsp;&nbsp;&nbsp;
-              <a [routerLink]="['../strategyItems/',strategyItem.id, 'update']">
-                <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
-              </a>
-            </td>
+<main class="main">
+    <h1>Strategy Items</h1>
+    <br>
+    <div class="flex-container">
+        <div class="flex-item">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
+                        <!-- DELETE icon -->
+                        <th scope='col'>NAME</th>
+                        <th scope='col'>DESCRIPTION</th>
 
-            <td > {{ strategyItem.name }}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let strategyItem of strategyItems">
+                        <td *ngIf="(jwt.checkRole() != 'reader')">
+                            <a>
+                                <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('strategyItem-delete', strategyItem)">
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a>
+                                <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('strategyItem-edit', strategyItem)">
+                            </a>
+                        </td>
+
+                        <td>
+                            <a class="btn btn-light" role="button" (click)="showLinkedCapabilities(strategyItem.name)">
+
+                                {{ strategyItem.name }}
+                            </a>
+                          </td>
+
+                        <td> {{ strategyItem.description }} </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <br>
+                <div class="flex-container" style="margin-bottom: 0px;">
+                    <div class="flex-item" *ngIf="!showStrItemAdd">
+
+                        <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('strategyItem-add')">ADD STRATEGY ITEM</button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex-item">
+            <app-strategy-items-add *ngIf="showStrItemAdd"></app-strategy-items-add>
+
+            <app-strategy-items-edit *ngIf="showStrItemEdit" [strItemCurrentValues]="strItemCurrentValues">
+            </app-strategy-items-edit>
+
+            <app-strategy-items-delete *ngIf="showStrItemDelete" [strItemCurrentValues]="strItemCurrentValues">
+            </app-strategy-items-delete>
+
+              <!-- Linked caps right panel -->
+              <div id="linkedCaps" *ngIf="showLinkedCaps">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="3">LINKED CAPABILITIES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let capstrItem of capStrItems">
+                            <td>
+                                <a class="btn btn-light" role="button" (click)="setCapabilityCookie(capstrItem.capability.id)" [routerLink]="['../capabilities/update']">
+                                    {{ capstrItem.capability.name }}
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
-            <td > {{ strategyItem.description }} </td>
-          </tr>
-        </tbody>
-      </table>
-      <div>
-        <br>
-        <button type="button" class="btn btn-danger" [routerLink]="['../strategyItems/create']">ADD STRATEGY ITEM</button>
-      </div>
-      <br>
+        </div>
+
     </div>
-    
-  </div>
+</main>

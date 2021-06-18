@@ -23,11 +23,7 @@ public class EnvironmentUnitTests {
         Environment environment = new Environment("Test environment", company);
 
         // when
-        String toString = "Environment(id=null, name=Test environment, "
-        +  "capabilities=null, strategies=null, resources=null, itApplications=null, "
-        + "programs=null, businessProcesses=null, company=Company(id=null, vatNumber=1, " 
-        + "companyName=" + company.getCompanyName() + ", email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, "
-        + "postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, environments=null))";
+        String toString = "Environment(id=null, name=Test environment, capabilities=null, strategies=null, resources=null, itApplications=null, programs=null, businessProcesses=null, company=Company(id=null, vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, approved=false, environments=null))";
 
         // then
         assertEquals(environment.toString(), toString);

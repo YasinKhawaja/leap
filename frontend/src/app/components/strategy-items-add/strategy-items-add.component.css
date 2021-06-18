@@ -1,26 +1,44 @@
-.middle-page {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.flex-container {
+    display: flex;
+}
+
+.flex-item {
+    flex: 1;
+    
+}
+
+.title {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 35px;
+}
+
+.hide {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 35px;
+}
+
+h5, label {
+    margin: 0px;
+}
+
+.red {
+    color: red;
 }
 
 .center {
     text-align: center;
-    vertical-align: middle;
 }
 
-h5 {
-    margin: 0px;
+.left {
+    text-align: left;
 }
 
-td {
-    text-align: center;
-    vertical-align: middle !important;
-}
-
-label {
-    margin: 0px;
+.right {
+    text-align: right;
 }
 
 .form-control.ng-touched.ng-invalid {
@@ -29,8 +47,4 @@ label {
 
 .form-control.ng-touched.ng-valid {
     border: 2px solid green;
-}
-
-.width{
-    max-width: 50%;
 }

@@ -5,6 +5,7 @@ import { CapabilityProjectService } from 'src/app/services/capability-project/ca
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { ProjectService } from 'src/app/services/project/project.service';
 import Swal from 'sweetalert2';
+import { CapabilityProjectComponent } from '../capability-project/capability-project.component';
 
 @Component({
   selector: 'app-capability-project-add',
@@ -19,7 +20,8 @@ export class CapabilityProjectAddComponent implements OnInit {
     project: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private cp: CapabilityProjectService, private ns: NavbarService, private ps: ProjectService) {
+  constructor(private fb: FormBuilder, private cp: CapabilityProjectService, private ns: NavbarService, private ps: ProjectService,
+    private cpc : CapabilityProjectComponent ) {
     this.projects = [];
   }
 
@@ -50,5 +52,10 @@ export class CapabilityProjectAddComponent implements OnInit {
     )
     this.cp.addCapabilityProject(capabilityid, newCapabilityProject)
   }
+
+  hide(): void {
+    this.cpc.hideAll();
+  }
+
 
 }

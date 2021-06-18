@@ -25,3 +25,8 @@ td {
     vertical-align: middle !important;
     word-wrap: break-word;
 }
+
+.align-right {
+    text-align: right;
+    margin-bottom: 15px;
+}

@@ -1,18 +1,19 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,22 +66,23 @@ public class UserController {
 
     @PostMapping("/user")
     public void addUser(@RequestBody UserDTO userDTO, @RequestParam String company, @RequestParam Integer role) {
-        User user = modelMapper.map(userDTO, User.class);
-        if (userService.checkUser(user.getEmail(), user.getUsername())) {
-            byte[] bytes = new byte[10];
-            new Random().nextBytes(bytes);
-            String password = Base64.getEncoder().encodeToString(bytes);
-            user.setRole(role);
-            user.setPassword(password);
-            user.setCompany(userService.findCompany(Long.parseLong(company)));
+        if (!role.equals(-1) && !role.equals(0)) {
+            User user = modelMapper.map(userDTO, User.class);
+            if (userService.checkUser(user.getEmail(), user.getUsername())) {
+                byte[] bytes = new byte[10];
+                new Random().nextBytes(bytes);
+                String password = Base64.getEncoder().encodeToString(bytes);
+                user.setRole(role);
+                user.setPassword(password);
+                user.setCompany(userService.findCompany(Long.parseLong(company)));
 
-            userService.addUser(user);
+                userService.addUser(user);
 
-            userService.sendMail(user.getEmail(), user.getUsername(), user.getId().toString());
+                userService.sendMail(user.getEmail(), user.getUsername(), user.getId().toString());
+            }
         }
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/user")
     public List<UserDTO> getUsers(@RequestParam("companyId") String companyId) {
         List<User> users = userService.findUserByCompany(Long.parseLong(companyId));
@@ -91,13 +93,11 @@ public class UserController {
         return userDTOs;
     }
 
-    @ExceptionHandler(Exception.class)
     @DeleteMapping("/user")
     public void delUser(@RequestParam("userid") String userid) {
         userService.delUser(Long.parseLong(userid));
     }
 
-    @ExceptionHandler(Exception.class)
     @PutMapping("/user")
     public void updateUser(@RequestParam String userid, @RequestBody UserDTO userDTO, @RequestParam Integer role) {
         User user = modelMapper.map(userDTO, User.class);
@@ -106,36 +106,36 @@ public class UserController {
         userService.updateUser(userid, user);
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/user/{userid}")
     public UserDTO getUser(@PathVariable String userid) {
         User user = userService.findUserById(userid);
         return modelMapper.map(user, UserDTO.class);
     }
 
-    @ExceptionHandler(Exception.class)
     @GetMapping("/user/login")
     public void trylogin(@RequestParam("username") String username, @RequestParam("password") String password,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws LoginException {
+        userService.checkCompanyLocked(username);
         String value = Base64.getEncoder().withoutPadding().encodeToString(
                 userService.authenticateUser(new UsernamePasswordAuthenticationToken(username, password)).getBytes());
         String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        cookie.setMaxAge(900);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from(name, value).httpOnly(false).secure(false).domain("localhost")
+                .path("/").maxAge(Duration.ofMinutes(15)).sameSite("Strict").build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/user/jwt")
-    public void jwt(@RequestParam String token, HttpServletResponse response) {
-        String newToken = userService.refreshJwt(token);
+    public void jwt(@RequestParam String token, @RequestParam String username, HttpServletResponse response) {
+        String newToken = userService.refreshJwt(token, username);
         response.addHeader("Access-Control-Expose-Headers", SecurityConstraints.HEADER_STRING);
         response.addHeader("Access-Control-Allow-Headers", SecurityConstraints.HEADER_STRING);
-        response.setHeader("Authorization", newToken);
+        String name = Base64.getEncoder().withoutPadding().encodeToString(("jwt").getBytes());
+        newToken = Base64.getEncoder().withoutPadding().encodeToString(newToken.getBytes());
+        ResponseCookie cookie = ResponseCookie.from(name, newToken).httpOnly(false).secure(false).domain("localhost")
+                .path("/").maxAge(Duration.ofMinutes(15)).sameSite("Strict").build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
-    @ExceptionHandler(Exception.class)
     @PostMapping("/user/resetpassword")
     public void requestResetPassword(@RequestParam String email) {
         User user = userService.findUserByMail(email);
@@ -151,7 +151,6 @@ public class UserController {
         mailService.sendMail(mail);
     }
 
-    @ExceptionHandler(Exception.class)
     @PutMapping("/user/resetpassword")
     public void resetPassword(@RequestParam String token, @RequestParam String password) {
 

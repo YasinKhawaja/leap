@@ -3,19 +3,23 @@ package edu.ap.group10.leapwebapp.company;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.mail.AuthenticationFailedException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationToken;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenService;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
+import edu.ap.group10.leapwebapp.security.SecurityConstraints;
+import edu.ap.group10.leapwebapp.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -31,10 +35,15 @@ public class CompanyController {
   @Autowired
   private MailService mailService;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping("/companies")
-  public List<Company> getAllCompanies(@RequestParam String role) {
+  public List<Company> getAllCompanies(@RequestHeader("Authorization") String auth) {
     try {
-      if (companyService.checkRole(role)) {
+      String token = auth.replace(SecurityConstraints.TOKEN_PREFIX, "");
+      token = this.companyService.getRole(token);
+      if (companyService.checkRole(token)) {
         return companyService.getCompanies();
       }
     } catch (AccessDeniedException ex) {
@@ -43,32 +52,30 @@ public class CompanyController {
     return Arrays.asList();
   }
 
-  @PostMapping("/companies")
+  @PostMapping("/company")
   public void addNewCompany(@RequestBody Company company) {
+    company.setApproved(false);
     companyService.addCompany(company);
 
-    String token = confirmationTokenService.addConfirmationToken(company);
-
-    String confirmationTokenString = "http://localhost:4200/company/register/?id=" + company.getId() + "&token="
-        + token;
+    String confirmationTokenString = "http://localhost:4200/company/register/" + company.getId();
 
     Mail mail = new Mail();
-    // change setReceiver to get a list of email adresses from the application
-    // admins
-    mail.setReceiver("standaertsander@gmail.com, stijnverhaegen@gmail.com, yasin.khawaja@student.ap.be, janelguera@gmail.com");
+    String emails = userService.getApplicationAdmins();
+    mail.setReceiver(emails);
     mail.setSubject("New application from: " + company.getCompanyName());
     mail.setContent(
         "Click on this link to view the request from: " + company.getCompanyName() + ".\n" + confirmationTokenString);
     mailService.sendMail(mail);
   }
 
-  @GetMapping("/companies/{token}")
-  public Company viewCompanyApplication(@PathVariable("token") String confirmationToken, @RequestParam String role) {
+  @GetMapping("/company/application/{companyid}")
+  public Company viewCompanyApplication(@RequestHeader("Authorization") String auth, @PathVariable Long companyid) {
     Company c = null;
     try {
-      if (companyService.checkRole(role)) {
-        ConfirmationToken token = confirmationTokenService.getConfirmationToken(confirmationToken);
-        c = companyService.findCompany(token.getCompany().getId());
+      String token = auth.replace(SecurityConstraints.TOKEN_PREFIX, "");
+      token = this.companyService.getRole(token);
+      if (companyService.checkRole(token)) {
+        c = companyService.findCompany(companyid);
       }
       return c;
     } catch (Exception e) {
@@ -77,23 +84,22 @@ public class CompanyController {
     }
   }
 
-  @PostMapping("/companies/{token}/applicationStatus")
-  public void companyApplicationResult(@PathVariable String token, @RequestParam("accepted") Boolean accepted,
-      @RequestParam String role) {
+  @PostMapping("/company/application/{companyid}")
+  public void companyApplicationResult(@PathVariable Long companyid, @RequestParam("accepted") Boolean accepted,
+      @RequestHeader("Authorization") String auth) {
+    String authToken = auth.replace(SecurityConstraints.TOKEN_PREFIX, "");
+    authToken = this.companyService.getRole(authToken);
     try {
-      if (companyService.checkRole(role)) {
-        ConfirmationToken verifyToken = confirmationTokenService.getConfirmationToken(token);
-
-        Long companyID = verifyToken.getCompany().getId();
+      if (companyService.checkRole(authToken)) {
+        Long companyID = companyid;
         Company company = companyService.findCompany(companyID);
-
-        confirmationTokenService.deleteConfirmationToken(token);
 
         String confirmationTokenString = "";
 
         if (accepted.booleanValue()) {
           String tokenAdmin = confirmationTokenService.addConfirmationToken(company);
           confirmationTokenString = "http://localhost:4200/register-useradmin?token=" + tokenAdmin;
+          companyService.updateCompany(company.getId(), true);
         } else {
           companyService.deleteCompany(companyID);
         }
@@ -111,6 +117,18 @@ public class CompanyController {
       }
     } catch (AccessDeniedException ex) {
       log.error(ex.getMessage());
+    }
+  }
+
+  @PostMapping("/company/status")
+  public void changeCompanyStatus(@RequestHeader("Authorization") String auth, @RequestParam Long companyid,
+      @RequestParam Boolean status) {
+    String token = auth.replace(SecurityConstraints.TOKEN_PREFIX, "");
+    token = this.companyService.getRole(token);
+    if (companyService.checkRole(token)) {
+      this.companyService.updateCompany(companyid, status);
+    } else {
+      log.error("Unatuhorized request", new AuthenticationFailedException());
     }
   }
 }

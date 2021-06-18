@@ -1,33 +1,57 @@
 <main class="main">
+    <h1>Business Processes</h1>
+    <br>
     <div class="flex-container">
         <div class="flex-item">
             <div>
                 <table class="table table-striped">
+
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
                             <th scope="col">NAME</th>
                             <th scope="col">DESCRIPTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let process of businessprocesses">
-                            <td>
-                                <a [routerLink]="['../businessprocess/delete/', process.id]">
-                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                            <td *ngIf="(jwt.checkRole() != 'lezer')">
+                                <a >
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'(click)="show('process-delete',process)" >
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-light" role="button" [routerLink]="['../businessprocess/edit/', process.id]">
+                                <a *ngIf="(jwt.checkRole() != 'lezer')" class="btn btn-light" role="button" (click)="show('process-edit',process)">
                                     {{ process.name }}
                                 </a>
+                                <div *ngIf="(jwt.checkRole() == 'reader')">{{process.name}}</div>
                             </td>
                             <td>{{ process.description }}</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
+                    <div>
+                        <br>
+                        <div class="flex-container" style="margin-bottom: 0px;">
+                          <div class="flex-item" *ngIf="!showProcessAdd">
+
+                            <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger"  (click)="show('process-add')" >ADD BUSINESS PROCESS</button>
+                          </div>
+                      </div>
+                   
+                    </div>
+                
+                </div>
         </div>
-    </div>
-    <button type="button" class="btn btn-danger" [routerLink]="['../businessprocess/add']">ADD BUSINESS PROCESS</button>
-</main>
+            
+                <div class="flex-item">
+                   <app-businessprocess-add *ngIf="showProcessAdd"></app-businessprocess-add>
+                  
+              <app-businessprocess-edit *ngIf="showProcessEdit" [processCurrentValues]="processCurrentValues"></app-businessprocess-edit> 
+            <app-businessprocess-delete *ngIf="showProcessDelete" [processCurrentValues]="processCurrentValues"></app-businessprocess-delete>
+                   
+              </div>
+            
+              </div>
+    </main>
+   

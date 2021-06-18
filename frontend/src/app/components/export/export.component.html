@@ -3,13 +3,12 @@
   <br>
     <div class="flex-container-1" id="div">
       <ng-container class='container' *ngFor='let capabilityLevel1 of capabilitiesLevel1'>
-        <!-- <div id="div1" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}} -->
-          <div attr.id="{{capabilityLevel1.id}}" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel1) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}}
+          <div attr.id="{{capabilityLevel1.id}}" class="flex-container-2" [ngStyle]="filter === 'ITApplication' ? applyITApplicationFilter(capabilityLevel1) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel1) : { 'border-color': 'black' }">{{capabilityLevel1.name}}
           <ng-container class='container' *ngFor='let capabilityLevel2 of capabilityLevel1.subcapabilities'>
-            <div attr.id="{{capabilityLevel2.id}}" class="flex-container-3" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel2) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel2) : { 'border-color': 'black' }">
+            <div attr.id="{{capabilityLevel2.id}}" class="flex-container-3" [ngStyle]="filter === 'ITApplication' ? applyITApplicationFilter(capabilityLevel2) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel2) : { 'border-color': 'black' }">
               {{capabilityLevel2.name}}
               <ng-container class='container' *ngFor='let capabilityLevel3 of capabilityLevel2.subcapabilities'>
-                <div attr.id="{{capabilityLevel3.id}}" class="flex-container-4" [ngStyle]="filter === 'ITApplication' ? applySelectedITApplication(capabilityLevel3) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel3) : { 'border-color': 'black' }">
+                <div attr.id="{{capabilityLevel3.id}}" class="flex-container-4" [ngStyle]="filter === 'ITApplication' ? applyITApplicationFilter(capabilityLevel3) : filter== 'StrategyItem' ? applySelectedStrategyItem(capabilityLevel3) : { 'border-color': 'black' }">
                   {{capabilityLevel3.name}}
                 </div>
               </ng-container>
@@ -37,14 +36,10 @@
       <button type="submit">Export to CSV</button>
     </form>
     <h4>Options</h4>
-    <h6>Choose IT Application to see which linked capability uses it the best.</h6>
-    <div [formGroup]="itApplication">
-      <select class="custom-select" (change)="changeITApplication()" formControlName="itApplicationName">
-        <option value="" disabled>Choose your IT Application</option>
-        <option *ngFor="let itApplication of itApplications  | keyvalue" [ngValue]="itApplication.value">
-          {{itApplication.value}}</option>
-      </select>
-    </div>
+    <form (ngSubmit)="setITApplicationFilter()">
+      <br>
+      <button type="submit">Click to see the average IT score of all capabilities.</button>
+    </form>
     <br>
     <h6>Choose Strategy, then select Strategy Item.</h6>
     <div [formGroup]="strategy">

@@ -1,5 +1,6 @@
 package edu.ap.group10.leapwebapp.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
@@ -53,6 +54,18 @@ public class UserService implements UserDetailsService {
         } else {
             throw new UsernameNotFoundException(username);
         }
+    }
+
+    public String getApplicationAdmins() {
+        List<String> emails = new ArrayList<>();
+        for (User user : userRepository.findAll()) {
+            if (user.getRole().equals(-1)) {
+                emails.add(user.getEmail());
+            }
+        }
+        String emailsToString = emails.toString();
+        emailsToString = emailsToString.substring(1, emailsToString.length() - 1);
+        return emailsToString;
     }
 
     public Company validateToken(String token) {
@@ -141,11 +154,27 @@ public class UserService implements UserDetailsService {
         return customAuthenticationProvider.checkUserID(token);
     }
 
-    public String refreshJwt(String token) {
-        return customAuthenticationProvider.newJwt(token);
+    public String refreshJwt(String token, String username) {
+        return customAuthenticationProvider.newJwt(token, username);
     }
 
     public User findUserByMail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public String checkCompanyLocked(String username) throws LoginException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new LoginException("Incorrect username or password");
+        } else {
+            String authorities = user.getAuthorities().toString();
+            if (authorities.equals("[Application admin]")) {
+                return "";
+            } else if (!user.getCompany().getApproved().booleanValue()) {
+                throw new LoginException("Company is locked");
+            } else {
+                return "";
+            }
+        }
     }
 }

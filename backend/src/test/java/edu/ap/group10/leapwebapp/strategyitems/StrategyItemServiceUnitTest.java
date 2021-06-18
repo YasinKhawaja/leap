@@ -96,11 +96,8 @@ import edu.ap.group10.leapwebapp.environment.Environment;
  
      }
 
-// //werkt niet
-//     @Test
-   void getAllStrategiesInStrategyByName() {
+// //byname
 
-}
     
    @Test
    void givenStrategyId_whenGetAStrategyItemInStrategy_returnsStrategyItemInStrategy() {
@@ -131,12 +128,8 @@ import edu.ap.group10.leapwebapp.environment.Environment;
 
    }
 
-   //werkt nog niet
-   @Test
-   void create() {
+   //create
   
-
-  }
 
 
    @Test

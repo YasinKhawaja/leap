@@ -25,8 +25,7 @@ class ITApplicationUnitTests {
         ITApplication itapplication = new ITApplication("test", "tech", environment);
 
         // When
-        String toString = "ITApplication(id=null, name=test, technology=tech, version=version, acquisitionDate=acquisitionDate, endOfLife=endOfLife, currentScalability=0, expectedScalability=0, currentPerformance=0, expectedPerformance=0, currentSecurityLevel=0, expectedSecurityLevel=0, currentStability=0, expectedStability=0, costCurrency=Eur, currentValueForMoney=0, currentTotalCostPerYear=0.0, toleratedTotalCostPerYear=0.0, timeValue=TIMEVALUE, environment="
-                + environment.toString() + ")";
+        String toString = "ITApplication(id=null, name=test, technology=tech, version=version, acquisitionDate=acquisitionDate, endOfLife=endOfLife, currentScalability=0, expectedScalability=0, currentPerformance=0, expectedPerformance=0, currentSecurityLevel=0, expectedSecurityLevel=0, currentStability=0, expectedStability=0, costCurrency=Eur, currentValueForMoney=0, currentTotalCostPerYear=0.0, toleratedTotalCostPerYear=0.0, timeValue=TIMEVALUE, importanceFactor=0.0, environment=Environment(id=null, name=Test environment, capabilities=null, strategies=null, resources=null, itApplications=null, programs=null, businessProcesses=null, company=Company(id=null, vatNumber=1, companyName=Test Company, email=sv@gmail.com, streetName=kerkstraat, houseNumber=3, postcode=5, city=Mortsel, country=België, businessActivity=null, taxOffice=null, approved=false, environments=null)))";
 
         // Then
         assertEquals(itapplication.toString(), toString);

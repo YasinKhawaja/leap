@@ -1,26 +1,28 @@
 <main class="main">
+    <h1>Programs</h1>
+    <br>
     <div class="flex-container">
         <div class="flex-item">
-            <div>
+           
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
+                            <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
                             <th scope="col">NAME</th>
                             <th scope="col">DESCRIPTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let program of programs">
-                            <td>
-                                <a [routerLink]="['../program/delete/', program.id]">
-                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                            <td *ngIf="(jwt.checkRole() != 'lezer')">
+                                <a *ngIf="(jwt.checkRole() != 'lezer')" >
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20' (click)="show('program-delete',program)">
                                 </a>
                             </td>
-                            <td class="middle-div">
-                                <a [routerLink]="['../program/edit/', program.id]">
-                                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20">
+                            <td *ngIf="(jwt.checkRole() != 'lezer')" class="middle-div">
+                                <a >
+                                    <img src="assets/edit-icon.png" alt="Update" height="20" width="20" (click)="show('program-edit',program)">
                                 </a>
                             </td>
                             <td>
@@ -32,8 +34,27 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div>
+                    <br>
+                    <div class="flex-container" style="margin-bottom: 0px;">
+                      <div class="flex-item" *ngIf="!showProgramAdd">
+            
+                          <button *ngIf="(jwt.checkRole() != 'lezer')" type="button" class="btn btn-danger" (click)="show('program-add')">ADD PROGRAM</button>
+                      </div>
+                  </div>
+               
+                </div>
+            
             </div>
-        </div>
-    </div>
-    <button type="button" class="btn btn-danger" [routerLink]="['../program/create']">ADD PROGRAM</button>
+        
+            <div class="flex-item">
+              <app-program-add *ngIf="showProgramAdd"></app-program-add>
+              
+      <app-program-edit *ngIf="showProgramEdit" [programCurrentValues]="programCurrentValues"></app-program-edit> 
+             <app-program-delete *ngIf="showProgramDelete" [programCurrentValues]="programCurrentValues"></app-program-delete>
+                 
+          </div>
+        
+          </div>
 </main>

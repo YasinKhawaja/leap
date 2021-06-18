@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import edu.ap.group10.leapwebapp.user.User;
+import edu.ap.group10.leapwebapp.user.UserRepository;
 import edu.ap.group10.leapwebapp.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +29,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -44,24 +48,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UsernamePasswordAuthenticationToken token = null;
 
-        try {
-            if (user != null) {
-                if (!user.isEnabled()) {
-                    throw new DisabledException("This user has been disabled.");
-                }
-                if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-                    throw new BadCredentialsException("Incorrect username or password");
-                }
-                token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
-                        user.getAuthorities());
-                return token;
-            } else {
-                throw new AuthenticationCredentialsNotFoundException("User credentials not found");
+        if (user != null) {
+            if (!user.isEnabled()) {
+                throw new DisabledException("This user has been disabled.");
             }
-
-        } catch (AuthenticationException e) {
-            log.error("Login error: ", e);
+            if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+                throw new BadCredentialsException("Incorrect username or password");
+            }
+            token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(),
+                    user.getAuthorities());
             return token;
+        } else {
+            throw new AuthenticationCredentialsNotFoundException("User credentials not found");
         }
     }
 
@@ -74,11 +72,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User user = userService.findUserByUsername(auth.getPrincipal().toString());
 
         if (user.getCompany() != null) {
-            return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
-                    .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
-                    .withSubject(auth.getPrincipal().toString())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
-                    .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+            if (user.getCompany().getApproved().booleanValue()) {
+                return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
+                        .withClaim(CLAIM_COMPANY, user.getCompany().getId().toString())
+                        .withSubject(auth.getPrincipal().toString())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
+                        .withIssuer(ISSUER).sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
+            } else {
+                return null;
+            }
         } else {
             return JWT.create().withClaim(CLAIM_ROLE, auth.getAuthorities().toString())
                     .withSubject(auth.getPrincipal().toString())
@@ -88,22 +90,33 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     }
 
-    public String newJwt(String token) {
+    public String newJwt(String token, String username) {
         DecodedJWT jwt = verifyJWTUser(token);
+        String usernameToken;
+
+        if (!username.equals("")) {
+            usernameToken = username;
+        } else {
+            usernameToken = jwt.getSubject();
+        }
 
         if (jwt != null) {
-            String role = jwt.getClaim(CLAIM_ROLE).toString();
-            role = role.substring(1, role.length() - 1);
+            String role = userRepository.findByUsername(usernameToken).getAuthorities().toString();
             String company = jwt.getClaim(CLAIM_COMPANY).toString();
             company = company.substring(1, company.length() - 1);
 
-            return JWT.create().withClaim(CLAIM_ROLE, role).withClaim(CLAIM_COMPANY, company)
-                    .withSubject(jwt.getSubject()).withIssuer(jwt.getIssuer())
+            return JWT.create().withClaim(CLAIM_ROLE, role).withClaim(CLAIM_COMPANY, company).withSubject(usernameToken)
+                    .withIssuer(jwt.getIssuer())
                     .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstraints.EXPIRATION_TIME))
                     .sign(Algorithm.HMAC512(SecurityConstraints.SECRET.getBytes()));
         } else {
             return null;
         }
+    }
+
+    public String getRole(String token) {
+        DecodedJWT jwt = verifyJWTUser(token);
+        return jwt.getClaim(CLAIM_ROLE).toString();
     }
 
     public String newUserIdJwt(String id) {

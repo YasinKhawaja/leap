@@ -68,6 +68,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.jwt.setUsername()
+    this.jwt.getRole()
     if (this.jwt.getUserBoolean().getValue()) {
       this.idle.watch();
       this.jwt.tokenRefresh();
@@ -103,6 +105,7 @@ export class AppComponent implements OnInit {
   getUsername(): string {
     if (this.jwt.getUsername() != null) {
       this.username = this.jwt.getUsername();
+      this.role = this.jwt.getRole()
     }
     else {
       this.username = "User";

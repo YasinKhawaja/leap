@@ -28,7 +28,8 @@ export class CapabilityProjectService {
     {headers: this.contentHeaders})
     .subscribe(
       () => {
-        this.router.navigate(['capability-project'])
+       // this.router.navigate(['capability-project'])
+       window.location.reload();
       },
       () => {
         Swal.fire('Error', 'Failed to add capability-project link', 'error')
@@ -40,7 +41,8 @@ export class CapabilityProjectService {
     var url = `${this.cpURL}/${capabilityprojectid}`
     this.http.delete(url).subscribe(
       () => {
-        this.router.navigate(['capability-project'])
+        //this.router.navigate(['capability-project'])
+        window.location.reload();
       }
     )
   }

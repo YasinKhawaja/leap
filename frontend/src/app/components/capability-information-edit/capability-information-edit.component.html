@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="flex-container card-header">
+        <div class="flex-item">
+            <div class="title">
+                <h5><strong>EDIT INFORMATION LINK</strong></h5>
+            </div>
+        </div>
+        <div class="flex-item">
+            <div class="hide">
+                <input type="image" src="assets/exit-icon.png" alt="Hide" height="30" width="30" (click)="hide()">
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form *ngIf="capinfoEditForm != null" [formGroup]="capinfoEditForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="criticality">Criticality</label>
+                <select id="criticality" class="form-control" formControlName='criticality' required>
+                    <option *ngFor="let type of eCrit | keyvalue" [ngValue]="type.value">{{ type.value }}</option>
+                </select>
+                <div class="alert alert-danger center" *ngIf="(crit!.dirty || crit!.touched) && crit!.invalid">
+                    <div *ngIf="crit!.errors!.required">
+                        Criticality
+                    </div>
+                </div>
+            </div>
+            <div class="center">
+                <button type="submit" class="btn btn-success" [disabled]="capinfoEditForm.invalid">EDIT</button>
+            </div>
+        </form>
+    </div>
+</div>

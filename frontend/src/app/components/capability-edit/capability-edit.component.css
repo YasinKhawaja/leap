@@ -2,6 +2,10 @@
     margin: 25px;
 }
 
+.table {
+    border: 0px solid white !important;
+}
+
 .flex-container-hor {
     display: flex;
 }
@@ -30,13 +34,14 @@
     text-align: center;
 }
 
-h5, label {
+h5,
+label {
     margin: 0px;
 }
 
 #table-top th {
     border-top: 0px;
-    width: 50%;
+    width: 33.33%;
 }
 
 #table-bottom th {

@@ -31,7 +31,8 @@ public createStrategy(envId: string, str: Strategy) {
   {headers: this.contentHeaders})
   .subscribe(
     () => {
-      this.router.navigate([`strategies/`])
+      window.location.reload();
+     
     },
     () => {
       Swal.fire('Error', 'Failed to create this strategy', 'error')
@@ -45,7 +46,8 @@ updateStrategy_CurrentEnvironment(strId: string, strategy: Strategy){
   this.http.put<Strategy>(url, strategy,
   {headers: this.contentHeaders})
   .subscribe(data => {
-    this.router.navigate([`strategies/`])
+    
+    window.location.reload();
   },
     error => {
       Swal.fire('Error', 'Failed to update the strategy', 'error')
@@ -55,10 +57,12 @@ updateStrategy_CurrentEnvironment(strId: string, strategy: Strategy){
 deleteStrategy_CurrentEnvironment(strId: string) {
   let url = `${this.strategiesServiceURI}/${strId}`
 
-  this.http.delete(url).subscribe();
+  this.http.delete(url).subscribe(() => {
+     window.location.reload();
+   });
 }
 
-// Search one str by name
+
 searchOneStrategy(name: string): Observable<Strategy[]> {
   let url = `${this.strategiesServiceURI}/searchOne`
 

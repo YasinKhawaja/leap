@@ -1,6 +1,5 @@
 package edu.ap.group10.leapwebapp.capabilityapplication;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.ap.group10.leapwebapp.capability.Capability;
 import edu.ap.group10.leapwebapp.capability.CapabilityService;
-import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.itapplication.ITApplication;
 import edu.ap.group10.leapwebapp.itapplication.ITApplicationService;
 
@@ -30,42 +28,7 @@ public class CapabilityApplicationController {
 
         @GetMapping("/capitapp/{capabilityId}")
         public List<CapabilityApplication> getAllCapabilityApplications(@PathVariable String capabilityId) {
-                List<CapabilityApplication> capabilityApplicationsList = capabilityApplicationService
-                                .getCapabilityApplications(capabilityId);
-                Capability capability = capabilityService.getCapabilityById(Long.parseLong(capabilityId));
-                capability.setInformationQuality(0.0);
-                capability.setApplicationFit(0.0);
-                Environment environment = capability.getEnvironment();
-                Long environmentId = environment.getId();
-
-                for (CapabilityApplication capabilityApplication : capabilityApplicationsList) {
-
-                        Integer[] importanceCalc = { capabilityApplication.getBusinessEfficiencySupport(),
-                                        capabilityApplication.getBusinessFunctionalCoverage(),
-                                        capabilityApplication.getBusinessCorrectness(),
-                                        capabilityApplication.getBusinessFuturePotential(),
-                                        capabilityApplication.getInformationCompleteness(),
-                                        capabilityApplication.getInformationCorrectness(),
-                                        capabilityApplication.getInformationAvailability() };
-
-                        Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
-                                        / (importanceCalc.length * 5);
-                        capabilityApplication.setImportance(importance);
-
-                        capability.setCalculatedInformationQuality(capabilityApplication.getInformationCompleteness(),
-                                        capabilityApplication.getInformationCorrectness(),
-                                        capabilityApplication.getInformationAvailability(),
-                                        capabilityApplication.getImportance());
-
-                        capability.setCalculatedApplicationFit(capabilityApplication.getBusinessEfficiencySupport(),
-                                        capabilityApplication.getBusinessFunctionalCoverage(),
-                                        capabilityApplication.getBusinessCorrectness(),
-                                        capabilityApplication.getBusinessFuturePotential(),
-                                        capabilityApplication.getImportance());
-
-                        capabilityService.updateCapability(environmentId, capability.getId(), capability);
-
-                }
+                capabilityApplicationService.calculateCapabilityAppFitAndInfoQuality(capabilityId);
                 return capabilityApplicationService.getCapabilityApplications(capabilityId);
         }
 
@@ -80,16 +43,13 @@ public class CapabilityApplicationController {
                         @RequestParam Integer businessFunctionalCoverage, @RequestParam Integer businessCorrectness,
                         @RequestParam Integer businessFuturePotential, @RequestParam Integer informationCompleteness,
                         @RequestParam Integer informationCorrectness, @RequestParam Integer informationAvailability,
-                        @PathVariable String capabilityId, @RequestParam String application) {
+                        @PathVariable String capabilityId, @RequestParam String application, @RequestParam String importanceFactor) {
 
-                Integer[] importanceCalc = { businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
-                                businessFuturePotential, informationCompleteness, informationCorrectness,
-                                informationAvailability };
-                Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
-                                / (importanceCalc.length * 5);
 
                 Capability capability = capabilityService.getCapabilityById(Long.parseLong(capabilityId));
                 ITApplication itApplication = itApplicationService.findITApplicationByName(application);
+                Double importance = Double.parseDouble(importanceFactor);
+
 
                 CapabilityApplication capabilityApplication = new CapabilityApplication(importance,
                                 businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
@@ -104,15 +64,13 @@ public class CapabilityApplicationController {
                         @RequestParam Integer businessFunctionalCoverage, @RequestParam Integer businessCorrectness,
                         @RequestParam Integer businessFuturePotential, @RequestParam Integer informationCompleteness,
                         @RequestParam Integer informationCorrectness, @RequestParam Integer informationAvailability,
-                        @PathVariable String capitappId) {
-                Integer[] importanceCalc = { businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
-                                businessFuturePotential, informationCompleteness, informationCorrectness,
-                                informationAvailability };
-                Double importance = (double) Arrays.stream(importanceCalc).mapToInt(Integer::intValue).sum()
-                                / (importanceCalc.length * 5);
+                        @PathVariable String capitappId, @RequestParam String importanceFactor) {
+                
 
                 CapabilityApplication capabilityApplication = capabilityApplicationService
                                 .findCapabilityApplication(Long.parseLong(capitappId));
+                
+                Double importance = Double.parseDouble(importanceFactor);
 
                 CapabilityApplication newCapabilityApplication = new CapabilityApplication(importance,
                                 businessEfficiencySupport, businessFunctionalCoverage, businessCorrectness,
@@ -127,5 +85,10 @@ public class CapabilityApplicationController {
         public void deleteCapabilityApplication(@PathVariable String capitappId) {
                 Long capitappID = Long.parseLong(capitappId);
                 capabilityApplicationService.deleteCapabilityApplication(capitappID);
+        }
+
+        @GetMapping("/capitapp/searchOne/{capitappId}")
+        public CapabilityApplication getCapabilityApplication(@PathVariable String capitappId) {
+                return capabilityApplicationService.findCapabilityApplication(Long.parseLong(capitappId));
         }
 }

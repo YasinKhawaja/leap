@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
 import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import { BusinessprocessComponent } from '../businessprocess/businessprocess.component';
 
 @Component({
   selector: 'app-businessprocess-add',
@@ -16,7 +17,7 @@ export class BusinessprocessAddComponent {
     description: [' ', Validators.nullValidator]
   });
 
-  constructor(private fb: FormBuilder, private bps: BusinessprocessService, private ns: NavbarService) { }
+  constructor(private fb: FormBuilder, private bps: BusinessprocessService, private ns: NavbarService , private bpc : BusinessprocessComponent) { }
 
   onSubmit(){
     var environmentid = this.ns.getEnvironmentCookie();
@@ -27,5 +28,9 @@ export class BusinessprocessAddComponent {
     );
 
     this.bps.addBusinessProcess(environmentid, newBusinessProcess);
+  }
+
+  hide(): void {
+    this.bpc.hideAll();
   }
 }
