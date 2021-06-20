@@ -37,7 +37,7 @@ export class CompanyService {
           Swal.fire('Registered', 'You have registered your company, please wait for one of the Admins to review your application. You will be sent an email with the result.', 'success')
           this.router.navigate(['login'])
         },
-        error => {
+        () => {
           Swal.fire('Error', 'Failed to register your company', 'error')
         });
   }

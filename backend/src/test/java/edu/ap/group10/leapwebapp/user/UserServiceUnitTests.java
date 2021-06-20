@@ -34,6 +34,7 @@ import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationToken;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenRepository;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
+import edu.ap.group10.leapwebapp.exceptions.RegisterException;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
@@ -207,7 +208,7 @@ public class UserServiceUnitTests {
     }
 
     @Test
-    void givenEmail_Username_whenCheckUser_returnsTrue() {
+    void givenEmail_Username_whenCheckUser_returnsTrue() throws RegisterException {
         // Given
         String email = "standaertsander@gmail.com";
         String username = "Sander";
@@ -215,7 +216,7 @@ public class UserServiceUnitTests {
         // When
         when(userRepository.findByEmail(email)).thenReturn(null);
         when(userRepository.findByUsername(username)).thenReturn(null);
-        boolean validator = sut.checkUser(email, username);
+        boolean validator = sut.checkUserAdmin(email, username);
 
         // Then
         assertTrue(validator);
@@ -232,7 +233,7 @@ public class UserServiceUnitTests {
         when(userRepository.findByUsername(username)).thenReturn(user);
 
         // Then
-        assertThrows(EntityExistsException.class, () -> sut.checkUser(email, username));
+        assertThrows(RegisterException.class, () -> sut.checkUserAdmin(email, username));
     }
 
     @Test
@@ -246,7 +247,7 @@ public class UserServiceUnitTests {
         when(userRepository.findByEmail(email)).thenReturn(user);
 
         // Then
-        assertThrows(EntityExistsException.class, () -> sut.checkUser(email, username));
+        assertThrows(EntityExistsException.class, () -> sut.checkUserAdmin(email, username));
     }
 
     @Test

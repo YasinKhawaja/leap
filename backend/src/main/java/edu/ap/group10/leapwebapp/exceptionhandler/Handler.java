@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import edu.ap.group10.leapwebapp.user.LoginException;
+import edu.ap.group10.leapwebapp.exceptions.LoginException;
+import edu.ap.group10.leapwebapp.exceptions.RegisterException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
 public class Handler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ LoginException.class, AuthenticationException.class })
+    @ExceptionHandler({ LoginException.class, AuthenticationException.class, RegisterException.class })
     protected ResponseEntity<Object> handleLoginException(Exception e, WebRequest request) {
         log.error(e.getMessage(), e);
         Object resBody = e.getMessage();
@@ -26,7 +27,7 @@ public class Handler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleMyException(Exception e, WebRequest request) {
         log.error(e.getMessage(), e);
-        Object resBody = "";
+        Object resBody = "Oops, something went wrong!";
         return handleExceptionInternal(e, resBody, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
