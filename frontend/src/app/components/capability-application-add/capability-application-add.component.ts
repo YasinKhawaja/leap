@@ -62,7 +62,15 @@ export class CapabilityApplicationAddComponent implements OnInit {
       this.capabilityApplication.value.importanceFactor
     );
 
-    this.cas.createCapabilityApplication(capabilityId, newCapabilityApplication);
+    this.cas.createCapabilityApplication(capabilityId, newCapabilityApplication)
+    .subscribe(
+      () => {
+        this.cac.ngOnInit();
+      },
+      () => {
+        Swal.fire('Error', `Failed to add capability application link`, 'error')
+      }
+      )
   }
 
   hide(): void {

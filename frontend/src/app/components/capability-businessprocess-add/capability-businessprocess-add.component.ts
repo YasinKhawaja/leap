@@ -54,7 +54,15 @@ export class CapabilityBusinessprocessAddComponent implements OnInit {
       this.capabilityBusinessprocess.value.businessprocess
     );
     
-    this.cbs.addCapabilityBusinessProcess(capabilityid, newCapabilityBusinessprocess);
+    this.cbs.addCapabilityBusinessProcess(capabilityid, newCapabilityBusinessprocess)
+    .subscribe(
+      () => {
+        this.cpc.ngOnInit();
+      },
+      () => {
+        Swal.fire('Error', `Failed to add capability business process link`, 'error')
+      }
+      )
   }
 
 }

@@ -30,7 +30,6 @@ export class StrategyAddComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder,
-    private router: Router,
     private ss: StrategyService, private ns: NavbarService, private sc: StrategyComponent) { }
 
   // Form GETTERS
@@ -60,6 +59,14 @@ export class StrategyAddComponent implements OnInit {
 
 
     this.ss.createStrategy(envId, straToCreate)
+    .subscribe(
+      () => {
+        this.sc.ngOnInit();
+      },
+      () => {
+        Swal.fire('Error', `Failed to add strategy`, 'error')
+      }
+    )
     this.strAddForm.reset();
     
    

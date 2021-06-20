@@ -17,10 +17,15 @@ export class CapabilityProjectDeleteComponent {
 
   deleteCapabilityProject() {
 
-    //let capabilityprojectid = this.router.url.split('/')[3];
     let capabilityprojectid = this.capabilityProjectCurrentValues.id;
 
-    this.cp.deleteCapabilityProject(capabilityprojectid.toString());
+    this.cp.deleteCapabilityProject(capabilityprojectid.toString())
+    .subscribe(
+      () => {
+        this.cpc.ngOnInit()
+        this.cpc.hideAll()
+      }
+    )
   }
 
 

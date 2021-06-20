@@ -5,6 +5,7 @@ import { CapabilityStrategyitemService } from 'src/app/services/capability-strat
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import Swal from 'sweetalert2';
 import { CapabilityStrategyitemsComponent } from '../capability-strategyitems/capability-strategyitems.component';
 
 
@@ -90,6 +91,14 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
       this.capabilityStrategyItem.value.strategicEmphasis
     );
 
-    this.css.createCapabilityStrategyItem(capabilityId, newCapabilityStrategyItem);
+    this.css.createCapabilityStrategyItem(capabilityId, newCapabilityStrategyItem)
+    .subscribe(
+    () => {
+      this.csic.ngOnInit();
+    },
+    () => {
+      Swal.fire('Error', `Failed to add capability strategy item link`, 'error')
+    }
+    )
   }
 }

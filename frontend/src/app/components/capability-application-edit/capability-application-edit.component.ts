@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
+import Swal from 'sweetalert2';
 import { CapabilityApplicationComponent } from '../capability-application/capability-application.component';
 
 @Component({
@@ -47,7 +47,7 @@ export class CapabilityApplicationEditComponent implements OnInit{
   }
 
   private getCurrentCapabilityApplication(): Observable<CapabilityApplication> {
-    //let capabilityApplicationId = this.router.url.split('/')[3];
+   
     let capabilityApplicationId = this.capAppCurrentValues.id;
 
     return this.cas.getCapabilityApplication(capabilityApplicationId.toString());
@@ -55,7 +55,7 @@ export class CapabilityApplicationEditComponent implements OnInit{
 
   onSubmit(){
   
-   // let capabilityApplicationId = this.router.url.split('/')[3];
+   
     let capabilityApplicationId = this.capAppCurrentValues.id;
     
     var newCapabilityApplication = new CapabilityApplication(
@@ -70,7 +70,14 @@ export class CapabilityApplicationEditComponent implements OnInit{
       this.capabilityApplication.value.importanceFactor
     );
 
-    this.cas.updateCapabilityApplication(capabilityApplicationId.toString(), newCapabilityApplication);
+    this.cas.updateCapabilityApplication(capabilityApplicationId.toString(), newCapabilityApplication)
+    .subscribe(
+      () => {
+        this.cac.ngOnInit()
+        this.cac.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit capability application link`, `error`)
+    )
 
   }
 

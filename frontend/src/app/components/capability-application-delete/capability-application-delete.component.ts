@@ -16,10 +16,16 @@ export class CapabilityApplicationDeleteComponent {
 
 
   deleteCapability_ITApplication() {
-    //let capabilityITApplicationId = this.router.url.split('/')[3];
+  
     let capabilityITApplicationId = this.capAppCurrentValues.id;
 
-    this.cas.deleteCapabilityApplication(capabilityITApplicationId.toString());
+    this.cas.deleteCapabilityApplication(capabilityITApplicationId.toString())
+    .subscribe(
+      () => {
+        this.cac.ngOnInit()
+        this.cac.hideAll()
+      }
+    )
   }
 
   hide(): void {

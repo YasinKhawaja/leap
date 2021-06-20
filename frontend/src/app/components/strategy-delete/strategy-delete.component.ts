@@ -30,7 +30,13 @@ export class StrategyDeleteComponent implements OnInit {
 
   deleteStrategyFromEnvironment() {
 
-    this.ss.deleteStrategy_CurrentEnvironment(this.strCurrentValues.id);
+    this.ss.deleteStrategy_CurrentEnvironment(this.strCurrentValues.id)
+    .subscribe(
+      () => {
+        this.sc.ngOnInit()
+        this.sc.hideAll()
+      }
+    )
    
 
   }

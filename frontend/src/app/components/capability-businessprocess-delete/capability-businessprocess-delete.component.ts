@@ -16,9 +16,15 @@ export class CapabilityBusinessprocessDeleteComponent {
   constructor(private cbs: CapabilityBusinessprocessService, private cpc : CapabilityBusinessprocessComponent) { }
 
   deleteCapabilityBusinessprocess() {
-    //var capabilityBusinessprocessid = this.router.url.split('/')[3];
+   
     var capabilityBusinessprocessid = this.capabilityBusinessProcessesCurrentValues.id;
-    this.cbs.deleteCapabilityBusienssProcess(capabilityBusinessprocessid.toString());
+    this.cbs.deleteCapabilityBusienssProcess(capabilityBusinessprocessid.toString())
+    .subscribe(
+      () => {
+        this.cpc.ngOnInit()
+        this.cpc.hideAll()
+      }
+    )
   }
 
    hide(): void {

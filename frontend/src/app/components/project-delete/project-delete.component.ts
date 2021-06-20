@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { ProjectComponent } from '../project/project.component';
 import { Project } from 'src/app/classes/project/project';
@@ -8,18 +8,27 @@ import { Project } from 'src/app/classes/project/project';
   templateUrl: './project-delete.component.html',
   styleUrls: ['./project-delete.component.css']
 })
-export class ProjectDeleteComponent {
+export class ProjectDeleteComponent implements OnInit  {
 
   @Input() projectCurrentValues: Project;
   constructor(private ps: ProjectService,private pc: ProjectComponent) { }
 
   deleteProject() {
     var projectid = this.projectCurrentValues.id;
-    //var projectid = this.router.url.split('/')[3];
+   
     this.ps.deleteProject(projectid)
+    .subscribe(
+      () => {
+        this.pc.ngOnInit()
+        this.pc.hideAll()
+      }
+    )
   }
 
   hide(): void {
     this.pc.hideAll();
+  }
+
+  ngOnInit(): void {
   }
 }

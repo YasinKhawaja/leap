@@ -51,6 +51,14 @@ export class CapabilityProjectAddComponent implements OnInit {
       this.capabilityproject.value.project
     )
     this.cp.addCapabilityProject(capabilityid, newCapabilityProject)
+    .subscribe(
+      () => {
+        this.cpc.ngOnInit();
+      },
+      () => {
+        Swal.fire('Error', `Failed to add capability project link`, 'error')
+      }
+      )
   }
 
   hide(): void {
