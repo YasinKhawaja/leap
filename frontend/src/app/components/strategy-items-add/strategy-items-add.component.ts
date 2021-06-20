@@ -18,18 +18,18 @@ export class StrategyItemsAddComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private si: StrategyItemService,private sic : StrategyItemsComponent){}
+    private si: StrategyItemService, private sic: StrategyItemsComponent) { }
 
-    ngOnInit(): void {
-      this.initializeForm();
-    }
+  ngOnInit(): void {
+    this.initializeForm();
+  }
 
-    private initializeForm() {
-     this.strItemAddForm = this.fb.group({
+  private initializeForm() {
+    this.strItemAddForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      description: ['', [Validators.nullValidator, Validators.pattern('^[A-Za-z0-9 ]+$')]]
+      description: ['', [Validators.nullValidator, Validators.pattern('^[A-Za-z0-9. ]+$')]]
     });
-    }
+  }
 
   get name() {
     return this.strItemAddForm.get('name');
@@ -39,8 +39,8 @@ export class StrategyItemsAddComponent implements OnInit {
     return this.strItemAddForm.get('description');
   }
 
-  
-  
+
+
   onSubmit() {
     var strId = this.router.url.split('/')[2];
     console.log(strId);
@@ -51,16 +51,16 @@ export class StrategyItemsAddComponent implements OnInit {
 
 
     this.si.createStrategyItem(strId, straItemToCreate)
-    .subscribe(
-      res => {
-        console.log(res);
-        this.sic.ngOnInit();
-        this.strItemAddForm.reset();
-     
-      },
-      err => Swal.fire('Error', err.error.message, 'error')
-    );
-    
+      .subscribe(
+        res => {
+          console.log(res);
+          this.sic.ngOnInit();
+          this.strItemAddForm.reset();
+
+        },
+        err => Swal.fire('Error', err.error.message, 'error')
+      );
+
   }
 
   hide(): void {

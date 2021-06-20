@@ -17,18 +17,18 @@ export class CapabilityProjectService {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
   }
 
-  public getCapabilityProject(capabilityid: string): Observable<CapabilityProject[]>{
+  public getCapabilityProject(capabilityid: string): Observable<CapabilityProject[]> {
     var url = `${this.cpURL}/${capabilityid}`
     return this.http.get<CapabilityProject[]>(url);
   }
 
-  public addCapabilityProject(capabilityid: string, capabilityproject: CapabilityProject) : Observable<any>{
+  public addCapabilityProject(capabilityid: string, capabilityproject: CapabilityProject) {
     var url = `${this.cpURL}/${capabilityid}`;
-    return this.http.post<CapabilityProject>(url, capabilityproject.getParams());
-  
+    return this.http.post<CapabilityProject>(url, capabilityproject.getParams(),
+      { headers: this.contentHeaders })
   }
 
-  public deleteCapabilityProject(capabilityprojectid: string){
+  public deleteCapabilityProject(capabilityprojectid: string): Observable<any> {
     var url = `${this.cpURL}/${capabilityprojectid}`
    return this.http.delete(url);
      

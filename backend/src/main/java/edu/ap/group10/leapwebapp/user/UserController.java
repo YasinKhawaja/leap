@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenService;
+import edu.ap.group10.leapwebapp.exceptions.LoginException;
+import edu.ap.group10.leapwebapp.exceptions.RegisterException;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.SecurityConstraints;
@@ -43,10 +45,11 @@ public class UserController {
     private MailService mailService;
 
     @PostMapping("/application-admin")
-    public void addApplicationAdmin(@RequestBody UserDTO userDTO, @RequestParam String secret) {
+    public void addApplicationAdmin(@RequestBody UserDTO userDTO, @RequestParam String secret)
+            throws RegisterException {
         User user = modelMapper.map(userDTO, User.class);
         if (secret.equals(SecurityConstraints.APPLICATION_ADMIN_SECRET)
-                && userService.checkUser(user.getEmail(), user.getUsername())) {
+                && userService.checkUserAdmin(user.getEmail(), user.getUsername())) {
             user.setRole(-1);
             user.setCompany(null);
             userService.addUser(user);
@@ -54,9 +57,9 @@ public class UserController {
     }
 
     @PostMapping("/useradmin")
-    public void addUserAdmin(@RequestParam String token, @RequestBody UserDTO userDTO) {
+    public void addUserAdmin(@RequestParam String token, @RequestBody UserDTO userDTO) throws RegisterException {
         User user = modelMapper.map(userDTO, User.class);
-        if (userService.checkUser(user.getEmail(), user.getUsername())) {
+        if (userService.checkUserAdmin(user.getEmail(), user.getUsername())) {
             user.setRole(0);
             user.setCompany(userService.validateToken(token));
             confirmationTokenService.deleteConfirmationToken(token);
@@ -65,21 +68,21 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public void addUser(@RequestBody UserDTO userDTO, @RequestParam String company, @RequestParam Integer role) {
-        if (!role.equals(-1) && !role.equals(0)) {
-            User user = modelMapper.map(userDTO, User.class);
-            if (userService.checkUser(user.getEmail(), user.getUsername())) {
-                byte[] bytes = new byte[10];
-                new Random().nextBytes(bytes);
-                String password = Base64.getEncoder().encodeToString(bytes);
-                user.setRole(role);
-                user.setPassword(password);
-                user.setCompany(userService.findCompany(Long.parseLong(company)));
+    public void addUser(@RequestBody UserDTO userDTO, @RequestParam String company, @RequestParam Integer role)
+            throws RegisterException {
+        User user = modelMapper.map(userDTO, User.class);
+        user.setRole(role);
+        if (userService.checkUser(user.getEmail(), user.getUsername(), user.getRole())) {
+            byte[] bytes = new byte[10];
+            new Random().nextBytes(bytes);
+            String password = Base64.getEncoder().encodeToString(bytes);
+            user.setRole(role);
+            user.setPassword(password);
+            user.setCompany(userService.findCompany(Long.parseLong(company)));
 
-                userService.addUser(user);
+            userService.addUser(user);
 
-                userService.sendMail(user.getEmail(), user.getUsername(), user.getId().toString());
-            }
+            userService.sendMail(user.getEmail(), user.getUsername(), user.getId().toString());
         }
     }
 

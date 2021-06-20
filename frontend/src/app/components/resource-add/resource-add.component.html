@@ -35,9 +35,8 @@
             </div>
             <!-- Full Time Equivalent yearly value -->
             <div class="form-group">
-                <label for="fullTimeEquivalentYearlyValue">Full Time Equivalent yearly value</label>
-                <input id="fullTimeEquivalentYearlyValue" type="text" class="form-control"
-                    formControlName="fullTimeEquivalentYearlyValue">
+                <label for="fullTimeEquivalentYearlyValue">Full Time Equivalent yearly value (in hours)</label>
+                <input id="fullTimeEquivalentYearlyValue" type="text" class="form-control" formControlName="fullTimeEquivalentYearlyValue">
                 <!-- Full Time Equivalent yearly value field validation errors -->
                 <div class="alert alert-danger center" *ngIf="(fteyv!.dirty || fteyv!.touched) && fteyv!.invalid">
                     <div *ngIf="fteyv!.errors!.pattern">

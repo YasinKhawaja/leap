@@ -16,40 +16,40 @@ export class ResetpasswordService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.contentHeaders = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-   }
+  }
 
-     public resetPasswordMail(email: string) {
+  public resetPasswordMail(email: string) {
 
-      var param = new URLSearchParams();
-      param.set("email", email);
+    var param = new URLSearchParams();
+    param.set("email", email);
 
-      this.http.post(this.resetpasswordURL, param.toString(),
-        { headers: this.contentHeaders})
-        .subscribe(
-          () => {
-            Swal.fire('Request submitted', `An email will be sent within the next hour, please check your spam folder.`, 'success');
-            this.router.navigate(['login'])
-          },
+    this.http.post(this.resetpasswordURL, param.toString(),
+      { headers: this.contentHeaders })
+      .subscribe(
+        () => {
+          Swal.fire('Request submitted', `An email will be sent within the next hour, please check your spam folder.`, 'success');
+          this.router.navigate(['login'])
+        },
         error => {
           Swal.fire('Error', error.error.message, 'error')
         });
-     }
+  }
 
-     public resetPassword(password: string) {
-      var token = new URL(window.location.href).searchParams.get("id");
+  public resetPassword(password: string) {
+    var token = new URL(window.location.href).searchParams.get("id");
 
-      var param = new URLSearchParams();
-      param.set("password", sha256(password + salt));
+    var param = new URLSearchParams();
+    param.set("password", sha256(password + salt));
 
-      this.http.put(`${this.resetpasswordURL}?token=${token}`, param.toString(),
-      {headers: this.contentHeaders})
+    this.http.put(`${this.resetpasswordURL}?token=${token}`, param.toString(),
+      { headers: this.contentHeaders })
       .subscribe(
         () => {
-          this.router.navigate(['environments']);
+          this.router.navigate(['login']);
           Swal.fire('Password reset', 'Your password has succesfully been reset!', 'success')
         },
         error => {
           Swal.fire('Error', error.error.message, 'error')
         });
-     }
+  }
 }

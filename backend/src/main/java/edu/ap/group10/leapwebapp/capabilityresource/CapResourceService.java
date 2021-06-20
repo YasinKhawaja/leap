@@ -41,7 +41,7 @@ public class CapResourceService {
         Capability cap = capabilityRepository.findById(capId).orElseThrow();
         Resource res = resourceRepository.findById(resId).orElseThrow();
         // Throw error if the cap res link already exists
-        if (capResourceRepository.existsByCapabilityIdAndResourceId(cap.getId(), res.getId())) {
+        if (capResourceRepository.existsByCapabilityIdAndResourceId(cap.getId(), res.getId()).booleanValue()) {
             throw new CapResourceException(String.format(
                     "<strong>%s</strong> is already linked with <strong>%s</strong>!", cap.getName(), res.getName()));
         }

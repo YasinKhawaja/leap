@@ -6,8 +6,10 @@ The backend of this project is made with Java Spring Boot.
 ### Regexx validation
 * Add user input validation in backend.
 
-### DTO'S EVERYWHERE
+### Code convention
 * Use DTO in controllers instead of the entity.
 
-### AP
-* Cookies are always httponly, send company/username/expirydate and role during authorization in seperated parameters to frontend (replacing jwt).
+### AP Restrictions
+* Cookies are always httponly, send company/username/expirydate and role during authorization in seperated parameters to frontend (replacing JWT).
+    * Change entire frontend to not work with data from JWT.
+* Google mail service (port) is not allowed by AP.

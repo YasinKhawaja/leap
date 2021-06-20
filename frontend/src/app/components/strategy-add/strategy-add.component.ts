@@ -23,7 +23,7 @@ export class StrategyAddComponent implements OnInit {
 
   private initializeForm() {
     this.strAddForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z 0-9]+')]],
       timeframeFrom: ['', [Validators.required]],
       timeframeTo: ['', [Validators.required]]
     });
@@ -68,8 +68,8 @@ export class StrategyAddComponent implements OnInit {
       }
     )
     this.strAddForm.reset();
-    
-   
+
+
   }
 
   // To hide the form

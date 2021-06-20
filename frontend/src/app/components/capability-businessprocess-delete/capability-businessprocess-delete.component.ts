@@ -13,21 +13,20 @@ import { CapabilityBusinessprocessComponent } from '../capability-businessproces
 export class CapabilityBusinessprocessDeleteComponent {
 
   @Input() capabilityBusinessProcessesCurrentValues: CapabilityBusinessprocess;
-  constructor(private cbs: CapabilityBusinessprocessService, private cpc : CapabilityBusinessprocessComponent) { }
+  constructor(private cbs: CapabilityBusinessprocessService, private cpc: CapabilityBusinessprocessComponent) { }
 
   deleteCapabilityBusinessprocess() {
-   
     var capabilityBusinessprocessid = this.capabilityBusinessProcessesCurrentValues.id;
     this.cbs.deleteCapabilityBusienssProcess(capabilityBusinessprocessid.toString())
-    .subscribe(
-      () => {
-        this.cpc.ngOnInit()
-        this.cpc.hideAll()
-      }
-    )
+      .subscribe(
+        () => {
+          this.cpc.ngOnInit()
+          this.hide()
+        }
+      );
   }
 
-   hide(): void {
+  hide(): void {
     this.cpc.hideAll();
   }
 }
