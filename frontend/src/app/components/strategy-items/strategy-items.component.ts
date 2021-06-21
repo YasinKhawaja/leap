@@ -18,7 +18,7 @@ export class StrategyItemsComponent implements OnInit {
 
    capStrItems:  CapabilityStrategyItems[]
 
-  constructor(private cs: StrategyItemService, private router: Router, private ns: NavbarService, public jwt: JwtService,
+  constructor(private cs: StrategyItemService, private router: Router, public jwt: JwtService,
     private csi: CapabilityStrategyitemService ) {
     this.strategyItems = [];
   }
@@ -39,7 +39,6 @@ export class StrategyItemsComponent implements OnInit {
   showStrItemDelete: boolean = false;
   strItemCurrentValues: StrategyItem;
 
-    // Linked caps right panel
     showLinkedCaps: boolean = false;
 
   showLinkedCapabilities(strItemName: string): void {
@@ -50,38 +49,29 @@ export class StrategyItemsComponent implements OnInit {
       });
   }
 
-  setCapabilityCookie(capabilityId: string): void {
-    this.ns.setCapabilityCookie(capabilityId);
-  }
   show(component: string, strategyItem?: StrategyItem): void {
     switch (component) {
       case 'strategyItem-add':
         this.hideAll();
-        // Show
         this.showStrItemAdd = true;
         break;
       case 'strategyItem-edit':
-        // Hide
         this.showStrItemAdd = false;
         this.showStrItemDelete = false;
         this.showLinkedCaps = false;
-        // Show
         this.strItemCurrentValues = strategyItem;
         this.showStrItemEdit = !this.showStrItemEdit;
         break;
 
         case 'strategyItem-delete':
-          // Hide
           this.showStrItemAdd = false;
           this.showStrItemEdit = false;
           this.showLinkedCaps = false;
-          // Show
           this.strItemCurrentValues = strategyItem;
           this.showStrItemDelete = !this.showStrItemDelete;
           break;
           case 'linked-caps':
             this.hideAll();
-            // Show
             this.showLinkedCaps = true;
             break;
       default:
@@ -93,7 +83,6 @@ export class StrategyItemsComponent implements OnInit {
     this.showStrItemAdd = false;
     this.showStrItemEdit = false;
     this.showStrItemDelete = false;
-
     this.showLinkedCaps = false;
   }
 

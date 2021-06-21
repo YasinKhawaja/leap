@@ -1,4 +1,3 @@
-<!-- Form -->
 <form [formGroup]="strItemAddForm" (ngSubmit)="onSubmit()">
   <div class="card">
     <div class="flex-container card-header">
@@ -14,11 +13,9 @@
   </div>
   </div>
     <div class="card-body">
-      <!-- Name -->
       <div class="form-group">
         <label for="name">Name <span class="red">*</span></label>
         <input id="name" type="text" class="form-control" formControlName="name" required>
-        <!-- Name field validation errors -->
         <div class="alert alert-danger center" *ngIf="name!.invalid && (name!.dirty || name!.touched)">
           <div *ngIf="name!.errors!.required">
             Name is required.
@@ -30,11 +27,10 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Description</label>
+        <label for="description">Description</label>
         <textarea id="description" rows="5" class="form-control" formControlName="description"></textarea>
       
       </div>
-      <!-- Submit button -->
       <div class="center">
         <button type="submit" class="btn btn-success" [disabled]="strItemAddForm.invalid">ADD</button>
       </div>

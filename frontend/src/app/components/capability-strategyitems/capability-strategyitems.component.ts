@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
 import { Capability } from 'src/app/classes/capability/capability';
 import { CapabilityStrategyitemService } from 'src/app/services/capability-strategyitem/capability-strategyitem.service';
@@ -27,9 +26,7 @@ export class CapabilityStrategyitemsComponent implements OnInit {
     this.csis.getCapabilityStrategyItems(capabilityId)
       .subscribe(
         result => {
-          console.log(result);
           this.capabilityStrategyItems = result;
-          //this.router.navigate([])
         },
         error => console.log(error));
   }
@@ -49,22 +46,17 @@ export class CapabilityStrategyitemsComponent implements OnInit {
     switch (component) {
       case 'capstritem-add':
         this.hideAll();
-        // Show
         this.showCapStrategyItemAdd = true;
         break;
       case 'capstritem-edit':
-        // Hide
         this.showCapStrategyItemAdd = false;
         this.showCapStrategyItemDelete = false;
-        // Show
         this.capStrategyItemCurrentValues = capstrategyItem;
         this.showCapStrategyItemEdit = !this.showCapStrategyItemEdit;
         break;
         case 'capstritem-delete':
-          // Hide
           this.showCapStrategyItemAdd = false;
           this.showCapStrategyItemEdit = false;
-          // Show
           this.capStrategyItemCurrentValues = capstrategyItem;
           this.showCapStrategyItemDelete = !this.showCapStrategyItemDelete;
           break;

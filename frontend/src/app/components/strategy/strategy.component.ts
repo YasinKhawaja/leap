@@ -23,7 +23,6 @@ export class StrategyComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //var envId = this.router.url.split('/')[2];
     this.ns.environmentSelect();
     var envId = this.ns.getEnvironmentCookie();
 
@@ -42,22 +41,17 @@ export class StrategyComponent implements OnInit {
     switch (component) {
       case 'strategy-add':
         this.hideAll();
-        // Show
         this.showStrAdd = true;
         break;
       case 'strategy-edit':
-        // Hide
         this.showStrAdd = false;
         this.showStrDelete = false;
-        // Show
         this.strCurrentValues = strategy;
         this.showStrEdit = !this.showStrEdit;
         break;
         case 'strategy-delete':
-          // Hide
           this.showStrAdd = false;
           this.showStrEdit = false;
-          // Show
           this.strCurrentValues = strategy;
           this.showStrDelete = !this.showStrDelete;
           break;

@@ -14,7 +14,6 @@ import { StrategyComponent } from '../strategy/strategy.component';
 })
 export class StrategyAddComponent implements OnInit {
 
-  // Form
   strAddForm: FormGroup;
 
   ngOnInit(): void {
@@ -32,7 +31,7 @@ export class StrategyAddComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private ss: StrategyService, private ns: NavbarService, private sc: StrategyComponent) { }
 
-  // Form GETTERS
+
   get name() {
     return this.strAddForm.get('name');
   }
@@ -48,7 +47,6 @@ export class StrategyAddComponent implements OnInit {
 
 
   onSubmit() {
-    //var envId = this.router.url.split('/')[2];
     let envId = this.ns.getEnvironmentCookie();
     console.log(envId);
     var straToCreate = new Strategy(
@@ -72,7 +70,6 @@ export class StrategyAddComponent implements OnInit {
 
   }
 
-  // To hide the form
   hide(): void {
     this.sc.hideAll();
   }
