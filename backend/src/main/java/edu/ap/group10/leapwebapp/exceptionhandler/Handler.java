@@ -17,6 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class Handler extends ResponseEntityExceptionHandler {
 
+    /**
+     * @param e       The Exception that was thrown.
+     * @param request The request on which this exception was thrown
+     * @param resBody The message you want to send back as response (in the response
+     *                body)
+     *
+     * @return Returns the exception with a message to display in the response body
+     *         of the original request along with the selected error code.
+     */
+
     @ExceptionHandler({ LoginException.class, AuthenticationException.class, RegisterException.class })
     protected ResponseEntity<Object> handleLoginException(Exception e, WebRequest request) {
         log.error(e.getMessage(), e);
