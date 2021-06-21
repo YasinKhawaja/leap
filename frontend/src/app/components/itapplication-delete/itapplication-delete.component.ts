@@ -10,7 +10,7 @@ import { ItapplicationComponent } from '../itapplication/itapplication.component
   templateUrl: './itapplication-delete.component.html',
   styleUrls: ['./itapplication-delete.component.css']
 })
-export class ItapplicationDeleteComponent implements OnInit {
+export class ItapplicationDeleteComponent {
 
   @Input() itCurrentValues: Itapplication;
 
@@ -33,8 +33,7 @@ export class ItapplicationDeleteComponent implements OnInit {
       }
     )
   }
-  ngOnInit(): void {
-  }
+  
 
   hide(): void {
     this.ic.hideAll();

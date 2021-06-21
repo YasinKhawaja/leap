@@ -8,7 +8,7 @@ import { ProgramComponent } from '../program/program.component';
   templateUrl: './program-delete.component.html',
   styleUrls: ['./program-delete.component.css']
 })
-export class ProgramDeleteComponent implements OnInit {
+export class ProgramDeleteComponent  {
 
   @Input() programCurrentValues: Program;
 
@@ -26,8 +26,7 @@ export class ProgramDeleteComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {
-  }
+ 
 
   hide(): void {
     this.pc.hideAll();

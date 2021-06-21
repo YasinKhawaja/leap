@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
@@ -11,7 +11,7 @@ import { StrategyItemsComponent } from '../strategy-items/strategy-items.compone
   templateUrl: './strategy-items-delete.component.html',
   styleUrls: ['./strategy-items-delete.component.css']
 })
-export class StrategyItemsDeleteComponent implements OnInit {
+export class StrategyItemsDeleteComponent {
 
   strId: string;
   strItemId: string;

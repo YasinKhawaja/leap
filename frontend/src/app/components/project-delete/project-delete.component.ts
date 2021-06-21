@@ -8,7 +8,7 @@ import { Project } from 'src/app/classes/project/project';
   templateUrl: './project-delete.component.html',
   styleUrls: ['./project-delete.component.css']
 })
-export class ProjectDeleteComponent implements OnInit  {
+export class ProjectDeleteComponent  {
 
   @Input() projectCurrentValues: Project;
   constructor(private ps: ProjectService,private pc: ProjectComponent) { }
@@ -29,6 +29,4 @@ export class ProjectDeleteComponent implements OnInit  {
     this.pc.hideAll();
   }
 
-  ngOnInit(): void {
-  }
 }

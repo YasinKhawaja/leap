@@ -8,15 +8,11 @@ import { BusinessprocessComponent } from '../businessprocess/businessprocess.com
   templateUrl: './businessprocess-delete.component.html',
   styleUrls: ['./businessprocess-delete.component.css']
 })
-export class BusinessprocessDeleteComponent implements OnInit   {
+export class BusinessprocessDeleteComponent {
 
   @Input() processCurrentValues: Businessprocess;
   
   constructor(private bps: BusinessprocessService, private bpc : BusinessprocessComponent) { }
-
-  ngOnInit(): void {
-  }
-
  
   deleteBusinessProcess() {
   

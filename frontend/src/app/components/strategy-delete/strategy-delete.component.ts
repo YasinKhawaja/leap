@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
 import { Strategy } from 'src/app/classes/strategy/strategy';
 import { StrategyComponent } from '../strategy/strategy.component';
@@ -8,7 +8,7 @@ import { StrategyComponent } from '../strategy/strategy.component';
   templateUrl: './strategy-delete.component.html',
   styleUrls: ['./strategy-delete.component.css']
 })
-export class StrategyDeleteComponent implements OnInit {
+export class StrategyDeleteComponent {
   
   str: Strategy;
   @Input() strCurrentValues: Strategy;
@@ -20,8 +20,7 @@ export class StrategyDeleteComponent implements OnInit {
   hide(): void {
     this.sc.hideAll();
   } 
-  ngOnInit(): void {
-  }
+
 
   deleteStrategyFromEnvironment() {
 
