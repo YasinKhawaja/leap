@@ -15,6 +15,9 @@ import { CapabilityService } from '../../services/capability/capability.service'
 export class CapabilityComponent implements OnInit {
 
   capabilities: Capability[] = [];
+  capabilitiesLevel1: Capability[]
+  capabilitiesLevel2: Capability[]
+  capabilitiesLevel3: Capability[]
   // For setCapability()
   _cap: Capability;
   // For display()
@@ -39,7 +42,12 @@ export class CapabilityComponent implements OnInit {
     var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllCapabilitiesInEnvironment(envId)
-      .subscribe(res => { this.capabilities = res; }, err => console.error(err));
+      .subscribe(res => { 
+        this.capabilities = res; 
+        this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1');
+        this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2');
+        this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3');
+      }, err => console.error(err));
   }
 
   uploadFile($event: any): void {
@@ -104,14 +112,7 @@ export class CapabilityComponent implements OnInit {
         await this.cs.createCapabilityFromCsv(environmentid, capability, csvRecord.parent).toPromise()
       }
     }
-    this.cs.getAllCapabilitiesInEnvironment(environmentid)
-      .subscribe(
-        res => {
-          this.capabilities = res
-        },
-        () => {
-          Swal.fire('Error', `Failed to load capabilities`, 'error')
-        })
+    this.ngOnInit();
   }
 
   selectCapability(capabilityID: string): void {
@@ -150,6 +151,7 @@ export class CapabilityComponent implements OnInit {
   callAll(cap: Capability, column: string) {
     this.setCapability(cap);
     this.display(column);
+    // window.scrollTo(0,document.body.scrollHeight + 425);
   }
 
 }
