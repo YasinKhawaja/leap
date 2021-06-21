@@ -20,15 +20,15 @@ import lombok.Data;
 public class CapStrategyItems implements Serializable {
 
     @Id
-    @Column(name = "capstrategyitems_id")
+    @Column(nullable = false, unique = true, updatable = false,name = "capstrategyitems_id")
     Long id;
 
     @OneToOne(targetEntity = Capability.class)
-    @JoinColumn(name = "capability_id")
+    @JoinColumn(name = "capability_id", nullable = false)
     private Capability capability;
 
     @OneToOne(targetEntity = StrategyItem.class)
-    @JoinColumn(name = "strategyitem_id")
+    @JoinColumn(name = "strategyitem_id", nullable = false)
     private StrategyItem strategyItem;
 
     @Column

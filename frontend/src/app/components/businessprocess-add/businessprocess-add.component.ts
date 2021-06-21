@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Businessprocess } from 'src/app/classes/businessprocess/businessprocess';
 import { BusinessprocessService } from 'src/app/services/businessprocess/businessprocess.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import Swal from 'sweetalert2';
 import { BusinessprocessComponent } from '../businessprocess/businessprocess.component';
 
 @Component({
@@ -10,12 +11,21 @@ import { BusinessprocessComponent } from '../businessprocess/businessprocess.com
   templateUrl: './businessprocess-add.component.html',
   styleUrls: ['./businessprocess-add.component.css']
 })
-export class BusinessprocessAddComponent {
+export class BusinessprocessAddComponent implements OnInit {
 
-  businessprocess = this.fb.group({
-    name: ['', Validators.required],
+   // Form
+   businessprocess: FormGroup;
+
+   ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  private initializeForm() {
+    this.businessprocess = this.fb.group({
+      name: ['', Validators.required],
     description: [' ', Validators.nullValidator]
-  });
+    });
+  }
 
   constructor(private fb: FormBuilder, private bps: BusinessprocessService, private ns: NavbarService , private bpc : BusinessprocessComponent) { }
 
@@ -27,8 +37,18 @@ export class BusinessprocessAddComponent {
       this.businessprocess.value.description
     );
 
-    this.bps.addBusinessProcess(environmentid, newBusinessProcess);
+    this.bps.addBusinessProcess(environmentid, newBusinessProcess)
+    .subscribe(
+      () => {
+        this.bpc.ngOnInit();
+      },
+      () => {
+        Swal.fire('Error', `Failed to add business process`, 'error')
+      }
+    )
   }
+
+ 
 
   hide(): void {
     this.bpc.hideAll();

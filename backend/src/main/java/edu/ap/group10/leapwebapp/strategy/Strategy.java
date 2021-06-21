@@ -25,20 +25,20 @@ public class Strategy implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "strategy_id")
+	@Column(nullable = false, unique = true, updatable = false,name = "strategy_id")
 	private Long id;
 
 	@Column(name = "strategy_name", nullable = false, unique = true)
 	private String name;
 
-	@Column(name = "timeframe_from")
+	@Column(nullable = false,name = "timeframe_from")
 	private String timeframeFrom;
 
-	@Column(name = "timeframe_to")
+	@Column(nullable = false,name = "timeframe_to")
 	private String timeframeTo;
 
 	@ManyToOne
-	@JoinColumn(name = "environment_id")
+	@JoinColumn(name = "environment_id",nullable = false)
 	@JsonBackReference(value = "environment_reference")
 	private Environment environment;
 

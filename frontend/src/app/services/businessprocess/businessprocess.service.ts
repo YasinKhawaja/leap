@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import Swal from 'sweetalert2';
 import { Businessprocess } from '../../classes/businessprocess/businessprocess';
 
 @Injectable({
@@ -29,49 +28,24 @@ export class BusinessprocessService {
     return this.http.get<Businessprocess>(url);
   }
 
-  public addBusinessProcess(environmentid: string, businessprocess: Businessprocess) {
+  public addBusinessProcess(environmentid: string, businessprocess: Businessprocess) : Observable<any> {
     var url = `${this.businessprocessURL}/${environmentid}`;
 
-    return this.http.post<Businessprocess>(url, businessprocess,
-      { headers: this.contentheaders })
-      .subscribe(
-        () => {
-          //this.router.navigate(['businessprocess'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', `Failed to create the business process: ${businessprocess.name}`, 'error')
-        }
-      )
+    return this.http.post<Businessprocess>(url, businessprocess);
+   
   }
 
-  public updateBusinessProcess(businessprocessid: string, businessprocess: Businessprocess) {
+  public updateBusinessProcess(businessprocessid: string, businessprocess: Businessprocess) : Observable<any>{
     var url = `${this.businessprocessURL}/${businessprocessid}`;
 
-    return this.http.put<Businessprocess>(url, businessprocess,
-      { headers: this.contentheaders })
-      .subscribe(
-        () => {
-          //this.router.navigate(['businessprocess'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', `Failed to update business process with id: ${businessprocess.id}`, 'error')
-        }
-      )
+    return this.http.put<Businessprocess>(url, businessprocess);
+    
   }
 
   public deleteBusinessProcess(businessprocessid: string) {
     var url = `${this.businessprocessURL}/${businessprocessid}`;
 
-    this.http.delete(url).subscribe(
-      () => {
-       // this.router.navigate(['businessprocess'])
-       window.location.reload();
-      },
-      () => {
-        Swal.fire('Error', 'Failed to create the business process', 'error')
-      }
-    )
+  return  this.http.delete(url);
+     
   }
 }

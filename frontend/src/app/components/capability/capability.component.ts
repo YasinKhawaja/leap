@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Capability } from 'src/app/classes/capability/capability';
 import { CSVRecord } from 'src/app/classes/csvrecord/csvrecord';
@@ -15,6 +16,9 @@ import { CapabilityService } from '../../services/capability/capability.service'
 export class CapabilityComponent implements OnInit {
 
   capabilities: Capability[] = [];
+  capabilitiesLevel1: Capability[]
+  capabilitiesLevel2: Capability[]
+  capabilitiesLevel3: Capability[]
   // For setCapability()
   _cap: Capability;
   // For display()
@@ -39,7 +43,14 @@ export class CapabilityComponent implements OnInit {
     var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllCapabilitiesInEnvironment(envId)
-      .subscribe(res => { this.capabilities = res; }, err => console.error(err));
+      .subscribe(res => {
+        this.capabilities = res;
+        this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1');
+        this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2');
+        this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3');
+      }, (error: HttpErrorResponse) => {
+        Swal.fire('Error', error.error, 'error')
+      });
   }
 
   uploadFile($event: any): void {
@@ -98,20 +109,12 @@ export class CapabilityComponent implements OnInit {
         if (currentRecord[9].trim() != "") {
           csvRecord.parent = currentRecord[9].trim().slice(1, currentRecord[9].trim().length - 1)
         }
-        console.log(csvRecord)
 
         var capability = new Capability(csvRecord.name, csvRecord.paceOfChange, csvRecord.targetOperationModel, csvRecord.resourceQuality)
         await this.cs.createCapabilityFromCsv(environmentid, capability, csvRecord.parent).toPromise()
       }
     }
-    this.cs.getAllCapabilitiesInEnvironment(environmentid)
-      .subscribe(
-        res => {
-          this.capabilities = res
-        },
-        () => {
-          Swal.fire('Error', `Failed to load capabilities`, 'error')
-        })
+    this.ngOnInit();
   }
 
   selectCapability(capabilityID: string): void {
@@ -150,6 +153,7 @@ export class CapabilityComponent implements OnInit {
   callAll(cap: Capability, column: string) {
     this.setCapability(cap);
     this.display(column);
+    // window.scrollTo(0,document.body.scrollHeight + 425);
   }
 
 }

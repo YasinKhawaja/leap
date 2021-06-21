@@ -7,7 +7,6 @@
                 <thead>
                     <tr>
                         <th *ngIf="(jwt.checkRole() != 'reader')" scope="col"></th>
-                        <!-- DELETE icon -->
                         <th scope="col">NAME</th>
                         <th scope='col'>TIMEFRAME FROM</th>
                         <th scope='col'>TIMEFRAME TO</th>
@@ -40,9 +39,6 @@
                 <br>
                 <div class="flex-container" style="margin-bottom: 0px;">
                     <div class="flex-item" *ngIf="!showStrAdd">
-
-                        <!-- <button type="button" class="btn btn-danger" >
-                 ADD STRATEGY</button>-->
                         <button *ngIf="(jwt.checkRole() != 'reader')" type="button" class="btn btn-danger" (click)="show('strategy-add')">ADD STRATEGY</button>
 
                     </div>
@@ -54,7 +50,6 @@
 
         <div class="flex-item">
             <app-strategy-add *ngIf="showStrAdd"></app-strategy-add>
-
             <app-strategy-edit *ngIf="showStrEdit" [strCurrentValues]="strCurrentValues"></app-strategy-edit>
             <app-strategy-delete *ngIf="showStrDelete" [strCurrentValues]="strCurrentValues"></app-strategy-delete>
 

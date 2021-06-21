@@ -14,7 +14,6 @@ import { StrategyComponent } from '../strategy/strategy.component';
 })
 export class StrategyAddComponent implements OnInit {
 
-  // Form
   strAddForm: FormGroup;
 
   ngOnInit(): void {
@@ -23,17 +22,16 @@ export class StrategyAddComponent implements OnInit {
 
   private initializeForm() {
     this.strAddForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z 0-9]+')]],
       timeframeFrom: ['', [Validators.required]],
       timeframeTo: ['', [Validators.required]]
     });
   }
 
   constructor(private fb: FormBuilder,
-    private router: Router,
     private ss: StrategyService, private ns: NavbarService, private sc: StrategyComponent) { }
 
-  // Form GETTERS
+
   get name() {
     return this.strAddForm.get('name');
   }
@@ -49,9 +47,7 @@ export class StrategyAddComponent implements OnInit {
 
 
   onSubmit() {
-    //var envId = this.router.url.split('/')[2];
     let envId = this.ns.getEnvironmentCookie();
-    console.log(envId);
     var straToCreate = new Strategy(
       this.name.value,
       this.timeframeFrom.value,
@@ -60,12 +56,19 @@ export class StrategyAddComponent implements OnInit {
 
 
     this.ss.createStrategy(envId, straToCreate)
+      .subscribe(
+        () => {
+          this.sc.ngOnInit();
+        },
+        () => {
+          Swal.fire('Error', `Failed to add strategy`, 'error')
+        }
+      )
     this.strAddForm.reset();
-    
-   
+
+
   }
 
-  // To hide the form
   hide(): void {
     this.sc.hideAll();
   }

@@ -13,11 +13,9 @@
         </div>
         <div class="card-body">
           <form [formGroup]="strEditForm" (ngSubmit)="onSubmit()">
-          <!-- Name -->
           <div class="form-group">
             <label for="name">Name <span class="red">*</span></label>
             <input id="name" type="text" class="form-control" formControlName="name" required>
-            <!-- Name field validation errors -->
             <div class="alert alert-danger center" *ngIf="strEditForm.get('name')!.invalid && (strEditForm.get('name')!.dirty || strEditForm.get('name')!.touched)">
               <div *ngIf="strEditForm.get('name')!.errors!.required">
                   Name is required.
@@ -28,7 +26,6 @@
           <div class="form-group">
             <label for="timeframeFrom">Timeframe from <span class="red">*</span></label>
             <input id="timeframeFrom" type="date" class="form-control" formControlName="timeframeFrom" required>
-            <!-- description field validation errors -->
             
           </div>
   
@@ -36,9 +33,7 @@
           <div class="form-group">
             <label for="timeframeTo">Timeframe to <span class="red">*</span></label>
             <input id="timeframeTo" type="date" class="form-control" formControlName="timeframeTo" required>
-          
           </div>
-          <!-- Submit button -->
           <div class="center">
             <button type="submit" class="btn btn-success" [disabled]="strEditForm.invalid">EDIT</button>
           </div>

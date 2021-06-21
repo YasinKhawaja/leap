@@ -30,44 +30,21 @@ export class ProjectService {
     return this.http.get<Project>(url)
   }
 
-  public addProject(programid: string, project: Project) {
+  public addProject(programid: string, project: Project) : Observable<any>  {
     var url = `${this.projectURL}/${programid}`
-    return this.http.post<Project>(url, project)
-      .subscribe(
-        () => {
-          //this.router.navigate(['project'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', "Failed to create the project", 'error')
-        }
-      )
+    return this.http.post<Project>(url, project);
+     
   }
 
-  public updateProject(projectid: string, project: Project) {
+  public updateProject(projectid: string, project: Project) : Observable<any>  {
     var url = `${this.projectURL}/${projectid}`
-    this.http.put<Project>(url, project)
-      .subscribe(
-        () => {
-          //this.router.navigate(['project'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', `Failed to update the project with id: ${projectid}`, 'error');
-        }
-      )
+  return  this.http.put<Project>(url, project);
+    
   }
 
   public deleteProject(projectid: string) {
     var url = `${this.projectURL}/${projectid}`
-    this.http.delete(url).subscribe(
-      () => {
-        //this.router.navigate(['project'])
-        window.location.reload();
-      },
-      () => {
-        Swal.fire('Error', `Failed to delete the project with id: ${projectid}`, 'error')
-      }
-    )
+   return this.http.delete(url);
+    
   }
 }

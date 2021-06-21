@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
-import { Capability } from 'src/app/classes/capability/capability';
-import { CapabilityStrategyitemsComponent } from 'src/app/components/capability-strategyitems/capability-strategyitems.component';
-import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -41,41 +39,22 @@ export class CapabilityStrategyitemService {
                     );
   }
 
-  public createCapabilityStrategyItem(capabilityId: string, capabilityStrategyItem: CapabilityStrategyItems){
+  public createCapabilityStrategyItem(capabilityId: string, capabilityStrategyItem: CapabilityStrategyItems): Observable<any>{
     let url = `${this.capabilityStrategyItemURL}/${capabilityId}`;
-    return this.http.post<CapabilityStrategyItems>(url, capabilityStrategyItem.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(() => {
-     
-      window.location.reload();
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    });
+    return this.http.post<CapabilityStrategyItems>(url, capabilityStrategyItem.getParams())
+ 
   }
 
-  public updateCapabilityStrategyItem(capabilityStrategyItemID: string, capabilityApplication: CapabilityStrategyItems) {
+  public updateCapabilityStrategyItem(capabilityStrategyItemID: string, capabilityApplication: CapabilityStrategyItems): Observable<any> {
     let url = `${this.capabilityStrategyItemURL}/${capabilityStrategyItemID}`
 
-    this.http.put<CapabilityStrategyItems>(url, capabilityApplication.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(
-      () => {
-        window.location.reload();
-    
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    });
+   return this.http.put<CapabilityStrategyItems>(url, capabilityApplication.getParams())
+   
   }
 
   public deleteCapabilityStrategyItem(capabilityStrategyItemID: string) {
     let url = `${this.capabilityStrategyItemURL}/${capabilityStrategyItemID}`
 
-    this.http.delete(url).subscribe(
-      () => {
-        window.location.reload();
-      
-      });
+   return  this.http.delete(url);
   }
 }

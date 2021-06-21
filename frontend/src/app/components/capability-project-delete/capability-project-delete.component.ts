@@ -13,14 +13,18 @@ import { CapabilityProjectComponent } from '../capability-project/capability-pro
 export class CapabilityProjectDeleteComponent {
 
   @Input() capabilityProjectCurrentValues: CapabilityProject;
-  constructor(private cp: CapabilityProjectService,private cpc : CapabilityProjectComponent) { }
+  constructor(private cp: CapabilityProjectService, private cpc: CapabilityProjectComponent) { }
 
   deleteCapabilityProject() {
-
-    //let capabilityprojectid = this.router.url.split('/')[3];
     let capabilityprojectid = this.capabilityProjectCurrentValues.id;
 
-    this.cp.deleteCapabilityProject(capabilityprojectid.toString());
+    this.cp.deleteCapabilityProject(capabilityprojectid.toString())
+      .subscribe(
+        () => {
+          this.cpc.ngOnInit()
+          this.hide()
+        }
+      );
   }
 
 

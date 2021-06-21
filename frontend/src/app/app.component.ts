@@ -23,15 +23,20 @@ export class AppComponent implements OnInit {
   constructor(public ns: NavbarService, public jwt: JwtService, public router: Router, private idle: Idle, private keepalive: Keepalive) {
     this.title = 'LEAP-webapp'
 
+    // Sets the countdown to when a user is considered idle (in seconds)
     idle.setIdle(600);
+    // The time the user gets before the timeout event happens (in seconds)
     idle.setTimeout(30);
+    // The interrupts that reset the idle timer
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES)
 
+    // Upon interrupting the idle timer the timer will reset and the popup will close
     idle.onIdleEnd.subscribe(() => {
       this.reset();
       Swal.close();
     });
 
+    // When the timer ends and wasn't interrupted it will log the user out and navigate them back to the login screen, they will see a popup
     idle.onTimeout.subscribe(() => {
       this.timedOut = true;
       this.logout();
@@ -39,15 +44,18 @@ export class AppComponent implements OnInit {
       Swal.fire("warning", "Idle for over 10 minutes, log in again", "warning");
     });
 
+    // The event that occurs when a user is idle
     idle.onIdleStart.subscribe(() => {
       Swal.fire("warning", "", "warning")
     })
 
+    // Updates the previous swal in onIdleStart with the given message
     idle.onTimeoutWarning.subscribe((countdown) => {
       Swal.getTitle().textContent = `Idle for too long, press button within ${countdown} seconds to stay logged in`;
     })
 
 
+    // Start the idle timer
     this.jwt.getUserIdle().subscribe(userIsLoggedIn => {
       if (userIsLoggedIn) {
         this.idle.watch()
@@ -57,6 +65,7 @@ export class AppComponent implements OnInit {
       }
     })
 
+    // Event checker
     keepalive.interval(15);
     keepalive.onPing.subscribe(() => this.lastPing = new Date());
   }

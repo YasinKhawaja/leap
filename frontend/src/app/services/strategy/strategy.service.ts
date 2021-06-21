@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Strategy } from 'src/app/classes/strategy/strategy';
-import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,41 +25,23 @@ public getAllStrategyInEnvironment(environmentId: string): Observable<Strategy[]
 }
 
 
-public createStrategy(envId: string, str: Strategy) {
+public createStrategy(envId: string, str: Strategy) : Observable<any> {
   var url = `${this.strategiesServiceURI}/${envId}`
-  return this.http.post<Strategy>(url, str,
-  {headers: this.contentHeaders})
-  .subscribe(
-    () => {
-      window.location.reload();
-     
-    },
-    () => {
-      Swal.fire('Error', 'Failed to create this strategy', 'error')
-    });
+  return this.http.post<Strategy>(url, str)
 
 }
 
-updateStrategy_CurrentEnvironment(strId: string, strategy: Strategy){
+updateStrategy_CurrentEnvironment(strId: string, strategy: Strategy) : Observable<any> {
   let url = `${this.strategiesServiceURI}/${strId}`
 
-  this.http.put<Strategy>(url, strategy,
-  {headers: this.contentHeaders})
-  .subscribe(data => {
-    
-    window.location.reload();
-  },
-    error => {
-      Swal.fire('Error', 'Failed to update the strategy', 'error')
-    });
+    return this.http.put<Strategy>(url, strategy)
 }
 
-deleteStrategy_CurrentEnvironment(strId: string) {
+deleteStrategy_CurrentEnvironment(strId: string): Observable<any> {
   let url = `${this.strategiesServiceURI}/${strId}`
 
-  this.http.delete(url).subscribe(() => {
-     window.location.reload();
-   });
+  return this.http.delete(url);
+
 }
 
 

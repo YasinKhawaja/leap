@@ -30,3 +30,12 @@ td {
     text-align: right;
     margin-bottom: 15px;
 }
+
+.title {
+    width: auto;
+    margin-top: 25px;
+}
+
+.name {
+    width: 750px;
+}

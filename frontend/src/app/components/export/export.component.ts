@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { saveAs } from "file-saver";
 import html2canvas from 'html2canvas';
@@ -30,6 +32,8 @@ export class ExportComponent implements OnInit {
 
   capabilitiesLinkedToItApplication: Capability[]
   capabilityStrategyItemsLinkedToStrategyItem: CapabilityStrategyItems[]
+
+  contentDataURL = null
 
   style: { 'border-color': string };
   filter: string;
@@ -64,9 +68,8 @@ export class ExportComponent implements OnInit {
 
     this.cs.getCapabilitiesWithParents(environmentId)
       .subscribe(
-        (res) => {
-          this.parents = res
-          console.log(this.parents)
+        (result) => {
+          this.parents = result
         },
         () => {
           Swal.fire('Error', 'failed to load parents of capabilities', 'error')
@@ -76,14 +79,15 @@ export class ExportComponent implements OnInit {
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {
         this.capabilities = result;
-        console.log(this.capabilities);
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
 
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
 
         this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3')
       },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
 
 
     this.strats.getAllStrategyInEnvironment(environmentId)
@@ -92,7 +96,9 @@ export class ExportComponent implements OnInit {
           this.strategies.push(e.name);
         })
       },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   setITApplicationFilter() {
@@ -127,18 +133,22 @@ export class ExportComponent implements OnInit {
           this.strategyItems.push(e.name);
         })
       },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
-  
+
   changeStrategyItem() {
     this.filter = "StrategyItem"; // when a strategy item is chosen, set the filter to StrategyItem to apply the colors on the capability map for this filter
-    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName) 
+    this.csis.getCapabilityStrategyItemsLinkedToStrategyItem(this.strategyItem.value.strategyItemName)
       .subscribe(result => {
         this.capabilityStrategyItemsLinkedToStrategyItem = result;
 
       },
-        error => console.log(error))
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
 
   }
 
@@ -178,17 +188,13 @@ export class ExportComponent implements OnInit {
       children.push(this.parents[i].split(';')[0])
       parents.push(this.parents[i].split(';')[1])
     }
-    console.log(children)
-    console.log(parents)
 
     for (var i = 0; i < this.capabilities.length; i++) {
       if (children.includes(cap[i].name)) {
-        console.log(i + ": " + cap[i].name)
         cap[i].parent = parents[count];
         count++;
       }
     }
-    console.log(cap);
 
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
 
@@ -208,23 +214,27 @@ export class ExportComponent implements OnInit {
   }
 
   generatePowerPoint() {
-    // create new powerpoint
     let powerpoint = new pptxgen();
+    var counter: number = 0
 
-
-    // add a slide
-    let slide = powerpoint.addSlide();
-
-    // add the capability map image
-    // capture the capabity map which is located in the div with id 'divLeftHalf'
-    let data = document.getElementById('divLeftHalf');
-    html2canvas(data, { scrollY: -window.scrollY }).then(canvas => { // convert the capability map html to an image
-      const contentDataURL = canvas.toDataURL('image/png', 4)
-      slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' }); // add image to slide
-
-      // save powerpoint
-      powerpoint.writeFile({ fileName: "CapabilityMap" });
-    });
+    this.capabilitiesLevel1.forEach(element => {
+      let slide = powerpoint.addSlide();
+      let data = document.getElementById(element.id);
+      html2canvas(data,
+        {
+          scrollX: -window.scrollX,
+          scrollY: -window.scrollY,
+          windowWidth: document.documentElement.offsetWidth,
+          windowHeight: document.documentElement.offsetHeight
+        }).then(canvas => { // convert the capability map html to an image
+          const contentDataURL = canvas.toDataURL('image/png', 4)
+          slide.addImage({ data: contentDataURL, x: 0, y: 1.5, w: '100%', h: '50%' });// save powerpoint 
+          counter++
+          if (counter.valueOf() == this.capabilitiesLevel1.length) {
+            powerpoint.writeFile({ fileName: "CapabilityMap" });
+          }
+        });
+    })
   }
 
   generatePDF() {
@@ -249,7 +259,7 @@ export class ExportComponent implements OnInit {
       doc.save("CapabilityMap");
     });
   }
-  
+
   // reload the capability map without any filters
   generateEntireMap() {
     window.location.reload();

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Strategy } from 'src/app/classes/strategy/strategy';
 import { StrategyService } from 'src/app/services/strategy/strategy.service';
+import Swal from 'sweetalert2';
 import { StrategyComponent } from '../strategy/strategy.component';
 
 @Component({
@@ -48,7 +49,14 @@ export class StrategyEditComponent implements OnInit {
       this.strEditForm.value.timeframeTo
     );
 
-    this.cs.updateStrategy_CurrentEnvironment(this.strCurrentValues.id, newStraValues);
+    this.cs.updateStrategy_CurrentEnvironment(this.strCurrentValues.id, newStraValues)
+    .subscribe(
+      () => {
+        this.sc.ngOnInit()
+        this.sc.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit strategy`, `error`)
+    )
 
     }
   }

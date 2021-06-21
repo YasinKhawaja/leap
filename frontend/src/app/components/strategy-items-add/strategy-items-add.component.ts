@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,21 +16,20 @@ export class StrategyItemsAddComponent implements OnInit {
 
   strItemAddForm: FormGroup;
 
-
   constructor(private fb: FormBuilder,
     private router: Router,
-    private si: StrategyItemService,private sic : StrategyItemsComponent){}
+    private si: StrategyItemService, private sic: StrategyItemsComponent) { }
 
-    ngOnInit(): void {
-      this.initializeForm();
-    }
+  ngOnInit(): void {
+    this.initializeForm();
+  }
 
-    private initializeForm() {
-     this.strItemAddForm = this.fb.group({
+  private initializeForm() {
+    this.strItemAddForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      description: ['', [Validators.nullValidator, Validators.pattern('^[A-Za-z0-9 ]+$')]]
+      description: ['', [Validators.nullValidator, Validators.pattern('^[A-Za-z0-9. ]+$')]]
     });
-    }
+  }
 
   get name() {
     return this.strItemAddForm.get('name');
@@ -39,11 +39,8 @@ export class StrategyItemsAddComponent implements OnInit {
     return this.strItemAddForm.get('description');
   }
 
-  
-  
   onSubmit() {
     var strId = this.router.url.split('/')[2];
-    console.log(strId);
     var straItemToCreate = new StrategyItem(
       this.name.value,
       this.description.value
@@ -51,16 +48,16 @@ export class StrategyItemsAddComponent implements OnInit {
 
 
     this.si.createStrategyItem(strId, straItemToCreate)
-    .subscribe(
-      res => {
-        console.log(res);
-        this.sic.ngOnInit();
-        this.strItemAddForm.reset();
-     
-      },
-      err => Swal.fire('Error', err.error.message, 'error')
-    );
-    
+      .subscribe(
+        res => {
+          this.sic.ngOnInit();
+          this.strItemAddForm.reset();
+
+        },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
+
   }
 
   hide(): void {

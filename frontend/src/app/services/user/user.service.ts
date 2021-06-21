@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from "../../classes/user/user"
 import { Router } from '@angular/router';
@@ -25,8 +25,8 @@ export class UserService {
           this.router.navigate(['login'])
           Swal.fire('Registered', 'You have succesfully registered', 'success')
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error')
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
         });
   }
 
@@ -49,8 +49,8 @@ export class UserService {
       () => {
         this.router.navigate(['environments'])
       },
-      error => {
-        Swal.fire('error', error.error.message, 'error')
+      () => {
+        Swal.fire('error', `Failed to delete this user.`, 'error')
       }
     )
   }
@@ -71,8 +71,8 @@ export class UserService {
         }
         this.router.navigate(['environments'])
       },
-      () => {
-        Swal.fire('Error', 'Failed to update user, new email or username might be in use', 'error')
+      (error: HttpErrorResponse) => {
+        Swal.fire('Error', error.error, 'error')
       }
     )
   }
@@ -87,11 +87,11 @@ export class UserService {
       }
     }).subscribe(
       () => {
+        this.router.navigate(['environments'])
         Swal.fire('Success', 'User has been created, an email will be sent to this user', 'success')
       },
-      () => {
-        Swal.fire('Error', 'Failed to create user, email or username might be in use.', 'error')
-      }
-    )
+      (error: HttpErrorResponse) => {
+        Swal.fire('Error', error.error, 'error')
+      })
   }
 }

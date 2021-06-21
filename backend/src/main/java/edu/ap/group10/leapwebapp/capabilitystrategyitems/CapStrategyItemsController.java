@@ -29,7 +29,7 @@ public class CapStrategyItemsController {
         return capStrategyItemService.getAllCapabilityStrategyItemsLinkedToStrategyItem(strategyItemName);
     }
 
-    @PostMapping("/capstrategyitems/{capabilityId}") // {capabilityId}"
+    @PostMapping("/capstrategyitems/{capabilityId}")
     public void createCapStrategyItems(@PathVariable Long capabilityId, @RequestParam String strategyItemName,
             @RequestParam StrategicEmphasis strategicEmphasis) {
         capStrategyItemService.createCapStrategyItems(capabilityId, strategyItemName, strategicEmphasis);

@@ -3,8 +3,6 @@ package edu.ap.group10.leapwebapp.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityExistsException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +17,8 @@ import edu.ap.group10.leapwebapp.company.CompanyService;
 import edu.ap.group10.leapwebapp.confirmationtoken.ConfirmationTokenRepository;
 import edu.ap.group10.leapwebapp.environment.Environment;
 import edu.ap.group10.leapwebapp.environment.EnvironmentRepository;
+import edu.ap.group10.leapwebapp.exceptions.LoginException;
+import edu.ap.group10.leapwebapp.exceptions.RegisterException;
 import edu.ap.group10.leapwebapp.mail.Mail;
 import edu.ap.group10.leapwebapp.mail.MailService;
 import edu.ap.group10.leapwebapp.security.CustomAuthenticationProvider;
@@ -102,11 +102,26 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public boolean checkUser(String email, String username) {
-        if (userRepository.findByEmail(email) != null || userRepository.findByUsername(username) != null) {
-            throw new EntityExistsException("User already exists");
+    public boolean checkUser(String email, String username, Integer role) throws RegisterException {
+        if (role.equals(-1)) {
+            throw new RegisterException("Setting role to application admin is not allowed");
+        } else if (userRepository.findByEmail(email) != null) {
+            throw new RegisterException("Email already in use");
+        } else if (userRepository.findByUsername(username) != null) {
+            throw new RegisterException("Username is in use");
+        } else {
+            return true;
         }
-        return true;
+    }
+
+    public boolean checkUserAdmin(String email, String username) throws RegisterException {
+        if (userRepository.findByEmail(email) != null) {
+            throw new RegisterException("Email already in use");
+        } else if (userRepository.findByUsername(username) != null) {
+            throw new RegisterException("Username is in use");
+        } else {
+            return true;
+        }
     }
 
     public Company findCompany(Long id) {

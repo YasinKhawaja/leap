@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -69,11 +70,12 @@ export class CapabilityResourceAddComponent implements OnInit {
 
     this.crs.createCapResource(capId, resId, this.nor.value)
       .subscribe(
-        response => {
+        () => {
           this.crc.ngOnInit();
         },
-        error => Swal.fire('Error', error.error.message, 'error')
-      );
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   // To hide the form

@@ -11,7 +11,6 @@
                         <th scope='col'>Strategy Item</th>
                         <th scope='col'>Capability</th>
                         <th scope='col'>Strategic Emphasis</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +30,6 @@
                             {{ capabilityStrategyItem.strategyItem.name }}</a>
                         </td>
                         <td>
-                            <!--Change to new capability link-->
                             <a class="btn btn-light" [routerLink]="['../capabilities/','update']"> {{
                                 capabilityStrategyItem.capability.name }}</a>
                         </td>
@@ -54,11 +52,8 @@
         </div>
         <div class="flex-item">
             <app-capability-strategyitems-add *ngIf="showCapStrategyItemAdd"></app-capability-strategyitems-add>
-
             <app-capability-strategyitems-edit *ngIf="showCapStrategyItemEdit" [capStrategyItemCurrentValues]="capStrategyItemCurrentValues"></app-capability-strategyitems-edit>
             <app-capability-strategyitems-delete *ngIf="showCapStrategyItemDelete" [capStrategyItemCurrentValues]="capStrategyItemCurrentValues"></app-capability-strategyitems-delete>
-
-
         </div>
 
     </div>

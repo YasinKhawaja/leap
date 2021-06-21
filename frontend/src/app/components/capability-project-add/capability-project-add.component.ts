@@ -16,12 +16,12 @@ export class CapabilityProjectAddComponent implements OnInit {
 
   projects: string[]
 
-  capabilityproject= this.fb.group({
+  capabilityproject = this.fb.group({
     project: ['', Validators.required]
   })
 
   constructor(private fb: FormBuilder, private cp: CapabilityProjectService, private ns: NavbarService, private ps: ProjectService,
-    private cpc : CapabilityProjectComponent ) {
+    private cpc: CapabilityProjectComponent) {
     this.projects = [];
   }
 
@@ -33,7 +33,6 @@ export class CapabilityProjectAddComponent implements OnInit {
         result => {
           result.forEach(
             e => {
-              console.log(e);
               this.projects.push(e.name);
             }
           )
@@ -44,13 +43,22 @@ export class CapabilityProjectAddComponent implements OnInit {
       )
   }
 
-  onSubmit(){
+  onSubmit() {
     var capabilityid = this.ns.getCapabilityCookie();
 
     var newCapabilityProject = new CapabilityProject(
       this.capabilityproject.value.project
     )
     this.cp.addCapabilityProject(capabilityid, newCapabilityProject)
+      .subscribe(
+        () => {
+          this.cpc.ngOnInit()
+          this.hide()
+        },
+        () => {
+          Swal.fire('Error', 'Failed to add capability-project link', 'error')
+        }
+      )
   }
 
   hide(): void {

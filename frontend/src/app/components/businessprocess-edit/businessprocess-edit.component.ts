@@ -35,7 +35,6 @@ export class BusinessprocessEditComponent implements OnInit {
 
   private getBusinessProcess(): Observable<Businessprocess>{
 
-    //var businessprocessid = this.router.url.split('/')[3];
     var businessprocessid = this.processCurrentValues.id;
     return this.bps.getBusinessProcess(businessprocessid);
   }
@@ -46,6 +45,13 @@ export class BusinessprocessEditComponent implements OnInit {
       this.businessprocess.value.name,
       this.businessprocess.value.description
     ))
+    .subscribe(
+      () => {
+        this.bpc.ngOnInit()
+        this.bpc.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit business process`, `error`)
+    )
   }
 
   hide(): void {

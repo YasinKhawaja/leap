@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { Capability } from 'src/app/classes/capability/capability';
@@ -28,10 +29,9 @@ export class CapabilityApplicationComponent implements OnInit {
       .subscribe(
         result => {
           this.capabilityApplications = result;
-          console.log(this.capabilityApplications);
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error')
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
         });
   }
 
@@ -61,15 +61,15 @@ export class CapabilityApplicationComponent implements OnInit {
         this.capAppCurrentValues = capapp;
         this.showCapAppEdit = !this.showCapAppEdit;
         break;
-        case 'capapp-delete':
-          // Hide
-          this.showCapAppAdd = false;
-          this.showCapAppEdit = false;
-          // Show
-          this.capAppCurrentValues = capapp;
-          this.showCapAppDelete = !this.showCapAppDelete;
-          break;
- 
+      case 'capapp-delete':
+        // Hide
+        this.showCapAppAdd = false;
+        this.showCapAppEdit = false;
+        // Show
+        this.capAppCurrentValues = capapp;
+        this.showCapAppDelete = !this.showCapAppDelete;
+        break;
+
       default:
         break;
     }
@@ -78,6 +78,6 @@ export class CapabilityApplicationComponent implements OnInit {
   hideAll(): void {
     this.showCapAppAdd = false;
     this.showCapAppEdit = false;
-    this.showCapAppDelete= false;
+    this.showCapAppDelete = false;
   }
 }
