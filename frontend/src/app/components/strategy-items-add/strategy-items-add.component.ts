@@ -15,7 +15,6 @@ export class StrategyItemsAddComponent implements OnInit {
 
   strItemAddForm: FormGroup;
 
-
   constructor(private fb: FormBuilder,
     private router: Router,
     private si: StrategyItemService, private sic: StrategyItemsComponent) { }
@@ -38,8 +37,6 @@ export class StrategyItemsAddComponent implements OnInit {
   get description() {
     return this.strItemAddForm.get('description');
   }
-
-
 
   onSubmit() {
     var strId = this.router.url.split('/')[2];

@@ -7,7 +7,6 @@
                 <thead>
                     <tr>
                         <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
-                        <!-- DELETE icon -->
                         <th scope='col'>NAME</th>
                         <th scope='col'>DESCRIPTION</th>
 
@@ -57,7 +56,6 @@
             <app-strategy-items-delete *ngIf="showStrItemDelete" [strItemCurrentValues]="strItemCurrentValues">
             </app-strategy-items-delete>
 
-            <!-- Linked caps right panel -->
             <div id="linkedCaps" *ngIf="showLinkedCaps">
                 <table class="table table-striped">
                     <thead>
@@ -68,9 +66,7 @@
                     <tbody>
                         <tr *ngFor="let capstrItem of capStrItems">
                             <td>
-                                <a class="btn btn-light" role="button" (click)="setCapabilityCookie(capstrItem.capability.id)" [routerLink]="['/capabilities/update']">
                                     {{ capstrItem.capability.name }}
-                                </a>
                             </td>
                         </tr>
                     </tbody>

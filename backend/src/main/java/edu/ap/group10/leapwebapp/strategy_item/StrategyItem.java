@@ -20,18 +20,18 @@ public class StrategyItem implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "strategyitem_id")
+	@Column(nullable = false, unique = true, updatable = false,name = "strategyitem_id")
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "strategy_id")
+	@JoinColumn(name = "strategy_id",nullable = false)
 	@JsonBackReference(value = "strategyitem_reference")
 	private Strategy strategy;
 
 	@Column(nullable = false)
 	private String name;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String description;
 
 	public StrategyItem() {

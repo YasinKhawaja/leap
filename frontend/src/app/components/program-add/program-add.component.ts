@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Program } from 'src/app/classes/program/program';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { ProgramService } from 'src/app/services/program/program.service';
+import Swal from 'sweetalert2';
 import { ProgramComponent } from '../program/program.component';
 
 @Component({
@@ -10,12 +11,19 @@ import { ProgramComponent } from '../program/program.component';
   templateUrl: './program-add.component.html',
   styleUrls: ['./program-add.component.css']
 })
-export class ProgramAddComponent{
+export class ProgramAddComponent implements OnInit {
 
-  program = this.fb.group({
+  program: FormGroup;
+
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+  private initializeForm() {
+  this.program = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.nullValidator]
   })
+}
 
   constructor(private fb: FormBuilder, private ps: ProgramService, private ns: NavbarService, private pc: ProgramComponent) { }
 
@@ -28,6 +36,15 @@ export class ProgramAddComponent{
     )
 
     this.ps.addProgram(environmentid, newProgram)
+    .subscribe(
+      () => {
+        this.pc.ngOnInit();
+      },
+      () => {
+        Swal.fire('Error', `Failed to add program`, 'error')
+      }
+    )
+
   }
 
   hide(): void {

@@ -1,7 +1,4 @@
 package edu.ap.group10.leapwebapp.strategy_item;
-
-
-
 import java.util.List;
 import java.util.stream.Collectors;
 

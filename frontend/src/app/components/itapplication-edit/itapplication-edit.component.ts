@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
+import Swal from 'sweetalert2';
 import { ItapplicationComponent } from '../itapplication/itapplication.component';
 
 enum Currency {
@@ -66,14 +67,13 @@ export class ItapplicationEditComponent implements OnInit {
   }
 
   private getCurrentITApplication(): Observable<Itapplication> {
-   // var itApplicationId = this.router.url.split('/')[2];
+  
 
     return this.its.getITApplication(this.itCurrentValues.id.toString());
   }
 
   onSubmit() {
-    //let itApplicationId = this.router.url.split('/')[2];
-
+ 
     let updatedITApplication = new Itapplication(
       this.itapplication.value.name,
       this.itapplication.value.technology,
@@ -95,7 +95,14 @@ export class ItapplicationEditComponent implements OnInit {
       this.itapplication.value.timeValue.toUpperCase()
     );
 
-    this.its.updateITApplication_CurrentEnvironment(this.itCurrentValues.id.toString(), updatedITApplication);
+    this.its.updateITApplication_CurrentEnvironment(this.itCurrentValues.id.toString(), updatedITApplication) .subscribe(
+      () => {
+        this.ic.ngOnInit()
+        this.ic.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit it application`, `error`)
+    )
+
   }
 
   hide(): void {

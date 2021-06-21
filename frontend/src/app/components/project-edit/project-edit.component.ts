@@ -45,6 +45,14 @@ export class ProjectEditComponent implements OnInit {
       this.project.value.name,
       this.project.value.description
     ))
+    .subscribe(
+      () => {
+        this.pc.ngOnInit()
+        this.pc.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit project`, `error`)
+    )
+
   }
 
   hide(): void {

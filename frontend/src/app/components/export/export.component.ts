@@ -219,7 +219,7 @@ export class ExportComponent implements OnInit {
       let data = document.getElementById(element.id);
       html2canvas(data, { scrollY: -window.scrollY }).then(canvas => { // convert the capability map html to an image
         const contentDataURL = canvas.toDataURL('image/png', 4)
-        slide.addImage({ data: contentDataURL, x: 0, y: 0, w: '100%', h: '100%' });// save powerpoint
+        slide.addImage({ data: contentDataURL, x: 0, y: 1.5, w: '100%', h: '50%' });// save powerpoint 
         counter++
         if (counter.valueOf() == this.capabilitiesLevel1.length) {
           powerpoint.writeFile({ fileName: "CapabilityMap" });

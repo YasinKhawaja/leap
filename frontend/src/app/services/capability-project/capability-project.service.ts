@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CapabilityProject } from 'src/app/classes/capability-project/capability-project';
-import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,8 @@ export class CapabilityProjectService {
 
   public deleteCapabilityProject(capabilityprojectid: string): Observable<any> {
     var url = `${this.cpURL}/${capabilityprojectid}`
-    return this.http.delete(url)
+   return this.http.delete(url);
+     
+   
   }
 }

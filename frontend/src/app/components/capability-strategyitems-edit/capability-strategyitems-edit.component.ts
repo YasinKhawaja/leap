@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
 import { CapabilityStrategyitemService } from 'src/app/services/capability-strategyitem/capability-strategyitem.service';
+import Swal from 'sweetalert2';
 import { CapabilityStrategyitemsComponent } from '../capability-strategyitems/capability-strategyitems.component';
 
 enum StrategicEmphasis {
@@ -27,18 +27,23 @@ export class CapabilityStrategyitemsEditComponent {
   capabilityStrategyItem = this.fb.group({
     strategicEmphasis: ['', Validators.required]
   })
-  constructor(private fb: FormBuilder, private router: Router, private csi: CapabilityStrategyitemService , private csic : CapabilityStrategyitemsComponent) { }
+  constructor(private fb: FormBuilder, private csi: CapabilityStrategyitemService , private csic : CapabilityStrategyitemsComponent) { }
 
   onSubmit(){
-  
-    //let capabilityStrategyItemID = this.router.url.split('/')[3];
     
     var newCapabilityStrategyItem = new CapabilityStrategyItems(
       "",
       this.capabilityStrategyItem.value.strategicEmphasis
     );
 
-    this.csi.updateCapabilityStrategyItem(this.capStrategyItemCurrentValues.id.toString(), newCapabilityStrategyItem);
+    this.csi.updateCapabilityStrategyItem(this.capStrategyItemCurrentValues.id.toString(), newCapabilityStrategyItem)
+    .subscribe(
+      () => {
+        this.csic.ngOnInit()
+        this.csic.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit capability strategy item link`, `error`)
+    )
 
   }
 

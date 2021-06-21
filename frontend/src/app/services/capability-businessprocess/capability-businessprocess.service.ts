@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CapabilityBusinessprocess } from 'src/app/classes/capability-businessprocess/capability-businessprocess';
-import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'

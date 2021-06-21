@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StrategyItem } from 'src/app/classes/strategy-item/strategyItem';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
-import { Location } from '@angular/common';
 import { StrategyItemsComponent } from '../strategy-items/strategy-items.component';
 
 @Component({
@@ -43,9 +42,6 @@ export class StrategyItemsDeleteComponent implements OnInit {
           this.sic.ngOnInit();
           this.sic.hideAll();
         }
-       
-      );
-     
+      ); 
   }
-
 }

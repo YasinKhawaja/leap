@@ -1,6 +1,4 @@
-import { Location } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
 import { CapabilityApplicationService } from 'src/app/services/capability-application/capability-application.service';
 import { ItapplicationService } from 'src/app/services/itapplication/itapplication.service';
@@ -12,26 +10,30 @@ import { ItapplicationComponent } from '../itapplication/itapplication.component
   templateUrl: './itapplication-delete.component.html',
   styleUrls: ['./itapplication-delete.component.css']
 })
-export class ItapplicationDeleteComponent {
+export class ItapplicationDeleteComponent implements OnInit {
 
   @Input() itCurrentValues: Itapplication;
 
 
-  constructor(private its: ItapplicationService, private router: Router, private location: Location, private ns: NavbarService, private cas: CapabilityApplicationService 
+  constructor(private its: ItapplicationService, private ns: NavbarService, private cas: CapabilityApplicationService 
     ,private ic : ItapplicationComponent) { }
 
   deleteITApplication_CurrentEnvironment() {
     let capabilityId = this.ns.readCookie("Capability");
-   // let itApplicationId = this.router.url.split('/')[2];
+  
     let itApplicationId = this.itCurrentValues.id;
 
     this.cas.deleteCapabilityApplication(itApplicationId + capabilityId);
     
-    this.its.deleteITApplication_CurrentEnvironment(itApplicationId.toString());
+    this.its.deleteITApplication_CurrentEnvironment(itApplicationId.toString())
+    .subscribe(
+      () => {
+        this.ic.ngOnInit()
+        this.ic.hideAll()
+      }
+    )
   }
-
-  navigateBack() {
-    this.location.back();
+  ngOnInit(): void {
   }
 
   hide(): void {

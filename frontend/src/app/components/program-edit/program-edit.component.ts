@@ -26,7 +26,7 @@ export class ProgramEditComponent implements OnInit {
         result => {
           this.program = this.fb.group({
             name: [result.name, [Validators.required]],
-            description: [result.description, [Validators.required]]
+            description: [result.description, [Validators.nullValidator]]
           })
         },
         () => {
@@ -36,8 +36,6 @@ export class ProgramEditComponent implements OnInit {
   }
 
   private getProgram(): Observable<Program>{
-    //this.programid = this.router.url.split('/')[3];
-
     return this.ps.getProgram(this.programCurrentValues.id)
   }
 
@@ -49,7 +47,14 @@ export class ProgramEditComponent implements OnInit {
     this.ps.updateProgram(this.programCurrentValues.id, new Program(
       this.program.value.name,
       this.program.value.description
-    ))
+    )).subscribe(
+      () => {
+        this.pc.ngOnInit()
+        this.pc.hideAll()
+      },
+      () => Swal.fire('Error', `Failed to edit program`, `error`)
+    )
+
   }
 }
 

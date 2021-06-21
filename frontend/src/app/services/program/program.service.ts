@@ -25,45 +25,21 @@ export class ProgramService {
     return this.http.get<Program>(url)
   }
 
-  public addProgram(environmentid: string, program: Program) {
+  public addProgram(environmentid: string, program: Program) : Observable<any>  {
     var url = `${this.programURL}/${environmentid}`
-    return this.http.post<Program>(url, program)
-      .subscribe(
-        () => {
-          //this.router.navigate(['program'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', `Failed to create the program: ${program.name}`, 'error')
-        }
-      )
+    return this.http.post<Program>(url, program);
+    
   }
 
-  public updateProgram(programid: string, program: Program) {
+  public updateProgram(programid: string, program: Program) : Observable<any>  {
     var url = `${this.programURL}/${programid}`
-    return this.http.put<Program>(url, program)
-      .subscribe(
-        () => {
-          //this.router.navigate(['program'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', `Failed to update program with id: ${programid}`, 'error')
-        }
-      )
+    return this.http.put<Program>(url, program);
+   
   }
 
   public deleteProgram(programid: string) {
     var url = `${this.programURL}/${programid}`
-    this.http.delete(url)
-      .subscribe(
-        () => {
-          //this.router.navigate(['program'])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', `Failed to delete the program with id: ${programid}`, 'error')
-        }
-      )
+   return this.http.delete(url);
+    
   }
 }

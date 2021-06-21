@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Itapplication } from 'src/app/classes/itapplication/itapplication';
-import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -28,45 +27,23 @@ export class ItapplicationService {
     return this.http.get<Itapplication>(url);
   }
 
-  public createITApplication_CurrentEnvironment(environmentId: string, itApplication: Itapplication) {
+  public createITApplication_CurrentEnvironment(environmentId: string, itApplication: Itapplication): Observable<any> {
     let url = `${this.itApplicationURL}/${environmentId}`;
-    return this.http.post<Itapplication>(url, itApplication,
-      { headers: this.contentHeaders })
-      .subscribe(
-        () => {
-         // this.router.navigate([`itapplication/`])
-          window.location.reload();
-        },
-        () => {
-          Swal.fire('Error', 'Failed to create this application', 'error')
-        });
+    return this.http.post<Itapplication>(url, itApplication);
+    
   }
 
-  updateITApplication_CurrentEnvironment(itApplicationID: string, itApplication: Itapplication) {
+  updateITApplication_CurrentEnvironment(itApplicationID: string, itApplication: Itapplication): Observable<any> {
     let url = `${this.itApplicationURL}/${itApplicationID}`
 
-    this.http.put<Itapplication>(url, itApplication,
-      { headers: this.contentHeaders })
-      .subscribe(data => {
-        //this.router.navigate([`itapplication/`])
-        window.location.reload();
-      },
-        error => {
-          Swal.fire('Error', 'Failed to update the application', 'error')
-        });
+    return this.http.put<Itapplication>(url, itApplication);
+    
   }
 
   deleteITApplication_CurrentEnvironment(itApplicationID: string) {
     let url = `${this.itApplicationURL}/${itApplicationID}`
 
-    this.http.delete(url).subscribe(
-      () => {
-        window.location.reload();
-        //this.router.navigate([`itapplication/`])
-      },
-      () => {
-        Swal.fire('Error', 'Failed to delete the application', 'error')
-      }
-    );
+   return this.http.delete(url);
+     
   }
 }

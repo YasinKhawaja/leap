@@ -5,7 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { tap } from "rxjs/operators";
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
 import { Capability } from 'src/app/classes/capability/capability';
-import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -46,45 +45,23 @@ export class CapabilityApplicationService {
   }
 
 
-  public createCapabilityApplication(capabilityId: string, capabilityApplication: CapabilityApplication){
+  public createCapabilityApplication(capabilityId: string, capabilityApplication: CapabilityApplication): Observable<any>{
     let url = `${this.capabilityApplicationURL}/${capabilityId}`;
-    return this.http.post<CapabilityApplication>(url, capabilityApplication.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(
-      () => {
-      //Swal.fire('Success', 'You have succesfully linked the IT-Application', 'success')
-      //this.router.navigate([`capability-application/`])
-      window.location.reload();
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    });
+    return this.http.post<CapabilityApplication>(url, capabilityApplication.getParams());
+   
   }
 
-  public updateCapabilityApplication(capabilityApplicationID: string, capabilityApplication: CapabilityApplication) {
+  public updateCapabilityApplication(capabilityApplicationID: string, capabilityApplication: CapabilityApplication): Observable<any> {
     let url = `${this.capabilityApplicationURL}/${capabilityApplicationID}`
 
-    this.http.put<CapabilityApplication>(url, capabilityApplication.getParams(),
-    {headers: this.contentHeaders})
-    .subscribe(
-      () => {
-     // Swal.fire('Success', 'You have succesfully updated the Capability-Application link', 'success')
-     // this.router.navigate([`capability-application/`])
-     window.location.reload();
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    });
+   return this.http.put<CapabilityApplication>(url, capabilityApplication.getParams());
+   
   }
 
   public deleteCapabilityApplication(capabilityApplicationID: string) {
     let url = `${this.capabilityApplicationURL}/${capabilityApplicationID}`
 
-    this.http.delete(url).subscribe(
-      () => {
-        //Swal.fire('Success', 'You have succesfully deleted the Capability-Application link', 'success')
-       // this.router.navigate([`capability-application/`])
-       window.location.reload();
-      });
+   return this.http.delete(url);
+    
   }
 }

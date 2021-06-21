@@ -19,9 +19,14 @@ export class CapabilityStrategyitemsDeleteComponent implements OnInit {
   }
 
   deleteCapability_StrategyItem() {
-    //let capabilityStrategyItemID = this.router.url.split('/')[3];
-
-    this.csi.deleteCapabilityStrategyItem(this.capStrategyItemCurrentValues.id.toString());
+    
+    this.csi.deleteCapabilityStrategyItem(this.capStrategyItemCurrentValues.id.toString())
+    .subscribe(
+      () => {
+        this.csic.ngOnInit()
+        this.csic.hideAll()
+      }
+    )
 
   }
 
