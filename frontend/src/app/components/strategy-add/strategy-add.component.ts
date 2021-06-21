@@ -48,7 +48,6 @@ export class StrategyAddComponent implements OnInit {
 
   onSubmit() {
     let envId = this.ns.getEnvironmentCookie();
-    console.log(envId);
     var straToCreate = new Strategy(
       this.name.value,
       this.timeframeFrom.value,
@@ -57,14 +56,14 @@ export class StrategyAddComponent implements OnInit {
 
 
     this.ss.createStrategy(envId, straToCreate)
-    .subscribe(
-      () => {
-        this.sc.ngOnInit();
-      },
-      () => {
-        Swal.fire('Error', `Failed to add strategy`, 'error')
-      }
-    )
+      .subscribe(
+        () => {
+          this.sc.ngOnInit();
+        },
+        () => {
+          Swal.fire('Error', `Failed to add strategy`, 'error')
+        }
+      )
     this.strAddForm.reset();
 
 

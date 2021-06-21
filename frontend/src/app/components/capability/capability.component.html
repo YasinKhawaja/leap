@@ -18,114 +18,115 @@
                 </div>
             </div>
         </div>
-        <br>
         <ng-container class='container' *ngFor='let cap1 of capabilitiesLevel1'>
-            <div class="title">Overview of capability {{cap1.name}}</div>
-        <table class="table table-striped">
-            
-            <thead> 
-                <tr>
-                    <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
-                    <!-- DELETE icon -->
-                    <th scope="col">NAME</th>
-                    <th scope="col">LEVEL</th>
-                    <th scope="col">PACE OF CHANGE</th>
-                    <th scope="col">TARGET OPERATION MODEL</th>
-                    <th scope="col">RESOURCES QUALITY</th>
-                    <th scope="col">INFO QUALITY</th>
-                    <th scope="col">APP FIT</th>
-                    <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
-                    <!-- ADD sub cap -->
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td *ngIf="(jwt.checkRole() != 'reader')">
-                        <a [routerLink]="[cap1.id, 'delete']" role="button" (click)="selectCapability(cap1.id)">
-                            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
-                        </a>
-                    </td>
-                    <td class="name">
-                        <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap1.id)">
-                            {{ cap1.name }}
-                        </a>
-                    </td>
-                    <td>{{ cap1.level }}</td>
-                    <td>{{ cap1.paceOfChange }}</td>
-                    <td>{{ cap1.targetOperationModel }}</td>
-                    <td>{{ cap1.resourcesQuality }}</td>
-                    <td>{{ cap1.informationQuality }}</td>
-                    <td>{{ cap1.applicationFit }}</td>
-                    <td *ngIf="(jwt.checkRole() != 'reader')">
-                        <button type="button" class="btn btn-danger" (click)="callAll(cap1, '2')" *ngIf="cap1.level == '1'">
-                            ADD CAP Lv2
-                        </button>
-                        <button type="button" class="btn btn-danger" (click)="callAll(cap1, '3')" *ngIf="cap1.level == '2'">
-                            ADD CAP Lv3
-                        </button>
-                    </td>
-                </tr>
-                <ng-container class='container' *ngFor='let cap2 of cap1.subcapabilities'>
-                <tr>
-                    <td *ngIf="(jwt.checkRole() != 'reader')">
-                        <a [routerLink]="[cap2.id, 'delete']" role="button" (click)="selectCapability(cap2.id)">
-                            <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
-                        </a>
-                    </td>
-                    <td>
-                        <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap2.id)">
-                            {{ cap2.name }}
-                        </a>
-                    </td>
-                    <td>{{ cap2.level }}</td>
-                    <td>{{ cap2.paceOfChange }}</td>
-                    <td>{{ cap2.targetOperationModel }}</td>
-                    <td>{{ cap2.resourcesQuality }}</td>
-                    <td>{{ cap2.informationQuality }}</td>
-                    <td>{{ cap2.applicationFit }}</td>
-                    <td *ngIf="(jwt.checkRole() != 'reader')">
-                        <button type="button" class="btn btn-danger" (click)="callAll(cap2, '2')" *ngIf="cap2.level == '1'">
-                            ADD CAP Lv2
-                        </button>
-                        <button type="button" class="btn btn-danger" (click)="callAll(cap2, '3')" *ngIf="cap2.level == '2'">
-                            ADD CAP Lv3
-                        </button>
-                    </td>
-                </tr>
-                <ng-container class='container' *ngFor='let cap3 of cap2.subcapabilities'>
+            <div class="title">
+                <h5><strong>Overview of capability {{cap1.name}}</strong></h5>
+            </div>
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
+                        <!-- DELETE icon -->
+                        <th scope="col">NAME</th>
+                        <th scope="col">LEVEL</th>
+                        <th scope="col">PACE OF CHANGE</th>
+                        <th scope="col">TARGET OPERATION MODEL</th>
+                        <th scope="col">RESOURCES QUALITY</th>
+                        <th scope="col">INFO QUALITY</th>
+                        <th scope="col">APP FIT</th>
+                        <th scope="col" *ngIf="(jwt.checkRole() != 'reader')"></th>
+                        <!-- ADD sub cap -->
+                    </tr>
+                </thead>
+                <tbody>
+
                     <tr>
                         <td *ngIf="(jwt.checkRole() != 'reader')">
-                            <a [routerLink]="[cap3.id, 'delete']" role="button" (click)="selectCapability(cap3.id)">
+                            <a [routerLink]="[cap1.id, 'delete']" role="button" (click)="selectCapability(cap1.id)">
                                 <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
                             </a>
                         </td>
-                        <td>
-                            <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap3.id)">
-                                {{ cap3.name }}
+                        <td class="name">
+                            <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap1.id)">
+                                {{ cap1.name }}
                             </a>
                         </td>
-                        <td>{{ cap3.level }}</td>
-                        <td>{{ cap3.paceOfChange }}</td>
-                        <td>{{ cap3.targetOperationModel }}</td>
-                        <td>{{ cap3.resourcesQuality }}</td>
-                        <td>{{ cap3.informationQuality }}</td>
-                        <td>{{ cap3.applicationFit }}</td>
+                        <td>{{ cap1.level }}</td>
+                        <td>{{ cap1.paceOfChange }}</td>
+                        <td>{{ cap1.targetOperationModel }}</td>
+                        <td>{{ cap1.resourcesQuality }}</td>
+                        <td>{{ cap1.informationQuality }}</td>
+                        <td>{{ cap1.applicationFit }}</td>
                         <td *ngIf="(jwt.checkRole() != 'reader')">
-                            <button type="button" class="btn btn-danger" (click)="callAll(cap3, '2')" *ngIf="cap3.level == '1'">
+                            <button type="button" class="btn btn-danger" (click)="callAll(cap1, '2')" *ngIf="cap1.level == '1'">
                                 ADD CAP Lv2
                             </button>
-                            <button type="button" class="btn btn-danger" (click)="callAll(cap3, '3')" *ngIf="cap3.level == '2'">
+                            <button type="button" class="btn btn-danger" (click)="callAll(cap1, '3')" *ngIf="cap1.level == '2'">
                                 ADD CAP Lv3
                             </button>
                         </td>
                     </tr>
-                </ng-container>
-            </ng-container> 
-            
-            </tbody>
-        </table>
-        <br>
+                    <ng-container class='container' *ngFor='let cap2 of cap1.subcapabilities'>
+                        <tr>
+                            <td *ngIf="(jwt.checkRole() != 'reader')">
+                                <a [routerLink]="[cap2.id, 'delete']" role="button" (click)="selectCapability(cap2.id)">
+                                    <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap2.id)">
+                                    {{ cap2.name }}
+                                </a>
+                            </td>
+                            <td>{{ cap2.level }}</td>
+                            <td>{{ cap2.paceOfChange }}</td>
+                            <td>{{ cap2.targetOperationModel }}</td>
+                            <td>{{ cap2.resourcesQuality }}</td>
+                            <td>{{ cap2.informationQuality }}</td>
+                            <td>{{ cap2.applicationFit }}</td>
+                            <td *ngIf="(jwt.checkRole() != 'reader')">
+                                <button type="button" class="btn btn-danger" (click)="callAll(cap2, '2')" *ngIf="cap2.level == '1'">
+                                    ADD CAP Lv2
+                                </button>
+                                <button type="button" class="btn btn-danger" (click)="callAll(cap2, '3')" *ngIf="cap2.level == '2'">
+                                    ADD CAP Lv3
+                                </button>
+                            </td>
+                        </tr>
+                        <ng-container class='container' *ngFor='let cap3 of cap2.subcapabilities'>
+                            <tr>
+                                <td *ngIf="(jwt.checkRole() != 'reader')">
+                                    <a [routerLink]="[cap3.id, 'delete']" role="button" (click)="selectCapability(cap3.id)">
+                                        <img src='assets/delete-icon.png' alt="Delete" width='20' height='20'>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-light" [routerLink]="['update']" role="button" (click)="selectCapability(cap3.id)">
+                                        {{ cap3.name }}
+                                    </a>
+                                </td>
+                                <td>{{ cap3.level }}</td>
+                                <td>{{ cap3.paceOfChange }}</td>
+                                <td>{{ cap3.targetOperationModel }}</td>
+                                <td>{{ cap3.resourcesQuality }}</td>
+                                <td>{{ cap3.informationQuality }}</td>
+                                <td>{{ cap3.applicationFit }}</td>
+                                <td *ngIf="(jwt.checkRole() != 'reader')">
+                                    <button type="button" class="btn btn-danger" (click)="callAll(cap3, '2')" *ngIf="cap3.level == '1'">
+                                        ADD CAP Lv2
+                                    </button>
+                                    <button type="button" class="btn btn-danger" (click)="callAll(cap3, '3')" *ngIf="cap3.level == '2'">
+                                        ADD CAP Lv3
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+
+                </tbody>
+            </table>
+            <br>
         </ng-container>
         <div>
             <br>

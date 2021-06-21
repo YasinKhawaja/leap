@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { waitForAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
@@ -67,9 +68,8 @@ export class ExportComponent implements OnInit {
 
     this.cs.getCapabilitiesWithParents(environmentId)
       .subscribe(
-        (res) => {
-          this.parents = res
-          console.log(this.parents)
+        (result) => {
+          this.parents = result
         },
         () => {
           Swal.fire('Error', 'failed to load parents of capabilities', 'error')
@@ -79,14 +79,15 @@ export class ExportComponent implements OnInit {
     this.cs.getAllCapabilitiesInEnvironment(environmentId)
       .subscribe(result => {
         this.capabilities = result;
-        console.log(this.capabilities);
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1')
 
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2')
 
         this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3')
       },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
 
 
     this.strats.getAllStrategyInEnvironment(environmentId)
@@ -95,7 +96,9 @@ export class ExportComponent implements OnInit {
           this.strategies.push(e.name);
         })
       },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   setITApplicationFilter() {
@@ -130,7 +133,9 @@ export class ExportComponent implements OnInit {
           this.strategyItems.push(e.name);
         })
       },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
 
@@ -141,7 +146,9 @@ export class ExportComponent implements OnInit {
         this.capabilityStrategyItemsLinkedToStrategyItem = result;
 
       },
-        error => console.log(error))
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
 
   }
 
@@ -181,17 +188,13 @@ export class ExportComponent implements OnInit {
       children.push(this.parents[i].split(';')[0])
       parents.push(this.parents[i].split(';')[1])
     }
-    console.log(children)
-    console.log(parents)
 
     for (var i = 0; i < this.capabilities.length; i++) {
       if (children.includes(cap[i].name)) {
-        console.log(i + ": " + cap[i].name)
         cap[i].parent = parents[count];
         count++;
       }
     }
-    console.log(cap);
 
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
 

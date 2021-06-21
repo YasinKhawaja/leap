@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -37,13 +38,13 @@ export class EnvironmentAddComponent implements OnInit {
   onSubmit(): void {
     this.es.createEnvironment(this.name.value, this.companyid)
       .subscribe(
-        res => {
-          console.log(res);
+        () => {
           Swal.fire('Created', `Environment <strong>${this.name.value}</strong> created.`, 'success');
           this.router.navigate(['environments']);
         },
-        err => Swal.fire('Error', err.error.message, 'error')
-      );
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
 }

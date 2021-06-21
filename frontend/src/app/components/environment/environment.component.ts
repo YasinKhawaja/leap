@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Company } from 'src/app/classes/company/company';
 import { Environment } from 'src/app/classes/environment/environment';
@@ -38,8 +39,9 @@ export class EnvironmentComponent implements OnInit {
         res => {
           this.environments = res;
         },
-        err => console.error(err)
-      );
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   getCompanies(): void {
@@ -48,10 +50,9 @@ export class EnvironmentComponent implements OnInit {
         result => {
           this.companies = result;
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error');
-        }
-      )
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   getUsers(): void {
@@ -60,10 +61,9 @@ export class EnvironmentComponent implements OnInit {
         result => {
           this.users = result
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error');
-        }
-      )
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   getRole() {

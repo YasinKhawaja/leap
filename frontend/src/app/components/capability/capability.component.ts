@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Capability } from 'src/app/classes/capability/capability';
 import { CSVRecord } from 'src/app/classes/csvrecord/csvrecord';
@@ -42,12 +43,14 @@ export class CapabilityComponent implements OnInit {
     var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllCapabilitiesInEnvironment(envId)
-      .subscribe(res => { 
-        this.capabilities = res; 
+      .subscribe(res => {
+        this.capabilities = res;
         this.capabilitiesLevel1 = this.capabilities.filter(capability => capability.level == '1');
         this.capabilitiesLevel2 = this.capabilities.filter(capability => capability.level == '2');
         this.capabilitiesLevel3 = this.capabilities.filter(capability => capability.level == '3');
-      }, err => console.error(err));
+      }, (error: HttpErrorResponse) => {
+        Swal.fire('Error', error.error, 'error')
+      });
   }
 
   uploadFile($event: any): void {
@@ -106,7 +109,6 @@ export class CapabilityComponent implements OnInit {
         if (currentRecord[9].trim() != "") {
           csvRecord.parent = currentRecord[9].trim().slice(1, currentRecord[9].trim().length - 1)
         }
-        console.log(csvRecord)
 
         var capability = new Capability(csvRecord.name, csvRecord.paceOfChange, csvRecord.targetOperationModel, csvRecord.resourceQuality)
         await this.cs.createCapabilityFromCsv(environmentid, capability, csvRecord.parent).toPromise()

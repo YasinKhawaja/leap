@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -30,8 +30,8 @@ export class ResetpasswordService {
           Swal.fire('Request submitted', `An email will be sent within the next hour, please check your spam folder.`, 'success');
           this.router.navigate(['login'])
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error')
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
         });
   }
 
@@ -48,8 +48,8 @@ export class ResetpasswordService {
           this.router.navigate(['login']);
           Swal.fire('Password reset', 'Your password has succesfully been reset!', 'success')
         },
-        error => {
-          Swal.fire('Error', error.error.message, 'error')
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
         });
   }
 }

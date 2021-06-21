@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
@@ -41,24 +42,24 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
     strategicEmphasis: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private css: CapabilityStrategyitemService, 
-    private ns: NavbarService, private sis: StrategyService,private sos : StrategyItemService , private csic : CapabilityStrategyitemsComponent) {
+  constructor(private fb: FormBuilder, private css: CapabilityStrategyitemService,
+    private ns: NavbarService, private sis: StrategyService, private sos: StrategyItemService, private csic: CapabilityStrategyitemsComponent) {
 
     this.strategies = [];
     this.strategyItems = [];
-   }
+  }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     let environmentId = this.ns.getEnvironmentCookie();
     this.sis.getAllStrategyInEnvironment(environmentId)
-    .subscribe(result => {
-      result.forEach(e => {
-        this.strategies.push(e.name);
-      })
-      console.log(result);
-    },
-    error => console.log(error));
-    
+      .subscribe(result => {
+        result.forEach(e => {
+          this.strategies.push(e.name);
+        })
+      },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   hide(): void {
@@ -69,36 +70,37 @@ export class CapabilityStrategyitemsAddComponent implements OnInit {
     this.strategyItems = [];
 
     this.sos.getAllStrategyItemsInStrategyByName(this.strategy.value.strategyName)
-     .subscribe(result => {
-       result.forEach(e => {
+      .subscribe(result => {
+        result.forEach(e => {
 
           this.strategyItems.push(e.name);
         })
-       console.log(result);
-     },
-        error => console.log(error));
+      },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   changeStrategyItem() {
     this.capabilityStrategyItem.value.strategyItemName;
   }
 
-  onSubmit(){
+  onSubmit() {
     let capabilityId = this.ns.getCapabilityCookie();
-    
-    var newCapabilityStrategyItem = new CapabilityStrategyItems( 
+
+    var newCapabilityStrategyItem = new CapabilityStrategyItems(
       this.capabilityStrategyItem.value.strategyItemName,
       this.capabilityStrategyItem.value.strategicEmphasis
     );
 
     this.css.createCapabilityStrategyItem(capabilityId, newCapabilityStrategyItem)
-    .subscribe(
-    () => {
-      this.csic.ngOnInit();
-    },
-    () => {
-      Swal.fire('Error', `Failed to add capability strategy item link`, 'error')
-    }
-    )
+      .subscribe(
+        () => {
+          this.csic.ngOnInit();
+        },
+        () => {
+          Swal.fire('Error', `Failed to add capability strategy item link`, 'error')
+        }
+      )
   }
 }

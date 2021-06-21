@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CapabilityApplication } from 'src/app/classes/capability-application/capability-application';
@@ -29,27 +30,26 @@ export class CapabilityApplicationAddComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder, private cas: CapabilityApplicationService, private ns: NavbarService, private its: ItapplicationService,
-    private cac : CapabilityApplicationComponent) {
+    private cac: CapabilityApplicationComponent) {
     this.itApplications = [];
   }
 
   ngOnInit(): void {
     let environmentId = this.ns.getEnvironmentCookie();
     this.its.getITApplications_CurrentEnvironment(environmentId)
-    .subscribe(result => {
-      result.forEach(e => {
-        this.itApplications.push(e.name);
-      })
-    },
-    error => {
-      Swal.fire('Error', error.error.message, 'error')
-    }
-    )
+      .subscribe(result => {
+        result.forEach(e => {
+          this.itApplications.push(e.name);
+        })
+      },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
-  onSubmit(){
+  onSubmit() {
     let capabilityId = this.ns.getCapabilityCookie();
-    
+
     var newCapabilityApplication = new CapabilityApplication(
       this.capabilityApplication.value.application,
       this.capabilityApplication.value.businessEfficiencySupport,
@@ -63,13 +63,13 @@ export class CapabilityApplicationAddComponent implements OnInit {
     );
 
     this.cas.createCapabilityApplication(capabilityId, newCapabilityApplication)
-    .subscribe(
-      () => {
-        this.cac.ngOnInit();
-      },
-      () => {
-        Swal.fire('Error', `Failed to add capability application link`, 'error')
-      }
+      .subscribe(
+        () => {
+          this.cac.ngOnInit();
+        },
+        () => {
+          Swal.fire('Error', `Failed to add capability application link`, 'error')
+        }
       )
   }
 

@@ -7,6 +7,8 @@ import { StrategyService } from 'src/app/services/strategy/strategy.service';
 import { Strategy } from 'src/app/classes/strategy/strategy';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-strategy',
@@ -27,8 +29,13 @@ export class StrategyComponent implements OnInit {
     var envId = this.ns.getEnvironmentCookie();
 
     this.cs.getAllStrategyInEnvironment(envId)
-      .subscribe(res => { this.strategies = res; console.log(res); },
-        error => { console.error(error) })
+      .subscribe(
+        result => {
+          this.strategies = result;
+        },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   showStrAdd: boolean = false;
@@ -49,13 +56,13 @@ export class StrategyComponent implements OnInit {
         this.strCurrentValues = strategy;
         this.showStrEdit = !this.showStrEdit;
         break;
-        case 'strategy-delete':
-          this.showStrAdd = false;
-          this.showStrEdit = false;
-          this.strCurrentValues = strategy;
-          this.showStrDelete = !this.showStrDelete;
-          break;
- 
+      case 'strategy-delete':
+        this.showStrAdd = false;
+        this.showStrEdit = false;
+        this.strCurrentValues = strategy;
+        this.showStrDelete = !this.showStrDelete;
+        break;
+
       default:
         break;
     }
@@ -64,7 +71,7 @@ export class StrategyComponent implements OnInit {
   hideAll(): void {
     this.showStrAdd = false;
     this.showStrEdit = false;
-    this.showStrDelete= false;
+    this.showStrDelete = false;
   }
 
 }

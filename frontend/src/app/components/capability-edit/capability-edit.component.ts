@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -104,8 +105,9 @@ export class CapabilityEditComponent implements OnInit {
           Swal.fire('Edited', `Capability <strong>${this.capCurrentValues.name}</strong> edited.`, 'success');
           this.ngOnInit();
         },
-        err => console.error(err)
-      );
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   refer() {

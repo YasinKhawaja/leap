@@ -26,7 +26,6 @@ export class CapabilityInformationService {
     var url = `${this.capinfoURI}/${capabilityid}`
 
     var params = new HttpParams().set('information', information).set('criticality', criticality.toUpperCase())
-    console.log(params.toString())
 
     return this.http.post<CapabilityInformation>(url, params)
   }

@@ -1,8 +1,10 @@
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capability } from 'src/app/classes/capability/capability';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import Swal from 'sweetalert2';
 import { CapabilityService } from '../../services/capability/capability.service';
 
 @Component({
@@ -25,17 +27,17 @@ export class CapabilityDeleteComponent implements OnInit {
   ngOnInit(): void {
     this.cs.getCapability(this.envId, this.capId)
       .subscribe(
-        res => this.cap = res,
-        err => console.log(err)
-      );
+        response => this.cap = response,
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   // To delete the cap in its env
   deleteCapability() {
     this.cs.deleteCapability(this.envId, this.capId)
       .subscribe(
-        res => this.navigateBack(),
-        err => console.log(err)
+        () => this.navigateBack()
       );
   }
 

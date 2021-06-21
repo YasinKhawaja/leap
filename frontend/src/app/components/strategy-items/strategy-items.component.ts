@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
@@ -6,6 +7,7 @@ import { CapabilityStrategyitemService } from 'src/app/services/capability-strat
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
 import { StrategyItemService } from 'src/app/services/strategy-item/strategy-item.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-strategy-items',
@@ -16,10 +18,10 @@ export class StrategyItemsComponent implements OnInit {
 
   strategyItems: StrategyItem[]
 
-   capStrItems:  CapabilityStrategyItems[]
+  capStrItems: CapabilityStrategyItems[]
 
   constructor(private cs: StrategyItemService, private router: Router, public jwt: JwtService,
-    private csi: CapabilityStrategyitemService ) {
+    private csi: CapabilityStrategyitemService) {
     this.strategyItems = [];
   }
 
@@ -28,8 +30,13 @@ export class StrategyItemsComponent implements OnInit {
     var strId = this.router.url.split('/')[2];
 
     this.cs.getAllStrategyItemInStrategy(strId)
-      .subscribe(res => { this.strategyItems = res; console.log(res); },
-        error => { console.error(error) })
+      .subscribe(
+        result => {
+          this.strategyItems = result;
+        },
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
 
@@ -39,7 +46,7 @@ export class StrategyItemsComponent implements OnInit {
   showStrItemDelete: boolean = false;
   strItemCurrentValues: StrategyItem;
 
-    showLinkedCaps: boolean = false;
+  showLinkedCaps: boolean = false;
 
   showLinkedCapabilities(strItemName: string): void {
     this.csi.getCapabilityStrategyItemsLinkedToStrategyItem(strItemName)
@@ -63,17 +70,17 @@ export class StrategyItemsComponent implements OnInit {
         this.showStrItemEdit = !this.showStrItemEdit;
         break;
 
-        case 'strategyItem-delete':
-          this.showStrItemAdd = false;
-          this.showStrItemEdit = false;
-          this.showLinkedCaps = false;
-          this.strItemCurrentValues = strategyItem;
-          this.showStrItemDelete = !this.showStrItemDelete;
-          break;
-          case 'linked-caps':
-            this.hideAll();
-            this.showLinkedCaps = true;
-            break;
+      case 'strategyItem-delete':
+        this.showStrItemAdd = false;
+        this.showStrItemEdit = false;
+        this.showLinkedCaps = false;
+        this.strItemCurrentValues = strategyItem;
+        this.showStrItemDelete = !this.showStrItemDelete;
+        break;
+      case 'linked-caps':
+        this.hideAll();
+        this.showLinkedCaps = true;
+        break;
       default:
         break;
     }

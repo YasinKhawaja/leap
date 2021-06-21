@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CapabilityStrategyItems } from 'src/app/classes/capability-strategyitems/capability-strategyitems';
 import { Capability } from 'src/app/classes/capability/capability';
@@ -5,6 +6,7 @@ import { CapabilityStrategyitemService } from 'src/app/services/capability-strat
 import { CapabilityService } from 'src/app/services/capability/capability.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 import { NavbarService } from 'src/app/services/navbar/navbar.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-capability-strategyitems',
@@ -28,7 +30,9 @@ export class CapabilityStrategyitemsComponent implements OnInit {
         result => {
           this.capabilityStrategyItems = result;
         },
-        error => console.log(error));
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   private getCapability(): void {
@@ -54,13 +58,13 @@ export class CapabilityStrategyitemsComponent implements OnInit {
         this.capStrategyItemCurrentValues = capstrategyItem;
         this.showCapStrategyItemEdit = !this.showCapStrategyItemEdit;
         break;
-        case 'capstritem-delete':
-          this.showCapStrategyItemAdd = false;
-          this.showCapStrategyItemEdit = false;
-          this.capStrategyItemCurrentValues = capstrategyItem;
-          this.showCapStrategyItemDelete = !this.showCapStrategyItemDelete;
-          break;
- 
+      case 'capstritem-delete':
+        this.showCapStrategyItemAdd = false;
+        this.showCapStrategyItemEdit = false;
+        this.capStrategyItemCurrentValues = capstrategyItem;
+        this.showCapStrategyItemDelete = !this.showCapStrategyItemDelete;
+        break;
+
       default:
         break;
     }
@@ -69,6 +73,6 @@ export class CapabilityStrategyitemsComponent implements OnInit {
   hideAll(): void {
     this.showCapStrategyItemAdd = false;
     this.showCapStrategyItemEdit = false;
-    this.showCapStrategyItemDelete= false;
+    this.showCapStrategyItemDelete = false;
   }
 }

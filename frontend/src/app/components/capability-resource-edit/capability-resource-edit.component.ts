@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CapResource } from 'src/app/classes/capabillity-resource/capresource';
@@ -38,12 +39,13 @@ export class CapabilityResourceEditComponent implements OnInit {
   onSubmit() {
     this.crs.updateCapResource(this.capresCurrentValues.id, this.nor.value)
       .subscribe(
-        response => {
+        () => {
           this.crc.ngOnInit();
           this.crc.hideAll();
         },
-        error => Swal.fire('Error', error.error.message, 'error')
-      );
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
   }
 
   hide(): void {

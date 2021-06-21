@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -40,7 +41,6 @@ export class StrategyItemsAddComponent implements OnInit {
 
   onSubmit() {
     var strId = this.router.url.split('/')[2];
-    console.log(strId);
     var straItemToCreate = new StrategyItem(
       this.name.value,
       this.description.value
@@ -50,13 +50,13 @@ export class StrategyItemsAddComponent implements OnInit {
     this.si.createStrategyItem(strId, straItemToCreate)
       .subscribe(
         res => {
-          console.log(res);
           this.sic.ngOnInit();
           this.strItemAddForm.reset();
 
         },
-        err => Swal.fire('Error', err.error.message, 'error')
-      );
+        (error: HttpErrorResponse) => {
+          Swal.fire('Error', error.error, 'error')
+        });
 
   }
 
